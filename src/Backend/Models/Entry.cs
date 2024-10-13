@@ -2,6 +2,7 @@
 {
     public class Entry
     {
+        public int Id { get; set; }
         public float Amount { get; set; }
         public DateTime Time { get; set; }
 
