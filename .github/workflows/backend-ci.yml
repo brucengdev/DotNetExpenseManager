@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Start SQL server
+      run: docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=MyPassword" -e "MSSQL_PID=Express" -p 1433:1433  --name sqlpreview --hostname sqlpreview -d mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
     
     - uses: actions/checkout@v4
     - name: Setup .NET
