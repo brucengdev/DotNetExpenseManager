@@ -14,7 +14,7 @@ describe("Login", () => {
         expect(screen.getByRole("button", { name: "Login"})).toBeInTheDocument()
     })
 
-    it("has compulsory username", async () => {
+    it("has mandatory field checks 1", async () => {
         render(<Login />)
 
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
@@ -23,7 +23,7 @@ describe("Login", () => {
         expect(screen.getByLabelText("Password").className).toContain("mandatory")
     })
 
-    it("has compulsory password", async () => {
+    it("has mandatory field checks 2", async () => {
         render(<Login />)
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "123"}})
