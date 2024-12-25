@@ -4,7 +4,6 @@ import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { TestClient } from "./TestClient";
 import { sleep } from "./testutils";
-import { act } from "react";
 
 describe("App", () => {
     it("shows login form when not logged in", () => {
