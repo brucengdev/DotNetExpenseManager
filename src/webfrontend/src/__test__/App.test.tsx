@@ -1,6 +1,6 @@
 import { screen, render } from "@testing-library/react";
 import App from "../App";
-import {describe, expect, it} from 'vitest'
+import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { TestClient } from "./TestClient";
 import { sleep } from "./testutils";
@@ -8,7 +8,7 @@ import { sleep } from "./testutils";
 describe("App", () => {
     it("shows login form when not logged in", () => {
         const client = new TestClient()
-        client.LoggedIn = false;
+        client.IsLoggedIn = vitest.fn(async () => false)
         render(<App client={client} />)
 
         expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
