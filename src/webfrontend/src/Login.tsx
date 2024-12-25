@@ -20,6 +20,7 @@ export function Login() {
         <input type="password" 
             className={passwordWarn? "mandatory": ""}
             value={password}
+            onChange={e => setPassword(e.target.value)}
             ></input>
       </label>
       <button onClick={() => {

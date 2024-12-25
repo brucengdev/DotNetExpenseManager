@@ -33,4 +33,16 @@ describe("Login", () => {
         expect(screen.getByRole("textbox", { name: "Username" }).className).toBe("")
         expect(screen.getByLabelText("Password").className).toContain("mandatory")
     })
+
+    it("has mandatory field checks 3", async () => {
+        render(<Login />)
+
+        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "123"}})
+        fireEvent.change(screen.getByLabelText("Password"), { target: { value: "123"}})
+
+        fireEvent.click(screen.getByRole("button", { name: "Login"}))
+
+        expect(screen.getByRole("textbox", { name: "Username" }).className).toBe("")
+        expect(screen.getByLabelText("Password").className).toBe("")
+    })
 })
