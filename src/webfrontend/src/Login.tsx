@@ -1,7 +1,12 @@
 import { useState } from "react"
 import './Login.css'
+import { IClient } from "./api/Client"
 
-export function Login() {
+interface LoginProps {
+    client: IClient
+}
+
+export function Login({client}: LoginProps) {
     const [username, setUsername] = useState("")
     const [usernameWarn, setUsernameWarn] = useState(false)
     const [password, setPassword] = useState("")
@@ -27,6 +32,7 @@ export function Login() {
       <button onClick={() => {
         setUsernameWarn(username == "")
         setPasswordWarn(password == "")
+        client.Login()
       }
     }>Login</button>
     </>

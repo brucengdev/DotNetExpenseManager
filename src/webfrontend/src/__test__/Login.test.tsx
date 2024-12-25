@@ -1,11 +1,12 @@
 import { screen, render, fireEvent } from "@testing-library/react";
-import {describe, expect, it} from 'vitest'
+import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { Login } from "../Login";
+import { TestClient } from "./TestClient";
 
 describe("Login", () => {
     it("has necessary ui components", () => {
-        render(<Login />)
+        render(<Login client={new TestClient()} />)
 
         expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
         expect(screen.getByRole("textbox", { name: "Username"})).toBeInTheDocument()
@@ -15,7 +16,7 @@ describe("Login", () => {
     })
 
     it("has mandatory field checks 1", async () => {
-        render(<Login />)
+        render(<Login client={new TestClient()} />)
 
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
 
@@ -32,7 +33,7 @@ describe("Login", () => {
     })
 
     it("has mandatory field checks 2", async () => {
-        render(<Login />)
+        render(<Login client={new TestClient()} />)
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "123"}})
 
@@ -42,8 +43,10 @@ describe("Login", () => {
         expect(screen.getByLabelText("Password").className).toContain("mandatory")
     })
 
-    it("has mandatory field checks 3", async () => {
-        render(<Login />)
+    it("has a successful login flow", async () => {
+        const client = new TestClient();
+        client.Login = vitest.fn()
+        render(<Login client={client} />)
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "123"}})
         fireEvent.change(screen.getByLabelText("Password"), { target: { value: "123"}})
@@ -52,5 +55,7 @@ describe("Login", () => {
 
         expect(screen.getByRole("textbox", { name: "Username" }).className).toBe("")
         expect(screen.getByLabelText("Password").className).toBe("")
+
+        expect(client.Login).toHaveBeenCalledOnce()
     })
 })
