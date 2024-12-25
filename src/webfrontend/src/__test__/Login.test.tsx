@@ -20,5 +20,17 @@ describe("Login", () => {
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
 
         expect(screen.getByRole("textbox", { name: "Username" }).className).toContain("mandatory")
+        expect(screen.getByLabelText("Password").className).toContain("mandatory")
+    })
+
+    it("has compulsory password", async () => {
+        render(<Login />)
+
+        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "123"}})
+
+        fireEvent.click(screen.getByRole("button", { name: "Login"}))
+
+        expect(screen.getByRole("textbox", { name: "Username" }).className).toBe("")
+        expect(screen.getByLabelText("Password").className).toContain("mandatory")
     })
 })
