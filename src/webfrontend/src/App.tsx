@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 import { IClient } from './api/Client'
 import { Login } from './Login'
 import { MainView } from './Expenses'
