@@ -78,4 +78,26 @@ describe("Login", () => {
 
         expect(onLogin).toHaveBeenCalled()
     })
+
+    it("has a unsuccessful login flow", async () => {
+        const client = new TestClient();
+        client.Login = vitest.fn(async ()=>  false)
+        const onLogin = vitest.fn()
+        render(<Login client={client} onLogin={onLogin} />)
+
+        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "user1"}})
+        fireEvent.change(screen.getByLabelText("Password"), { target: { value: "hispass"}})
+
+        fireEvent.click(screen.getByRole("button", { name: "Login"}))
+
+        await sleep(10)
+
+        expect(screen.getByRole("textbox", { name: "Username" }).className).toBe("")
+        expect(screen.getByLabelText("Password").className).toBe("")
+
+        expect(client.Login).toHaveBeenCalledOnce()
+        expect(client.Login).toHaveBeenCalledWith("user1", "hispass")
+
+        expect(onLogin).not.toHaveBeenCalled()
+    })
 })
