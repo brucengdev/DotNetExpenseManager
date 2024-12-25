@@ -4,9 +4,10 @@ import { IClient } from "./api/Client"
 
 interface LoginProps {
     client: IClient
+    onLogin: () => void
 }
 
-export function Login({client}: LoginProps) {
+export function Login({client, onLogin}: LoginProps) {
     const [username, setUsername] = useState("")
     const [usernameWarn, setUsernameWarn] = useState(false)
     const [password, setPassword] = useState("")
@@ -40,9 +41,16 @@ export function Login({client}: LoginProps) {
       <button onClick={() => {
         const valid = validateForm()
         if(valid) {
-            client.Login(username, password)
+            login(client, username, password, onLogin)
         }
       }
     }>Login</button>
     </>
+}
+
+const login = async (client: IClient, username: string, password:string, onLogin: () => void) => {
+    const success = await client.Login(username, password)
+    if(success) {
+        onLogin()
+    }
 }

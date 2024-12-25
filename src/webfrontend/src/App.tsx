@@ -13,7 +13,7 @@ function App({client}: AppProps) {
   .then(loggedIn => setLoggedIn(loggedIn))
   return (
     <>
-      {loggedIn? <MainView />: <Login client={client} />}
+      {loggedIn? <MainView />: <Login client={client} onLogin={() => {} } />}
     </>
   )
 }
