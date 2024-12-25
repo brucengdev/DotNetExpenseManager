@@ -4,9 +4,9 @@ import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 
 describe("App", () => {
-    it("displays a header", () => {
+    it("shows login form when not logged in", () => {
         render(<App />)
 
-        expect(screen.getByRole("heading", { name: "Vite + React"})).toBeInTheDocument()
+        expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
     })
 })
