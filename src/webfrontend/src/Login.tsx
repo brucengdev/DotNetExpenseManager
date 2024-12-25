@@ -11,6 +11,14 @@ export function Login({client}: LoginProps) {
     const [usernameWarn, setUsernameWarn] = useState(false)
     const [password, setPassword] = useState("")
     const [passwordWarn, setPasswordWarn] = useState(false)
+
+    const validateForm = () => {
+        setUsernameWarn(username == "")
+        setPasswordWarn(password == "")
+        const valid = username != "" && password != ""
+        return valid
+    }
+
     return <>
       <h1>Login</h1>
       <label>
@@ -30,9 +38,10 @@ export function Login({client}: LoginProps) {
             ></input>
       </label>
       <button onClick={() => {
-        setUsernameWarn(username == "")
-        setPasswordWarn(password == "")
-        client.Login(username, password)
+        const valid = validateForm()
+        if(valid) {
+            client.Login(username, password)
+        }
       }
     }>Login</button>
     </>

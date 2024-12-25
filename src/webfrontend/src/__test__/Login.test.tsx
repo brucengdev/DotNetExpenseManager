@@ -33,7 +33,9 @@ describe("Login", () => {
     })
 
     it("has mandatory field checks 2", async () => {
-        render(<Login client={new TestClient()} />)
+        const client = new TestClient();
+        client.Login = vitest.fn(async () => false)
+        render(<Login client={client} />)
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "123"}})
 
@@ -41,6 +43,8 @@ describe("Login", () => {
 
         expect(screen.getByRole("textbox", { name: "Username" }).className).toBe("")
         expect(screen.getByLabelText("Password").className).toContain("mandatory")
+
+        expect(client.Login).not.toHaveBeenCalled()
     })
 
     it("has a successful login flow", async () => {
