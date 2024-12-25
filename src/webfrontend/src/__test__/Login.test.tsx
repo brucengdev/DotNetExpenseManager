@@ -48,8 +48,8 @@ describe("Login", () => {
         client.Login = vitest.fn()
         render(<Login client={client} />)
 
-        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "123"}})
-        fireEvent.change(screen.getByLabelText("Password"), { target: { value: "123"}})
+        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "user1"}})
+        fireEvent.change(screen.getByLabelText("Password"), { target: { value: "hispass"}})
 
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
 
@@ -57,5 +57,6 @@ describe("Login", () => {
         expect(screen.getByLabelText("Password").className).toBe("")
 
         expect(client.Login).toHaveBeenCalledOnce()
+        expect(client.Login).toHaveBeenCalledWith("user1", "hispass")
     })
 })

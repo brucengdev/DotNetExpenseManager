@@ -32,7 +32,7 @@ export function Login({client}: LoginProps) {
       <button onClick={() => {
         setUsernameWarn(username == "")
         setPasswordWarn(password == "")
-        client.Login()
+        client.Login(username, password)
       }
     }>Login</button>
     </>

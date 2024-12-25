@@ -6,7 +6,7 @@ export class TestClient implements IClient {
     }
     public LoggedIn: boolean = false
 
-    async Login() {
+    async Login(username: string, pass: string) {
         return true
     }
 }
