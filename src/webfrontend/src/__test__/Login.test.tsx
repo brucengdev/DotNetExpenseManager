@@ -21,6 +21,14 @@ describe("Login", () => {
 
         expect(screen.getByRole("textbox", { name: "Username" }).className).toContain("mandatory")
         expect(screen.getByLabelText("Password").className).toContain("mandatory")
+
+        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "123"}})
+        fireEvent.change(screen.getByLabelText("Password"), { target: { value: "123"}})
+
+        fireEvent.click(screen.getByRole("button", { name: "Login"}))
+
+        expect(screen.getByRole("textbox", { name: "Username" }).className).toBe("")
+        expect(screen.getByLabelText("Password").className).toBe("")
     })
 
     it("has mandatory field checks 2", async () => {

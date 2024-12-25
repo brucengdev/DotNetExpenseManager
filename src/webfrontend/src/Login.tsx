@@ -25,8 +25,8 @@ export function Login() {
             ></input>
       </label>
       <button onClick={() => {
-        if(username == "") { setUsernameWarn(true) }
-        if(password == "") { setPasswordWarn(true) }
+        setUsernameWarn(username == "")
+        setPasswordWarn(password == "")
       }
     }>Login</button>
     </>
