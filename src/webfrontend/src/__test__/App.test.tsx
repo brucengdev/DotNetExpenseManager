@@ -16,7 +16,7 @@ describe("App", () => {
 
     it("shows main view when logged in", async () => {
         const client = new TestClient();
-        client.LoggedIn = true;
+        client.IsLoggedIn = vitest.fn(async () => true)
         render(<App client={client} />)
 
         await sleep(10)
