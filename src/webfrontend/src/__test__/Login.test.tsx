@@ -10,5 +10,6 @@ describe("Login", () => {
         expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
         expect(screen.getByRole("textbox", { name: "Username"})).toBeInTheDocument()
         expect(screen.getByLabelText("Password")).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "Login"})).toBeInTheDocument()
     })
 })

@@ -9,5 +9,6 @@ export function Login() {
         Password
         <input type="password" />
       </label>
+      <button>Login</button>
     </>
 }
