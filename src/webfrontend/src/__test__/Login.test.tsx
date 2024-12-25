@@ -45,7 +45,7 @@ describe("Login", () => {
 
     it("has a successful login flow", async () => {
         const client = new TestClient();
-        client.Login = vitest.fn()
+        client.Login = vitest.fn(async () => true)
         render(<Login client={client} />)
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "user1"}})
