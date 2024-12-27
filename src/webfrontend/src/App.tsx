@@ -10,10 +10,18 @@ export interface AppProps {
 function App({client}: AppProps) {
   const [loggedIn, setLoggedIn] = useState(false)
   client.IsLoggedIn()
-  .then(loggedIn => setLoggedIn(loggedIn))
+  .then(result => {
+    if(result != loggedIn) {
+      setLoggedIn(result)
+    }
+})
   return (
     <>
-      {loggedIn? <MainView />: <Login client={client} onLogin={() => {} } />}
+      {loggedIn? <MainView />: <Login client={client} onLogin={() => { 
+          setLoggedIn(true)
+        } 
+      } 
+      />}
     </>
   )
 }

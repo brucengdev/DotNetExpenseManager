@@ -14,8 +14,6 @@ export function Login({client, onLogin}: LoginProps) {
     const [passwordWarn, setPasswordWarn] = useState(false)
 
     const validateForm = () => {
-        setUsernameWarn(username == "")
-        setPasswordWarn(password == "")
         const valid = username != "" && password != ""
         return valid
     }
@@ -43,6 +41,8 @@ export function Login({client, onLogin}: LoginProps) {
         if(valid) {
             login(client, username, password, onLogin)
         }
+        setUsernameWarn(username == "")
+        setPasswordWarn(password == "")
       }
     }>Login</button>
     </>
