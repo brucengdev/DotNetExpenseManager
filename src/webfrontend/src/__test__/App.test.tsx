@@ -39,4 +39,21 @@ describe("App", () => {
 
         expect(screen.getByRole("heading", { name: "Expenses"})).toBeInTheDocument()
     })
+
+    it("still shows login form if logging in was failed", async () => {
+        const client = new TestClient()
+        render(<App client={client} />)
+        
+        await sleep(10)
+
+        expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
+
+        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "incorrect_user"}})
+        fireEvent.change(screen.getByLabelText("Password"), { target: { value: "incorrect_pass"}})
+
+        fireEvent.click(screen.getByRole("button", { name: "Login"}))
+        await sleep(10)
+
+        expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
+    })
 })
