@@ -22,5 +22,9 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="Backend.Tests" />
+  </ItemGroup>
 
 </Project>
