@@ -29,9 +29,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
       working-directory: ./src/Backend
-    - name: Build
+    - name: Build solution
       run: dotnet build --no-restore
-      working-directory: ./src/Backend
+      working-directory: ./src
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: ./src/Backend.Tests
