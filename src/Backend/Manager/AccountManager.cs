@@ -14,6 +14,6 @@ public class AccountManager: IAccountManager
     public bool VerifyUser(string username, string password)
     {
         var user = _userRepository.GetUser(username);
-        return user.Password == password;
+        return user!=null && user.Password == password;
     }
 }

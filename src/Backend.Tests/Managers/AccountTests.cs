@@ -46,5 +46,24 @@ namespace Backend.Tests
             //assert
             result.ShouldBeFalse();
         }
+        
+        [Fact]
+        public void Verify_incorrect_user()
+        {
+            //arrange
+            var userRepo = new TestUserRepository();
+            userRepo.CreateUser(new User
+            {
+                Username = "johndoe",
+                Password = "testPassword"
+            });
+            var sut = new AccountManager(userRepo);
+
+            //act
+            var result = sut.VerifyUser("johndoe2", "testpassword222");
+            
+            //assert
+            result.ShouldBeFalse();
+        }
     }
 }

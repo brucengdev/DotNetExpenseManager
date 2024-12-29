@@ -11,8 +11,9 @@ public class TestUserRepository: IUserRepository
         _users.Add(user.Username, user);
     }
 
-    public User GetUser(string username)
+    public User? GetUser(string username)
     {
-        return _users[username];
+        _users.TryGetValue(username, out var user);
+        return user;
     }
 }
