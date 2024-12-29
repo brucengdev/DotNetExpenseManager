@@ -37,5 +37,21 @@ public class AccountControllerTests
         (result.Result as OkObjectResult).Value.ShouldBe(true);
     }
     
-
+    [Fact]
+    public void Login_must_fail_with_incorrect_username_and_password_with_status_code_401()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(m => m.VerifyUser(
+                It.IsAny<string>(),
+                It.IsAny<string>()))
+            .Returns(false);
+        var sut = new AccountController(accountManager.Object);
+        
+        //act
+        ActionResult<bool> result = sut.Login("johndoe", "testpassword");
+        
+        //assert
+        result.Result.ShouldBeOfType<UnauthorizedResult>();
+    }
 }

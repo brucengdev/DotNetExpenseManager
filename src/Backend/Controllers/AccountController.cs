@@ -7,12 +7,20 @@ namespace Backend.Controllers;
 [ApiController]
 public class AccountController: ControllerBase
 {
+    private readonly IAccountManager _accountManager;
     internal AccountController(IAccountManager accountManager)
     {
+        _accountManager = accountManager;
     }
 
     public ActionResult<bool> Login(string username, string password)
     {
-        return Ok(true);
+        var validUser = _accountManager.VerifyUser(username, password);
+        if (validUser)
+        {
+            return Ok(true);
+        }
+
+        return Unauthorized();
     }
 }
