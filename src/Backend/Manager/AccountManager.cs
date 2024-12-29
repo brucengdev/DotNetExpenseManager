@@ -13,8 +13,7 @@ public class AccountManager: IAccountManager
     }
     public bool VerifyUser(string username, string password)
     {
-        if(username == "johndoe" && password == "testpassword")
-            return true;
-        return false;
+        var user = _userRepository.GetUser(username);
+        return user.Password == password;
     }
 }

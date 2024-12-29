@@ -22,7 +22,7 @@ namespace Backend.Tests
             var sut = new AccountManager(userRepo);
             
             //act
-            var result = sut.VerifyUser("johndoe", "testpassword");
+            var result = sut.VerifyUser("johndoe", "testPassword");
             
             //assert
             result.ShouldBeTrue();
