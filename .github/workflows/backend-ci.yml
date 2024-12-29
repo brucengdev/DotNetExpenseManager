@@ -30,7 +30,7 @@ jobs:
       run: dotnet restore
       working-directory: ./src
     - name: Build solution
-      run: dotnet build .\DotNetExpensesManager.sln
+      run: dotnet build ./DotNetExpensesManager.sln
       working-directory: ./src
     - name: Test
       run: dotnet test --no-build --verbosity normal
