@@ -9,10 +9,15 @@ namespace Backend.Tests.Controller;
 public class AccountControllerTests
 {
     [Fact]
-    public void Must_be_controller()
+    public void Controller_config()
     {
         Attribute.GetCustomAttribute(typeof(AccountController), typeof(ApiControllerAttribute))
             .ShouldNotBeNull();
+
+        var routeAttr = Attribute.GetCustomAttribute(typeof(AccountController), typeof(RouteAttribute))
+            as RouteAttribute;
+        routeAttr.ShouldNotBeNull();
+        routeAttr.Template.ShouldBe("[controller]");
         
         typeof(AccountController).BaseType
             .IsAssignableTo(typeof(ControllerBase)).ShouldBeTrue();
