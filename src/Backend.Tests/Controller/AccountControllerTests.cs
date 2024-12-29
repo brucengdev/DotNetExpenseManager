@@ -19,6 +19,16 @@ public class AccountControllerTests
     }
 
     [Fact]
+    public void Login_endpoint_config()
+    {
+        var method = typeof(AccountController).GetMethods()
+            .SingleOrDefault(x => x.Name == nameof(AccountController.Login));
+
+        var attributes = method?.GetCustomAttributes(typeof(HttpPostAttribute), true);
+        attributes.Length.ShouldBeGreaterThan(0);
+    }
+    
+    [Fact]
     public void Login_must_succeed_with_correct_username_and_password()
     {
         //arrange

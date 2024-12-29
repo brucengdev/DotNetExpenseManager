@@ -1,5 +1,4 @@
 using Backend.Manager;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -12,7 +11,8 @@ public class AccountController: ControllerBase
     {
         _accountManager = accountManager;
     }
-
+    
+    [HttpPost]
     public ActionResult<bool> Login(string username, string password)
     {
         var validUser = _accountManager.VerifyUser(username, password);
