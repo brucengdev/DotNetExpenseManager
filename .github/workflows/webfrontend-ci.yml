@@ -16,8 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - run: cd src/webfrontend
-    - name: Install Node.js
-      run: apt-get install nodejs
-    - run: npm run build --if-present
-    - run: npm test:ci
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - run: npm i;npm run build --if-present
+      working-directory: src/webfrontend
+    - run: npm run vitest
+      working-directory: src/webfrontend
