@@ -5,14 +5,14 @@ using Shouldly;
 
 namespace Backend.Tests
 {
-    public class AccountTests
+    public partial class AccountTests
     {
         [Fact]
         public void Verify_correct_user()
         {
             //arrange
             var userRepo = new TestUserRepository();
-            userRepo.CreateUser(new User
+            userRepo.AddUser(new User
             {
                 Username = "johndoe",
                 Password = "testPassword"
@@ -31,7 +31,7 @@ namespace Backend.Tests
         {
             //arrange
             var userRepo = new TestUserRepository();
-            userRepo.CreateUser(new User
+            userRepo.AddUser(new User
             {
                 Username = "johndoe",
                 Password = "testPassword"
@@ -50,7 +50,7 @@ namespace Backend.Tests
         {
             //arrange
             var userRepo = new TestUserRepository();
-            userRepo.CreateUser(new User
+            userRepo.AddUser(new User
             {
                 Username = "johndoe",
                 Password = "testPassword"

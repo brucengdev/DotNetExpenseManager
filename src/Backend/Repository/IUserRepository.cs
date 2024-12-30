@@ -5,4 +5,6 @@ namespace Backend.Repository;
 public interface IUserRepository
 {
     User? GetUser(string username);
+
+    bool AddUser(User user);
 }

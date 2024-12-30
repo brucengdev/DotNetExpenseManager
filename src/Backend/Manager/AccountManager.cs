@@ -1,3 +1,4 @@
+using Backend.Models;
 using Backend.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,11 @@ public class AccountManager: IAccountManager
 
     public CreateUserResult CreateUser(string username, string password)
     {
+        _userRepository.AddUser(new User()
+        {
+            Username = username,
+            Password = password
+        });
         return CreateUserResult.Success;
     }
 }
