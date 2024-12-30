@@ -19,7 +19,7 @@ public class AccountController: ControllerBase
         var validUser = _accountManager.VerifyUser(username, password);
         if (validUser)
         {
-            return Ok(true);
+            return Ok();
         }
 
         return Unauthorized();

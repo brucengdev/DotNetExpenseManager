@@ -48,8 +48,7 @@ public partial class AccountControllerTests
         ActionResult<bool> result = sut.Login("johndoe", "testpassword");
         
         //assert
-        result.Result.ShouldBeOfType<OkObjectResult>();
-        (result.Result as OkObjectResult).Value.ShouldBe(true);
+        result.Result.ShouldBeOfType<OkResult>();
     }
     
     [Fact]
