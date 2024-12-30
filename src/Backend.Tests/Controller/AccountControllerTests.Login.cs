@@ -6,7 +6,7 @@ using Shouldly;
 
 namespace Backend.Tests.Controller;
 
-public class AccountControllerTests
+public partial class AccountControllerTests
 {
     [Fact]
     public void Controller_config()
