@@ -25,6 +25,7 @@ public class AccountController: ControllerBase
         return Unauthorized();
     }
 
+    [HttpPost]
     public ActionResult<bool> CreateUser(string username, string password)
     {
         _accountManager.CreateUser(username, password);

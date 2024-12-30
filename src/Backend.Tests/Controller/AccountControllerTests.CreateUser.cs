@@ -25,4 +25,14 @@ public partial class AccountControllerTests
         accountManager.VerifyNoOtherCalls();
         result.Result.ShouldBeOfType<OkResult>();
     }
+
+    [Fact]
+    public void CreateUser_endpoint_config()
+    {
+        var method = typeof(AccountController).GetMethods()
+            .SingleOrDefault(x => x.Name == nameof(AccountController.CreateUser));
+
+        var attributes = method?.GetCustomAttributes(typeof(HttpPostAttribute), true);
+        attributes.Length.ShouldBeGreaterThan(0);
+    }
 }
