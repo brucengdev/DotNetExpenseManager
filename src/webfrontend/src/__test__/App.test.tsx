@@ -1,4 +1,4 @@
-import { screen, render, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import App from "../App";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
