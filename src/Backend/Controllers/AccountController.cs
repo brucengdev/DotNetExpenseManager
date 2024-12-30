@@ -8,13 +8,14 @@ namespace Backend.Controllers;
 public class AccountController: ControllerBase
 {
     private readonly IAccountManager _accountManager;
-    internal AccountController(IAccountManager accountManager)
+    public AccountController(IAccountManager accountManager)
     {
         _accountManager = accountManager;
     }
     
     [HttpPost("[action]")]
-    public ActionResult<bool> Login(string username, string password)
+    public ActionResult<bool> Login(
+        string username, string password)
     {
         var validUser = _accountManager.VerifyUser(username, password);
         if (validUser)
@@ -26,7 +27,9 @@ public class AccountController: ControllerBase
     }
 
     [HttpPost("[action]")]
-    public ActionResult<bool> CreateUser(string username, string password)
+    public ActionResult<bool> CreateUser(
+        [FromForm] string username, 
+        [FromForm] string password)
     {
         var result = _accountManager.CreateUser(username, password);
         if (result == CreateUserResult.AlreadyExists)
