@@ -9,21 +9,6 @@ namespace Backend.Tests.Controller;
 public partial class AccountControllerTests
 {
     [Fact]
-    public void Controller_config()
-    {
-        Attribute.GetCustomAttribute(typeof(AccountController), typeof(ApiControllerAttribute))
-            .ShouldNotBeNull();
-
-        var routeAttr = Attribute.GetCustomAttribute(typeof(AccountController), typeof(RouteAttribute))
-            as RouteAttribute;
-        routeAttr.ShouldNotBeNull();
-        routeAttr.Template.ShouldBe("[controller]");
-        
-        typeof(AccountController).BaseType
-            .IsAssignableTo(typeof(ControllerBase)).ShouldBeTrue();
-    }
-
-    [Fact]
     public void Login_endpoint_config()
     {
         var method = typeof(AccountController).GetMethods()
