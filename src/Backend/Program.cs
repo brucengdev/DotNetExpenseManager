@@ -1,5 +1,7 @@
 using Backend;
+using Backend.Manager;
 using Backend.Models;
+using Backend.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ExpensesContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccountManager, AccountManager>();
 
 builder.Services.AddControllers();
 
