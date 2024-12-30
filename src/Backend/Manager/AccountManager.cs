@@ -17,8 +17,8 @@ public class AccountManager: IAccountManager
         return user!=null && user.Password == password;
     }
 
-    public bool CreateUser(string username, string password)
+    public CreateUserResult CreateUser(string username, string password)
     {
-        return true;
+        return CreateUserResult.Success;
     }
 }

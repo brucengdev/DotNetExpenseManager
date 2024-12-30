@@ -14,7 +14,7 @@ public partial class AccountControllerTests
         //arrange
         var accountManager = new Mock<IAccountManager>();
         accountManager.Setup(am => am.CreateUser(It.IsAny<string>(), It.IsAny<string>()))
-            .Returns(true);
+            .Returns(CreateUserResult.Success);
         var sut = new AccountController(accountManager.Object);
         
         //act
@@ -24,6 +24,24 @@ public partial class AccountControllerTests
         accountManager.Verify(am => am.CreateUser("johndoe", "testpass"), Times.Exactly(1));
         accountManager.VerifyNoOtherCalls();
         result.Result.ShouldBeOfType<OkResult>();
+    }
+    
+    [Fact]
+    public void CreateUser_must_fail_when_user_already_exists()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.CreateUser(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(CreateUserResult.AlreadyExists);
+        var sut = new AccountController(accountManager.Object);
+        
+        //act
+        ActionResult<bool> result = sut.CreateUser("johndoe", "testpass");
+        
+        //assert
+        accountManager.Verify(am => am.CreateUser("johndoe", "testpass"), Times.Exactly(1));
+        accountManager.VerifyNoOtherCalls();
+        result.Result.ShouldBeOfType<ForbidResult>();
     }
 
     [Fact]
