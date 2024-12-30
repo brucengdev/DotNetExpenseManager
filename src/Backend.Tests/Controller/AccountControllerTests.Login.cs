@@ -11,8 +11,7 @@ public partial class AccountControllerTests
     [Fact]
     public void Login_endpoint_config()
     {
-        var method = typeof(AccountController).GetMethods()
-            .SingleOrDefault(x => x.Name == nameof(AccountController.Login));
+        var method = GetMethod<AccountController>(nameof(AccountController.Login));
 
         var attributes = method?.GetCustomAttributes(typeof(HttpPostAttribute), true);
         attributes.Length.ShouldBeGreaterThan(0);

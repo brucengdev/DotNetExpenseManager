@@ -1,13 +1,19 @@
+using System.Reflection;
 using Backend.Controllers;
-using Backend.Manager;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
 using Shouldly;
 
 namespace Backend.Tests.Controller;
 
 public partial class AccountControllerTests
 {
+    
+    private static MethodInfo? GetMethod<TClass>(string methodName)
+    {
+        return typeof(TClass).GetMethods()
+            .SingleOrDefault(x => x.Name == methodName);
+    }
+    
     [Fact]
     public void Controller_config()
     {
