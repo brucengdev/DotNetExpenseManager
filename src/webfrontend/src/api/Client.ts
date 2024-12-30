@@ -5,7 +5,7 @@ export interface IClient {
 }
 
 export class Client implements IClient {
-    Login = (username: string, pass: string) => new Promise<boolean>((resolve: any) => resolve(true))
+    Login = () => new Promise<boolean>((resolve: any) => resolve(true))
     async IsLoggedIn() {
         return false
     }
