@@ -16,4 +16,9 @@ public class AccountManager: IAccountManager
         var user = _userRepository.GetUser(username);
         return user!=null && user.Password == password;
     }
+
+    public bool CreateUser(string username, string password)
+    {
+        return true;
+    }
 }

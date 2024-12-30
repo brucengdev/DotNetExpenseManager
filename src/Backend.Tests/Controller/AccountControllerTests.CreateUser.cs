@@ -8,5 +8,21 @@ namespace Backend.Tests.Controller;
 
 public partial class AccountControllerTests
 {
-    
+    [Fact]
+    public void CreateUser_must_success()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.CreateUser(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(true);
+        var sut = new AccountController(accountManager.Object);
+        
+        //act
+        ActionResult<bool> result = sut.CreateUser("johndoe", "testpass");
+        
+        //assert
+        accountManager.Verify(am => am.CreateUser("johndoe", "testpass"), Times.Exactly(1));
+        accountManager.VerifyNoOtherCalls();
+        result.Result.ShouldBeOfType<OkResult>();
+    }
 }
