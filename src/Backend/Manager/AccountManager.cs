@@ -20,6 +20,10 @@ public class AccountManager: IAccountManager
 
     public CreateUserResult CreateUser(string username, string password)
     {
+        if (_userRepository.UserExists(username))
+        {
+            return CreateUserResult.AlreadyExists;
+        }
         _userRepository.AddUser(new User()
         {
             Username = username,
