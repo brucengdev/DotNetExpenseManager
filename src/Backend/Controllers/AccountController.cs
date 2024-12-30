@@ -13,7 +13,7 @@ public class AccountController: ControllerBase
         _accountManager = accountManager;
     }
     
-    [HttpPost]
+    [HttpPost("[action]")]
     public ActionResult<bool> Login(string username, string password)
     {
         var validUser = _accountManager.VerifyUser(username, password);
@@ -25,7 +25,7 @@ public class AccountController: ControllerBase
         return Unauthorized();
     }
 
-    [HttpPost]
+    [HttpPost("[action]")]
     public ActionResult<bool> CreateUser(string username, string password)
     {
         var result = _accountManager.CreateUser(username, password);

@@ -51,5 +51,8 @@ public partial class AccountControllerTests
 
         var attributes = method?.GetCustomAttributes(typeof(HttpPostAttribute), true);
         attributes.Length.ShouldBeGreaterThan(0);
+
+        var postAttr = attributes[0] as HttpPostAttribute;
+        postAttr.Template.ShouldBe("[action]");
     }
 }
