@@ -19,9 +19,20 @@ public class AccountController: ControllerBase
         var validUser = _accountManager.VerifyUser(username, password);
         if (validUser)
         {
-            return Ok(true);
+            return Ok();
         }
 
         return Unauthorized();
+    }
+
+    [HttpPost]
+    public ActionResult<bool> CreateUser(string username, string password)
+    {
+        var result = _accountManager.CreateUser(username, password);
+        if (result == CreateUserResult.AlreadyExists)
+        {
+            return Forbid();
+        }
+        return Ok();
     }
 }

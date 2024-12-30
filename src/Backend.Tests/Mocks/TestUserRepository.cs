@@ -6,9 +6,9 @@ namespace Backend.Tests.Mocks;
 public class TestUserRepository: IUserRepository
 {
     private Dictionary<string, User> _users = new();
-    public void CreateUser(User user)
+    public bool AddUser(User user)
     {
-        _users.Add(user.Username, user);
+        return _users.TryAdd(user.Username, user);
     }
 
     public User? GetUser(string username)
@@ -16,4 +16,7 @@ public class TestUserRepository: IUserRepository
         _users.TryGetValue(username, out var user);
         return user;
     }
+
+    public bool UserExists(string username)
+        => _users.ContainsKey(username);
 }
