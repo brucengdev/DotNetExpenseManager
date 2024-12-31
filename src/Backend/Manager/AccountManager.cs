@@ -67,6 +67,17 @@ internal class AccountManager: IAccountManager
         {
             return false;
         }
+
+        var expiry = new DateTime(Convert.ToInt32(parts[1]),
+            Convert.ToInt32(parts[2]),
+            Convert.ToInt32(parts[3]),
+            Convert.ToInt32(parts[4]),
+            Convert.ToInt32(parts[5]),
+            0);
+        if (currentTime > expiry)
+        {
+            return false;
+        }
         return true;
     }
 }

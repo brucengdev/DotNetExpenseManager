@@ -39,8 +39,16 @@ namespace Backend.Tests
         {
             new object[]
             {
+                "wrong username",
                 "johndoe2", 
                 new DateTime(2024, 12, 31, 19, 4, 0),
+                "johndoe-2024-12-31-19-04"
+            },
+            new object[]
+            {
+                "expired token",
+                "johndoe", 
+                new DateTime(2024, 12, 31, 19, 5, 0),
                 "johndoe-2024-12-31-19-04"
             },
         };
@@ -48,6 +56,7 @@ namespace Backend.Tests
         [Theory]
         [MemberData(nameof(NegativeCases))]
         public void IsTokenValid_must_return_false_if_token_is_invalid(
+            string testname,
             string username, 
             DateTime currentTime,
             string token)
