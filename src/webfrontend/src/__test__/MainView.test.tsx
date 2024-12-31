@@ -5,11 +5,10 @@ import { MainView } from "../MainView";
 
 describe("MainView", () => {
     it("has necessary ui components", () => {
-        render(<MainView  />)
+        render(<MainView />)
         
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
-        expect(dayButton.className).toContain("selected")
 
         const monthButton = screen.getByRole("button", {name: "Month"})
         expect(monthButton).toBeInTheDocument()
@@ -22,6 +21,14 @@ describe("MainView", () => {
         const reportsButton = screen.getByRole("button", {name: "Reports"})
         expect(reportsButton).toBeInTheDocument()
         expect(reportsButton.className).not.toContain("selected")
+    })
+
+    it("shows day view on initial", () => {
+        render(<MainView />)
+
+        const dayButton = screen.getByRole("button", { name: "Day"})
+        expect(dayButton).toBeInTheDocument()
+        expect(dayButton.className).toContain("selected")
 
         const dayView = screen.queryByTestId("day-view")
         expect(dayView).toBeInTheDocument()
