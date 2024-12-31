@@ -9,7 +9,7 @@ namespace Backend.Controllers;
 internal class EntriesController: ControllerBase
 {
     private readonly IEntryManager _entryManager;
-    internal EntriesController(IEntryManager em)
+    internal EntriesController(IEntryManager em, IAccountManager am)
     {
         _entryManager = em;
     }
@@ -17,7 +17,9 @@ internal class EntriesController: ControllerBase
     [HttpPost("[action]")]
     public ActionResult AddEntry(Entry inputEntry, string accessToken)
     {
-        _entryManager.AddEntry(inputEntry);
+        var resolvedEntry = new Entry(inputEntry);
+        resolvedEntry.UserId = 12;
+        _entryManager.AddEntry(resolvedEntry);
         return Ok();
     }
 }

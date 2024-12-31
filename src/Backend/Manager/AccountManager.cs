@@ -88,4 +88,9 @@ internal class AccountManager: IAccountManager
             return false;
         }
     }
+
+    public int GetUserId(string accessToken)
+    {
+        return 0;
+    }
 }

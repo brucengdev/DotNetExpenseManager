@@ -26,10 +26,6 @@ public partial class EntriesControllerTests
     public void AddEntry_is_successful()
     {
         //arrange
-        var entryManager = new Mock<IEntryManager>();
-        var sut = new EntriesController(entryManager.Object);
-
-        //act
         var inputEntry = new Entry
         {
             Title = "Grocery",
@@ -37,14 +33,23 @@ public partial class EntriesControllerTests
             Date = new DateTime(2024, 3, 12)
         };
         var accessToken = "johndoe-2024-12-07-07-08-09";
+        var entryManager = new Mock<IEntryManager>();
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId(accessToken))
+            .Returns(12);
+        var sut = new EntriesController(entryManager.Object, accountManager.Object);
+
+        //act
+        
         var result = sut.AddEntry(inputEntry, accessToken);
 
         //assert
         var verifyEntry = (Entry e) =>
         {
             return e.Title == "Grocery"
-                && e.Value == -123.22f
-                && e.Date == new DateTime(2024, 3, 12);
+                   && e.Value == -123.22f
+                   && e.Date == new DateTime(2024, 3, 12)
+                   && e.UserId == 12;
         };
         entryManager.Verify(em => em.AddEntry(
             It.Is<Entry>(e => verifyEntry(e))), Times.Exactly(1));
