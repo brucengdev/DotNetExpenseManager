@@ -23,7 +23,7 @@ describe("MainView", () => {
         expect(reportsButton).toBeInTheDocument()
         expect(reportsButton.className).not.toContain("selected")
 
-        const logButton = screen.getByRole("button", {name: "Log"})
-        expect(logButton).toBeInTheDocument()
+        const dayView = screen.queryByTestId("day-view")
+        expect(dayView).toBeInTheDocument()
     })
 })

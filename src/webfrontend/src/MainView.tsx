@@ -7,6 +7,6 @@ export function MainView() {
       <button>Month</button>
       <button>Year</button>
       <button>Reports</button>
-      <button>Log</button>
+      <div data-testid="day-view"></div>
     </>
 }
