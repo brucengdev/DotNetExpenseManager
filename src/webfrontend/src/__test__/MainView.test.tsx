@@ -9,6 +9,9 @@ describe("MainView", () => {
         
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
+
+        const logoutButton = screen.getByRole("button", { name: "Log out"})
+        expect(logoutButton).toBeInTheDocument()
     })
 
     it("shows day view on initial", () => {
