@@ -65,4 +65,21 @@ describe("DayView", () => {
 
         expect(screen.getByTestId("entry-form")).toBeInTheDocument()
     })
+
+    it("goes back to day view after saving new entry", async() => {
+        const client = new TestClient()
+        render(<DayView client={client} date={new Date(2024, 4, 31)} />)
+
+        const logButton = screen.getByRole("button", {name: "+"})
+        fireEvent.click(logButton)
+
+        fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
+        fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})
+        fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
+        fireEvent.click(screen.getByRole("button", { name: "Save" }))
+
+        await sleep(10)
+
+        expect(screen.getByTestId("entry-list")).toBeInTheDocument()
+    })
 })
