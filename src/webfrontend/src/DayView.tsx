@@ -15,7 +15,6 @@ export const DayView = ({client, date}: DayViewProps) => {
     client.GetExpensesByDate(date)
     .then(expenses => {
         if(!areEntriesSame(expenses, entries)) {
-            console.log("entries length = " + expenses.length)
             setEntries(expenses)
         }
     })

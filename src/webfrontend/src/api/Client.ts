@@ -35,7 +35,7 @@ export class Client implements IClient {
         return result.ok
     }
 
-    async GetExpensesByDate(date: Date): Promise<Expense[]> {
+    async GetExpensesByDate(_: Date): Promise<Expense[]> {
         return []
     }
 }
