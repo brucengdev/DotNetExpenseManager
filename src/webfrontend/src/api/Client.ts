@@ -11,7 +11,7 @@ let url = import.meta.env.VITE_API_SERVER || devUrl
 if(url === '/') { url = '' }
 
 export class Client implements IClient {
-    private loggedIn: boolean = false
+    private token: string = ""
     public async Login(username: string, password: string): Promise<boolean> {
         const result = await fetch(`${url}/Account/Login?${new URLSearchParams({
             username,
@@ -19,10 +19,17 @@ export class Client implements IClient {
         }).toString()}`, {
             method: "POST"
         })
-        this.loggedIn = result.ok
-        return this.loggedIn
+        if(result.ok) {
+            this.token = await result.text()
+        } else {
+            this.token = ""
+        }
+        return this.token !== ""
     }
     async IsLoggedIn() {
-        return this.loggedIn
+        const result = await fetch(`${url}/Account/IsLoggedIn?${new URLSearchParams({
+            token: this.token
+        }).toString()}`)
+        return result.ok
     }
 }
