@@ -20,10 +20,10 @@ namespace Backend.Tests
             var sut = new AccountManager(userRepo);
             
             //act
-            var result = sut.VerifyUser("johndoe", "testPassword");
+            var result = sut.CreateAccessToken("johndoe", "testPassword");
             
             //assert
-            result.ShouldBeTrue();
+            result.ShouldBe("dummyToken");
         }
         
         [Fact]
@@ -57,11 +57,10 @@ namespace Backend.Tests
             });
             var sut = new AccountManager(userRepo);
 
-            //act
-            var result = sut.VerifyUser("johndoe2", "testpassword222");
-            
-            //assert
-            result.ShouldBeFalse();
+            //act and assert
+            Should.Throw<UserNotFoundException>(
+                () => sut.CreateAccessToken("johndoe2", "testpassword222")
+            );
         }
     }
 }

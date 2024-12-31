@@ -4,7 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Manager;
 
-public class AccountManager: IAccountManager
+internal class UserNotFoundException : Exception
+{
+    
+}
+
+internal class AccountManager: IAccountManager
 {
     internal IUserRepository _userRepository;
 
@@ -30,5 +35,15 @@ public class AccountManager: IAccountManager
             Password = password
         });
         return CreateUserResult.Success;
+    }
+
+    public string CreateAccessToken(string username, string password)
+    {
+        var user = _userRepository.GetUser(username);
+        if (user == null)
+        {
+            throw new UserNotFoundException();
+        }
+        return "dummyToken";
     }
 }
