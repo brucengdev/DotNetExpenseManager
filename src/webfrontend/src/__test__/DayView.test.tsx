@@ -1,11 +1,12 @@
-import { render } from "@testing-library/react";
-import {describe, it} from 'vitest'
+import { render, screen } from "@testing-library/react";
+import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { DayView } from "../DayView";
 import { TestClient } from "./TestClient";
+import { sleep } from "./testutils";
 
 describe("DayView", () => {
-    it("gets current expenses", () => {
+    it("gets current expenses", async () => {
         const client = new TestClient()
         client.Expenses = [
             { date: new Date(2024, 12, 11), title: "grocery", value: -120 },
@@ -15,5 +16,9 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} date={new Date(2024, 12, 11)} />)
         
+        await sleep(10)
+
+        const entries = screen.getAllByTestId("entry")
+        expect(entries.length).toBe(2)
     })
 })

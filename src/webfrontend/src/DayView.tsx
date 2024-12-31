@@ -7,6 +7,7 @@ export interface DayViewProps {
 
 export const DayView = (_: DayViewProps) => {
     return <div data-testid="day-view">
-            Day view
+            <div data-testid="entry">Entry 1</div>
+            <div data-testid="entry">Entry 2</div>
         </div>
 }
