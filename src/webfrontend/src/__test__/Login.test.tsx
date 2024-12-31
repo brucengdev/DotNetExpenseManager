@@ -9,7 +9,7 @@ describe("Login", () => {
     it("has necessary ui components", () => {
         render(<Login client={new TestClient()} onLogin={()=> {}} />)
 
-        expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
+        expect(screen.getByTestId("login-view")).toBeInTheDocument()
         expect(screen.getByRole("textbox", { name: "Username"})).toBeInTheDocument()
         expect(screen.getByRole("textbox", { name: "Username"}).className).toBe("")
         expect(screen.getByLabelText("Password")).toBeInTheDocument()
