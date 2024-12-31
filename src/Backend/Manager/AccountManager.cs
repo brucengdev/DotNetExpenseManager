@@ -96,6 +96,8 @@ internal class AccountManager: IAccountManager
 
     public int GetUserId(string accessToken)
     {
-        return 14;
+        var username = accessToken.Substring(0, accessToken.IndexOf('-'));
+        var user = _userRepository.GetUser(username);
+        return user.Id;
     }
 }
