@@ -6,5 +6,6 @@ export function MainView() {
       <button className="selected">Day</button>
       <button>Month</button>
       <button>Year</button>
+      <button>Log</button>
     </>
 }
