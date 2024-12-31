@@ -36,7 +36,8 @@ public partial class EntriesControllerTests
             Value = -123.22f,
             Date = new DateTime(2024, 3, 12)
         };
-        var result = sut.AddEntry(inputEntry);
+        var accessToken = "johndoe-2024-12-07-07-08-09";
+        var result = sut.AddEntry(inputEntry, accessToken);
 
         //assert
         entryManager.Verify(em => em.AddEntry(It.Is<Entry>(e => e == inputEntry)), Times.Exactly(1));
