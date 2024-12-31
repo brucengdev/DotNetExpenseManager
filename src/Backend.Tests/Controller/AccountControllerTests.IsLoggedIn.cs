@@ -9,6 +9,18 @@ namespace Backend.Tests.Controller;
 public partial class AccountControllerTests
 {
     [Fact]
+    public void IsLoggedIn_endpoint_config()
+    {
+        var method = GetMethod<AccountController>(nameof(AccountController.IsLoggedIn));
+
+        var attributes = method?.GetCustomAttributes(typeof(HttpGetAttribute), true);
+        attributes.Length.ShouldBeGreaterThan(0);
+
+        var attribute = attributes[0] as HttpGetAttribute;
+        attribute.Template.ShouldBe("[action]");
+    }
+    
+    [Fact]
     public void IsLoggedIn_must_return_OK_when_token_is_valid()
     {
         //arrange

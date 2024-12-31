@@ -45,6 +45,7 @@ public class AccountController: ControllerBase
         return Ok();
     }
 
+    [HttpGet("[action]")]
     public ActionResult IsLoggedIn(string accessToken)
     {
         return _accountManager.IsTokenValid(accessToken, DateTime.Now)? Ok()
