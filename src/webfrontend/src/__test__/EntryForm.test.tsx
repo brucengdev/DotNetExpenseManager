@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import {describe, expect, it} from 'vitest'
+import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { EntryForm } from "../EntryForm";
 
 describe("EntryForm", () => {
     it("shows form input", async () => {
-        render(<EntryForm date={new Date(2024, 4, 31)} />)
+        render(<EntryForm date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
         expect(screen.getByRole("textbox", {name: "Title"})).toBeInTheDocument()
         expect(screen.getByLabelText("Value")).toBeInTheDocument()
@@ -18,7 +18,7 @@ describe("EntryForm", () => {
     })
 
     it("changes date", async () => {
-        render(<EntryForm date={new Date(2024, 4, 31)} />)
+        render(<EntryForm date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
         const dateField = screen.getByLabelText("Date")
         expect(dateField).toHaveAttribute("value", "2024-05-31")
@@ -28,7 +28,7 @@ describe("EntryForm", () => {
     })
 
     it("changes title", async () => {
-        render(<EntryForm date={new Date(2024, 4, 31)} />)
+        render(<EntryForm date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
         const titleTextbox = screen.getByRole("textbox", {name: "Title"})
         expect(titleTextbox).toHaveAttribute("value", "")
@@ -38,12 +38,24 @@ describe("EntryForm", () => {
     })
 
     it("changes value", async () => {
-        render(<EntryForm date={new Date(2024, 4, 31)} />)
+        render(<EntryForm date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
         const valueTextbox = screen.getByLabelText("Value")
         expect(valueTextbox).toHaveAttribute("value", "0")
 
         fireEvent.change(valueTextbox, { target: { value: "-120.23"}})
         expect(valueTextbox).toHaveAttribute("value", "-120.23")
+    })
+
+    it("executes callback when click save successfully", async () => {
+        const saveHandler = vitest.fn()
+        render(<EntryForm date={new Date(2024, 4, 31)} onSave={saveHandler} />)
+        
+        fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
+        fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})
+        fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
+        fireEvent.click(screen.getByRole("button", { name: "Save" }))
+
+        expect(saveHandler).toHaveBeenCalled()
     })
 })

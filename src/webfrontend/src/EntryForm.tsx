@@ -3,9 +3,11 @@ import { formatDateToDay } from "./utils"
 
 export interface EntryFormProps {
     date: Date
+    onSave: () => void
 }
 export const EntryForm = (props: EntryFormProps) => {
     const initialDate = props.date
+    const onSave = props.onSave
     const [date, setDate] = useState(initialDate)
     const [title, setTitle] = useState("")
     const [value, setValue] = useState(0 as number)
@@ -31,6 +33,6 @@ export const EntryForm = (props: EntryFormProps) => {
                     onChange={(event) => setDate(new Date(event.target.value))} 
                     />
         </label>
-        <button>Save</button>
+        <button onClick={onSave}>Save</button>
     </div>
 }
