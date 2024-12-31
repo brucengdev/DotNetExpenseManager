@@ -22,10 +22,20 @@ internal class AccountManager: IAccountManager
     {
         _userRepository = userRepository;
     }
-    public bool VerifyUser(string username, string password)
+    private bool VerifyUser(string username, string password)
     {
         var user = _userRepository.GetUser(username);
-        return user!=null && user.Password == password;
+        if (user == null)
+        {
+            throw new UserNotFoundException();
+        }
+
+        if (user.Password != password)
+        {
+            throw new WrongPasswordException();
+        }
+
+        return true;
     }
 
     public CreateUserResult CreateUser(string username, string password)
@@ -44,16 +54,7 @@ internal class AccountManager: IAccountManager
 
     public string CreateAccessToken(string username, string password)
     {
-        var user = _userRepository.GetUser(username);
-        if (user == null)
-        {
-            throw new UserNotFoundException();
-        }
-
-        if (user.Password != password)
-        {
-            throw new WrongPasswordException();
-        }
+        VerifyUser(username, password);
         return "dummyToken";
     }
 }
