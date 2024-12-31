@@ -19,6 +19,9 @@ describe("DayView", () => {
         
         await sleep(10)
 
+        const entryList = screen.getByTestId("entry-list")
+        expect(entryList).toBeInTheDocument()
+        
         const entries = screen.getAllByTestId("entry")
         expect(entries.length).toBe(2)
 
