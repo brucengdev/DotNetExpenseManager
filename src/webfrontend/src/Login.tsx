@@ -18,8 +18,8 @@ export function Login({client, onLogin}: LoginProps) {
         return valid
     }
 
-    return <>
-      <h1>Login</h1>
+    return <div data-testid="login-view">
+      {/* <h1>Login</h1> */}
       <label>
         Username
         <input type="text" 
@@ -45,7 +45,7 @@ export function Login({client, onLogin}: LoginProps) {
         setPasswordWarn(password == "")
       }
     }>Login</button>
-    </>
+    </div>
 }
 
 const login = async (client: IClient, username: string, password:string, onLogin: () => void) => {

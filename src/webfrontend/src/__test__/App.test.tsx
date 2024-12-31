@@ -10,7 +10,7 @@ describe("App", () => {
         const client = new TestClient()
         render(<App client={client} />)
 
-        expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
+        expect(screen.getByTestId("login-view")).toBeInTheDocument()
     })
 
     it("shows main view when already logged in", async () => {
@@ -29,7 +29,7 @@ describe("App", () => {
         
         await sleep(10)
 
-        expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
+        expect(screen.getByTestId("login-view")).toBeInTheDocument()
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: TEST_USER_NAME}})
         fireEvent.change(screen.getByLabelText("Password"), { target: { value: TEST_PASSWORD}})
@@ -46,7 +46,7 @@ describe("App", () => {
         
         await sleep(10)
 
-        expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
+        expect(screen.getByTestId("login-view")).toBeInTheDocument()
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "incorrect_user"}})
         fireEvent.change(screen.getByLabelText("Password"), { target: { value: "incorrect_pass"}})
@@ -54,6 +54,6 @@ describe("App", () => {
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
         await sleep(10)
 
-        expect(screen.getByRole("heading", { name: "Login"})).toBeInTheDocument()
+        expect(screen.getByTestId("login-view")).toBeInTheDocument()
     })
 })
