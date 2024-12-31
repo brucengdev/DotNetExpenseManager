@@ -9,6 +9,11 @@ internal class UserNotFoundException : Exception
     
 }
 
+internal class WrongPasswordException : Exception
+{
+    
+}
+
 internal class AccountManager: IAccountManager
 {
     internal IUserRepository _userRepository;
@@ -43,6 +48,11 @@ internal class AccountManager: IAccountManager
         if (user == null)
         {
             throw new UserNotFoundException();
+        }
+
+        if (user.Password != password)
+        {
+            throw new WrongPasswordException();
         }
         return "dummyToken";
     }

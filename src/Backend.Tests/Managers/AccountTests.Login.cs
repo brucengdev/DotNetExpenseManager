@@ -38,11 +38,10 @@ namespace Backend.Tests
             });
             var sut = new AccountManager(userRepo);
 
-            //act
-            var result = sut.VerifyUser("johndoe", "testpassword222");
-            
-            //assert
-            result.ShouldBeFalse();
+            //act & assert
+            Should.Throw<WrongPasswordException>(
+                () => sut.CreateAccessToken("johndoe", "testpassword222")
+            );
         }
         
         [Fact]
