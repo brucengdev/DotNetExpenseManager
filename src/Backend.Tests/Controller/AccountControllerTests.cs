@@ -7,13 +7,6 @@ namespace Backend.Tests.Controller;
 
 public partial class AccountControllerTests
 {
-    
-    private static MethodInfo? GetMethod<TClass>(string methodName)
-    {
-        return typeof(TClass).GetMethods()
-            .SingleOrDefault(x => x.Name == methodName);
-    }
-    
     [Fact]
     public void Controller_config()
     {
