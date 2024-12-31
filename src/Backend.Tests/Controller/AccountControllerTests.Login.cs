@@ -56,4 +56,22 @@ public partial class AccountControllerTests
         //assert
         result.Result.ShouldBeOfType<UnauthorizedResult>();
     }
+    
+    [Fact]
+    public void Login_must_fail_when_user_is_incorrect_with_status_code_401()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(m => m.CreateAccessToken(
+                It.IsAny<string>(),
+                It.IsAny<string>()))
+            .Throws(new UserNotFoundException());
+        var sut = new AccountController(accountManager.Object);
+        
+        //act
+        ActionResult<string> result = sut.Login("johndoe", "testpassword");
+        
+        //assert
+        result.Result.ShouldBeOfType<UnauthorizedResult>();
+    }
 }
