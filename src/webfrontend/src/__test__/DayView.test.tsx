@@ -13,7 +13,7 @@ describe("DayView", () => {
             { date: new Date(2024, 12, 9), title: "eat out", value: -60 },
             { date: new Date(2024, 12, 11), title: "eat out", value: -65 },
         ]
-        render(<DayView client={client} />)
+        render(<DayView client={client} date={new Date(2024, 12, 11)} />)
         
     })
 })
