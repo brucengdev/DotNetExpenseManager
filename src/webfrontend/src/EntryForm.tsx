@@ -1,3 +1,5 @@
+import { formatDateToDay } from "./utils"
+
 export interface EntryFormProps {
     date: Date
 }
@@ -13,7 +15,7 @@ export const EntryForm = ({date}: EntryFormProps) => {
         </label>
         <label>
             Date
-            <input type="date" value={date.toISOString()} />
+            <input type="date" value={formatDateToDay(date)} />
         </label>
         <button>Save</button>
     </div>
