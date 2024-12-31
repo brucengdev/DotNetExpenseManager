@@ -94,13 +94,24 @@ internal class AccountManager: IAccountManager
         }
     }
 
-    public int GetUserId(string accessToken)
+    public int GetUserId(string accessToken, DateTime currentTime)
     {
-        var username = accessToken.Substring(0, accessToken.IndexOf('-'));
+        var parts = accessToken.Split('-');
+        var username = parts[0];
         var user = _userRepository.GetUser(username);
         if (user == null)
         {
             throw new UserNotFoundException();
+        }
+        var expiry = new DateTime(Convert.ToInt32(parts[1]),
+            Convert.ToInt32(parts[2]),
+            Convert.ToInt32(parts[3]),
+            Convert.ToInt32(parts[4]),
+            Convert.ToInt32(parts[5]),
+            0);
+        if (currentTime > expiry)
+        {
+            throw new TokenExpiredException();
         }
         return user.Id;
     }

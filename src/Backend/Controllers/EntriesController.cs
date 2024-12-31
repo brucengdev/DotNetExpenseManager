@@ -22,7 +22,7 @@ internal class EntriesController: ControllerBase
         try
         {
             var resolvedEntry = new Entry(inputEntry);
-            resolvedEntry.UserId = _accountManager.GetUserId(accessToken);
+            resolvedEntry.UserId = _accountManager.GetUserId(accessToken, DateTime.Now);
             _entryManager.AddEntry(resolvedEntry);
             return Ok();
         }

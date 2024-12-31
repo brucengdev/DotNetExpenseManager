@@ -34,10 +34,11 @@ public partial class EntriesControllerTests
             Value = -123.22f,
             Date = new DateTime(2024, 3, 12)
         };
-        var accessToken = "johndoe-2024-12-07-07-08-09";
+        var accessToken = "johndoe-2024-12-07-07-08";
         var entryManager = new Mock<IEntryManager>();
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.GetUserId(accessToken))
+        accountManager.Setup(
+                am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
             .Returns(userId);
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
 
@@ -72,7 +73,7 @@ public partial class EntriesControllerTests
         var accessToken = "johndoe-2024-12-07-07-08-09";
         var entryManager = new Mock<IEntryManager>();
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.GetUserId(accessToken))
+        accountManager.Setup(am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
             .Throws(new UserNotFoundException());
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
 
@@ -98,7 +99,7 @@ public partial class EntriesControllerTests
         var accessToken = "johndoe-2024-12-07-07-08-09";
         var entryManager = new Mock<IEntryManager>();
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.GetUserId(accessToken))
+        accountManager.Setup(am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
             .Throws(new TokenExpiredException());
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
 

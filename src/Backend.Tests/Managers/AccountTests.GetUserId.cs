@@ -23,7 +23,8 @@ namespace Backend.Tests
             var sut = new AccountManager(userRepo);
             
             //act
-            var result = sut.GetUserId("johndoe-2024-12-07-05-30-16");
+            var currentTime = new DateTime(2024, 12, 7, 5, 29, 0);
+            var result = sut.GetUserId("johndoe-2024-12-07-05-30", currentTime);
             
             //assert
             result.ShouldBe(userId);
@@ -37,7 +38,28 @@ namespace Backend.Tests
             var sut = new AccountManager(userRepo);
             
             //act + assert
-            Should.Throw<UserNotFoundException>(() => sut.GetUserId("johndoe-2024-12-07-05-30-16"));
+            var currentTime = new DateTime(2024, 12, 7, 5, 29, 0);
+            Should.Throw<UserNotFoundException>(() => sut.GetUserId("johndoe-2024-12-07-05-30", currentTime));
+        }
+        
+        [Fact]
+        public void Throws_token_expired_exception_when_token_has_expired()
+        {
+            //arrange
+            var userRepo = new TestUserRepository();
+            userRepo.AddUser(new User
+            {
+                Id = 12,
+                Username = "johndoe",
+                Password = "testPassword"
+            });
+            var sut = new AccountManager(userRepo);
+            
+            //act + assert
+            var currentTime = new DateTime(2024, 12, 7, 5, 31, 0);
+            Should.Throw<TokenExpiredException>(
+                () => sut.GetUserId("johndoe-2024-12-07-05-30", currentTime)
+            );
         }
     }
 }
