@@ -36,4 +36,14 @@ describe("EntryForm", () => {
         fireEvent.change(titleTextbox, { target: { value: "foo"}})
         expect(titleTextbox).toHaveAttribute("value", "foo")
     })
+
+    it("changes value", async () => {
+        render(<EntryForm date={new Date(2024, 4, 31)} />)
+        
+        const valueTextbox = screen.getByLabelText("Value")
+        expect(valueTextbox).toHaveAttribute("value", "0")
+
+        fireEvent.change(valueTextbox, { target: { value: "-120"}})
+        expect(valueTextbox).toHaveAttribute("value", "-120")
+    })
 })

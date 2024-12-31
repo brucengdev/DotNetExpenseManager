@@ -8,6 +8,7 @@ export const EntryForm = (props: EntryFormProps) => {
     const initialDate = props.date
     const [date, setDate] = useState(initialDate)
     const [title, setTitle] = useState("")
+    const [value, setValue] = useState(0 as number)
     return <div data-testid="entry-form">
         <label>
             Title
@@ -18,7 +19,10 @@ export const EntryForm = (props: EntryFormProps) => {
         </label>
         <label>
             Value
-            <input type="number" />
+            <input type="number" 
+                value={value}
+                onChange={event => setValue(parseFloat(event.target.value))}
+            />
         </label>
         <label>
             Date
