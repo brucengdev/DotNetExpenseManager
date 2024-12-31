@@ -61,23 +61,31 @@ internal class AccountManager: IAccountManager
 
     public bool IsTokenValid(string token, DateTime currentTime)
     {
-        var parts = token.Split('-');
-        var username = parts[0];
-        if (!_userRepository.UserExists(username))
+        try
         {
-            return false;
-        }
+            var parts = token.Split('-');
+            var username = parts[0];
+            if (!_userRepository.UserExists(username))
+            {
+                return false;
+            }
 
-        var expiry = new DateTime(Convert.ToInt32(parts[1]),
-            Convert.ToInt32(parts[2]),
-            Convert.ToInt32(parts[3]),
-            Convert.ToInt32(parts[4]),
-            Convert.ToInt32(parts[5]),
-            0);
-        if (currentTime > expiry)
+            var expiry = new DateTime(Convert.ToInt32(parts[1]),
+                Convert.ToInt32(parts[2]),
+                Convert.ToInt32(parts[3]),
+                Convert.ToInt32(parts[4]),
+                Convert.ToInt32(parts[5]),
+                0);
+            if (currentTime > expiry)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception)
         {
             return false;
         }
-        return true;
     }
 }

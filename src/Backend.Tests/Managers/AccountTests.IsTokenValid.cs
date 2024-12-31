@@ -51,6 +51,13 @@ namespace Backend.Tests
                 new DateTime(2024, 12, 31, 19, 5, 0),
                 "johndoe-2024-12-31-19-04"
             },
+            new object[]
+            {
+                "invalid token format 1",
+                "johndoe", 
+                new DateTime(2024, 12, 31, 19, 5, 0),
+                "johndoe-202412311904"
+            },
         };
         
         [Theory]
