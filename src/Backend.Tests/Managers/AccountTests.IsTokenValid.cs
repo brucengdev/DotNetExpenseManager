@@ -46,9 +46,23 @@ namespace Backend.Tests
             },
             new object[]
             {
-                "expired token",
+                "expired token 1",
                 "johndoe", 
                 new DateTime(2024, 12, 31, 19, 5, 0),
+                "johndoe-2024-12-31-19-04"
+            },
+            new object[]
+            {
+                "expired token 2",
+                "johndoe", 
+                new DateTime(2024, 12, 31, 20, 4, 0),
+                "johndoe-2024-12-31-19-04"
+            },
+            new object[]
+            {
+                "expired token 3",
+                "johndoe", 
+                new DateTime(2025, 1, 1, 19, 5, 0),
                 "johndoe-2024-12-31-19-04"
             },
             new object[]
@@ -57,6 +71,27 @@ namespace Backend.Tests
                 "johndoe", 
                 new DateTime(2024, 12, 31, 19, 5, 0),
                 "johndoe-202412311904"
+            },
+            new object[]
+            {
+                "invalid token format 2",
+                "johndoe", 
+                new DateTime(2024, 12, 31, 19, 5, 0),
+                "johndoe202412311904"
+            },
+            new object[]
+            {
+                "empty token",
+                "johndoe", 
+                new DateTime(2024, 12, 31, 19, 5, 0),
+                ""
+            },
+            new object[]
+            {
+                "null token",
+                "johndoe", 
+                new DateTime(2024, 12, 31, 19, 5, 0),
+                null
             },
         };
         
