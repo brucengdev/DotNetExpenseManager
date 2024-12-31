@@ -5,7 +5,10 @@ export interface IClient {
 }
 
 const devUrl = "https://localhost:7146"
-const url = import.meta.env.VITE_API_SERVER || devUrl
+let url = import.meta.env.VITE_API_SERVER || devUrl
+
+//means the frontend is in same host as backend
+if(url === '/') { url = '' }
 
 export class Client implements IClient {
     private loggedIn: boolean = false

@@ -26,7 +26,7 @@ RUN dotnet publish "./Backend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p
 FROM node as buildfrontend
 COPY webfrontend /src
 WORKDIR /src
-RUN npm i;npm run build
+RUN echo "VITE_API_SERVER=/" > .env; npm i;npm run build
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final

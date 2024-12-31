@@ -10,15 +10,15 @@ services:
       - 80:8080
 
   db:
-        container_name: azure-sql-edge
-        image: mcr.microsoft.com/azure-sql-edge
-        ports:
-            - 1433:1433
-        restart: always
-        volumes: 
-            - azure-sql-edge-data:/var/opt/mssql
-        environment:
-            MSSQL_SA_PASSWORD: "Pass@123"
-            ACCEPT_EULA: "Y"
+    container_name: azure-sql-edge
+    image: mcr.microsoft.com/azure-sql-edge
+    ports:
+        - 1433:1433
+    restart: always
+    volumes: 
+        - azure-sql-edge-data:/var/opt/mssql
+    environment:
+        MSSQL_SA_PASSWORD: "Pass@123"
+        ACCEPT_EULA: "Y"
 volumes:
     azure-sql-edge-data:
