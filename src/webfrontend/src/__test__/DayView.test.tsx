@@ -6,7 +6,7 @@ import { TestClient } from "./TestClient";
 import { sleep } from "./testutils";
 
 describe("DayView", () => {
-    it("gets current expenses", async () => {
+    it("shows expenses by day", async () => {
         const client = new TestClient()
         client.Expenses = [
             { date: new Date(2024, 12, 11), title: "grocery", value: -120 },

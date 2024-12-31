@@ -2,10 +2,11 @@ import { screen, render } from "@testing-library/react";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { MainView } from "../MainView";
+import { TestClient } from "./TestClient";
 
 describe("MainView", () => {
     it("has necessary ui components", () => {
-        render(<MainView />)
+        render(<MainView client={new TestClient()} />)
         
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
@@ -15,7 +16,7 @@ describe("MainView", () => {
     })
 
     it("shows day view on initial", () => {
-        render(<MainView />)
+        render(<MainView client={new TestClient()} />)
 
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
