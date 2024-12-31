@@ -14,7 +14,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Backend/Backend.csproj", "Backend/"] 
 RUN dotnet restore "./Backend/Backend.csproj"
-COPY ./src .
+COPY src .
 WORKDIR "/src/Backend"
 RUN dotnet build "./Backend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
