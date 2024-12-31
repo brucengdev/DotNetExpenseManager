@@ -47,6 +47,7 @@ public class AccountController: ControllerBase
 
     public ActionResult IsLoggedIn(string accessToken)
     {
-        return Ok();
+        return _accountManager.IsTokenValid(accessToken)? Ok()
+            : Unauthorized();
     }
 }

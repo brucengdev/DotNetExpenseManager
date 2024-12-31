@@ -76,7 +76,7 @@ public partial class AccountControllerTests
     }
     
     [Fact]
-    public void IsLoggedIn_must_return_true_when_token_is_valid()
+    public void IsLoggedIn_must_return_OK_when_token_is_valid()
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
@@ -89,5 +89,21 @@ public partial class AccountControllerTests
         
         //assert
         result.Result.ShouldBeOfType<OkResult>();
+    }
+    
+    [Fact]
+    public void IsLoggedIn_must_return_Unauthorized_when_token_is_invalid()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.IsTokenValid(It.IsAny<string>()))
+            .Returns(false);
+        var sut = new AccountController(accountManager.Object);
+        
+        //act
+        ActionResult<string> result = sut.IsLoggedIn("dummyToken");
+        
+        //assert
+        result.Result.ShouldBeOfType<UnauthorizedResult>();
     }
 }
