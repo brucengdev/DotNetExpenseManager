@@ -40,7 +40,14 @@ public partial class EntriesControllerTests
         var result = sut.AddEntry(inputEntry, accessToken);
 
         //assert
-        entryManager.Verify(em => em.AddEntry(It.Is<Entry>(e => e == inputEntry)), Times.Exactly(1));
+        var verifyEntry = (Entry e) =>
+        {
+            return e.Title == "Grocery"
+                && e.Value == -123.22f
+                && e.Date == new DateTime(2024, 3, 12);
+        };
+        entryManager.Verify(em => em.AddEntry(
+            It.Is<Entry>(e => verifyEntry(e))), Times.Exactly(1));
         entryManager.VerifyNoOtherCalls();
         result.ShouldBeOfType<OkResult>();
     }
