@@ -1,4 +1,7 @@
-export const EntryForm = () => {
+export interface EntryFormProps {
+    date: Date
+}
+export const EntryForm = ({date}: EntryFormProps) => {
     return <div data-testid="entry-form">
         <label>
             Title
@@ -10,7 +13,7 @@ export const EntryForm = () => {
         </label>
         <label>
             Date
-            <input type="date" />
+            <input type="date" value={date.toISOString()} />
         </label>
         <button>Save</button>
     </div>

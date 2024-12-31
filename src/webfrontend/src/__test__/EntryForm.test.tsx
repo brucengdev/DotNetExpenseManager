@@ -5,11 +5,15 @@ import { EntryForm } from "../EntryForm";
 
 describe("EntryForm", () => {
     it("shows form input", async () => {
-        render(<EntryForm  />)
+        render(<EntryForm date={new Date(2024, 12, 31)} />)
         
         expect(screen.getByRole("textbox", {name: "Title"})).toBeInTheDocument()
         expect(screen.getByLabelText("Value")).toBeInTheDocument()
-        expect(screen.getByLabelText("Date")).toBeInTheDocument()
+        
+        const dateField = screen.getByLabelText("Date")
+        expect(dateField).toBeInTheDocument()
+        expect(dateField).toHaveAttribute("value", "2025-01-30T17:00:00.000Z")
+
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
     })
 })
