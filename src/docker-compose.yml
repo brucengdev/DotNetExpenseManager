@@ -1,0 +1,9 @@
+name: expensesmanager
+services:
+  web:
+    platform: "linux/amd64"
+    build: .
+    image: ${DOCKERHUB_REGISTRY}/expensesmanager
+    restart: always
+    ports:
+      - 5014:80
