@@ -4,6 +4,7 @@ export interface IClient {
     IsLoggedIn: () => Promise<boolean>
     Login: (username: string, pass: string) => Promise<boolean>
     GetExpensesByDate: (date: Date) => Promise<Expense[]>
+    AddEntry: (entry: Expense) => Promise<boolean>
 }
 
 const devUrl = "https://localhost:7146"
@@ -37,5 +38,8 @@ export class Client implements IClient {
 
     async GetExpensesByDate(_: Date): Promise<Expense[]> {
         return []
+    }
+    async AddEntry(_: Expense): Promise<boolean> {
+        return true
     }
 }

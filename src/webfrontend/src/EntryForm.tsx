@@ -1,13 +1,17 @@
 import { useState } from "react"
 import { formatDateToDay } from "./utils"
+import { IClient } from "./api/Client"
+import { Expense } from "./api/Expense"
 
 export interface EntryFormProps {
     date: Date
     onSave: () => void
+    client: IClient
 }
 export const EntryForm = (props: EntryFormProps) => {
     const initialDate = props.date
     const onSave = props.onSave
+    const client = props.client
     const [date, setDate] = useState(initialDate)
     const [title, setTitle] = useState("")
     const [value, setValue] = useState(0 as number)
@@ -33,6 +37,9 @@ export const EntryForm = (props: EntryFormProps) => {
                     onChange={(event) => setDate(new Date(event.target.value))} 
                     />
         </label>
-        <button onClick={onSave}>Save</button>
+        <button onClick={() => {
+            client.AddEntry(new Expense(date, title, value))
+            .then(onSave)
+        }}>Save</button>
     </div>
 }

@@ -20,4 +20,9 @@ export class TestClient implements IClient {
         return this.Expenses
             .filter(entry => sameDate(entry.date, date))
     }
+
+    async AddEntry(entry: Expense): Promise<boolean> {
+        this.Expenses.push(entry)
+        return true
+    }
 }
