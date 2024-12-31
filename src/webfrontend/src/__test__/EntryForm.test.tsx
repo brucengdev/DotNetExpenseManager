@@ -16,4 +16,11 @@ describe("EntryForm", () => {
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
     })
+
+    it("changes date", async () => {
+        render(<EntryForm date={new Date(2024, 4, 31)} />)
+        
+        const dateField = screen.getByLabelText("Date")
+        expect(dateField).toHaveAttribute("value", "2024-05-31")
+    })
 })
