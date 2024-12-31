@@ -19,9 +19,16 @@ internal class EntriesController: ControllerBase
     [HttpPost("[action]")]
     public ActionResult AddEntry(Entry inputEntry, string accessToken)
     {
-        var resolvedEntry = new Entry(inputEntry);
-        resolvedEntry.UserId = _accountManager.GetUserId(accessToken);
-        _entryManager.AddEntry(resolvedEntry);
-        return Ok();
+        try
+        {
+            var resolvedEntry = new Entry(inputEntry);
+            resolvedEntry.UserId = _accountManager.GetUserId(accessToken);
+            _entryManager.AddEntry(resolvedEntry);
+            return Ok();
+        }
+        catch (UserNotFoundException)
+        {
+            return Unauthorized();
+        }
     }
 }
