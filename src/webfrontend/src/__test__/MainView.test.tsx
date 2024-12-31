@@ -19,6 +19,10 @@ describe("MainView", () => {
         expect(yearButton).toBeInTheDocument()
         expect(yearButton.className).not.toContain("selected")
 
+        const reportsButton = screen.getByRole("button", {name: "Reports"})
+        expect(reportsButton).toBeInTheDocument()
+        expect(reportsButton.className).not.toContain("selected")
+
         const logButton = screen.getByRole("button", {name: "Log"})
         expect(logButton).toBeInTheDocument()
     })
