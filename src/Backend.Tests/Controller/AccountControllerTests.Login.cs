@@ -27,7 +27,8 @@ public partial class AccountControllerTests
         var accountManager = new Mock<IAccountManager>();
         accountManager.Setup(m => m.CreateAccessToken(
                 It.IsAny<string>(),
-                It.IsAny<string>()))
+                It.IsAny<string>(),
+                It.IsAny<DateTime>()))
             .Returns("somedummytoken");
         var sut = new AccountController(accountManager.Object);
         
@@ -46,7 +47,8 @@ public partial class AccountControllerTests
         var accountManager = new Mock<IAccountManager>();
         accountManager.Setup(m => m.CreateAccessToken(
                 It.IsAny<string>(),
-                It.IsAny<string>()))
+                It.IsAny<string>(),
+                It.IsAny<DateTime>()))
             .Throws(new WrongPasswordException());
         var sut = new AccountController(accountManager.Object);
         
@@ -64,7 +66,9 @@ public partial class AccountControllerTests
         var accountManager = new Mock<IAccountManager>();
         accountManager.Setup(m => m.CreateAccessToken(
                 It.IsAny<string>(),
-                It.IsAny<string>()))
+                It.IsAny<string>(),
+             It.IsAny<DateTime>())
+                )
             .Throws(new UserNotFoundException());
         var sut = new AccountController(accountManager.Object);
         

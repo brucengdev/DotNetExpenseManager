@@ -52,10 +52,11 @@ internal class AccountManager: IAccountManager
         return CreateUserResult.Success;
     }
 
-    public string CreateAccessToken(string username, string password)
+    public string CreateAccessToken(string username, string password, DateTime creationTime)
     {
         VerifyUser(username, password);
-        return "dummyToken";
+        var expiryTime = creationTime.AddHours(1);
+        return $"{username}-{expiryTime.ToString("yyyy-MM-dd-HH-mm")}";
     }
 
     public bool IsTokenValid(string token)

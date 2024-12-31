@@ -19,7 +19,7 @@ public class AccountController: ControllerBase
     {
         try
         {
-            var token = _accountManager.CreateAccessToken(username, password);
+            var token = _accountManager.CreateAccessToken(username, password, DateTime.Now);
             return Ok(token);
         }
         catch (UserNotFoundException)

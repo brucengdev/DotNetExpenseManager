@@ -10,7 +10,7 @@ public interface IAccountManager
 {
     CreateUserResult CreateUser(string username, string password);
 
-    string CreateAccessToken(string username, string password);
+    string CreateAccessToken(string username, string password, DateTime creationTime);
     
     bool IsTokenValid(string token);
 }
