@@ -10,5 +10,9 @@ describe("MainView", () => {
         const todayButton = screen.getByRole("button", { name: "Today"})
         expect(todayButton).toBeInTheDocument()
         expect(todayButton.className).toContain("selected")
+
+        const thisMonthButton = screen.getByRole("button", {name: "This month"})
+        expect(thisMonthButton).toBeInTheDocument()
+        expect(thisMonthButton.className).not.toContain("selected")
     })
 })
