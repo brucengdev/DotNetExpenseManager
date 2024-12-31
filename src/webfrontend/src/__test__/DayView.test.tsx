@@ -21,7 +21,10 @@ describe("DayView", () => {
         const entries = screen.getAllByTestId("entry")
         expect(entries.length).toBe(2)
 
+        expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
         expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
 
+        expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("eat out")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
     })
 })
