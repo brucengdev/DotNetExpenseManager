@@ -7,13 +7,13 @@ describe("MainView", () => {
     it("has necessary ui components", () => {
         render(<MainView  />)
         
-        const todayButton = screen.getByRole("button", { name: "Today"})
-        expect(todayButton).toBeInTheDocument()
-        expect(todayButton.className).toContain("selected")
+        const dayButton = screen.getByRole("button", { name: "Day"})
+        expect(dayButton).toBeInTheDocument()
+        expect(dayButton.className).toContain("selected")
 
-        const thisMonthButton = screen.getByRole("button", {name: "This month"})
-        expect(thisMonthButton).toBeInTheDocument()
-        expect(thisMonthButton.className).not.toContain("selected")
+        const monthButton = screen.getByRole("button", {name: "Month"})
+        expect(monthButton).toBeInTheDocument()
+        expect(monthButton.className).not.toContain("selected")
 
         const yearButton = screen.getByRole("button", {name: "Year"})
         expect(yearButton).toBeInTheDocument()
