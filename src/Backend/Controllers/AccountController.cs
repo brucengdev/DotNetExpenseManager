@@ -46,9 +46,9 @@ public class AccountController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    public ActionResult IsLoggedIn(string accessToken)
+    public ActionResult IsLoggedIn(string token)
     {
-        return _accountManager.IsTokenValid(accessToken, DateTime.Now)? Ok()
+        return _accountManager.IsTokenValid(token, DateTime.Now)? Ok()
             : Unauthorized();
     }
 }
