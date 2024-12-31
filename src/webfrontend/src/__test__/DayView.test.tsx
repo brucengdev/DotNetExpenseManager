@@ -20,5 +20,8 @@ describe("DayView", () => {
 
         const entries = screen.getAllByTestId("entry")
         expect(entries.length).toBe(2)
+
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+
     })
 })
