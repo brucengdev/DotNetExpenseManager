@@ -12,8 +12,6 @@ services:
   db:
     container_name: azure-sql-edge
     image: mcr.microsoft.com/azure-sql-edge
-    ports:
-        - 1433:1433
     restart: always
     volumes: 
         - azure-sql-edge-data:/var/opt/mssql
