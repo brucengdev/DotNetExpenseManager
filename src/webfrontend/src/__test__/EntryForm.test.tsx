@@ -26,4 +26,11 @@ describe("EntryForm", () => {
         fireEvent.change(dateField, { target: { value: "2023-01-02"}})
         expect(dateField).toHaveAttribute("value", "2023-01-02")
     })
+
+    it("changes title", async () => {
+        render(<EntryForm date={new Date(2024, 4, 31)} />)
+        
+        const titleTextbox = screen.getByRole("textbox", {name: "Title"})
+        expect(titleTextbox).not.toHaveAttribute("value")
+    })
 })
