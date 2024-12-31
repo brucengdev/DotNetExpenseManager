@@ -84,7 +84,7 @@ public partial class AccountControllerTests
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.IsTokenValid(It.IsAny<string>()))
+        accountManager.Setup(am => am.IsTokenValid(It.IsAny<string>(), It.IsAny<DateTime>()))
             .Returns(true);
         var sut = new AccountController(accountManager.Object);
         
@@ -100,7 +100,7 @@ public partial class AccountControllerTests
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.IsTokenValid(It.IsAny<string>()))
+        accountManager.Setup(am => am.IsTokenValid(It.IsAny<string>(), It.IsAny<DateTime>()))
             .Returns(false);
         var sut = new AccountController(accountManager.Object);
         

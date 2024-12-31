@@ -59,7 +59,7 @@ internal class AccountManager: IAccountManager
         return $"{username}-{expiryTime.ToString("yyyy-MM-dd-HH-mm")}";
     }
 
-    public bool IsTokenValid(string token)
+    public bool IsTokenValid(string token, DateTime currentTime)
     {
         return true;
     }
