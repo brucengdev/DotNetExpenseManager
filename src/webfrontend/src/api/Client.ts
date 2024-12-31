@@ -1,7 +1,9 @@
+import { Expense } from "./Expense"
 
 export interface IClient {
     IsLoggedIn: () => Promise<boolean>
     Login: (username: string, pass: string) => Promise<boolean>
+    GetExpensesByDate: (date: Date) => Promise<Expense[]>
 }
 
 const devUrl = "https://localhost:7146"
@@ -31,5 +33,9 @@ export class Client implements IClient {
             token: this.token
         }).toString()}`)
         return result.ok
+    }
+
+    async GetExpensesByDate(date: Date): Promise<Expense[]> {
+        return []
     }
 }
