@@ -14,6 +14,11 @@ internal class WrongPasswordException : Exception
     
 }
 
+internal class TokenExpiredException : Exception
+{
+    
+}
+
 internal class AccountManager: IAccountManager
 {
     internal IUserRepository _userRepository;

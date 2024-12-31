@@ -30,5 +30,9 @@ internal class EntriesController: ControllerBase
         {
             return Unauthorized();
         }
+        catch (TokenExpiredException)
+        {
+            return Unauthorized();
+        }
     }
 }

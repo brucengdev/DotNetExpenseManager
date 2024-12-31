@@ -82,4 +82,29 @@ public partial class EntriesControllerTests
         entryManager.VerifyNoOtherCalls();
         result.ShouldBeOfType<UnauthorizedResult>();
     }
+    
+    [Fact]
+    public void AddEntry_returns_unauthorized_when_token_expired()
+    {
+        //arrange
+        var inputEntry = new Entry
+        {
+            Title = "Grocery",
+            Value = -123.22f,
+            Date = new DateTime(2024, 3, 12)
+        };
+        var accessToken = "johndoe-2024-12-07-07-08-09";
+        var entryManager = new Mock<IEntryManager>();
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId(accessToken))
+            .Throws(new TokenExpiredException());
+        var sut = new EntriesController(entryManager.Object, accountManager.Object);
+
+        //act
+        var result = sut.AddEntry(inputEntry, accessToken);
+
+        //assert
+        entryManager.VerifyNoOtherCalls();
+        result.ShouldBeOfType<UnauthorizedResult>();
+    }
 }
