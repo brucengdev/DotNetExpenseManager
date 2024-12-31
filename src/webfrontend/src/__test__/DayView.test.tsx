@@ -21,8 +21,8 @@ describe("DayView", () => {
 
         const entryList = screen.getByTestId("entry-list")
         expect(entryList).toBeInTheDocument()
-        
-        const entries = screen.getAllByTestId("entry")
+
+        const entries = entryList.querySelectorAll('[data-testid="entry"]')
         expect(entries.length).toBe(2)
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
