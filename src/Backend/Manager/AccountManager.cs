@@ -96,6 +96,6 @@ internal class AccountManager: IAccountManager
 
     public int GetUserId(string accessToken)
     {
-        return 0;
+        return 14;
     }
 }
