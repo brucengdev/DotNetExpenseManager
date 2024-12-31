@@ -1,0 +1,12 @@
+import { render, screen } from "@testing-library/react";
+import {describe, expect, it} from 'vitest'
+import '@testing-library/jest-dom'
+import { EntryForm } from "../EntryForm";
+
+describe("EntryForm", () => {
+    it("shows form input", async () => {
+        render(<EntryForm  />)
+        
+        expect(screen.getByRole("textbox", {name: "Title"})).toBeInTheDocument()
+    })
+})
