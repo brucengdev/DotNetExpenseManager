@@ -34,5 +34,30 @@ namespace Backend.Tests
             //assert
             result.ShouldBeTrue();
         }
+
+        public static IEnumerable<object[]> NegativeCases = new List<object[]>
+        {
+            new object[] { "johndoe2", new DateTime(2024, 12, 31, 19, 4, 0) },
+        };
+        
+        [Theory]
+        [MemberData(nameof(NegativeCases))]
+        public void IsTokenValid_must_return_false_if_token_is_invalid(string username, DateTime currentTime)
+        {
+            //arrange
+            var userRepo = new TestUserRepository();
+            userRepo.AddUser(new User
+            {
+                Username = username,
+                Password = "testPassword"
+            });
+            var sut = new AccountManager(userRepo);
+            
+            //act
+            var result = sut.IsTokenValid("johndoe-2024-12-31-19-04", currentTime);
+            
+            //assert
+            result.ShouldBeFalse();
+        }
     }
 }

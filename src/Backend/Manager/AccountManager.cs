@@ -61,6 +61,12 @@ internal class AccountManager: IAccountManager
 
     public bool IsTokenValid(string token, DateTime currentTime)
     {
+        var parts = token.Split('-');
+        var username = parts[0];
+        if (!_userRepository.UserExists(username))
+        {
+            return false;
+        }
         return true;
     }
 }
