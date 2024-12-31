@@ -8,6 +8,10 @@ export const EntryForm = () => {
             Value
             <input type="number" />
         </label>
+        <label>
+            Date
+            <input type="date" />
+        </label>
         <button>Save</button>
     </div>
 }
