@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { EntryForm } from "../EntryForm";
@@ -22,5 +22,8 @@ describe("EntryForm", () => {
         
         const dateField = screen.getByLabelText("Date")
         expect(dateField).toHaveAttribute("value", "2024-05-31")
+
+        fireEvent.change(dateField, { target: { value: "2023-01-02"}})
+        expect(dateField).toHaveAttribute("value", "2023-01-02")
     })
 })
