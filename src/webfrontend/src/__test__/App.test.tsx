@@ -37,7 +37,7 @@ describe("App", () => {
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
         await sleep(10)
 
-        expect(screen.getByRole("heading", { name: "Expenses"})).toBeInTheDocument()
+        expect(screen.getByTestId("main-view")).toBeInTheDocument()
     })
 
     it("still shows login form if logging in was failed", async () => {
