@@ -32,5 +32,5 @@ RUN npm i;npm run build
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=buildfrontend /src/dist ./webfrontend
+COPY --from=buildfrontend /src/dist ./wwwroot
 ENTRYPOINT ["dotnet", "Backend.dll"]

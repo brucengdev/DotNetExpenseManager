@@ -3,6 +3,7 @@ using Backend.Manager;
 using Backend.Models;
 using Backend.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,9 @@ using(var serviceScope = app.Services.CreateScope())
     context.Database.EnsureCreated();
     SeedData.Initialize(context);
 }
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
