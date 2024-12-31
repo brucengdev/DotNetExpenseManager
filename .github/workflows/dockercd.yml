@@ -14,6 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: create .env
+      working-directory: ./src
+      run: echo "DOCKERHUB_REGISTRY=${{ secrets.DOCKERHUB_REGISTRY }}" > .env
     - name: Build the Docker image
       working-directory: ./src
       run: docker compose build
