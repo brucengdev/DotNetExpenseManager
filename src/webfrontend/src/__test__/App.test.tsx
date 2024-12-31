@@ -20,7 +20,7 @@ describe("App", () => {
 
         await sleep(10)
 
-        expect(screen.getByRole("heading", { name: "Expenses"})).toBeInTheDocument()
+        expect(screen.getByTestId("main-view")).toBeInTheDocument()
     })
 
     it("shows main view after logging in", async () => {
