@@ -32,10 +32,11 @@ public partial class AccountControllerTests
         var sut = new AccountController(accountManager.Object);
         
         //act
-        ActionResult<bool> result = sut.Login("johndoe", "testpassword");
+        ActionResult<string> result = sut.Login("johndoe", "testpassword");
         
         //assert
-        result.Result.ShouldBeOfType<OkResult>();
+        result.Result.ShouldBeOfType<OkObjectResult>();
+        (result.Result as OkObjectResult).Value.ShouldBe("dummyToken");
     }
     
     [Fact]
@@ -50,7 +51,7 @@ public partial class AccountControllerTests
         var sut = new AccountController(accountManager.Object);
         
         //act
-        ActionResult<bool> result = sut.Login("johndoe", "testpassword");
+        ActionResult<string> result = sut.Login("johndoe", "testpassword");
         
         //assert
         result.Result.ShouldBeOfType<UnauthorizedResult>();

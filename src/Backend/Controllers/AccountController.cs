@@ -14,13 +14,13 @@ public class AccountController: ControllerBase
     }
     
     [HttpPost("[action]")]
-    public ActionResult<bool> Login(
+    public ActionResult<string> Login(
         string username, string password)
     {
         var validUser = _accountManager.VerifyUser(username, password);
         if (validUser)
         {
-            return Ok();
+            return Ok("dummyToken");
         }
 
         return Unauthorized();
