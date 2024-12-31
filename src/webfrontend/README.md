@@ -1,3 +1,10 @@
+# How to configure
+Create a .env file and set the endpoint to the API server
+
+```
+VITE_API_SERVER=https://yourdomain/path/to/api
+```
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
