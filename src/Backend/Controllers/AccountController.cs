@@ -14,16 +14,22 @@ public class AccountController: ControllerBase
     }
     
     [HttpPost("[action]")]
-    public ActionResult<bool> Login(
+    public ActionResult<string> Login(
         string username, string password)
     {
-        var validUser = _accountManager.VerifyUser(username, password);
-        if (validUser)
+        try
         {
-            return Ok();
+            var token = _accountManager.CreateAccessToken(username, password, DateTime.Now);
+            return Ok(token);
         }
-
-        return Unauthorized();
+        catch (UserNotFoundException)
+        {
+            return Unauthorized();
+        }
+        catch (WrongPasswordException)
+        {
+            return Unauthorized();
+        }
     }
 
     [HttpPost("[action]")]
@@ -37,5 +43,12 @@ public class AccountController: ControllerBase
             return Forbid();
         }
         return Ok();
+    }
+
+    [HttpGet("[action]")]
+    public ActionResult IsLoggedIn(string token)
+    {
+        return _accountManager.IsTokenValid(token, DateTime.Now)? Ok()
+            : Unauthorized();
     }
 }

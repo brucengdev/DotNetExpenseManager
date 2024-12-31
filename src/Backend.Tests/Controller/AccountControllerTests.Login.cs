@@ -25,34 +25,58 @@ public partial class AccountControllerTests
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(m => m.VerifyUser(
+        accountManager.Setup(m => m.CreateAccessToken(
                 It.IsAny<string>(),
-                It.IsAny<string>()))
-            .Returns(true);
+                It.IsAny<string>(),
+                It.IsAny<DateTime>()))
+            .Returns("somedummytoken");
         var sut = new AccountController(accountManager.Object);
         
         //act
-        ActionResult<bool> result = sut.Login("johndoe", "testpassword");
+        ActionResult<string> result = sut.Login("johndoe", "testpassword");
         
         //assert
-        result.Result.ShouldBeOfType<OkResult>();
+        result.Result.ShouldBeOfType<OkObjectResult>();
+        (result.Result as OkObjectResult).Value.ShouldBe("somedummytoken");
     }
     
     [Fact]
-    public void Login_must_fail_with_incorrect_username_and_password_with_status_code_401()
+    public void Login_must_fail_when_password_is_incorrect_with_status_code_401()
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(m => m.VerifyUser(
+        accountManager.Setup(m => m.CreateAccessToken(
                 It.IsAny<string>(),
-                It.IsAny<string>()))
-            .Returns(false);
+                It.IsAny<string>(),
+                It.IsAny<DateTime>()))
+            .Throws(new WrongPasswordException());
         var sut = new AccountController(accountManager.Object);
         
         //act
-        ActionResult<bool> result = sut.Login("johndoe", "testpassword");
+        ActionResult<string> result = sut.Login("johndoe", "testpassword");
         
         //assert
         result.Result.ShouldBeOfType<UnauthorizedResult>();
     }
+    
+    [Fact]
+    public void Login_must_fail_when_user_is_incorrect_with_status_code_401()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(m => m.CreateAccessToken(
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+             It.IsAny<DateTime>())
+                )
+            .Throws(new UserNotFoundException());
+        var sut = new AccountController(accountManager.Object);
+        
+        //act
+        ActionResult<string> result = sut.Login("johndoe", "testpassword");
+        
+        //assert
+        result.Result.ShouldBeOfType<UnauthorizedResult>();
+    }
+
 }

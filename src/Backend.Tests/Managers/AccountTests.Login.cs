@@ -20,10 +20,11 @@ namespace Backend.Tests
             var sut = new AccountManager(userRepo);
             
             //act
-            var result = sut.VerifyUser("johndoe", "testPassword");
+            var creationTime = new DateTime(2024, 12, 31, 18, 4, 0);
+            var result = sut.CreateAccessToken("johndoe", "testPassword", creationTime);
             
             //assert
-            result.ShouldBeTrue();
+            result.ShouldBe($"johndoe-2024-12-31-19-04");
         }
         
         [Fact]
@@ -38,11 +39,10 @@ namespace Backend.Tests
             });
             var sut = new AccountManager(userRepo);
 
-            //act
-            var result = sut.VerifyUser("johndoe", "testpassword222");
-            
-            //assert
-            result.ShouldBeFalse();
+            //act & assert
+            Should.Throw<WrongPasswordException>(
+                () => sut.CreateAccessToken("johndoe", "testpassword222", DateTime.Now)
+            );
         }
         
         [Fact]
@@ -57,11 +57,10 @@ namespace Backend.Tests
             });
             var sut = new AccountManager(userRepo);
 
-            //act
-            var result = sut.VerifyUser("johndoe2", "testpassword222");
-            
-            //assert
-            result.ShouldBeFalse();
+            //act and assert
+            Should.Throw<UserNotFoundException>(
+                () => sut.CreateAccessToken("johndoe2", "testpassword222", DateTime.Now)
+            );
         }
     }
 }

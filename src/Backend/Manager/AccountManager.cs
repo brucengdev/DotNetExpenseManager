@@ -4,7 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Manager;
 
-public class AccountManager: IAccountManager
+internal class UserNotFoundException : Exception
+{
+    
+}
+
+internal class WrongPasswordException : Exception
+{
+    
+}
+
+internal class AccountManager: IAccountManager
 {
     internal IUserRepository _userRepository;
 
@@ -12,10 +22,20 @@ public class AccountManager: IAccountManager
     {
         _userRepository = userRepository;
     }
-    public bool VerifyUser(string username, string password)
+    private bool VerifyUser(string username, string password)
     {
         var user = _userRepository.GetUser(username);
-        return user!=null && user.Password == password;
+        if (user == null)
+        {
+            throw new UserNotFoundException();
+        }
+
+        if (user.Password != password)
+        {
+            throw new WrongPasswordException();
+        }
+
+        return true;
     }
 
     public CreateUserResult CreateUser(string username, string password)
@@ -30,5 +50,42 @@ public class AccountManager: IAccountManager
             Password = password
         });
         return CreateUserResult.Success;
+    }
+
+    public string CreateAccessToken(string username, string password, DateTime creationTime)
+    {
+        VerifyUser(username, password);
+        var expiryTime = creationTime.AddHours(1);
+        return $"{username}-{expiryTime.ToString("yyyy-MM-dd-HH-mm")}";
+    }
+
+    public bool IsTokenValid(string token, DateTime currentTime)
+    {
+        try
+        {
+            var parts = token.Split('-');
+            var username = parts[0];
+            if (!_userRepository.UserExists(username))
+            {
+                return false;
+            }
+
+            var expiry = new DateTime(Convert.ToInt32(parts[1]),
+                Convert.ToInt32(parts[2]),
+                Convert.ToInt32(parts[3]),
+                Convert.ToInt32(parts[4]),
+                Convert.ToInt32(parts[5]),
+                0);
+            if (currentTime > expiry)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }
