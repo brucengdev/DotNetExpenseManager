@@ -44,4 +44,10 @@ describe("DayView", () => {
         const entries = screen.queryAllByTestId("entry")
         expect(entries.length).toBe(0)
     })
+
+    it("has button to log new expense", () => {
+        render(<DayView client={new TestClient()} date={new Date()} />)
+
+        expect(screen.getByRole("button", {name: "+"})).toBeInTheDocument()
+    })
 })

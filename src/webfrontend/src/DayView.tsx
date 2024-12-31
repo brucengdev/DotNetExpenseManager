@@ -19,9 +19,8 @@ export const DayView = ({client, date}: DayViewProps) => {
     })
 
     return <div data-testid="day-view">
-        {
-            entries.map(({title, value}) => <Entry title={title} value={value} />)
-        }
+            {entries.map(({title, value}) => <Entry title={title} value={value} />)}
+            <button>+</button>
         </div>
 }
 
