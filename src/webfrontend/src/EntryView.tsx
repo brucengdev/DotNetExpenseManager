@@ -3,7 +3,7 @@ export interface EntryProps {
     value: number
 }
 
-export const Entry = ({title, value}: EntryProps) => {
+export const EntryView = ({title, value}: EntryProps) => {
     return <div data-testid="entry">
         <div data-testid="title">{title}</div>
         <div data-testid="value">{value}</div>

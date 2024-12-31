@@ -1,10 +1,10 @@
-import { Expense } from "./Expense"
+import { Entry } from "./Entry"
 
 export interface IClient {
     IsLoggedIn: () => Promise<boolean>
     Login: (username: string, pass: string) => Promise<boolean>
-    GetExpensesByDate: (date: Date) => Promise<Expense[]>
-    AddEntry: (entry: Expense) => Promise<boolean>
+    GetEntriesByDate: (date: Date) => Promise<Entry[]>
+    AddEntry: (entry: Entry) => Promise<boolean>
 }
 
 const devUrl = "https://localhost:7146"
@@ -36,10 +36,10 @@ export class Client implements IClient {
         return result.ok
     }
 
-    async GetExpensesByDate(_: Date): Promise<Expense[]> {
+    async GetEntriesByDate(_: Date): Promise<Entry[]> {
         return []
     }
-    async AddEntry(_: Expense): Promise<boolean> {
+    async AddEntry(_: Entry): Promise<boolean> {
         return true
     }
 }

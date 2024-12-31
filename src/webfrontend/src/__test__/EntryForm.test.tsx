@@ -49,7 +49,7 @@ describe("EntryForm", () => {
         expect(valueTextbox).toHaveAttribute("value", "-120.23")
     })
 
-    it("saves expenses and executes callback when clicking save successfully", async () => {
+    it("saves entries and executes callback when clicking save successfully", async () => {
         const saveHandler = vitest.fn()
         const client = new TestClient()
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} />)
@@ -61,7 +61,7 @@ describe("EntryForm", () => {
 
         await sleep(10)
 
-        expect(client.Expenses.length).toBe(1)
+        expect(client.Entries.length).toBe(1)
         expect(saveHandler).toHaveBeenCalled()
     })
 })
