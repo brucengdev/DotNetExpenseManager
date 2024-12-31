@@ -9,6 +9,7 @@ export interface DayViewProps {
 }
 
 export const DayView = ({client, date}: DayViewProps) => {
+    const [addingEntry, setAddingEntry] = useState(false)
     const [entries, setEntries] = useState([] as Expense[])
     client.GetExpensesByDate(date)
     .then(expenses => {
@@ -19,10 +20,14 @@ export const DayView = ({client, date}: DayViewProps) => {
     })
 
     return <div data-testid="day-view">
-            <div data-testid="entry-list">
-                {entries.map(({title, value}) => <Entry title={title} value={value} />)}
-            </div>
-            <button>+</button>
+            {addingEntry? <div data-testid="entry-form" /> :
+                <div>
+                    <div data-testid="entry-list">
+                        {entries.map(({title, value}) => <Entry title={title} value={value} />)}
+                    </div>
+                    <button onClick={() => setAddingEntry(true)}>+</button>
+                </div>
+            }
         </div>
 }
 

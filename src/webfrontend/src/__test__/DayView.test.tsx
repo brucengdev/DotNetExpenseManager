@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { DayView } from "../DayView";
@@ -55,5 +55,14 @@ describe("DayView", () => {
         render(<DayView client={new TestClient()} date={new Date()} />)
 
         expect(screen.getByRole("button", {name: "+"})).toBeInTheDocument()
+    })
+
+    it("shows form to enter when log button is pressed", () => {
+        render(<DayView client={new TestClient()} date={new Date()} />)
+
+        const logButton = screen.getByRole("button", {name: "+"})
+        fireEvent.click(logButton)
+
+        expect(screen.getByTestId("entry-form")).toBeInTheDocument()
     })
 })
