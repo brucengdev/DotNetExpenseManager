@@ -98,6 +98,10 @@ internal class AccountManager: IAccountManager
     {
         var username = accessToken.Substring(0, accessToken.IndexOf('-'));
         var user = _userRepository.GetUser(username);
+        if (user == null)
+        {
+            throw new UserNotFoundException();
+        }
         return user.Id;
     }
 }
