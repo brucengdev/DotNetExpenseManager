@@ -22,8 +22,10 @@ public partial class EntriesControllerTests
         postAttr.Template.ShouldBe("[action]");
     }
     
-    [Fact]
-    public void AddEntry_is_successful()
+    [Theory]
+    [InlineData(12)]
+    [InlineData(15)]
+    public void AddEntry_is_successful(int userId)
     {
         //arrange
         var inputEntry = new Entry
@@ -36,7 +38,7 @@ public partial class EntriesControllerTests
         var entryManager = new Mock<IEntryManager>();
         var accountManager = new Mock<IAccountManager>();
         accountManager.Setup(am => am.GetUserId(accessToken))
-            .Returns(12);
+            .Returns(userId);
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
 
         //act
@@ -49,7 +51,7 @@ public partial class EntriesControllerTests
             return e.Title == "Grocery"
                    && e.Value == -123.22f
                    && e.Date == new DateTime(2024, 3, 12)
-                   && e.UserId == 12;
+                   && e.UserId == userId;
         };
         entryManager.Verify(em => em.AddEntry(
             It.Is<Entry>(e => verifyEntry(e))), Times.Exactly(1));
