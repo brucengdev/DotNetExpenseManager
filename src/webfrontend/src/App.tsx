@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { IClient } from './api/Client'
 import { Login } from './Login'
-import { MainView } from './Expenses'
+import { MainView } from './MainView'
 
 export interface AppProps {
   client: IClient
