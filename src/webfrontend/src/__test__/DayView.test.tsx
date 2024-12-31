@@ -44,7 +44,10 @@ describe("DayView", () => {
         
         await sleep(10)
 
-        const entries = screen.queryAllByTestId("entry")
+        const entryList = screen.getByTestId("entry-list")
+        expect(entryList).toBeInTheDocument()
+
+        const entries = entryList.querySelectorAll('[data-testid="entry"]')
         expect(entries.length).toBe(0)
     })
 
