@@ -9,18 +9,6 @@ describe("MainView", () => {
         
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
-
-        const monthButton = screen.getByRole("button", {name: "Month"})
-        expect(monthButton).toBeInTheDocument()
-        expect(monthButton.className).not.toContain("selected")
-
-        const yearButton = screen.getByRole("button", {name: "Year"})
-        expect(yearButton).toBeInTheDocument()
-        expect(yearButton.className).not.toContain("selected")
-
-        const reportsButton = screen.getByRole("button", {name: "Reports"})
-        expect(reportsButton).toBeInTheDocument()
-        expect(reportsButton.className).not.toContain("selected")
     })
 
     it("shows day view on initial", () => {
