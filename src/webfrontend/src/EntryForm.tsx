@@ -8,5 +8,6 @@ export const EntryForm = () => {
             Value
             <input type="number" />
         </label>
+        <button>Save</button>
     </div>
 }

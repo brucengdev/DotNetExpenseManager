@@ -9,5 +9,6 @@ describe("EntryForm", () => {
         
         expect(screen.getByRole("textbox", {name: "Title"})).toBeInTheDocument()
         expect(screen.getByLabelText("Value")).toBeInTheDocument()
+        expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
     })
 })
