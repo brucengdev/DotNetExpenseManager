@@ -25,10 +25,10 @@ public partial class AccountControllerTests
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(m => m.VerifyUser(
+        accountManager.Setup(m => m.CreateAccessToken(
                 It.IsAny<string>(),
                 It.IsAny<string>()))
-            .Returns(true);
+            .Returns("somedummytoken");
         var sut = new AccountController(accountManager.Object);
         
         //act
@@ -36,18 +36,18 @@ public partial class AccountControllerTests
         
         //assert
         result.Result.ShouldBeOfType<OkObjectResult>();
-        (result.Result as OkObjectResult).Value.ShouldBe("dummyToken");
+        (result.Result as OkObjectResult).Value.ShouldBe("somedummytoken");
     }
     
     [Fact]
-    public void Login_must_fail_with_incorrect_username_and_password_with_status_code_401()
+    public void Login_must_fail_when_password_is_incorrect_with_status_code_401()
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(m => m.VerifyUser(
+        accountManager.Setup(m => m.CreateAccessToken(
                 It.IsAny<string>(),
                 It.IsAny<string>()))
-            .Returns(false);
+            .Throws(new WrongPasswordException());
         var sut = new AccountController(accountManager.Object);
         
         //act
