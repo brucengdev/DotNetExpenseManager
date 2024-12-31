@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { formatDateToDay } from "./utils"
 import { IClient } from "./api/Client"
-import { Expense } from "./api/Expense"
+import { Entry } from "./api/Entry"
 
 export interface EntryFormProps {
     date: Date
@@ -38,7 +38,7 @@ export const EntryForm = (props: EntryFormProps) => {
                     />
         </label>
         <button onClick={() => {
-            client.AddEntry(new Expense(date, title, value))
+            client.AddEntry(new Entry(date, title, value))
             .then(onSave)
         }}>Save</button>
     </div>

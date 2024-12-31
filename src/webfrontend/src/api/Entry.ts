@@ -1,6 +1,6 @@
 import { sameDate } from "../utils"
 
-export class Expense {
+export class Entry {
     public title: string = ""
     public value: number = 0
     public date: Date = new Date()
@@ -11,7 +11,7 @@ export class Expense {
         this.value = value
     }
 
-    public Equals(other: Expense): boolean {
+    public Equals(other: Entry): boolean {
         return this.title === other.title
                 && this.value === other.value
                 && sameDate(this.date, other.date)

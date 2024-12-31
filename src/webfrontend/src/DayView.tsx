@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { IClient } from "./api/Client"
-import { Entry } from "./EntryView"
-import { Expense } from "./api/Expense"
+import { EntryView } from "./EntryView"
+import { Entry } from "./api/Entry"
 import { EntryForm } from "./EntryForm"
 
 export interface DayViewProps {
@@ -11,11 +11,11 @@ export interface DayViewProps {
 
 export const DayView = ({client, date}: DayViewProps) => {
     const [addingEntry, setAddingEntry] = useState(false)
-    const [entries, setEntries] = useState([] as Expense[])
-    client.GetExpensesByDate(date)
-    .then(expenses => {
-        if(!areEntriesSame(expenses, entries)) {
-            setEntries(expenses)
+    const [entries, setEntries] = useState([] as Entry[])
+    client.GetEntriesByDate(date)
+    .then(serverEntries => {
+        if(!areEntriesSame(serverEntries, entries)) {
+            setEntries(serverEntries)
         }
     })
 
@@ -23,7 +23,7 @@ export const DayView = ({client, date}: DayViewProps) => {
             {addingEntry? <EntryForm client={client} date={date} onSave={() => { setAddingEntry(false) } } /> :
                 <div>
                     <div data-testid="entry-list">
-                        {entries.map(({title, value}) => <Entry title={title} value={value} />)}
+                        {entries.map(({title, value}) => <EntryView title={title} value={value} />)}
                     </div>
                     <button onClick={() => setAddingEntry(true)}>+</button>
                 </div>
@@ -31,12 +31,12 @@ export const DayView = ({client, date}: DayViewProps) => {
         </div>
 }
 
-function areEntriesSame(expenses: Expense[], entries: Expense[]) {
-    if(expenses.length !== entries.length) {
+function areEntriesSame(entries1: Entry[], entries2: Entry[]) {
+    if(entries1.length !== entries2.length) {
         return false
     }
-    for(let i = 0; i < expenses.length; i++) {
-        if(!expenses[i].Equals(entries[i])) {
+    for(let i = 0; i < entries1.length; i++) {
+        if(!entries1[i].Equals(entries2[i])) {
             return false
         }
     }

@@ -1,5 +1,5 @@
 import { IClient } from "../api/Client";
-import { Expense } from "../api/Expense";
+import { Entry } from "../api/Entry";
 import { sameDate } from "../utils";
 
 export const TEST_USER_NAME = "valid_user"
@@ -7,7 +7,7 @@ export const TEST_PASSWORD = "correct_pass"
 
 export class TestClient implements IClient {
     private _loggedIn = false;
-    public Expenses: Expense[] = []
+    public Entries: Entry[] = []
     async IsLoggedIn() {
         return this._loggedIn
     }
@@ -16,13 +16,13 @@ export class TestClient implements IClient {
         return this.IsLoggedIn();
     }
 
-    async GetExpensesByDate(date: Date): Promise<Expense[]> {
-        return this.Expenses
+    async GetEntriesByDate(date: Date): Promise<Entry[]> {
+        return this.Entries
             .filter(entry => sameDate(entry.date, date))
     }
 
-    async AddEntry(entry: Expense): Promise<boolean> {
-        this.Expenses.push(entry)
+    async AddEntry(entry: Entry): Promise<boolean> {
+        this.Entries.push(entry)
         return true
     }
 }

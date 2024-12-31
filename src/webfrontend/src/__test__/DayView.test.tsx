@@ -4,16 +4,16 @@ import '@testing-library/jest-dom'
 import { DayView } from "../DayView";
 import { TestClient } from "./TestClient";
 import { sleep } from "./testutils";
-import { Expense } from "../api/Expense";
+import { Entry } from "../api/Entry";
 
 describe("DayView", () => {
-    it("shows expenses by day", async () => {
+    it("shows entries by day", async () => {
         const client = new TestClient()
-        client.Expenses = [
-            new Expense(new Date(2024, 12, 11), "grocery", -120),
-            new Expense(new Date(2024, 12, 8), "toys", -100),
-            new Expense(new Date(2024, 12, 9), "eat out", -60),
-            new Expense(new Date(2024, 12, 11), "eat out", -65),
+        client.Entries = [
+            new Entry(new Date(2024, 12, 11), "grocery", -120),
+            new Entry(new Date(2024, 12, 8), "toys", -100),
+            new Entry(new Date(2024, 12, 9), "eat out", -60),
+            new Entry(new Date(2024, 12, 11), "eat out", -65),
         ]
         render(<DayView client={client} date={new Date(2024, 12, 11)} />)
         
@@ -32,13 +32,13 @@ describe("DayView", () => {
         expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
     })
 
-    it("shows expenses by day 2", async () => {
+    it("shows entries by day 2", async () => {
         const client = new TestClient()
-        client.Expenses = [
-            new Expense(new Date(2024, 12, 11), "grocery", -120),
-            new Expense(new Date(2024, 12, 8), "toys", -100),
-            new Expense(new Date(2024, 12, 9), "eat out", -60),
-            new Expense(new Date(2024, 12, 11), "eat out", -65),
+        client.Entries = [
+            new Entry(new Date(2024, 12, 11), "grocery", -120),
+            new Entry(new Date(2024, 12, 8), "toys", -100),
+            new Entry(new Date(2024, 12, 9), "eat out", -60),
+            new Entry(new Date(2024, 12, 11), "eat out", -65),
         ]
         render(<DayView client={client} date={new Date(2023, 12, 11)} />)
         
