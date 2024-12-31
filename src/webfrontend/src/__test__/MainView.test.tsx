@@ -7,6 +7,8 @@ describe("MainView", () => {
     it("has necessary ui components", () => {
         render(<MainView  />)
         
-        expect(screen.getByRole("button", { name: "Today"})).toBeInTheDocument()
+        const todayButton = screen.getByRole("button", { name: "Today"})
+        expect(todayButton).toBeInTheDocument()
+        expect(todayButton.className).toContain("selected")
     })
 })

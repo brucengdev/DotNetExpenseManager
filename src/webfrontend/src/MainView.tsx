@@ -1,6 +1,8 @@
+import "./MainView.css"
+
 export function MainView() {
     return <>
       <h1>Expenses</h1>
-      <button>Today</button>
+      <button className="selected">Today</button>
     </>
 }
