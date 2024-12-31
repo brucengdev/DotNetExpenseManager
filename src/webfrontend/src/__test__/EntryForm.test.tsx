@@ -43,7 +43,7 @@ describe("EntryForm", () => {
         const valueTextbox = screen.getByLabelText("Value")
         expect(valueTextbox).toHaveAttribute("value", "0")
 
-        fireEvent.change(valueTextbox, { target: { value: "-120"}})
-        expect(valueTextbox).toHaveAttribute("value", "-120")
+        fireEvent.change(valueTextbox, { target: { value: "-120.23"}})
+        expect(valueTextbox).toHaveAttribute("value", "-120.23")
     })
 })
