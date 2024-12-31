@@ -68,24 +68,7 @@ internal class AccountManager: IAccountManager
     {
         try
         {
-            var parts = token.Split('-');
-            var username = parts[0];
-            if (!_userRepository.UserExists(username))
-            {
-                return false;
-            }
-
-            var expiry = new DateTime(Convert.ToInt32(parts[1]),
-                Convert.ToInt32(parts[2]),
-                Convert.ToInt32(parts[3]),
-                Convert.ToInt32(parts[4]),
-                Convert.ToInt32(parts[5]),
-                0);
-            if (currentTime > expiry)
-            {
-                return false;
-            }
-
+            GetUserId(token, currentTime);
             return true;
         }
         catch (Exception)
