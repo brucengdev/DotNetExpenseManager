@@ -25,4 +25,4 @@ jobs:
       run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASS }}
     - name: Push Docker image
       working-directory: src/ 
-      run: docker compose push
+      run: docker compose push web

@@ -34,12 +34,12 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-using(var scope = app.Services.CreateScope()) {
-    var serviceProvider = scope.ServiceProvider;
-    var context = serviceProvider.GetService<ExpensesContext>();
-    if(context != null) {
-        SeedData.Initialize(context);
-    }
+//create DB
+using(var serviceScope = app.Services.CreateScope())
+{
+    var context = serviceScope.ServiceProvider.GetService<ExpensesContext>();
+    context.Database.EnsureCreated();
+    SeedData.Initialize(context);
 }
 
 // Configure the HTTP request pipeline.
