@@ -1,9 +1,22 @@
+using Backend.Manager;
+using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class EntriesController: ControllerBase
+internal class EntriesController: ControllerBase
 {
+    private readonly IEntryManager _entryManager;
+    internal EntriesController(IEntryManager em)
+    {
+        _entryManager = em;
+    }
+
+    public ActionResult AddEntry(Entry inputEntry)
+    {
+        _entryManager.AddEntry(inputEntry);
+        return Ok();
+    }
 }

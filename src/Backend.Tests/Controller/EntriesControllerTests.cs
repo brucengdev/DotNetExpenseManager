@@ -4,7 +4,7 @@ using Shouldly;
 
 namespace Backend.Tests.Controller;
 
-public class EntriesControllerTests
+public partial class EntriesControllerTests
 {
     
     [Fact]
