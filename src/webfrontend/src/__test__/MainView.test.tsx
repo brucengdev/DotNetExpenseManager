@@ -30,7 +30,7 @@ describe("MainView", () => {
         expect(dayButton).toBeInTheDocument()
         expect(dayButton.className).toContain("selected")
 
-        const dayView = screen.queryByTestId("day-view")
+        const dayView = screen.getByTestId("day-view")
         expect(dayView).toBeInTheDocument()
     })
 })
