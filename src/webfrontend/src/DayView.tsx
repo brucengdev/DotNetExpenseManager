@@ -1,4 +1,5 @@
 import { IClient } from "./api/Client"
+import { Entry } from "./EntryView"
 
 export interface DayViewProps {
     client: IClient
@@ -7,13 +8,7 @@ export interface DayViewProps {
 
 export const DayView = (_: DayViewProps) => {
     return <div data-testid="day-view">
-            <div data-testid="entry">
-                <div data-testid="title">grocery</div>
-                <div data-testid="value">-120</div>
-            </div>
-            <div data-testid="entry">
-                <div data-testid="title">eat out</div>
-                <div data-testid="value">-65</div>
-            </div>
+            <Entry title="grocery" value={-120} />
+            <Entry title="eat out" value={-65} />
         </div>
 }
