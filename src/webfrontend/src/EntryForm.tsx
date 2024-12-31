@@ -4,5 +4,9 @@ export const EntryForm = () => {
             Title
             <input type="text" />
         </label>
+        <label>
+            Value
+            <input type="number" />
+        </label>
     </div>
 }
