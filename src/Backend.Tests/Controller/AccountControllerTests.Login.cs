@@ -74,4 +74,20 @@ public partial class AccountControllerTests
         //assert
         result.Result.ShouldBeOfType<UnauthorizedResult>();
     }
+    
+    [Fact]
+    public void IsLoggedIn_must_return_true_when_token_is_valid()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.IsTokenValid(It.IsAny<string>()))
+            .Returns(true);
+        var sut = new AccountController(accountManager.Object);
+        
+        //act
+        ActionResult<string> result = sut.IsLoggedIn("dummyToken");
+        
+        //assert
+        result.Result.ShouldBeOfType<OkResult>();
+    }
 }

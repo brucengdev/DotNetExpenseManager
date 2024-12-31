@@ -57,4 +57,9 @@ internal class AccountManager: IAccountManager
         VerifyUser(username, password);
         return "dummyToken";
     }
+
+    public bool IsTokenValid(string token)
+    {
+        return true;
+    }
 }

@@ -44,4 +44,9 @@ public class AccountController: ControllerBase
         }
         return Ok();
     }
+
+    public ActionResult IsLoggedIn(string accessToken)
+    {
+        return Ok();
+    }
 }
