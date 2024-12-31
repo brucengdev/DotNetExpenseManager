@@ -2,6 +2,7 @@ import { useState } from "react"
 import { IClient } from "./api/Client"
 import { Entry } from "./EntryView"
 import { Expense } from "./api/Expense"
+import { EntryForm } from "./EntryForm"
 
 export interface DayViewProps {
     client: IClient
@@ -20,7 +21,7 @@ export const DayView = ({client, date}: DayViewProps) => {
     })
 
     return <div data-testid="day-view">
-            {addingEntry? <div data-testid="entry-form" /> :
+            {addingEntry? <EntryForm /> :
                 <div>
                     <div data-testid="entry-list">
                         {entries.map(({title, value}) => <Entry title={title} value={value} />)}
