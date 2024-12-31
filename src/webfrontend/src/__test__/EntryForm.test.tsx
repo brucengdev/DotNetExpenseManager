@@ -31,6 +31,9 @@ describe("EntryForm", () => {
         render(<EntryForm date={new Date(2024, 4, 31)} />)
         
         const titleTextbox = screen.getByRole("textbox", {name: "Title"})
-        expect(titleTextbox).not.toHaveAttribute("value")
+        expect(titleTextbox).toHaveAttribute("value", "")
+
+        fireEvent.change(titleTextbox, { target: { value: "foo"}})
+        expect(titleTextbox).toHaveAttribute("value", "foo")
     })
 })

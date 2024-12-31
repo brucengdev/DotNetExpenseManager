@@ -7,10 +7,14 @@ export interface EntryFormProps {
 export const EntryForm = (props: EntryFormProps) => {
     const initialDate = props.date
     const [date, setDate] = useState(initialDate)
+    const [title, setTitle] = useState("")
     return <div data-testid="entry-form">
         <label>
             Title
-            <input type="text" />
+            <input type="text"
+                value={title}
+                onChange={event => setTitle(event.target.value)}
+             />
         </label>
         <label>
             Value
