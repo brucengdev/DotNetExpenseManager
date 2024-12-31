@@ -14,6 +14,7 @@ internal class EntriesController: ControllerBase
         _entryManager = em;
     }
 
+    [HttpPost("[action]")]
     public ActionResult AddEntry(Entry inputEntry)
     {
         _entryManager.AddEntry(inputEntry);

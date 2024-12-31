@@ -9,6 +9,19 @@ namespace Backend.Tests.Controller;
 
 public partial class EntriesControllerTests
 {
+    
+    [Fact]
+    public void AddEntry_endpoint_config()
+    {
+        var method = Utils.GetMethod<EntriesController>(nameof(EntriesController.AddEntry));
+
+        var attributes = method?.GetCustomAttributes(typeof(HttpPostAttribute), true);
+        attributes.Length.ShouldBeGreaterThan(0);
+
+        var postAttr = attributes[0] as HttpPostAttribute;
+        postAttr.Template.ShouldBe("[action]");
+    }
+    
     [Fact]
     public void AddEntry_is_successful()
     {
