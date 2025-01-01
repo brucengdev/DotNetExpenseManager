@@ -19,12 +19,18 @@ namespace Backend.Tests
             {
                 Title = "Test entry",
                 Value = -10.22f,
-                Date = new DateTime(2022, 4, 22)
+                Date = new DateTime(2022, 4, 22),
+                UserId = 23
             };
             sut.AddEntry(inputEntry);
             
             //assert
             entryRepo.Entries.Count().ShouldBe(1);
+            var savedEntry = entryRepo.Entries.First();
+            savedEntry.Title.ShouldBe("Test entry");
+            savedEntry.Date.ShouldBe(new DateTime(2022, 4, 22));
+            savedEntry.Value.ShouldBe(-10.22f);
+            savedEntry.UserId.ShouldBe(23);
         }
     }
 }
