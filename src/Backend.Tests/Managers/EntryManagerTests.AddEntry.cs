@@ -35,6 +35,8 @@ namespace Backend.Tests
 
         [Theory]
         [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-3)]
         public void AddEntry_must_throw_invalid_user_id_on_invalid_user_id(int userId)
         {
             //arrange

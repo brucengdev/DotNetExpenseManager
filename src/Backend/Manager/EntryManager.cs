@@ -17,7 +17,7 @@ internal class EntryManager: IEntryManager
     }
     public bool AddEntry(Entry input)
     {
-        if (input.UserId == 0)
+        if (input.UserId <= 0)
         {
             throw new InvalidUserIdException();
         }
