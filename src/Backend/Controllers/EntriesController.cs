@@ -17,12 +17,13 @@ public class EntriesController: ControllerBase
     }
 
     [HttpPost("[action]")]
-    public ActionResult AddEntry(Entry inputEntry, string accessToken)
+    public ActionResult AddEntry([FromBody] Entry inputEntry, [FromQuery] string accessToken)
     {
         try
         {
             var resolvedEntry = new Entry(inputEntry);
             resolvedEntry.UserId = _accountManager.GetUserId(accessToken, DateTime.Now);
+            resolvedEntry.User = _accountManager.GetById(resolvedEntry.UserId);
             _entryManager.AddEntry(resolvedEntry);
             return Ok();
         }
