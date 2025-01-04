@@ -40,6 +40,12 @@ public partial class EntriesControllerTests
         accountManager.Setup(
                 am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
             .Returns(userId);
+        accountManager.Setup(
+                am => am.GetById(userId))
+            .Returns(new User
+            {
+                Id = userId
+            });
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
 
         //act

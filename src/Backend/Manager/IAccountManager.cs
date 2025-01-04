@@ -1,3 +1,5 @@
+using Backend.Models;
+
 namespace Backend.Manager;
 
 public enum CreateUserResult
@@ -14,4 +16,6 @@ public interface IAccountManager
 
     bool IsTokenValid(string token, DateTime currentTime);
     int GetUserId(string accessToken, DateTime currentTime);
+
+    User GetById(int userId);
 }

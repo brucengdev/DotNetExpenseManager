@@ -112,4 +112,9 @@ internal class AccountManager: IAccountManager
         }
         return user.Id;
     }
+
+    public User GetById(int userId)
+    {
+        return new();
+    }
 }
