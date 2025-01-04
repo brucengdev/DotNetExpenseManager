@@ -5,7 +5,7 @@ using Shouldly;
 
 namespace Backend.Tests
 {
-    public partial class AccountTests
+    public partial class AccountManagerTests
     {
         public static IEnumerable<object[]> PositiveCases = new List<object[]>
         {
