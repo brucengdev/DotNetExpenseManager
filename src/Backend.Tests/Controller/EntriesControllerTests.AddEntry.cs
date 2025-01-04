@@ -28,7 +28,7 @@ public partial class EntriesControllerTests
     public void AddEntry_is_successful(int userId)
     {
         //arrange
-        var inputEntry = new Entry
+        var inputEntry = new EntryPlain
         {
             Title = "Grocery",
             Value = -123.22f,
@@ -70,7 +70,7 @@ public partial class EntriesControllerTests
     public void AddEntry_returns_unauthorized_when_user_is_invalid()
     {
         //arrange
-        var inputEntry = new Entry
+        var inputEntry = new EntryPlain
         {
             Title = "Grocery",
             Value = -123.22f,
@@ -96,7 +96,7 @@ public partial class EntriesControllerTests
     public void AddEntry_returns_unauthorized_when_token_expired()
     {
         //arrange
-        var inputEntry = new Entry
+        var inputEntry = new EntryPlain
         {
             Title = "Grocery",
             Value = -123.22f,
@@ -121,7 +121,7 @@ public partial class EntriesControllerTests
     public void AddEntry_returns_unauthorized_when_token_is_malformed()
     {
         //arrange
-        var inputEntry = new Entry
+        var inputEntry = new EntryPlain
         {
             Title = "Grocery",
             Value = -123.22f,

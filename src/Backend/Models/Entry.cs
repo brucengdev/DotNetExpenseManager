@@ -5,6 +5,8 @@
         public Entry(): base()
         {
         }
+        
+        public Entry(EntryPlain other): base(other) { }
 
         public Entry(Entry other): base(other)
         {
@@ -16,7 +18,7 @@
     public class EntryPlain
     {
         public EntryPlain() { }
-        public EntryPlain(Entry other)
+        public EntryPlain(EntryPlain other)
         {
             Value = other.Value;
             Date = other.Date;

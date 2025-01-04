@@ -17,7 +17,7 @@ public class EntriesController: ControllerBase
     }
 
     [HttpPost("[action]")]
-    public ActionResult AddEntry([FromBody] Entry inputEntry, [FromQuery] string accessToken)
+    public ActionResult AddEntry([FromBody] EntryPlain inputEntry, [FromQuery] string accessToken)
     {
         try
         {
