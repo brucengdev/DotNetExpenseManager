@@ -39,7 +39,21 @@ export class Client implements IClient {
     async GetEntriesByDate(_: Date): Promise<Entry[]> {
         return []
     }
-    async AddEntry(_: Entry): Promise<boolean> {
-        return true
+    async AddEntry(entry: Entry): Promise<boolean> {
+        const result = await fetch(`${url}/Entries/AddEntry?${new URLSearchParams({
+            accessToken: this.token
+        }).toString()}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(entry)
+        })  
+        if(result.ok) {
+            this.token = await result.text()
+        } else {
+            this.token = ""
+        }
+        return this.token !== ""
     }
 }
