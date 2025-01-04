@@ -1,6 +1,5 @@
 using Backend.Models;
 using Backend.Repository;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Manager;
 
@@ -10,6 +9,16 @@ internal class UserNotFoundException : Exception
 }
 
 internal class WrongPasswordException : Exception
+{
+    
+}
+
+internal class MalformedTokenException : Exception
+{
+    
+}
+
+internal class TokenExpiredException : Exception
 {
     
 }
@@ -63,29 +72,49 @@ internal class AccountManager: IAccountManager
     {
         try
         {
-            var parts = token.Split('-');
-            var username = parts[0];
-            if (!_userRepository.UserExists(username))
-            {
-                return false;
-            }
-
-            var expiry = new DateTime(Convert.ToInt32(parts[1]),
-                Convert.ToInt32(parts[2]),
-                Convert.ToInt32(parts[3]),
-                Convert.ToInt32(parts[4]),
-                Convert.ToInt32(parts[5]),
-                0);
-            if (currentTime > expiry)
-            {
-                return false;
-            }
-
+            GetUserId(token, currentTime);
             return true;
         }
         catch (Exception)
         {
             return false;
         }
+    }
+
+    public int GetUserId(string accessToken, DateTime currentTime)
+    {
+        var username = "";
+        DateTime expiry;
+        try
+        {
+            var parts = accessToken.Split('-');
+            username = parts[0];
+            expiry = new DateTime(Convert.ToInt32(parts[1]),
+                Convert.ToInt32(parts[2]),
+                Convert.ToInt32(parts[3]),
+                Convert.ToInt32(parts[4]),
+                Convert.ToInt32(parts[5]),
+                0);
+        }
+        catch (Exception)
+        {
+            throw new MalformedTokenException();
+        }
+
+        var user = _userRepository.GetUser(username);
+        if (user == null)
+        {
+            throw new UserNotFoundException();
+        }
+        if (currentTime > expiry)
+        {
+            throw new TokenExpiredException();
+        }
+        return user.Id;
+    }
+
+    public User GetById(int userId)
+    {
+        return _userRepository.GetUser(userId);
     }
 }

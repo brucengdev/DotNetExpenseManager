@@ -15,6 +15,12 @@ internal class UserRepository: IUserRepository
         return _dbContext.Users
             .FirstOrDefault(u => u.Username == username);
     }
+    
+    public User? GetUser(int userId)
+    {
+        return _dbContext.Users
+            .FirstOrDefault(u => u.Id == userId);
+    }
 
     public bool AddUser(User user)
     {

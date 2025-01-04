@@ -1,24 +1,24 @@
-using System.Reflection;
 using Backend.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Shouldly;
 
 namespace Backend.Tests.Controller;
 
-public partial class AccountControllerTests
+public partial class EntriesControllerTests
 {
+    
     [Fact]
     public void Controller_config()
     {
-        Attribute.GetCustomAttribute(typeof(AccountController), typeof(ApiControllerAttribute))
+        Attribute.GetCustomAttribute(typeof(EntriesController), typeof(ApiControllerAttribute))
             .ShouldNotBeNull();
 
-        var routeAttr = Attribute.GetCustomAttribute(typeof(AccountController), typeof(RouteAttribute))
+        var routeAttr = Attribute.GetCustomAttribute(typeof(EntriesController), typeof(RouteAttribute))
             as RouteAttribute;
         routeAttr.ShouldNotBeNull();
         routeAttr.Template.ShouldBe("[controller]");
         
-        typeof(AccountController).BaseType
+        typeof(EntriesController).BaseType
             .IsAssignableTo(typeof(ControllerBase)).ShouldBeTrue();
     }
 }

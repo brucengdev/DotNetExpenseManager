@@ -1,3 +1,5 @@
+using Backend.Models;
+
 namespace Backend.Manager;
 
 public enum CreateUserResult
@@ -13,4 +15,7 @@ public interface IAccountManager
     string CreateAccessToken(string username, string password, DateTime creationTime);
 
     bool IsTokenValid(string token, DateTime currentTime);
+    int GetUserId(string accessToken, DateTime currentTime);
+
+    User GetById(int userId);
 }

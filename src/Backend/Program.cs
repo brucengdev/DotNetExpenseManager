@@ -31,6 +31,9 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountManager, AccountManager>();
 
+builder.Services.AddScoped<IEntryRepository, EntryRepository>();
+builder.Services.AddScoped<IEntryManager, EntryManager>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
