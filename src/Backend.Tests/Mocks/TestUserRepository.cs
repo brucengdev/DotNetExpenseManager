@@ -16,6 +16,12 @@ public class TestUserRepository: IUserRepository
         _users.TryGetValue(username, out var user);
         return user;
     }
+    
+    public User? GetUser(int userId)
+    {
+        var user = _users.Values.FirstOrDefault(u => u.Id == userId);
+        return user;
+    }
 
     public bool UserExists(string username)
         => _users.ContainsKey(username);

@@ -115,6 +115,6 @@ internal class AccountManager: IAccountManager
 
     public User GetById(int userId)
     {
-        return new();
+        return _userRepository.GetUser(userId);
     }
 }
