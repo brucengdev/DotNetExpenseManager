@@ -11,7 +11,7 @@ internal class InvalidUserIdException : Exception
 internal class EntryManager: IEntryManager
 {
     private readonly IEntryRepository _entryRepository;
-    internal EntryManager(IEntryRepository entryRepo)
+    public EntryManager(IEntryRepository entryRepo)
     {
         _entryRepository = entryRepo;
     }

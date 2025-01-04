@@ -6,11 +6,11 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-internal class EntriesController: ControllerBase
+public class EntriesController: ControllerBase
 {
     private readonly IEntryManager _entryManager;
     private readonly IAccountManager _accountManager;
-    internal EntriesController(IEntryManager em, IAccountManager am)
+    public EntriesController(IEntryManager em, IAccountManager am)
     {
         _entryManager = em;
         _accountManager = am;
