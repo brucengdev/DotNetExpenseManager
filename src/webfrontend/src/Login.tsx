@@ -1,13 +1,15 @@
 import { useState } from "react"
 import './Login.css'
 import { IClient } from "./api/Client"
+import { IStorage, STORED_TOKEN } from "./storage/Storage"
 
 interface LoginProps {
     client: IClient
+    storage: IStorage
     onLogin: () => void
 }
 
-export function Login({client, onLogin}: LoginProps) {
+export function Login({client, storage, onLogin}: LoginProps) {
     const [username, setUsername] = useState("")
     const [usernameWarn, setUsernameWarn] = useState(false)
     const [password, setPassword] = useState("")
@@ -39,7 +41,7 @@ export function Login({client, onLogin}: LoginProps) {
       <button onClick={() => {
         const valid = validateForm()
         if(valid) {
-            login(client, username, password, onLogin)
+            login(client, storage, username, password, onLogin)
         }
         setUsernameWarn(username == "")
         setPasswordWarn(password == "")
@@ -48,9 +50,10 @@ export function Login({client, onLogin}: LoginProps) {
     </div>
 }
 
-const login = async (client: IClient, username: string, password:string, onLogin: () => void) => {
+const login = async (client: IClient, storage: IStorage, username: string, password:string, onLogin: () => void) => {
     const success = await client.Login(username, password)
     if(success) {
+        storage.Set(STORED_TOKEN, client.Token())
         onLogin()
     }
 }
