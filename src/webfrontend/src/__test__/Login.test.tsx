@@ -2,7 +2,7 @@ import { screen, render, fireEvent } from "@testing-library/react";
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { Login } from "../Login";
-import { TestClient } from "./TestClient";
+import { TEST_PASSWORD, TEST_USER_NAME, TestClient } from "./TestClient";
 import { sleep } from "./testutils";
 
 describe("Login", () => {
@@ -59,12 +59,11 @@ describe("Login", () => {
 
     it("has a successful login flow", async () => {
         const client = new TestClient();
-        client.Login = vitest.fn(async ()=>  true)
         const onLogin = vitest.fn()
         render(<Login client={client} onLogin={onLogin} />)
 
-        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "user1"}})
-        fireEvent.change(screen.getByLabelText("Password"), { target: { value: "hispass"}})
+        fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: TEST_USER_NAME }})
+        fireEvent.change(screen.getByLabelText("Password"), { target: { value: TEST_PASSWORD }})
 
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
 
@@ -72,9 +71,6 @@ describe("Login", () => {
 
         expect(screen.getByRole("textbox", { name: "Username" }).className).toBe("")
         expect(screen.getByLabelText("Password").className).toBe("")
-
-        expect(client.Login).toHaveBeenCalledOnce()
-        expect(client.Login).toHaveBeenCalledWith("user1", "hispass")
 
         expect(onLogin).toHaveBeenCalled()
     })
