@@ -26,6 +26,22 @@ describe("App", () => {
         expect(screen.getByTestId("main-view")).toBeInTheDocument()
     })
 
+    it("shows login form after logging out", async () => {
+        const client = new TestClient();
+        const testStorage = new TestStorage();
+        testStorage.Set(STORED_TOKEN, TEST_TOKEN)
+        render(<App client={client} storage={testStorage} />)
+
+        await sleep(10)
+
+        expect(screen.getByTestId("main-view")).toBeInTheDocument()
+
+        fireEvent.click(screen.getByRole("button", { name: "Log out" }))
+
+        expect(await client.IsLoggedIn()).toBeFalsy()
+        expect(screen.getByTestId("login-view")).toBeInTheDocument()
+    })
+
     it("shows main view when already logged in", async () => {
         const client = new TestClient();
         client.Login(TEST_USER_NAME, TEST_PASSWORD)

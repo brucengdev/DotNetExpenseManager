@@ -5,6 +5,7 @@ export interface IClient {
     IsLoggedIn: () => Promise<boolean>
     Login: (username: string, pass: string) => Promise<boolean>
     LoginByToken: (token:string) => Promise<boolean>
+    Logout: () => void
     GetEntriesByDate: (date: Date) => Promise<Entry[]>
     AddEntry: (entry: Entry) => Promise<boolean>
 }
@@ -36,6 +37,11 @@ export class Client implements IClient {
     async IsLoggedIn() {
         return await this.IsTokenValid(this.token)
     }
+
+    Logout() {
+        this.token = ""
+    }
+
     private async IsTokenValid(token: string) {
         const result = await fetch(`${url}/Account/IsLoggedIn?${new URLSearchParams({
             token

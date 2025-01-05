@@ -4,12 +4,13 @@ import "./MainView.css"
 
 export interface MainViewProps {
   client: IClient
+  onLogout: () => void
 }
 
-export function MainView({client} : MainViewProps) {
+export function MainView({client, onLogout} : MainViewProps) {
     return <div data-testid="main-view">
       <button className="selected">Day</button>
       <DayView client={client} date={new Date()} />
-      <button>Log out</button>
+      <button onClick={() => onLogout()}>Log out</button>
     </div>
 }

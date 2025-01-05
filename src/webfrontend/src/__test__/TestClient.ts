@@ -7,27 +7,30 @@ export const TEST_PASSWORD = "correct_pass"
 export const TEST_TOKEN = "correcttoken"
 
 export class TestClient implements IClient {
-    private _loggedIn = false
     private _token: string | undefined = undefined
     public Token() { return this._token }
     public Entries: Entry[] = []
     async IsLoggedIn() {
-        return this._loggedIn
+        return this._token === TEST_TOKEN
     }
     async Login(username: string, pass: string) {
-        this._loggedIn = username === TEST_USER_NAME && pass === TEST_PASSWORD;
-        if(this._loggedIn) {
+        const loggedIn = username === TEST_USER_NAME && pass === TEST_PASSWORD;
+        if(loggedIn) {
             this._token = TEST_TOKEN
         }
         return this.IsLoggedIn();
     }
 
+    Logout() {
+        this._token = ""
+    }
+
     async LoginByToken(token: string) {
-        this._loggedIn = token === TEST_TOKEN
-        if(this._loggedIn) {
+        const loggedIn = token === TEST_TOKEN
+        if(loggedIn) {
             this._token = token
         }
-        return this._loggedIn
+        return loggedIn
     }
 
     async GetEntriesByDate(date: Date): Promise<Entry[]> {

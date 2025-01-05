@@ -28,10 +28,16 @@ function App({client, storage}: AppProps) {
 })
   return (
     <>
-      {loggedIn? <MainView client={client} />: <Login client={client} storage={storage} onLogin={() => { 
+      {loggedIn
+      ? <MainView client={client} onLogout={() => { 
+        storage.Clear(STORED_TOKEN)
+        client.Logout()
+        setLoggedIn(false) 
+      }} />
+      : <Login client={client} storage={storage} onLogin={() => { 
           setLoggedIn(true)
         } 
-      } 
+      }
       />}
     </>
   )

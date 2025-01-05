@@ -6,6 +6,10 @@ export class TestStorage implements IStorage {
         this.data[key] = value
     }
 
+    public Clear(key: string) {
+        delete this.data[key]
+    }
+
     public Get(key: string) {
         return this.data[key]
     }
