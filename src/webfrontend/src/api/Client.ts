@@ -1,6 +1,7 @@
 import { Entry } from "./Entry"
 
 export interface IClient {
+    Token: () => string | undefined
     IsLoggedIn: () => Promise<boolean>
     Login: (username: string, pass: string) => Promise<boolean>
     LoginByToken: (token:string) => Promise<boolean>
@@ -16,6 +17,7 @@ if(url === '/') { url = '' }
 
 export class Client implements IClient {
     private token: string = ""
+    public Token() { return this.token }
     public async Login(username: string, password: string): Promise<boolean> {
         const result = await fetch(`${url}/Account/Login?${new URLSearchParams({
             username,
