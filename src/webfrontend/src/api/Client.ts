@@ -3,6 +3,7 @@ import { Entry } from "./Entry"
 export interface IClient {
     IsLoggedIn: () => Promise<boolean>
     Login: (username: string, pass: string) => Promise<boolean>
+    LoginByToken: (token:string) => Promise<boolean>
     GetEntriesByDate: (date: Date) => Promise<Entry[]>
     AddEntry: (entry: Entry) => Promise<boolean>
 }
@@ -29,11 +30,21 @@ export class Client implements IClient {
         }
         return this.token !== ""
     }
+
     async IsLoggedIn() {
+        return await this.IsTokenValid(this.token)
+    }
+    private async IsTokenValid(token: string) {
         const result = await fetch(`${url}/Account/IsLoggedIn?${new URLSearchParams({
-            token: this.token
+            token
         }).toString()}`)
         return result.ok
+    }
+
+    async LoginByToken(token: string) {
+        const succeeded = await this.IsTokenValid(token)
+        this.token = token
+        return succeeded
     }
 
     async GetEntriesByDate(_: Date): Promise<Entry[]> {

@@ -2,13 +2,24 @@ import { useState } from 'react'
 import { IClient } from './api/Client'
 import { Login } from './Login'
 import { MainView } from './MainView'
+import { IStorage } from './storage/Storage'
 
 export interface AppProps {
-  client: IClient
+  client: IClient,
+  storage: IStorage
 }
 
-function App({client}: AppProps) {
+function App({client, storage}: AppProps) {
   const [loggedIn, setLoggedIn] = useState(false)
+  const storedToken = storage.Get("token")
+  if(storedToken) {
+    client.LoginByToken(storedToken)
+    .then(result => {
+      if(result != loggedIn) {
+        setLoggedIn(result)
+      }
+    })
+  }
   client.IsLoggedIn()
   .then(result => {
     if(result != loggedIn) {
