@@ -5,6 +5,7 @@ import '@testing-library/jest-dom'
 import { TEST_PASSWORD, TEST_TOKEN, TEST_USER_NAME, TestClient } from "./TestClient";
 import { sleep } from "./testutils";
 import { TestStorage } from "./TestStorage";
+import { STORED_TOKEN } from "../storage/Storage";
 
 describe("App", () => {
     it("shows login form when have never logged in", () => {
@@ -17,7 +18,7 @@ describe("App", () => {
     it("shows main view when was logged in before", async () => {
         const client = new TestClient();
         const testStorage = new TestStorage();
-        testStorage.Set("token", TEST_TOKEN)
+        testStorage.Set(STORED_TOKEN, TEST_TOKEN)
         render(<App client={client} storage={testStorage} />)
 
         await sleep(10)

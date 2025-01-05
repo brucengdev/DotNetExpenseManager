@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { IClient } from './api/Client'
 import { Login } from './Login'
 import { MainView } from './MainView'
-import { IStorage } from './storage/Storage'
+import { IStorage, STORED_TOKEN } from './storage/Storage'
 
 export interface AppProps {
   client: IClient,
@@ -11,7 +11,7 @@ export interface AppProps {
 
 function App({client, storage}: AppProps) {
   const [loggedIn, setLoggedIn] = useState(false)
-  const storedToken = storage.Get("token")
+  const storedToken = storage.Get(STORED_TOKEN)
   if(storedToken) {
     client.LoginByToken(storedToken)
     .then(result => {
