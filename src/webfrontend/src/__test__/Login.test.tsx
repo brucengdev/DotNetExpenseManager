@@ -4,6 +4,7 @@ import '@testing-library/jest-dom'
 import { Login } from "../Login";
 import { TEST_PASSWORD, TEST_USER_NAME, TestClient } from "./TestClient";
 import { sleep } from "./testutils";
+import { TestStorage } from "./TestStorage";
 
 describe("Login", () => {
     it("has necessary ui components", () => {
@@ -58,9 +59,10 @@ describe("Login", () => {
     })
 
     it("has a successful login flow", async () => {
-        const client = new TestClient();
+        const client = new TestClient()
+        const storage = new TestStorage()
         const onLogin = vitest.fn()
-        render(<Login client={client} onLogin={onLogin} />)
+        render(<Login client={client} storage={storage} onLogin={onLogin} />)
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: TEST_USER_NAME }})
         fireEvent.change(screen.getByLabelText("Password"), { target: { value: TEST_PASSWORD }})

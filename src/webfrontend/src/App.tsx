@@ -28,7 +28,7 @@ function App({client, storage}: AppProps) {
 })
   return (
     <>
-      {loggedIn? <MainView client={client} />: <Login client={client} onLogin={() => { 
+      {loggedIn? <MainView client={client} />: <Login client={client} storage={storage} onLogin={() => { 
           setLoggedIn(true)
         } 
       } 

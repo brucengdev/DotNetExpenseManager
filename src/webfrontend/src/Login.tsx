@@ -1,9 +1,11 @@
 import { useState } from "react"
 import './Login.css'
 import { IClient } from "./api/Client"
+import { IStorage } from "./storage/Storage"
 
 interface LoginProps {
     client: IClient
+    storage: IStorage
     onLogin: () => void
 }
 
