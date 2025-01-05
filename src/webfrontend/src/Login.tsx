@@ -21,7 +21,6 @@ export function Login({client, storage, onLogin}: LoginProps) {
     }
 
     return <div data-testid="login-view">
-      {/* <h1>Login</h1> */}
       <label>
         Username
         <input type="text" 

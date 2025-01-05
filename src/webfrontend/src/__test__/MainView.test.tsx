@@ -6,7 +6,7 @@ import { TestClient } from "./TestClient";
 
 describe("MainView", () => {
     it("has necessary ui components", () => {
-        render(<MainView client={new TestClient()} />)
+        render(<MainView client={new TestClient()} onLogout={() => { }} />)
         
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
@@ -16,7 +16,7 @@ describe("MainView", () => {
     })
 
     it("shows day view on initial", () => {
-        render(<MainView client={new TestClient()} />)
+        render(<MainView client={new TestClient()} onLogout={() => { }} />)
 
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
