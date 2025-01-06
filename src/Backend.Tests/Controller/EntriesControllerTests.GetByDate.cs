@@ -28,7 +28,6 @@ public partial class EntriesControllerTests
     {
         //arrange
         var date = new DateTime(2022, 11, 3);
-        var accessToken = "dummyToken";
         var entryManager = new Mock<IEntryManager>();
         var expected = new List<Entry>
         {
@@ -37,7 +36,10 @@ public partial class EntriesControllerTests
         };
         entryManager.Setup(em => em.GetByDate(date, 1))
             .Returns(expected);
+        var accessToken = "dummyToken";
         var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
+            .Returns(1);
         
         //act
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
