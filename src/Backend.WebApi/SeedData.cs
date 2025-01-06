@@ -1,6 +1,6 @@
 using Backend.Models;
 
-namespace Backend;
+namespace Backend.WebApi;
 
 public static class SeedData {
     public static void Initialize(ExpensesContext context)

@@ -1,5 +1,5 @@
 using System.Reflection;
-using Backend.Controllers;
+using Backend.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Shouldly;
 

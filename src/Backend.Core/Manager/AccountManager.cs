@@ -1,29 +1,29 @@
+using Backend.Core.Repository;
 using Backend.Models;
-using Backend.Repository;
 
-namespace Backend.Manager;
+namespace Backend.Core.Manager;
 
-internal class UserNotFoundException : Exception
+public class UserNotFoundException : Exception
 {
     
 }
 
-internal class WrongPasswordException : Exception
+public class WrongPasswordException : Exception
 {
     
 }
 
-internal class MalformedTokenException : Exception
+public class MalformedTokenException : Exception
 {
     
 }
 
-internal class TokenExpiredException : Exception
+public class TokenExpiredException : Exception
 {
     
 }
 
-internal class AccountManager: IAccountManager
+public class AccountManager: IAccountManager
 {
     internal IUserRepository _userRepository;
 

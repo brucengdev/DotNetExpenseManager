@@ -12,16 +12,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS buildbackend
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Backend/Backend.csproj", "Backend/"] 
-RUN dotnet restore "./Backend/Backend.csproj"
+COPY ["Backend.WebApi/Backend.WebApi.csproj", "Backend.WebApi/"] 
+RUN dotnet restore "./Backend.WebApi/Backend.WebApi.csproj"
 COPY . .
-WORKDIR "/src/Backend"
-RUN dotnet build "./Backend.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Backend.WebApi"
+RUN dotnet build "./Backend.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM buildbackend AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Backend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Backend.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM node as buildfrontend
 COPY webfrontend /src
@@ -33,4 +33,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=buildfrontend /src/dist ./wwwroot
-ENTRYPOINT ["dotnet", "Backend.dll"]
+ENTRYPOINT ["dotnet", "Backend.WebApi.dll"]

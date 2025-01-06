@@ -1,5 +1,5 @@
-using Backend.Controllers;
-using Backend.Manager;
+using Backend.WebApi.Controllers;
+using Backend.Core.Manager;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

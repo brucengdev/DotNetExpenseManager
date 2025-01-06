@@ -1,8 +1,8 @@
 using Backend.Models;
 
-namespace Backend.Repository;
+namespace Backend.Core.Repository;
 
-internal interface IEntryRepository
+public interface IEntryRepository
 {
     bool AddEntry(Entry entry);
     IEnumerable<Entry> GetByDateAndUser(DateTime date, int userId);
