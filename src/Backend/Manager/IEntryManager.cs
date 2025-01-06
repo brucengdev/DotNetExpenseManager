@@ -6,5 +6,5 @@ public interface IEntryManager
 {
     bool AddEntry(Entry input);
 
-    IEnumerable<EntryPlain> GetByDate(DateTime date);
+    IEnumerable<Entry> GetByDate(DateTime date);
 }
