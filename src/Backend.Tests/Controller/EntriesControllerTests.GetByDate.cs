@@ -35,7 +35,7 @@ public partial class EntriesControllerTests
             new() { Date = date, Value = -12, UserId = 1, Title = "test", Id = 4 },
             new() { Date = date, Value = -11, UserId = 1, Title = "test2", Id = 5 }
         };
-        entryManager.Setup(em => em.GetByDate(date))
+        entryManager.Setup(em => em.GetByDate(date, 1))
             .Returns(expected);
         var accountManager = new Mock<IAccountManager>();
         
@@ -65,7 +65,7 @@ public partial class EntriesControllerTests
             new() { Date = date, Value = -12, UserId = 1, Title = "test", Id = 4 },
             new() { Date = date, Value = -11, UserId = 1, Title = "test2", Id = 5 }
         };
-        entryManager.Setup(em => em.GetByDate(date))
+        entryManager.Setup(em => em.GetByDate(date, 1))
             .Returns(expected);
         var accountManager = new Mock<IAccountManager>();
         accountManager.Setup(am => am.GetUserId(accessToken, It.IsAny<DateTime>()))

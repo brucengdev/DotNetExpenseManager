@@ -48,7 +48,7 @@ public class EntriesController: ControllerBase
         try
         {
             var userId = _accountManager.GetUserId(accessToken, DateTime.Now);
-            var result = _entryManager.GetByDate(date)
+            var result = _entryManager.GetByDate(date, userId)
                 .Select(e => new EntryPlain(e));
             return Ok(result);
         }

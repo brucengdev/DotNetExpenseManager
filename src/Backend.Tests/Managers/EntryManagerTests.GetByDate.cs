@@ -20,10 +20,10 @@ namespace Backend.Tests
             entryRepo.Entries.Add(new() { Title = "entry2", Date = date, Value = -5, Id = 4, UserId = 2 });
             
             //act
-            var result = sut.GetByDate(date);
+            var result = sut.GetByDate(date, 1);
             
             //assert
-            
+            result.Count().ShouldBe(2);
         }
     }
 }
