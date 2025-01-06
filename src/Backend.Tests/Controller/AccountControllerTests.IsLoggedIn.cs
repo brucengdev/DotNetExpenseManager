@@ -12,6 +12,7 @@ public partial class AccountControllerTests
     public void IsLoggedIn_endpoint_config()
     {
         var method = Utils.GetMethod<AccountController>(nameof(AccountController.IsLoggedIn));
+        method.ShouldNotBeNull();
 
         var attributes = method?.GetCustomAttributes(typeof(HttpGetAttribute), true);
         attributes.Length.ShouldBeGreaterThan(0);

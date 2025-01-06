@@ -48,6 +48,7 @@ public partial class AccountControllerTests
     public void CreateUser_endpoint_config()
     {
         var method = Utils.GetMethod<AccountController>(nameof(AccountController.CreateUser));
+        method.ShouldNotBeNull();
 
         var attributes = method?.GetCustomAttributes(typeof(HttpPostAttribute), true);
         attributes.Length.ShouldBeGreaterThan(0);
