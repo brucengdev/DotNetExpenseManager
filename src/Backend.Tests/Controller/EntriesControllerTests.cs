@@ -10,7 +10,10 @@ public partial class EntriesControllerTests
     [Fact]
     public void Controller_config()
     {
-        Attribute.GetCustomAttribute(typeof(EntriesController), typeof(ApiControllerAttribute))
+        typeof(EntriesController).IsVisible.ShouldBeTrue();
+        
+        Attribute.GetCustomAttribute(typeof(EntriesController), 
+                typeof(ApiControllerAttribute))
             .ShouldNotBeNull();
 
         var routeAttr = Attribute.GetCustomAttribute(typeof(EntriesController), typeof(RouteAttribute))

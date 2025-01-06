@@ -10,6 +10,8 @@ public partial class AccountControllerTests
     [Fact]
     public void Controller_config()
     {
+        typeof(AccountController).IsVisible.ShouldBeTrue();
+        
         Attribute.GetCustomAttribute(typeof(AccountController), typeof(ApiControllerAttribute))
             .ShouldNotBeNull();
 
