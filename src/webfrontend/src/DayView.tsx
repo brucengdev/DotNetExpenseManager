@@ -3,6 +3,7 @@ import { IClient } from "./api/Client"
 import { EntryView } from "./EntryView"
 import { Entry } from "./api/Entry"
 import { EntryForm } from "./EntryForm"
+import { formatDisplayDate } from "./utils"
 
 export interface DayViewProps {
     client: IClient
@@ -23,6 +24,7 @@ export const DayView = ({client, date}: DayViewProps) => {
             {addingEntry? <EntryForm client={client} date={date} onSave={() => { setAddingEntry(false) } } /> :
                 <div>
                     <div data-testid="entry-list">
+                        <h2>{formatDisplayDate(date)}</h2>
                         {entries.map(({title, value}) => <EntryView title={title} value={value} />)}
                     </div>
                     <button onClick={() => setAddingEntry(true)}>+</button>

@@ -10,17 +10,19 @@ describe("DayView", () => {
     it("shows entries by day", async () => {
         const client = new TestClient()
         client.Entries = [
-            new Entry(new Date(2024, 12, 11), "grocery", -120),
-            new Entry(new Date(2024, 12, 8), "toys", -100),
-            new Entry(new Date(2024, 12, 9), "eat out", -60),
-            new Entry(new Date(2024, 12, 11), "eat out", -65),
+            new Entry(new Date(2024, 5, 11), "grocery", -120),
+            new Entry(new Date(2024, 5, 8), "toys", -100),
+            new Entry(new Date(2024, 5, 9), "eat out", -60),
+            new Entry(new Date(2024, 5, 11), "eat out", -65),
         ]
-        render(<DayView client={client} date={new Date(2024, 12, 11)} />)
+        render(<DayView client={client} date={new Date(2024, 5, 11)} />)
         
         await sleep(10)
 
         const entryList = screen.getByTestId("entry-list")
         expect(entryList).toBeInTheDocument()
+
+        expect(screen.getByRole("heading", { name: "11/6/2024"})).toBeInTheDocument()
 
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
         expect(entries.length).toBe(2)
