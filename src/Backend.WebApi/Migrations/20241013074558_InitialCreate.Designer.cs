@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Backend.Migrations
+namespace Backend.WebApi.Migrations
 {
     [DbContext(typeof(ExpensesContext))]
     [Migration("20241013074558_InitialCreate")]

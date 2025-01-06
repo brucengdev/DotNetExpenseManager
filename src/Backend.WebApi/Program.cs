@@ -1,8 +1,8 @@
-using Backend;
+using Backend.WebApi;
 using Backend.Core.Manager;
 using Backend.Core.Repository;
 using Backend.Models;
-using Backend.Repository;
+using Backend.WebApi.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

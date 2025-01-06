@@ -2,7 +2,7 @@ using Backend.Core.Manager;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers;
+namespace Backend.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]

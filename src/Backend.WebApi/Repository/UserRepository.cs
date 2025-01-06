@@ -1,7 +1,7 @@
 using Backend.Core.Repository;
 using Backend.Models;
 
-namespace Backend.Repository;
+namespace Backend.WebApi.Repository;
 
 internal class UserRepository: IUserRepository
 {

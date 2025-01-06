@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend", "Backend\Backend.csproj", "{4A27595C-D853-42BC-98FF-07A5FD49C482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.WebApi", "Backend.WebApi\Backend.WebApi.csproj", "{4A27595C-D853-42BC-98FF-07A5FD49C482}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Tests", "Backend.Tests\Backend.Tests.csproj", "{8AF68342-2D31-48E4-BD78-12BDE26FB00D}"
 EndProject
