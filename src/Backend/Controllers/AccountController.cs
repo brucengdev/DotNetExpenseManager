@@ -8,7 +8,7 @@ namespace Backend.Controllers;
 public class AccountController: ControllerBase
 {
     private readonly IAccountManager _accountManager;
-    internal AccountController(IAccountManager accountManager)
+    public AccountController(IAccountManager accountManager)
     {
         _accountManager = accountManager;
     }
