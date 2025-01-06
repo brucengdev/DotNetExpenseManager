@@ -28,6 +28,7 @@ public partial class EntriesControllerTests
     {
         //arrange
         var date = new DateTime(2022, 11, 3);
+        var accessToken = "dummyToken";
         var entryManager = new Mock<IEntryManager>();
         var expected = new List<Entry>
         {
@@ -40,7 +41,7 @@ public partial class EntriesControllerTests
         
         //act
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
-        var result = sut.GetByDate(date);
+        var result = sut.GetByDate(date, accessToken);
 
         //assert
         result.Result.ShouldBeOfType<OkObjectResult>();
@@ -50,6 +51,32 @@ public partial class EntriesControllerTests
         entries.Count().ShouldBe(2);
         entries.ToArray()[0].ShouldBeEquivalentTo(new EntryPlain(expected[0]));
         entries.ToArray()[1].ShouldBeEquivalentTo(new EntryPlain(expected[1]));
+    }
+    
+    [Fact]
+    public void GetByDate_return_unauthorized_when_user_is_not_found()
+    {
+        //arrange
+        var date = new DateTime(2022, 11, 3);
+        var accessToken = "dummyToken";
+        var entryManager = new Mock<IEntryManager>();
+        var expected = new List<Entry>
+        {
+            new() { Date = date, Value = -12, UserId = 1, Title = "test", Id = 4 },
+            new() { Date = date, Value = -11, UserId = 1, Title = "test2", Id = 5 }
+        };
+        entryManager.Setup(em => em.GetByDate(date))
+            .Returns(expected);
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
+            .Throws(new UserNotFoundException());
+        
+        //act
+        var sut = new EntriesController(entryManager.Object, accountManager.Object);
+        var result = sut.GetByDate(date, accessToken);
+
+        //assert
+        result.Result.ShouldBeOfType<UnauthorizedResult>();
     }
     
 }

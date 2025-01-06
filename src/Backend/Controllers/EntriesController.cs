@@ -43,10 +43,18 @@ public class EntriesController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date)
+    public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date, string accessToken)
     {
-        var result = _entryManager.GetByDate(date)
-            .Select(e => new EntryPlain(e));
-        return Ok(result);
+        try
+        {
+            var userId = _accountManager.GetUserId(accessToken, DateTime.Now);
+            var result = _entryManager.GetByDate(date)
+                .Select(e => new EntryPlain(e));
+            return Ok(result);
+        }
+        catch (UserNotFoundException)
+        {
+            return Unauthorized();
+        }
     }
 }
