@@ -45,6 +45,8 @@ public class EntriesController: ControllerBase
     [HttpGet("[action]")]
     public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date)
     {
-        return Ok(new List<EntryPlain>());
+        var result = _entryManager.GetByDate(date)
+            .Select(e => new EntryPlain(e));
+        return Ok(result);
     }
 }

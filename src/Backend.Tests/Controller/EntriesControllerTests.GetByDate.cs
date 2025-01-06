@@ -29,11 +29,13 @@ public partial class EntriesControllerTests
         //arrange
         var date = new DateTime(2022, 11, 3);
         var entryManager = new Mock<IEntryManager>();
+        var expected = new List<Entry>
+        {
+            new() { Date = date, Value = -12, UserId = 1, Title = "test", Id = 4 },
+            new() { Date = date, Value = -11, UserId = 1, Title = "test2", Id = 5 }
+        };
         entryManager.Setup(em => em.GetByDate(date))
-            .Returns(new List<Entry>
-            {
-                new() { Date = date, Value = -12, UserId = 1, Title = "test", Id = 4}
-            });
+            .Returns(expected);
         var accountManager = new Mock<IAccountManager>();
         
         //act
@@ -43,7 +45,9 @@ public partial class EntriesControllerTests
         //assert
         result.Result.ShouldBeOfType<OkObjectResult>();
         var value = (result.Result as OkObjectResult).Value;
-        value.ShouldBeOfType<List<EntryPlain>>();
+        value.ShouldBeAssignableTo<IEnumerable<EntryPlain>>();
+        var entries = value as IEnumerable<EntryPlain>;
+        entries.Count().ShouldBe(2);
     }
     
 }
