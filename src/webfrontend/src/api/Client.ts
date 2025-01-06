@@ -55,7 +55,16 @@ export class Client implements IClient {
         return succeeded
     }
 
-    async GetEntriesByDate(_: Date): Promise<Entry[]> {
+    async GetEntriesByDate(date: Date): Promise<Entry[]> {
+        const result = await fetch(`${url}/Entries/GetByDate?${new URLSearchParams({
+            accessToken: this.token,
+            date: date.toISOString()
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return await result.json()
+        }
         return []
     }
     async AddEntry(entry: Entry): Promise<boolean> {
@@ -68,11 +77,6 @@ export class Client implements IClient {
             },
             body: JSON.stringify(entry)
         })  
-        if(result.ok) {
-            this.token = await result.text()
-        } else {
-            this.token = ""
-        }
-        return this.token !== ""
+        return result.ok
     }
 }
