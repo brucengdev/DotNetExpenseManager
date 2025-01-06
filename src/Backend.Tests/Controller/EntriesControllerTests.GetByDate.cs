@@ -42,6 +42,8 @@ public partial class EntriesControllerTests
 
         //assert
         result.Result.ShouldBeOfType<OkObjectResult>();
+        var value = (result.Result as OkObjectResult).Value;
+        value.ShouldBeOfType<List<EntryPlain>>();
     }
     
 }
