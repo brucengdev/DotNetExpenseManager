@@ -24,6 +24,8 @@ namespace Backend.Tests
             
             //assert
             result.Count().ShouldBe(2);
+            result.ToArray()[0].ShouldBeEquivalentTo(entryRepo.Entries[0]);
+            result.ToArray()[1].ShouldBeEquivalentTo(entryRepo.Entries[1]);
         }
     }
 }
