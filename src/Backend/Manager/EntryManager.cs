@@ -23,4 +23,9 @@ internal class EntryManager: IEntryManager
         }
         return _entryRepository.AddEntry(input);
     }
+
+    public IEnumerable<Entry> GetByDate(DateTime date, int userId)
+    {
+        return _entryRepository.GetByDateAndUser(date, userId);
+    }
 }

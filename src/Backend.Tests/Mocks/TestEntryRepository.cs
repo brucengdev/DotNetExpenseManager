@@ -11,4 +11,9 @@ public class TestEntryRepository: IEntryRepository
         Entries.Add(entry);
         return true;
     }
+
+    public IEnumerable<Entry> GetByDateAndUser(DateTime date, int userId)
+    {
+        return Entries.Where(e => e.UserId == userId & e.Date.Date == date.Date);
+    }
 }

@@ -1,5 +1,6 @@
 using Backend.Manager;
 using Backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -36,6 +37,22 @@ public class EntriesController: ControllerBase
             return Unauthorized();
         }
         catch (MalformedTokenException)
+        {
+            return Unauthorized();
+        }
+    }
+
+    [HttpGet("[action]")]
+    public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date, string accessToken)
+    {
+        try
+        {
+            var userId = _accountManager.GetUserId(accessToken, DateTime.Now);
+            var result = _entryManager.GetByDate(date, userId)
+                .Select(e => new EntryPlain(e));
+            return Ok(result);
+        }
+        catch (UserNotFoundException)
         {
             return Unauthorized();
         }

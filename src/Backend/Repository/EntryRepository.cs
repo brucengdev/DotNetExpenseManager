@@ -16,4 +16,10 @@ internal class EntryRepository: IEntryRepository
         _dbContext.SaveChanges();
         return true;
     }
+
+    public IEnumerable<Entry> GetByDateAndUser(DateTime date, int userId)
+    {
+        return _dbContext.Entries
+            .Where(e => e.UserId == userId && e.Date.Date == date.Date);
+    }
 }
