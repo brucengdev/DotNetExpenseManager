@@ -1,5 +1,5 @@
 using Backend.Controllers;
-using Backend.Manager;
+using Backend.Core.Manager;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;

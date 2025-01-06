@@ -1,6 +1,6 @@
 using Backend.Models;
 
-namespace Backend.Manager;
+namespace Backend.Core.Manager;
 
 public enum CreateUserResult
 {

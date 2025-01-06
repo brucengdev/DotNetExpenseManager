@@ -1,4 +1,4 @@
-using System.Data.Common;
+using Backend.Core.Repository;
 using Backend.Models;
 
 namespace Backend.Repository;

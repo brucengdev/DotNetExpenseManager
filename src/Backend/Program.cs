@@ -1,5 +1,6 @@
 using Backend;
-using Backend.Manager;
+using Backend.Core.Manager;
+using Backend.Core.Repository;
 using Backend.Models;
 using Backend.Repository;
 using Microsoft.EntityFrameworkCore;

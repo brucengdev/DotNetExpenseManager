@@ -1,5 +1,4 @@
-using Backend.Manager;
-using Backend.Models;
+using Backend.Core.Manager;
 using Backend.Tests.Mocks;
 using Shouldly;
 

@@ -26,5 +26,9 @@
   <ItemGroup>
     <InternalsVisibleTo Include="Backend.Tests" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Backend.Core\Backend.Core.csproj" />
+  </ItemGroup>
 
 </Project>

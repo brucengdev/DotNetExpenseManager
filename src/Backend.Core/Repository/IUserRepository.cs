@@ -1,6 +1,6 @@
 using Backend.Models;
 
-namespace Backend.Repository;
+namespace Backend.Core.Repository;
 
 public interface IUserRepository
 {

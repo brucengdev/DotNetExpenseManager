@@ -1,14 +1,13 @@
+using Backend.Core.Repository;
 using Backend.Models;
-using Backend.Repository;
+namespace Backend.Core.Manager;
 
-namespace Backend.Manager;
-
-internal class InvalidUserIdException : Exception
+public class InvalidUserIdException : Exception
 {
     
 }
 
-internal class EntryManager: IEntryManager
+public class EntryManager: IEntryManager
 {
     private readonly IEntryRepository _entryRepository;
     public EntryManager(IEntryRepository entryRepo)
