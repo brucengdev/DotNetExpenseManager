@@ -48,6 +48,8 @@ public partial class EntriesControllerTests
         value.ShouldBeAssignableTo<IEnumerable<EntryPlain>>();
         var entries = value as IEnumerable<EntryPlain>;
         entries.Count().ShouldBe(2);
+        entries.ToArray()[0].ShouldBeEquivalentTo(new EntryPlain(expected[0]));
+        entries.ToArray()[1].ShouldBeEquivalentTo(new EntryPlain(expected[1]));
     }
     
 }
