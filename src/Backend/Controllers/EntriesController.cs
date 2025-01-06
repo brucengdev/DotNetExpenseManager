@@ -1,5 +1,6 @@
 using Backend.Manager;
 using Backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -44,6 +45,6 @@ public class EntriesController: ControllerBase
     [HttpGet("[action]")]
     public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date)
     {
-        throw new NotImplementedException();
+        return Ok(new List<EntryPlain>());
     }
 }

@@ -23,4 +23,9 @@ internal class EntryManager: IEntryManager
         }
         return _entryRepository.AddEntry(input);
     }
+
+    public IEnumerable<EntryPlain> GetByDate(DateTime date)
+    {
+        throw new NotImplementedException();
+    }
 }
