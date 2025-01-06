@@ -40,4 +40,10 @@ public class EntriesController: ControllerBase
             return Unauthorized();
         }
     }
+
+    [HttpGet("[action]")]
+    public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date)
+    {
+        throw new NotImplementedException();
+    }
 }
