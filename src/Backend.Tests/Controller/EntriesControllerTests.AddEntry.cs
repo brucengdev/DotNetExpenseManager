@@ -14,6 +14,7 @@ public partial class EntriesControllerTests
     public void AddEntry_endpoint_config()
     {
         var method = Utils.GetMethod<EntriesController>(nameof(EntriesController.AddEntry));
+        method.ShouldNotBeNull();
 
         var attributes = method?.GetCustomAttributes(typeof(HttpPostAttribute), true);
         attributes.Length.ShouldBeGreaterThan(0);
