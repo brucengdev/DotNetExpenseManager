@@ -88,14 +88,32 @@ describe("DayView", () => {
 
     it("switches to next day when next day button is clicked", async () => {
         const client = new TestClient()
+        client.Entries = [
+            new Entry(new Date(2024, 5, 1), "grocery", -120),
+            new Entry(new Date(2024, 5, 1), "toys", -100),
+            new Entry(new Date(2024, 12, 9), "eat out", -60),
+            new Entry(new Date(2024, 12, 11), "eat out", -65),
+        ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
         
         await sleep(10)
 
         expect(screen.getByRole("heading", { name: "31/5/2024"})).toBeInTheDocument()
         fireEvent.click(screen.getByRole("button", {name: ">"}))
+        
+        await sleep(10)
 
         expect(screen.getByRole("heading", {name: "1/6/2024"})).toBeInTheDocument()
+
+        const entryList = screen.getByTestId("entry-list")
+        const entries = entryList.querySelectorAll('[data-testid="entry"]')
+        expect(entries.length).toBe(2) 
+
+        expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+
+        expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("toys")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100")
     })
 
 
