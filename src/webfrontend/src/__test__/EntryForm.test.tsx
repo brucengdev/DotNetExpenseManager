@@ -17,6 +17,7 @@ describe("EntryForm", () => {
         expect(dateField).toHaveAttribute("value", "2024-05-31")
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
+        expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
     })
 
     it("changes date", async () => {
@@ -88,5 +89,9 @@ describe("EntryForm", () => {
         await sleep(10)
 
         expect(saveHandler).not.toHaveBeenCalled()
+    })
+
+    it("calls onCancel when Cancel is clicked", async () => {
+        
     })
 })

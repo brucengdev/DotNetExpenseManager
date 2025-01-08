@@ -47,5 +47,6 @@ export const EntryForm = (props: EntryFormProps) => {
             client.AddEntry(new Entry(date, title, valueFloat))
             .then(onSave)
         }}>Save</button>
+        <button>Cancel</button>
     </div>
 }
