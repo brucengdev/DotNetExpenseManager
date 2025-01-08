@@ -27,10 +27,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                     <div data-testid="entry-list">
                         <div>
                             <button onClick={
-                                () => {
-                                    const clonedDate = addDays(date, -1)
-                                    setDate(clonedDate)
-                                }
+                                () => setDate(addDays(date, -1))
                             }>&lt;</button>
                             <h2>{formatDisplayDate(date)}</h2>
                             <button>&gt;</button>
