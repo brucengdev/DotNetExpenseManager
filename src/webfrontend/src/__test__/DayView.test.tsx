@@ -15,7 +15,7 @@ describe("DayView", () => {
             new Entry(new Date(2024, 5, 9), "eat out", -60),
             new Entry(new Date(2024, 5, 11), "eat out", -65),
         ]
-        render(<DayView client={client} date={new Date(2024, 5, 11)} />)
+        render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
         await sleep(10)
 
@@ -23,6 +23,8 @@ describe("DayView", () => {
         expect(entryList).toBeInTheDocument()
 
         expect(screen.getByRole("heading", { name: "11/6/2024"})).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "<" })).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: ">" })).toBeInTheDocument()
 
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
         expect(entries.length).toBe(2)
@@ -42,7 +44,7 @@ describe("DayView", () => {
             new Entry(new Date(2024, 12, 9), "eat out", -60),
             new Entry(new Date(2024, 12, 11), "eat out", -65),
         ]
-        render(<DayView client={client} date={new Date(2023, 12, 11)} />)
+        render(<DayView client={client} initialDate={new Date(2023, 12, 11)} />)
         
         await sleep(10)
 
@@ -53,14 +55,76 @@ describe("DayView", () => {
         expect(entries.length).toBe(0)
     })
 
+    
+    it("switches to previous day when previous day button is clicked", async () => {
+        const client = new TestClient()
+        client.Entries = [
+            new Entry(new Date(2024, 4, 31), "grocery", -120),
+            new Entry(new Date(2024, 4, 31), "toys", -100),
+            new Entry(new Date(2024, 12, 9), "eat out", -60),
+            new Entry(new Date(2024, 12, 11), "eat out", -65),
+        ]
+        render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
+        
+        await sleep(10)
+
+        expect(screen.getByRole("heading", { name: "1/6/2024"})).toBeInTheDocument()
+        fireEvent.click(screen.getByRole("button", {name: "<"}))
+
+        await sleep(10)
+
+        expect(screen.getByRole("heading", {name: "31/5/2024"})).toBeInTheDocument()
+
+        const entryList = screen.getByTestId("entry-list")
+        const entries = entryList.querySelectorAll('[data-testid="entry"]')
+        expect(entries.length).toBe(2) 
+
+        expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+
+        expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("toys")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100")
+    })
+
+    it("switches to next day when next day button is clicked", async () => {
+        const client = new TestClient()
+        client.Entries = [
+            new Entry(new Date(2024, 5, 1), "grocery", -120),
+            new Entry(new Date(2024, 5, 1), "toys", -100),
+            new Entry(new Date(2024, 12, 9), "eat out", -60),
+            new Entry(new Date(2024, 12, 11), "eat out", -65),
+        ]
+        render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
+        
+        await sleep(10)
+
+        expect(screen.getByRole("heading", { name: "31/5/2024"})).toBeInTheDocument()
+        fireEvent.click(screen.getByRole("button", {name: ">"}))
+        
+        await sleep(10)
+
+        expect(screen.getByRole("heading", {name: "1/6/2024"})).toBeInTheDocument()
+
+        const entryList = screen.getByTestId("entry-list")
+        const entries = entryList.querySelectorAll('[data-testid="entry"]')
+        expect(entries.length).toBe(2) 
+
+        expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+
+        expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("toys")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100")
+    })
+
+
     it("has button to log new expense", () => {
-        render(<DayView client={new TestClient()} date={new Date()} />)
+        render(<DayView client={new TestClient()} initialDate={new Date()} />)
 
         expect(screen.getByRole("button", {name: "+"})).toBeInTheDocument()
     })
 
     it("shows form to enter when log button is pressed", () => {
-        render(<DayView client={new TestClient()} date={new Date()} />)
+        render(<DayView client={new TestClient()} initialDate={new Date()} />)
 
         const logButton = screen.getByRole("button", {name: "+"})
         fireEvent.click(logButton)
@@ -70,7 +134,7 @@ describe("DayView", () => {
 
     it("goes back to day view after saving new entry", async() => {
         const client = new TestClient()
-        render(<DayView client={client} date={new Date(2024, 4, 31)} />)
+        render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
 
         const logButton = screen.getByRole("button", {name: "+"})
         fireEvent.click(logButton)

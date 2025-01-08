@@ -3,16 +3,17 @@ import { IClient } from "./api/Client"
 import { EntryView } from "./EntryView"
 import { Entry } from "./api/Entry"
 import { EntryForm } from "./EntryForm"
-import { formatDisplayDate } from "./utils"
+import { addDays, formatDisplayDate } from "./utils"
 
 export interface DayViewProps {
     client: IClient
-    date: Date
+    initialDate: Date
 }
 
-export const DayView = ({client, date}: DayViewProps) => {
+export const DayView = ({client, initialDate}: DayViewProps) => {
     const [addingEntry, setAddingEntry] = useState(false)
     const [entries, setEntries] = useState([] as Entry[])
+    const [date, setDate] = useState(initialDate)
     client.GetEntriesByDate(date)
     .then(serverEntries => {
         if(!areEntriesSame(serverEntries, entries)) {
@@ -24,7 +25,11 @@ export const DayView = ({client, date}: DayViewProps) => {
             {addingEntry? <EntryForm client={client} date={date} onSave={() => { setAddingEntry(false) } } /> :
                 <div>
                     <div data-testid="entry-list">
-                        <h2>{formatDisplayDate(date)}</h2>
+                        <div>
+                            <button className="col" onClick={() => setDate(addDays(date, -1))}>&lt;</button>
+                            <h2 className="col">{formatDisplayDate(date)}</h2>
+                            <button className="col" onClick={() => setDate(addDays(date, 1))}>&gt;</button>
+                        </div>
                         {entries.map(({title, value}) => <EntryView title={title} value={value} />)}
                     </div>
                     <button onClick={() => setAddingEntry(true)}>+</button>
