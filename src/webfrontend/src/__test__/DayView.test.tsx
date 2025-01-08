@@ -15,7 +15,7 @@ describe("DayView", () => {
             new Entry(new Date(2024, 5, 9), "eat out", -60),
             new Entry(new Date(2024, 5, 11), "eat out", -65),
         ]
-        render(<DayView client={client} date={new Date(2024, 5, 11)} />)
+        render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
         await sleep(10)
 
@@ -36,6 +36,18 @@ describe("DayView", () => {
         expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
     })
 
+    it("switches to previous day when previous day button is clicked", async () => {
+        const client = new TestClient()
+        render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
+        
+        await sleep(10)
+
+        expect(screen.getByRole("heading", { name: "11/6/2024"})).toBeInTheDocument()
+        fireEvent.click(screen.getByRole("button", {name: "<"}))
+
+        expect(screen.getByRole("heading", {name: "10/6/2024"})).toBeInTheDocument()
+    })
+
     it("shows entries by day 2", async () => {
         const client = new TestClient()
         client.Entries = [
@@ -44,7 +56,7 @@ describe("DayView", () => {
             new Entry(new Date(2024, 12, 9), "eat out", -60),
             new Entry(new Date(2024, 12, 11), "eat out", -65),
         ]
-        render(<DayView client={client} date={new Date(2023, 12, 11)} />)
+        render(<DayView client={client} initialDate={new Date(2023, 12, 11)} />)
         
         await sleep(10)
 
@@ -56,13 +68,13 @@ describe("DayView", () => {
     })
 
     it("has button to log new expense", () => {
-        render(<DayView client={new TestClient()} date={new Date()} />)
+        render(<DayView client={new TestClient()} initialDate={new Date()} />)
 
         expect(screen.getByRole("button", {name: "+"})).toBeInTheDocument()
     })
 
     it("shows form to enter when log button is pressed", () => {
-        render(<DayView client={new TestClient()} date={new Date()} />)
+        render(<DayView client={new TestClient()} initialDate={new Date()} />)
 
         const logButton = screen.getByRole("button", {name: "+"})
         fireEvent.click(logButton)
@@ -72,7 +84,7 @@ describe("DayView", () => {
 
     it("goes back to day view after saving new entry", async() => {
         const client = new TestClient()
-        render(<DayView client={client} date={new Date(2024, 4, 31)} />)
+        render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
 
         const logButton = screen.getByRole("button", {name: "+"})
         fireEvent.click(logButton)

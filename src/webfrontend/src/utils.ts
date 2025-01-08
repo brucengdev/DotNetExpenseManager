@@ -21,4 +21,8 @@ function formatDate(dateNumber: number): string {
     return (dateNumber).toString().padStart(2, "0")
 }
 
-
+export function addDays(date: Date, days: number) {
+    const clonedDate = new Date(date)
+    clonedDate.setDate(date.getDate() + days)
+    return clonedDate
+}
