@@ -2,7 +2,8 @@ import "./EntryView.css"
 
 export interface EntryProps {
     title: string
-    value: number
+    value: number,
+    onDelete?: () => void
 }
 
 export const EntryView = ({title, value}: EntryProps) => {
