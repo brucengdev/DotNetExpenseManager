@@ -26,11 +26,9 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                 <div>
                     <div data-testid="entry-list">
                         <div>
-                            <button onClick={
-                                () => setDate(addDays(date, -1))
-                            }>&lt;</button>
+                            <button onClick={() => setDate(addDays(date, -1))}>&lt;</button>
                             <h2>{formatDisplayDate(date)}</h2>
-                            <button>&gt;</button>
+                            <button onClick={() => setDate(addDays(date, 1))}>&gt;</button>
                         </div>
                         {entries.map(({title, value}) => <EntryView title={title} value={value} />)}
                     </div>

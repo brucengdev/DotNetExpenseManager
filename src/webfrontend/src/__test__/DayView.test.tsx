@@ -68,6 +68,18 @@ describe("DayView", () => {
         expect(screen.getByRole("heading", {name: "31/5/2024"})).toBeInTheDocument()
     })
 
+    it("switches to next day when next day button is clicked", async () => {
+        const client = new TestClient()
+        render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
+        
+        await sleep(10)
+
+        expect(screen.getByRole("heading", { name: "31/5/2024"})).toBeInTheDocument()
+        fireEvent.click(screen.getByRole("button", {name: ">"}))
+
+        expect(screen.getByRole("heading", {name: "1/6/2024"})).toBeInTheDocument()
+    })
+
 
     it("has button to log new expense", () => {
         render(<DayView client={new TestClient()} initialDate={new Date()} />)
