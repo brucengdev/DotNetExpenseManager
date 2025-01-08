@@ -36,4 +36,16 @@ describe('EntryView', () => {
         fireEvent.click(screen.getByRole("button", { name: "Yes"}))
         expect(onDelete).toHaveBeenCalled()
     })
+    
+    it("hides confirmation view when No is clicked", () => {
+        const onDelete = vitest.fn()
+        render(<EntryView title="Foo" value={-12} onDelete={onDelete} />)
+
+        fireEvent.click(screen.getByRole("button", {name: "X"}))
+        expect(screen.queryByTestId("confirmDeleteView")).toBeInTheDocument()
+
+        fireEvent.click(screen.getByRole("button", { name: "No"}))
+        expect(onDelete).not.toHaveBeenCalled()
+        expect(screen.queryByTestId("confirmDeleteView")).not.toBeInTheDocument()
+    })
 })

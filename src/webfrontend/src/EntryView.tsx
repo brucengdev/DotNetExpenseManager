@@ -17,6 +17,7 @@ export const EntryView = ({title, value, onDelete}: EntryProps) => {
         {showConfirmDeletion?
          <ConfirmDeleteView 
             onYes={() => {if(onDelete) { onDelete()}} }
+            onNo={() => setShowConfirmDeletion(false)}
          />
          : <></> }
     </div>
