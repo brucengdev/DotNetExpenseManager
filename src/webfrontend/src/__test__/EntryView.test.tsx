@@ -17,11 +17,11 @@ describe('EntryView', () => {
         expect(screen.queryByRole("button", {name: "X"})).not.toBeInTheDocument()
     })
 
-    it("executes delete callback when button is clicked", () => {
+    it("shows confirmation dialog when delete is clicked", () => {
         const onDelete = vitest.fn()
         render(<EntryView title="Foo" value={-12} onDelete={onDelete} />)
 
         fireEvent.click(screen.getByRole("button", {name: "X"}))
-        expect(onDelete).toHaveBeenCalled()
+        expect(screen.getByRole("heading", {name: "Confirm to delete?"})).toBeInTheDocument()
     })
 })
