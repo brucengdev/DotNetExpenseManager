@@ -58,14 +58,14 @@ describe("DayView", () => {
     
     it("switches to previous day when previous day button is clicked", async () => {
         const client = new TestClient()
-        render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
+        render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
         
         await sleep(10)
 
-        expect(screen.getByRole("heading", { name: "11/6/2024"})).toBeInTheDocument()
+        expect(screen.getByRole("heading", { name: "1/6/2024"})).toBeInTheDocument()
         fireEvent.click(screen.getByRole("button", {name: "<"}))
 
-        expect(screen.getByRole("heading", {name: "10/6/2024"})).toBeInTheDocument()
+        expect(screen.getByRole("heading", {name: "31/5/2024"})).toBeInTheDocument()
     })
 
 
