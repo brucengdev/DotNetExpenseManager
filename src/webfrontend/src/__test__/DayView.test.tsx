@@ -24,6 +24,7 @@ describe("DayView", () => {
 
         expect(screen.getByRole("heading", { name: "11/6/2024"})).toBeInTheDocument()
         expect(screen.getByRole("button", { name: "<" })).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: ">" })).toBeInTheDocument()
 
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
         expect(entries.length).toBe(2)

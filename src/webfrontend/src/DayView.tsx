@@ -27,6 +27,7 @@ export const DayView = ({client, date}: DayViewProps) => {
                         <div>
                             <button>&lt;</button>
                             <h2>{formatDisplayDate(date)}</h2>
+                            <button>&gt;</button>
                         </div>
                         {entries.map(({title, value}) => <EntryView title={title} value={value} />)}
                     </div>
