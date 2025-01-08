@@ -9,12 +9,14 @@ describe('EntryView', () => {
         render(<EntryView title="Foo" value={-12} onDelete={onDelete} />)
 
         expect(screen.getByRole("button", {name: "X"})).toBeInTheDocument()
+        expect(screen.queryByRole("heading", {name: "Confirm to delete?"})).not.toBeInTheDocument()
     })
 
     it("does not show delete button when there is no delete callback", () => {
         render(<EntryView title="Foo" value={-12} />)
 
         expect(screen.queryByRole("button", {name: "X"})).not.toBeInTheDocument()
+        expect(screen.queryByRole("heading", {name: "Confirm to delete?"})).not.toBeInTheDocument()
     })
 
     it("shows confirmation dialog when delete is clicked", () => {
