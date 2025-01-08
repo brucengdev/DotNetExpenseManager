@@ -31,9 +31,11 @@ describe("DayView", () => {
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
         expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+        expect(entries[0].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
 
         expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("eat out")
         expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
+        expect(entries[1].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
     })
 
     it("shows entries by day 2", async () => {

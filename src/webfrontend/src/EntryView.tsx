@@ -13,7 +13,7 @@ export const EntryView = ({title, value, onDelete}: EntryProps) => {
     return <div data-testid="entry">
         <div className="col entryLabel" data-testid="title">{title}</div>
         <div className="col" data-testid="value">{value}</div>
-        {onDelete? <button onClick={() => setShowConfirmDeletion(true)}>X</button>: <></>}
+        {onDelete? <button data-testid="deleteBtn" onClick={() => setShowConfirmDeletion(true)}>X</button>: <></>}
         {showConfirmDeletion?
          <ConfirmDeleteView 
             onYes={() => {if(onDelete) { onDelete()}} }
