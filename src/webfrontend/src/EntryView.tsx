@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "./EntryView.css"
+import { ConfirmDeleteView } from "./ConfirmDeleteView"
 
 export interface EntryProps {
     title: string
@@ -13,6 +14,6 @@ export const EntryView = ({title, value, onDelete}: EntryProps) => {
         <div className="col entryLabel" data-testid="title">{title}</div>
         <div className="col" data-testid="value">{value}</div>
         {onDelete? <button onClick={() => setShowConfirmDeletion(true)}>X</button>: <></>}
-        {showConfirmDeletion? <h2>Confirm to delete?</h2>: <></> }
+        {showConfirmDeletion? <ConfirmDeleteView />: <></> }
     </div>
 }
