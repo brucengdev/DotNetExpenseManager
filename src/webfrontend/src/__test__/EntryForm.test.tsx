@@ -17,6 +17,7 @@ describe("EntryForm", () => {
         expect(dateField).toHaveAttribute("value", "2024-05-31")
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
+        expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
     })
 
     it("changes date", async () => {
@@ -63,5 +64,42 @@ describe("EntryForm", () => {
 
         expect(client.Entries.length).toBe(1)
         expect(saveHandler).toHaveBeenCalled()
+    })
+
+    it("hightlights textbox when value is invalid", async () => {
+        const saveHandler = vitest.fn()
+        const client = new TestClient()
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} />)
+        
+        fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-"}})
+
+        expect(screen.getByLabelText("Value")).toHaveClass("invalid")
+    })
+
+    it("does not save entry if form is invalid", async () => {
+        const saveHandler = vitest.fn()
+        const client = new TestClient()
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} />)
+        
+        fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
+        fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
+        fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-"}})
+        fireEvent.click(screen.getByRole("button", { name: "Save" }))
+
+        await sleep(10)
+
+        expect(saveHandler).not.toHaveBeenCalled()
+    })
+
+    it("calls onCancel when Cancel is clicked", async () => {
+        const saveHandler = vitest.fn()
+        const cancelHandler = vitest.fn()
+        const client = new TestClient()
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} onCancel={cancelHandler} />)
+        
+        fireEvent.click(screen.getByRole("button", { name: "Cancel" }))
+
+        expect(saveHandler).not.toHaveBeenCalled()
+        expect(cancelHandler).toHaveBeenCalled()
     })
 })

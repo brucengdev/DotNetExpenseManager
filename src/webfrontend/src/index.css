@@ -71,3 +71,7 @@ button:focus-visible {
 .col {
   display: inline-block
 }
+
+.invalid {
+  border-color: red
+}

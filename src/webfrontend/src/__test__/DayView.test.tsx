@@ -148,4 +148,16 @@ describe("DayView", () => {
 
         expect(screen.getByTestId("entry-list")).toBeInTheDocument()
     })
+
+    it("goes back to day view after cancelling adding new entry", async() => {
+        const client = new TestClient()
+        render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
+
+        fireEvent.click(screen.getByRole("button", {name: "+"}))
+        fireEvent.click(screen.getByRole("button", { name: "Cancel" }))
+
+        await sleep(10)
+
+        expect(screen.getByTestId("entry-list")).toBeInTheDocument()
+    })
 })
