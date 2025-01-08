@@ -25,7 +25,9 @@ export const EntryForm = (props: EntryFormProps) => {
         </label>
         <label>
             Value
-            <input type="number" 
+            <input 
+                className={isNaN(parseFloat(value))? "invalid": ""}
+                type="number" 
                 value={value}
                 onChange={event => setValue(event.target.value)}
             />
@@ -39,10 +41,11 @@ export const EntryForm = (props: EntryFormProps) => {
         </label>
         <button onClick={() => {
             const valueFloat = parseFloat(value)
-            if(!isNaN(valueFloat)) {
-                client.AddEntry(new Entry(date, title, valueFloat))
-                .then(onSave)
+            if(isNaN(valueFloat)) {
+                return
             }
+            client.AddEntry(new Entry(date, title, valueFloat))
+            .then(onSave)
         }}>Save</button>
     </div>
 }
