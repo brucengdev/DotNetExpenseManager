@@ -64,4 +64,19 @@ describe("EntryForm", () => {
         expect(client.Entries.length).toBe(1)
         expect(saveHandler).toHaveBeenCalled()
     })
+
+    it("hightlights textbox when value is invalid", async () => {
+        const saveHandler = vitest.fn()
+        const client = new TestClient()
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} />)
+        
+        fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
+        fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
+        fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-"}})
+        fireEvent.click(screen.getByRole("button", { name: "Save" }))
+
+        await sleep(10)
+
+        expect(saveHandler).not.toHaveBeenCalled()
+    })
 })

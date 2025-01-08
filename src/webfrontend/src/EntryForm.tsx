@@ -14,7 +14,7 @@ export const EntryForm = (props: EntryFormProps) => {
     const client = props.client
     const [date, setDate] = useState(initialDate)
     const [title, setTitle] = useState("")
-    const [value, setValue] = useState(0 as number)
+    const [value, setValue] = useState("0")
     return <div data-testid="entry-form">
         <label>
             Title
@@ -27,7 +27,7 @@ export const EntryForm = (props: EntryFormProps) => {
             Value
             <input type="number" 
                 value={value}
-                onChange={event => setValue(parseFloat(event.target.value))}
+                onChange={event => setValue(event.target.value)}
             />
         </label>
         <label>
@@ -38,8 +38,11 @@ export const EntryForm = (props: EntryFormProps) => {
                     />
         </label>
         <button onClick={() => {
-            client.AddEntry(new Entry(date, title, value))
-            .then(onSave)
+            const valueFloat = parseFloat(value)
+            if(!isNaN(valueFloat)) {
+                client.AddEntry(new Entry(date, title, valueFloat))
+                .then(onSave)
+            }
         }}>Save</button>
     </div>
 }
