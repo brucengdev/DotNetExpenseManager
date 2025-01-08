@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vitest } from "vitest";
 import '@testing-library/jest-dom'
 import { ConfirmDeleteView } from "../ConfirmDeleteView";
 
@@ -13,4 +13,11 @@ describe('ConfirmDeleteView', () => {
         expect(screen.getByRole("button", { name: "No"})).toBeInTheDocument()
     })
 
+    it("executes onYes callback when yes is clicked", () => {
+        const onYes = vitest.fn()
+        render(<ConfirmDeleteView  onYes={onYes} />)
+
+        fireEvent.click(screen.getByRole("button", { name: "Yes"}))
+        expect(onYes).toHaveBeenCalled()
+    })
 })
