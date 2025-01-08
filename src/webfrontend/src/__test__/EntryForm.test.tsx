@@ -92,6 +92,14 @@ describe("EntryForm", () => {
     })
 
     it("calls onCancel when Cancel is clicked", async () => {
+        const saveHandler = vitest.fn()
+        const cancelHandler = vitest.fn()
+        const client = new TestClient()
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} onCancel={cancelHandler} />)
         
+        fireEvent.click(screen.getByRole("button", { name: "Cancel" }))
+
+        expect(saveHandler).not.toHaveBeenCalled()
+        expect(cancelHandler).toHaveBeenCalled()
     })
 })

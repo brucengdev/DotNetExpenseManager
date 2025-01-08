@@ -7,10 +7,12 @@ export interface EntryFormProps {
     date: Date
     onSave: () => void
     client: IClient
+    onCancel?: () => void
 }
 export const EntryForm = (props: EntryFormProps) => {
     const initialDate = props.date
     const onSave = props.onSave
+    const onCancel = props.onCancel
     const client = props.client
     const [date, setDate] = useState(initialDate)
     const [title, setTitle] = useState("")
@@ -47,6 +49,8 @@ export const EntryForm = (props: EntryFormProps) => {
             client.AddEntry(new Entry(date, title, valueFloat))
             .then(onSave)
         }}>Save</button>
-        <button>Cancel</button>
+        <button onClick={() => {
+            if(onCancel) { onCancel()}
+        }}>Cancel</button>
     </div>
 }
