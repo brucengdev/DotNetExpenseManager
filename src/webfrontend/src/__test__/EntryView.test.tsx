@@ -26,4 +26,14 @@ describe('EntryView', () => {
         fireEvent.click(screen.getByRole("button", {name: "X"}))
         expect(screen.queryByTestId("confirmDeleteView")).toBeInTheDocument()
     })
+
+    it("executes onDelete when Yes is clicked", () => {
+        const onDelete = vitest.fn()
+        render(<EntryView title="Foo" value={-12} onDelete={onDelete} />)
+
+        fireEvent.click(screen.getByRole("button", {name: "X"}))
+        expect(screen.queryByTestId("confirmDeleteView")).toBeInTheDocument()
+        fireEvent.click(screen.getByRole("button", { name: "Yes"}))
+        expect(onDelete).toHaveBeenCalled()
+    })
 })
