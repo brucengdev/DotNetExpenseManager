@@ -46,7 +46,7 @@ export const EntryForm = (props: EntryFormProps) => {
             if(isNaN(valueFloat)) {
                 return
             }
-            client.AddEntry(new Entry(date, title, valueFloat))
+            client.AddEntry(new Entry(0, date, title, valueFloat))
             .then(onSave)
         }}>Save</button>
         <button onClick={() => {
