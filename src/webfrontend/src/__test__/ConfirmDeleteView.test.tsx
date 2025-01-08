@@ -20,4 +20,12 @@ describe('ConfirmDeleteView', () => {
         fireEvent.click(screen.getByRole("button", { name: "Yes"}))
         expect(onYes).toHaveBeenCalled()
     })
+
+    it("executes onNo callback when no is clicked", () => {
+        const onNo = vitest.fn()
+        render(<ConfirmDeleteView  onNo={onNo} />)
+
+        fireEvent.click(screen.getByRole("button", { name: "No"}))
+        expect(onNo).toHaveBeenCalled()
+    })
 })
