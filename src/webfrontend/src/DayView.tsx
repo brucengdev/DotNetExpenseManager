@@ -24,7 +24,10 @@ export const DayView = ({client, date}: DayViewProps) => {
             {addingEntry? <EntryForm client={client} date={date} onSave={() => { setAddingEntry(false) } } /> :
                 <div>
                     <div data-testid="entry-list">
-                        <h2>{formatDisplayDate(date)}</h2>
+                        <div>
+                            <button>&lt;</button>
+                            <h2>{formatDisplayDate(date)}</h2>
+                        </div>
                         {entries.map(({title, value}) => <EntryView title={title} value={value} />)}
                     </div>
                     <button onClick={() => setAddingEntry(true)}>+</button>
