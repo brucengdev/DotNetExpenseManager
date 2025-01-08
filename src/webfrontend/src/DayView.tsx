@@ -22,7 +22,12 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     })
 
     return <div data-testid="day-view">
-            {addingEntry? <EntryForm client={client} date={date} onSave={() => { setAddingEntry(false) } } /> :
+            {addingEntry? <EntryForm 
+                        client={client} 
+                        date={date} 
+                        onSave={() => { setAddingEntry(false) } } 
+                        onCancel={() => setAddingEntry(false) }
+                        /> :
                 <div>
                     <div data-testid="entry-list">
                         <div>
