@@ -10,10 +10,10 @@ describe("DayView", () => {
     it("shows entries by day", async () => {
         const client = new TestClient()
         client.Entries = [
-            new Entry(new Date(2024, 5, 11), "grocery", -120),
-            new Entry(new Date(2024, 5, 8), "toys", -100),
-            new Entry(new Date(2024, 5, 9), "eat out", -60),
-            new Entry(new Date(2024, 5, 11), "eat out", -65),
+            new Entry(0, new Date(2024, 5, 11), "grocery", -120),
+            new Entry(1, new Date(2024, 5, 8), "toys", -100),
+            new Entry(2, new Date(2024, 5, 9), "eat out", -60),
+            new Entry(3, new Date(2024, 5, 11), "eat out", -65),
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
@@ -31,18 +31,20 @@ describe("DayView", () => {
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
         expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+        expect(entries[0].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
 
         expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("eat out")
         expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
+        expect(entries[1].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
     })
 
     it("shows entries by day 2", async () => {
         const client = new TestClient()
         client.Entries = [
-            new Entry(new Date(2024, 12, 11), "grocery", -120),
-            new Entry(new Date(2024, 12, 8), "toys", -100),
-            new Entry(new Date(2024, 12, 9), "eat out", -60),
-            new Entry(new Date(2024, 12, 11), "eat out", -65),
+            new Entry(0, new Date(2024, 12, 11), "grocery", -120),
+            new Entry(1, new Date(2024, 12, 8), "toys", -100),
+            new Entry(2, new Date(2024, 12, 9), "eat out", -60),
+            new Entry(3, new Date(2024, 12, 11), "eat out", -65),
         ]
         render(<DayView client={client} initialDate={new Date(2023, 12, 11)} />)
         
@@ -59,10 +61,10 @@ describe("DayView", () => {
     it("switches to previous day when previous day button is clicked", async () => {
         const client = new TestClient()
         client.Entries = [
-            new Entry(new Date(2024, 4, 31), "grocery", -120),
-            new Entry(new Date(2024, 4, 31), "toys", -100),
-            new Entry(new Date(2024, 12, 9), "eat out", -60),
-            new Entry(new Date(2024, 12, 11), "eat out", -65),
+            new Entry(0, new Date(2024, 4, 31), "grocery", -120),
+            new Entry(1, new Date(2024, 4, 31), "toys", -100),
+            new Entry(2, new Date(2024, 12, 9), "eat out", -60),
+            new Entry(3, new Date(2024, 12, 11), "eat out", -65),
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
         
@@ -89,10 +91,10 @@ describe("DayView", () => {
     it("switches to next day when next day button is clicked", async () => {
         const client = new TestClient()
         client.Entries = [
-            new Entry(new Date(2024, 5, 1), "grocery", -120),
-            new Entry(new Date(2024, 5, 1), "toys", -100),
-            new Entry(new Date(2024, 12, 9), "eat out", -60),
-            new Entry(new Date(2024, 12, 11), "eat out", -65),
+            new Entry(0, new Date(2024, 5, 1), "grocery", -120),
+            new Entry(1, new Date(2024, 5, 1), "toys", -100),
+            new Entry(2, new Date(2024, 12, 9), "eat out", -60),
+            new Entry(3, new Date(2024, 12, 11), "eat out", -65),
         ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
         
@@ -159,5 +161,24 @@ describe("DayView", () => {
         await sleep(10)
 
         expect(screen.getByTestId("entry-list")).toBeInTheDocument()
+    })
+
+    it("deletes an entry", async() => {
+        const client = new TestClient()
+        client.Entries = [
+            new Entry(13, new Date(2024, 5, 1), "grocery", -120),
+        ]
+        render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
+        await sleep(10)
+
+        const entryList = screen.getByTestId("entry-list")
+        const entries = entryList.querySelectorAll('[data-testid="entry"]')
+        expect(entries.length).toBe(1) 
+
+        fireEvent.click(screen.getByRole("button", {name: "X"}))
+
+        fireEvent.click(screen.getByRole("button", {name: "Yes"}))
+
+        expect(client.Entries.length).toBe(0)
     })
 })

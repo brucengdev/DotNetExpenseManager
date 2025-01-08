@@ -8,6 +8,7 @@ export interface IClient {
     Logout: () => void
     GetEntriesByDate: (date: Date) => Promise<Entry[]>
     AddEntry: (entry: Entry) => Promise<boolean>
+    DeleteEntry(id: number): Promise<boolean>
 }
 
 const devUrl = "https://localhost:7146"
@@ -76,6 +77,16 @@ export class Client implements IClient {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(entry)
+        })  
+        return result.ok
+    }
+    
+    async DeleteEntry(id: number): Promise<boolean> {
+        const result = await fetch(`${url}/Entries/Delete?${new URLSearchParams({
+            accessToken: this.token,
+            id: id.toString()
+        }).toString()}`, {
+            method: "POST",
         })  
         return result.ok
     }

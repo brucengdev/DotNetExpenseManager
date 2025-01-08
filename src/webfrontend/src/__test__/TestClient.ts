@@ -42,4 +42,9 @@ export class TestClient implements IClient {
         this.Entries.push(entry)
         return true
     }
+
+    async DeleteEntry(id: number): Promise<boolean> {
+        this.Entries = this.Entries.filter(e => e.id !== id)
+        return true
+    }
 }

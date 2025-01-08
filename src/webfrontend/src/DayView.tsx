@@ -35,7 +35,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                             <h2 className="col">{formatDisplayDate(date)}</h2>
                             <button className="col" onClick={() => setDate(addDays(date, 1))}>&gt;</button>
                         </div>
-                        {entries.map(({title, value}) => <EntryView title={title} value={value} />)}
+                        {entries.map(({id, title, value}) => <EntryView title={title} value={value} onDelete={() => client.DeleteEntry(id)} />)}
                     </div>
                     <button onClick={() => setAddingEntry(true)}>+</button>
                 </div>
