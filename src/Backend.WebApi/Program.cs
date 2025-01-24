@@ -43,7 +43,7 @@ var app = builder.Build();
 using(var serviceScope = app.Services.CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetService<ExpensesContext>();
-    context.Database.EnsureCreated();
+    context.Database.Migrate();
     SeedData.Initialize(context);
 }
 
