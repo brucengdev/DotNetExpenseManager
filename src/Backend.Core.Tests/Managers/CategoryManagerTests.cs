@@ -1,6 +1,6 @@
 using Backend.Core.Manager;
 using Backend.Core.Tests.Mocks;
-using Moq;
+using Backend.Models;
 
 namespace Backend.Core.Tests;
 
@@ -11,6 +11,13 @@ public class CategoryManagerTests
     {
         //arrange
         var categoryRepo = new TestCategoryRepository();
+        categoryRepo.Categories = new List<Category>()
+        {
+            new() { Name = "household", UserId = 1 },
+            new() { Name = "Leisure", UserId = 1 },
+            new() { Name = "Travel", UserId = 2 }
+        };
         var sut = new CategoryManager(categoryRepo);
+        
     }
 }

@@ -6,6 +6,5 @@ public class CategoryManager
 {
     public CategoryManager(ICategoryRepository repository)
     {
-        
     }
 }
