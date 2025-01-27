@@ -29,6 +29,7 @@ describe("EntryForm", () => {
         expect(categoryOptions.length).toBe(2)
         expect(categoryOptions[0].innerHTML).toBe("Uncategorized")
         expect(categoryOptions[0]).toHaveAttribute("value", "0")
+        expect((categoryOptions[0] as any).selected).toBeTruthy()
 
         expect(categoryOptions[1].innerHTML).toBe("household")
         expect(categoryOptions[1]).toHaveAttribute("value", "1")

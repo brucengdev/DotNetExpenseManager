@@ -52,7 +52,7 @@ export const EntryForm = (props: EntryFormProps) => {
         <label>
             Category
             <select>
-                <option data-testid="category-option" value="0">
+                <option data-testid="category-option" value="0" selected>
                     Uncategorized
                 </option>
                 {categories.map(cat => 
