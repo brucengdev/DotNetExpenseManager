@@ -149,6 +149,8 @@ describe("DayView", () => {
         await sleep(10)
 
         expect(screen.getByTestId("entry-list")).toBeInTheDocument()
+
+        expect(client.Entries.length).toBe(1)
     })
 
     it("goes back to day view after cancelling adding new entry", async() => {
