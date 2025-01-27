@@ -7,6 +7,7 @@ import { sleep } from "./testutils";
 import { Entry } from "../api/Entry";
 import { sameDate } from "../utils";
 import { Category } from "../api/Category";
+import userEvent from "@testing-library/user-event";
 
 describe("DayView", () => {
     it("shows entries by day", async () => {
@@ -139,7 +140,7 @@ describe("DayView", () => {
     it("goes back to day view after saving new entry", async() => {
         const client = new TestClient()
         client.Categories = [
-            new Category(1, "Household")
+            new Category(12, "Household")
         ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
         await sleep(10)
@@ -147,15 +148,16 @@ describe("DayView", () => {
         const logButton = screen.getByRole("button", {name: "+"})
         fireEvent.click(logButton)
 
+        await sleep(10)
+
+        await userEvent.selectOptions(screen.getByRole("combobox", { name: "Category" }), "12")
+
         fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
         fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})
         fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
-        fireEvent.change(screen.getByRole("combobox", { name: "Category"}), {
-            target: { value: 1}
-        })
         fireEvent.click(screen.getByRole("button", { name: "Save" }))
 
-        await sleep(10)
+        await sleep(10) 
 
         expect(screen.getByTestId("entry-list")).toBeInTheDocument()
 
@@ -164,6 +166,7 @@ describe("DayView", () => {
         expect(entry.title).toBe("foo")
         expect(entry.value).toBe(-120.23)
         expect(sameDate(entry.date, new Date(2023, 0, 2))).toBeTruthy()
+        expect(entry.categoryId).toBe(12)
     })
 
     it("goes back to day view after cancelling adding new entry", async() => {

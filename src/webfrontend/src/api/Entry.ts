@@ -6,6 +6,7 @@ export class Entry implements Comparable<Entry>{
     public title: string = ""
     public value: number = 0
     public date: Date = new Date()
+    public categoryId: number = 0
 
     constructor(id: number, date: Date, title: string, value: number) {
         this.id = id

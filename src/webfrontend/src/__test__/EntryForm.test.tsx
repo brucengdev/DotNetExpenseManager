@@ -5,6 +5,7 @@ import { EntryForm } from "../EntryForm";
 import { TestClient } from "./TestClient";
 import { sleep } from "./testutils";
 import { Category } from "../api/Category";
+import userEvent from "@testing-library/user-event"
 
 describe("EntryForm", () => {
     it("shows form input", async () => {
@@ -79,7 +80,8 @@ describe("EntryForm", () => {
         
         const category = screen.getByRole("combobox", { name: "Category" })
 
-        fireEvent.change(category, { target: { value: "1"}})
+        await userEvent.selectOptions(category, "1")
+        await sleep(10)
         
         var categoryOptions = screen.getAllByTestId("category-option")
         expect((categoryOptions[0] as any).selected).toBeFalsy()
