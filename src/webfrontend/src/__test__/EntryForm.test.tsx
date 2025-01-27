@@ -1,18 +1,20 @@
-import { fireEvent, getByTestId, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { EntryForm } from "../EntryForm";
 import { TestClient } from "./TestClient";
 import { sleep } from "./testutils";
+import { Category } from "../api/Category";
 
 describe("EntryForm", () => {
     it("shows form input", async () => {
         const client = new TestClient()
         client.Categories = [
-            { id: 1, name: "" }
+            new Category(1, "household") 
         ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
-        
+        await sleep(100)
+
         expect(screen.getByRole("textbox", {name: "Title"})).toBeInTheDocument()
         expect(screen.getByLabelText("Value")).toBeInTheDocument()
         
@@ -24,8 +26,12 @@ describe("EntryForm", () => {
         expect(categoryField).toBeInTheDocument()
         
         var categoryOptions = screen.getAllByTestId("category-option")
+        expect(categoryOptions.length).toBe(2)
         expect(categoryOptions[0].innerHTML).toBe("Uncategorized")
         expect(categoryOptions[0]).toHaveAttribute("value", "0")
+
+        expect(categoryOptions[1].innerHTML).toBe("household")
+        expect(categoryOptions[1]).toHaveAttribute("value", "1")
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()

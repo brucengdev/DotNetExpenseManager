@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { formatDateToDay } from "./utils"
+import { areSame, formatDateToDay } from "./utils"
 import { IClient } from "./api/Client"
 import { Entry } from "./api/Entry"
+import { Category } from "./api/Category"
 
 export interface EntryFormProps {
     date: Date
@@ -17,6 +18,13 @@ export const EntryForm = (props: EntryFormProps) => {
     const [date, setDate] = useState(initialDate)
     const [title, setTitle] = useState("")
     const [value, setValue] = useState("0")
+    const [categories, setCategories] = useState([] as Category[])
+    client.GetCategories()
+    .then(cats => {
+        if(!areSame(cats, categories)) {
+            setCategories(cats)
+        }
+    })
     return <div data-testid="entry-form">
         <label>
             Title
@@ -47,6 +55,11 @@ export const EntryForm = (props: EntryFormProps) => {
                 <option data-testid="category-option" value="0">
                     Uncategorized
                 </option>
+                {categories.map(cat => 
+                    <option data-testid="category-option" value={cat.id}>
+                        {cat.name}
+                    </option>)
+                }
             </select>
         </label>
         <button onClick={() => {

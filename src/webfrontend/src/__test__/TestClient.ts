@@ -1,3 +1,4 @@
+import { Category } from "../api/Category";
 import { IClient } from "../api/Client";
 import { Entry } from "../api/Entry";
 import { sameDate } from "../utils";
@@ -47,5 +48,9 @@ export class TestClient implements IClient {
     async DeleteEntry(id: number): Promise<boolean> {
         this.Entries = this.Entries.filter(e => e.id !== id)
         return true
+    }
+
+    async GetCategories(): Promise<Category[]> {
+        return this.Categories
     }
 }

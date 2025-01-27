@@ -26,3 +26,17 @@ export function addDays(date: Date, days: number) {
     clonedDate.setDate(date.getDate() + days)
     return clonedDate
 }
+
+export function areSame<T extends Comparable>(first: T[], second: T[]) {
+    if(first.length !== second.length) {
+        return false
+    }
+
+    for(let i = 0; i < first.length; i++) {
+        if(!first[i].Equals(second[i])) {
+            return false
+        }
+    }
+
+    return true
+}
