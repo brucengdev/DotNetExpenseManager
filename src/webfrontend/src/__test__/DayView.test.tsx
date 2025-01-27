@@ -5,6 +5,7 @@ import { DayView } from "../DayView";
 import { TestClient } from "./TestClient";
 import { sleep } from "./testutils";
 import { Entry } from "../api/Entry";
+import { sameDate } from "../utils";
 
 describe("DayView", () => {
     it("shows entries by day", async () => {
@@ -151,6 +152,10 @@ describe("DayView", () => {
         expect(screen.getByTestId("entry-list")).toBeInTheDocument()
 
         expect(client.Entries.length).toBe(1)
+        const entry = client.Entries[0]
+        expect(entry.title).toBe("foo")
+        expect(entry.value).toBe(-120.23)
+        expect(sameDate(entry.date, new Date(2023, 0, 2))).toBeTruthy()
     })
 
     it("goes back to day view after cancelling adding new entry", async() => {
