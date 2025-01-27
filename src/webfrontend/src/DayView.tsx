@@ -3,7 +3,7 @@ import { IClient } from "./api/Client"
 import { EntryView } from "./EntryView"
 import { Entry } from "./api/Entry"
 import { EntryForm } from "./EntryForm"
-import { addDays, formatDisplayDate } from "./utils"
+import { addDays, areSame, formatDisplayDate } from "./utils"
 
 export interface DayViewProps {
     client: IClient
@@ -16,7 +16,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     const [date, setDate] = useState(initialDate)
     client.GetEntriesByDate(date)
     .then(serverEntries => {
-        if(!areEntriesSame(serverEntries, entries)) {
+        if(!areSame(serverEntries, entries)) {
             setEntries(serverEntries)
         }
     })
@@ -41,16 +41,4 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                 </div>
             }
         </div>
-}
-
-function areEntriesSame(entries1: Entry[], entries2: Entry[]) {
-    if(entries1.length !== entries2.length) {
-        return false
-    }
-    for(let i = 0; i < entries1.length; i++) {
-        if(!entries1[i].Equals(entries2[i])) {
-            return false
-        }
-    }
-    return true
 }

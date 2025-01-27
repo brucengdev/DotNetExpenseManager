@@ -1,10 +1,12 @@
+import { Comparable } from "../models/Comparable"
 import { sameDate } from "../utils"
 
-export class Entry {
+export class Entry implements Comparable<Entry>{
     public id: number = 0
     public title: string = ""
     public value: number = 0
     public date: Date = new Date()
+    public categoryId: number = 0
 
     constructor(id: number, date: Date, title: string, value: number) {
         this.id = id
@@ -17,5 +19,6 @@ export class Entry {
         return this.title === other.title
                 && this.value === other.value
                 && sameDate(this.date, other.date)
+                && this.categoryId === other.categoryId
     }
 }

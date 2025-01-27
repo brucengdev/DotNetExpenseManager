@@ -1,3 +1,4 @@
+import { Category } from "./Category"
 import { Entry } from "./Entry"
 
 export interface IClient {
@@ -9,6 +10,7 @@ export interface IClient {
     GetEntriesByDate: (date: Date) => Promise<Entry[]>
     AddEntry: (entry: Entry) => Promise<boolean>
     DeleteEntry(id: number): Promise<boolean>
+    GetCategories: () => Promise<Category[]>
 }
 
 const devUrl = "https://localhost:7146"
@@ -89,5 +91,11 @@ export class Client implements IClient {
             method: "POST",
         })  
         return result.ok
+    }
+
+    async GetCategories(): Promise<Category[]> {
+        return [
+            new Category(0, "Uncategorized")
+        ]
     }
 }
