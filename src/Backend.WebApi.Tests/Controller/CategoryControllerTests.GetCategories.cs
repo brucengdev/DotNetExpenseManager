@@ -13,6 +13,7 @@ public partial class CategoryControllerTests
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
+        var categoryManager = new Mock<ICategoryManager>();
         var sut = new CategoryController(accountManager.Object);
         
         //act

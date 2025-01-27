@@ -3,7 +3,7 @@ using Backend.Models;
 
 namespace Backend.Core.Manager;
 
-public class CategoryManager
+public class CategoryManager: ICategoryManager
 {
     private readonly ICategoryRepository _repository;
     public CategoryManager(ICategoryRepository repository)
