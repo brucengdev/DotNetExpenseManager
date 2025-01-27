@@ -36,4 +36,16 @@ describe('areSame', () => {
         ]
         expect(areSame(first, second)).toBeFalsy()
     })
+
+    it(' returns true when values equal', () => {
+        const first = [
+            new TestElement("dog"),
+            new TestElement("cat")
+        ]
+        const second = [
+            new TestElement("dog"),
+            new TestElement("cat")
+        ]
+        expect(areSame(first, second)).toBeTruthy()
+    })
 })
