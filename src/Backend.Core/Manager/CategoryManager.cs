@@ -5,16 +5,14 @@ namespace Backend.Core.Manager;
 
 public class CategoryManager
 {
+    private readonly ICategoryRepository _repository;
     public CategoryManager(ICategoryRepository repository)
     {
+        _repository = repository;
     }
 
-    public IEnumerable<Category> GetCategories(int i)
+    public IEnumerable<Category> GetCategories(int userId)
     {
-        return new List<Category>()
-        {
-            new() { Id = 1, Name = "household", UserId = 1 },
-            new() { Id = 2, Name = "Leisure", UserId = 1 },
-        };
+        return _repository.GetAllByUserId(userId);
     }
 }
