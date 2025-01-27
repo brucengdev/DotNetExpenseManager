@@ -1,6 +1,7 @@
+import { Comparable } from "../models/Comparable"
 import { sameDate } from "../utils"
 
-export class Entry {
+export class Entry implements Comparable<Entry>{
     public id: number = 0
     public title: string = ""
     public value: number = 0
