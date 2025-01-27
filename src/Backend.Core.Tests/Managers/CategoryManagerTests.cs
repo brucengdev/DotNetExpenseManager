@@ -19,5 +19,9 @@ public class CategoryManagerTests
         };
         var sut = new CategoryManager(categoryRepo);
         
+        //act
+        var categories = sut.GetCategories(1);
+        
+        
     }
 }
