@@ -33,6 +33,7 @@ describe("EntryForm", () => {
 
         expect(categoryOptions[1].innerHTML).toBe("household")
         expect(categoryOptions[1]).toHaveAttribute("value", "1")
+        expect((categoryOptions[1] as any).selected).toBeFalsy()
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
