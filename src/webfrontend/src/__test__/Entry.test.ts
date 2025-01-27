@@ -25,4 +25,28 @@ describe("Entry", () => {
         entry2.categoryId = 1
         expect(entry1.Equals(entry2)).toBeFalsy()
     })
+
+    test("Equals must be false when ids are different", () => {
+        const entry1 = new Entry(1, new Date(2024, 12, 1), "foo", -12.22)
+        entry1.categoryId = 1
+        const entry2 = new Entry(1, new Date(2024, 12, 2), "foo", -12.22)
+        entry2.categoryId = 1
+        expect(entry1.Equals(entry2)).toBeFalsy()
+    })
+
+    test("Equals must be false when titles are different", () => {
+        const entry1 = new Entry(1, new Date(2024, 12, 1), "foo", -12.22)
+        entry1.categoryId = 1
+        const entry2 = new Entry(1, new Date(2024, 12, 1), "foo2", -12.22)
+        entry2.categoryId = 1
+        expect(entry1.Equals(entry2)).toBeFalsy()
+    })
+
+    test("Equals must be false when values are different", () => {
+        const entry1 = new Entry(1, new Date(2024, 12, 1), "foo", -12.22)
+        entry1.categoryId = 1
+        const entry2 = new Entry(1, new Date(2024, 12, 1), "foo", -12.23)
+        entry2.categoryId = 1
+        expect(entry1.Equals(entry2)).toBeFalsy()
+    })
 })
