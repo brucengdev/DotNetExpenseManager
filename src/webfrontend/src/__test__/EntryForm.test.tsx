@@ -16,6 +16,9 @@ describe("EntryForm", () => {
         expect(dateField).toBeInTheDocument()
         expect(dateField).toHaveAttribute("value", "2024-05-31")
 
+        const categoryField = screen.getByRole("combobox", { name: "Category"})
+        expect(categoryField).toBeInTheDocument()
+
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
     })

@@ -41,6 +41,10 @@ export const EntryForm = (props: EntryFormProps) => {
                     onChange={(event) => setDate(new Date(event.target.value))} 
                     />
         </label>
+        <label>
+            Category
+            <select></select>
+        </label>
         <button onClick={() => {
             const valueFloat = parseFloat(value)
             if(isNaN(valueFloat)) {
