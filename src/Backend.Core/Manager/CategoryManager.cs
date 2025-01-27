@@ -11,6 +11,10 @@ public class CategoryManager
 
     public IEnumerable<Category> GetCategories(int i)
     {
-        return new List<Category>();
+        return new List<Category>()
+        {
+            new() { Id = 1, Name = "household", UserId = 1 },
+            new() { Id = 2, Name = "Leisure", UserId = 1 },
+        };
     }
 }

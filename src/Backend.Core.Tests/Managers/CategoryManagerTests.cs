@@ -1,6 +1,7 @@
 using Backend.Core.Manager;
 using Backend.Core.Tests.Mocks;
 using Backend.Models;
+using Shouldly;
 
 namespace Backend.Core.Tests;
 
@@ -22,6 +23,11 @@ public class CategoryManagerTests
         //act
         var categories = sut.GetCategories(1);
         
-        
+        //assert
+        categories.ShouldBeEquivalentTo(new List<Category>()
+        {
+            new() { Id = 1, Name = "household", UserId = 1 },
+            new() { Id = 2, Name = "Leisure", UserId = 1 },
+        });
     }
 }
