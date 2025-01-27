@@ -4,7 +4,7 @@ using Shouldly;
 
 namespace Backend.WebApi.Tests.Controller;
 
-public class CategoryControllerTests
+public partial class CategoryControllerTests
 {
     [Fact]
     public void Controller_config()
