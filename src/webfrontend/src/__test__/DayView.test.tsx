@@ -6,6 +6,7 @@ import { TestClient } from "./TestClient";
 import { sleep } from "./testutils";
 import { Entry } from "../api/Entry";
 import { sameDate } from "../utils";
+import { Category } from "../api/Category";
 
 describe("DayView", () => {
     it("shows entries by day", async () => {
@@ -137,7 +138,11 @@ describe("DayView", () => {
 
     it("goes back to day view after saving new entry", async() => {
         const client = new TestClient()
+        client.Categories = [
+            new Category(1, "Household")
+        ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
+        await sleep(10)
 
         const logButton = screen.getByRole("button", {name: "+"})
         fireEvent.click(logButton)
@@ -145,6 +150,9 @@ describe("DayView", () => {
         fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
         fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})
         fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
+        fireEvent.change(screen.getByRole("combobox", { name: "Category"}), {
+            target: { value: 1}
+        })
         fireEvent.click(screen.getByRole("button", { name: "Save" }))
 
         await sleep(10)
