@@ -1,5 +1,5 @@
 using Backend.Core.Manager;
-using Backend.Core.Repository;
+using Backend.Core.Tests.Mocks;
 using Moq;
 
 namespace Backend.Core.Tests;
@@ -10,7 +10,7 @@ public class CategoryManagerTests
     public void GetCategories_must_return()
     {
         //arrange
-        var categoryRepo = new Mock<ICategoryRepository>();
-        var sut = new CategoryManager(categoryRepo.Object);
+        var categoryRepo = new TestCategoryRepository();
+        var sut = new CategoryManager(categoryRepo);
     }
 }
