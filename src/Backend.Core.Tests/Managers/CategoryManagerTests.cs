@@ -13,9 +13,9 @@ public class CategoryManagerTests
         var categoryRepo = new TestCategoryRepository();
         categoryRepo.Categories = new List<Category>()
         {
-            new() { Name = "household", UserId = 1 },
-            new() { Name = "Leisure", UserId = 1 },
-            new() { Name = "Travel", UserId = 2 }
+            new() { Id = 1, Name = "household", UserId = 1 },
+            new() { Id = 2, Name = "Leisure", UserId = 1 },
+            new() { Id = 3, Name = "Travel", UserId = 2 }
         };
         var sut = new CategoryManager(categoryRepo);
         
