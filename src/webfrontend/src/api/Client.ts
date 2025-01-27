@@ -94,6 +94,8 @@ export class Client implements IClient {
     }
 
     async GetCategories(): Promise<Category[]> {
-        return []
+        return [
+            new Category(0, "Uncategorized")
+        ]
     }
 }
