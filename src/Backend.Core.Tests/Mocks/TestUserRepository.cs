@@ -2,7 +2,7 @@ using Backend.Core.Repository;
 using Backend.Models;
 using Backend.WebApi.Repository;
 
-namespace Backend.Tests.Mocks;
+namespace Backend.Core.Tests.Mocks;
 
 public class TestUserRepository: IUserRepository
 {

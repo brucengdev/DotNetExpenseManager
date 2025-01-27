@@ -34,4 +34,4 @@ jobs:
       working-directory: ./src
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      working-directory: ./src/Backend.Tests
+      working-directory: ./src/Backend.Core.Tests

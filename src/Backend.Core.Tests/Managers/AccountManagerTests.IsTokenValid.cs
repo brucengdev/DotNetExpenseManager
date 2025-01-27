@@ -1,9 +1,9 @@
 using Backend.Core.Manager;
 using Backend.Models;
-using Backend.Tests.Mocks;
+using Backend.Core.Tests.Mocks;
 using Shouldly;
 
-namespace Backend.Tests
+namespace Backend.Core.Tests
 {
     public partial class AccountManagerTests
     {

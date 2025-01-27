@@ -1,7 +1,7 @@
 using Backend.Core.Repository;
 using Backend.Models;
 
-namespace Backend.Tests.Mocks;
+namespace Backend.Core.Tests.Mocks;
 
 public class TestEntryRepository: IEntryRepository
 {
