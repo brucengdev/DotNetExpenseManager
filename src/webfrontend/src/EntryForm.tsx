@@ -44,7 +44,7 @@ export const EntryForm = (props: EntryFormProps) => {
         <label>
             Category
             <select>
-                <option data-testid="category-option">
+                <option data-testid="category-option" value="0">
                     Uncategorized
                 </option>
             </select>

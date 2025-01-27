@@ -21,6 +21,7 @@ describe("EntryForm", () => {
         
         var categoryOptions = screen.getAllByTestId("category-option")
         expect(categoryOptions[0].innerHTML).toBe("Uncategorized")
+        expect(categoryOptions[0]).toHaveAttribute("value", "0")
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
