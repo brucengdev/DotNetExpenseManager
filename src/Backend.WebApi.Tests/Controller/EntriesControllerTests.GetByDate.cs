@@ -1,11 +1,12 @@
 using Backend.WebApi.Controllers;
 using Backend.Core.Manager;
 using Backend.Models;
+using Backend.WebApi.Tests;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
 
-namespace Backend.Core.Tests.Controller;
+namespace Backend.Core.WebApi.Controller;
 
 public partial class EntriesControllerTests
 {

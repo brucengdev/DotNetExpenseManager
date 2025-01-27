@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Backend.Core.Tests;
+namespace Backend.WebApi.Tests;
 
 public class Utils
 {

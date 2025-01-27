@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
 
-namespace Backend.Core.Tests.Controller;
+namespace Backend.WebApi.Tests.Controller;
 
 public partial class EntriesControllerTests
 {

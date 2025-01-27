@@ -3,7 +3,7 @@ using Backend.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Shouldly;
 
-namespace Backend.Core.Tests.Controller;
+namespace Backend.WebApi.Tests.Controller;
 
 public partial class AccountControllerTests
 {
