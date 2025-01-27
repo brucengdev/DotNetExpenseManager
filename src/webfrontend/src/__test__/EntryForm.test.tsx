@@ -8,6 +8,9 @@ import { sleep } from "./testutils";
 describe("EntryForm", () => {
     it("shows form input", async () => {
         const client = new TestClient()
+        client.Categories = [
+            { id: 1, name: "" }
+        ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
         expect(screen.getByRole("textbox", {name: "Title"})).toBeInTheDocument()

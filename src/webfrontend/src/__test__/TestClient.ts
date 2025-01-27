@@ -10,6 +10,7 @@ export class TestClient implements IClient {
     private _token: string | undefined = undefined
     public Token() { return this._token }
     public Entries: Entry[] = []
+    public Categories: Category[] = []
     async IsLoggedIn() {
         return this._token === TEST_TOKEN
     }
