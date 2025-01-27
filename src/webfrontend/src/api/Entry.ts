@@ -19,5 +19,6 @@ export class Entry implements Comparable<Entry>{
         return this.title === other.title
                 && this.value === other.value
                 && sameDate(this.date, other.date)
+                && this.categoryId === other.categoryId
     }
 }
