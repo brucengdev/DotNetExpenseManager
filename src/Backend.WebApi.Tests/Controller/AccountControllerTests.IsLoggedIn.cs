@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
 
-namespace Backend.Tests.Controller;
+namespace Backend.WebApi.Tests.Controller;
 
 public partial class AccountControllerTests
 {

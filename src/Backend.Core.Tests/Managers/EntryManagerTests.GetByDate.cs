@@ -1,8 +1,8 @@
 using Backend.Core.Manager;
-using Backend.Tests.Mocks;
+using Backend.Core.Tests.Mocks;
 using Shouldly;
 
-namespace Backend.Tests
+namespace Backend.Core.Tests
 {
     public partial class EntryManagerTests
     {

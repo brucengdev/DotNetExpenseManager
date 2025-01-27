@@ -32,6 +32,9 @@ jobs:
     - name: Build solution
       run: dotnet build ./DotNetExpensesManager.sln
       working-directory: ./src
-    - name: Test
+    - name: Test Backend.Core
       run: dotnet test --no-build --verbosity normal
-      working-directory: ./src/Backend.Tests
+      working-directory: ./src/Backend.Core.Tests
+    - name: Test Backend.WebApi
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ./src/Backend.WebApi.Tests
