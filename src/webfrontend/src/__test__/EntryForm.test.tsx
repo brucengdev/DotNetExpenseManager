@@ -69,14 +69,22 @@ describe("EntryForm", () => {
         expect(valueTextbox).toHaveAttribute("value", "-120.23")
     })
 
-    // it("changes category", async () => {
-    //     render(<EntryForm client={new TestClient()} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+    it("changes category", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+        await sleep(10)
         
-    //     const category = screen.getByRole("combobox", { name: "Category" })
+        const category = screen.getByRole("combobox", { name: "Category" })
 
-    //     fireEvent.change(category, { target: { value: "12"}})
-    //     expect(category).toHaveAttribute("value", "-120.23")
-    // })
+        fireEvent.change(category, { target: { value: "1"}})
+        
+        var categoryOptions = screen.getAllByTestId("category-option")
+        expect((categoryOptions[0] as any).selected).toBeFalsy()
+        expect((categoryOptions[1] as any).selected).toBeTruthy()
+    })
 
     it("saves entries and executes callback when clicking save successfully", async () => {
         const saveHandler = vitest.fn()
