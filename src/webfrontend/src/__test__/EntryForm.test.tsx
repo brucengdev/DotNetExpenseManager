@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, getByTestId, render, screen } from "@testing-library/react";
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { EntryForm } from "../EntryForm";
@@ -18,6 +18,9 @@ describe("EntryForm", () => {
 
         const categoryField = screen.getByRole("combobox", { name: "Category"})
         expect(categoryField).toBeInTheDocument()
+        
+        var categoryOptions = screen.getAllByTestId("category-option")
+        expect(categoryOptions[0].innerHTML).toBe("Uncategorized")
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
@@ -52,6 +55,15 @@ describe("EntryForm", () => {
         fireEvent.change(valueTextbox, { target: { value: "-120.23"}})
         expect(valueTextbox).toHaveAttribute("value", "-120.23")
     })
+
+    // it("changes category", async () => {
+    //     render(<EntryForm client={new TestClient()} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+        
+    //     const category = screen.getByRole("combobox", { name: "Category" })
+
+    //     fireEvent.change(category, { target: { value: "12"}})
+    //     expect(category).toHaveAttribute("value", "-120.23")
+    // })
 
     it("saves entries and executes callback when clicking save successfully", async () => {
         const saveHandler = vitest.fn()

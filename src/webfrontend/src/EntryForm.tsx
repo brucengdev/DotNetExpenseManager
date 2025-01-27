@@ -43,7 +43,11 @@ export const EntryForm = (props: EntryFormProps) => {
         </label>
         <label>
             Category
-            <select></select>
+            <select>
+                <option data-testid="category-option">
+                    Uncategorized
+                </option>
+            </select>
         </label>
         <button onClick={() => {
             const valueFloat = parseFloat(value)
