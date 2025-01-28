@@ -94,8 +94,14 @@ export class Client implements IClient {
     }
 
     async GetCategories(): Promise<Category[]> {
-        return [
-            new Category(0, "Uncategorized")
-        ]
+        const result = await fetch(`${url}/Category/GetCategories?${new URLSearchParams({
+            accessToken: this.token,
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return await result.json()
+        }
+        return []
     }
 }
