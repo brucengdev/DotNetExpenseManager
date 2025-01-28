@@ -1,8 +1,7 @@
 import { useState } from "react"
-import { areSame, formatDateToDay } from "./utils"
+import { formatDateToDay } from "./utils"
 import { IClient } from "./api/Client"
 import { Entry } from "./api/Entry"
-import { Category } from "./api/Category"
 import { CategoryControl } from "./controls/CategoryControl"
 
 export interface EntryFormProps {
