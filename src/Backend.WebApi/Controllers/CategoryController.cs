@@ -8,7 +8,10 @@ namespace Backend.WebApi.Controllers;
 [Route("[controller]")]
 public class CategoryController: ControllerBase
 {
-    public CategoryController(IAccountManager accountManager)
+    public CategoryController(
+        IAccountManager accountManager,
+        ICategoryManager categoryManager
+        )
     {
         
     }
