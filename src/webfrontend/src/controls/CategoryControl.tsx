@@ -18,7 +18,7 @@ export function CategoryControl(props: CategoryControlProps) {
             setCategories(cats)
         }
     })
-    return <label>
+    return <label data-testid="category-control">
         Category
         <select value={categoryId} onChange={(e) => { 
                 const newCatId = parseInt(e.target.value)

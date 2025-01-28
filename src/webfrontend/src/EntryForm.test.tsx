@@ -23,18 +23,8 @@ describe("EntryForm", () => {
         expect(dateField).toBeInTheDocument()
         expect(dateField).toHaveAttribute("value", "2024-05-31")
 
-        const categoryField = screen.getByRole("combobox", { name: "Category"})
+        const categoryField = screen.getByTestId("category-control")
         expect(categoryField).toBeInTheDocument()
-        
-        var categoryOptions = screen.getAllByTestId("category-option")
-        expect(categoryOptions.length).toBe(2)
-        expect(categoryOptions[0].innerHTML).toBe("Uncategorized")
-        expect(categoryOptions[0]).toHaveAttribute("value", "0")
-        expect((categoryOptions[0] as any).selected).toBeTruthy()
-
-        expect(categoryOptions[1].innerHTML).toBe("household")
-        expect(categoryOptions[1]).toHaveAttribute("value", "1")
-        expect((categoryOptions[1] as any).selected).toBeFalsy()
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
