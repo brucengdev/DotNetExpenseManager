@@ -27,8 +27,8 @@ public class SecurityFilterAttributeTests
         
         //assert
         context.Result.ShouldBeNull();
-        context.HttpContext.Items.Keys.ShouldContain("UserId");
-        context.HttpContext.Items["UserId"].ShouldBe(1);
+        context.HttpContext.Items.Keys.ShouldContain(Constants.USER_ID);
+        context.HttpContext.Items[Constants.USER_ID].ShouldBe(1);
     }
 
     [Fact]
