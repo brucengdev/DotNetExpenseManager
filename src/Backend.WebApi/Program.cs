@@ -35,6 +35,9 @@ builder.Services.AddScoped<IAccountManager, AccountManager>();
 builder.Services.AddScoped<IEntryRepository, EntryRepository>();
 builder.Services.AddScoped<IEntryManager, EntryManager>();
 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
