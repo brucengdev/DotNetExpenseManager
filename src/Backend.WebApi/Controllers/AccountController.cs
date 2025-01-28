@@ -48,9 +48,8 @@ public class AccountController: ControllerBase
 
     [HttpGet("[action]")]
     [ServiceFilter(typeof(SecurityFilterAttribute))]
-    public ActionResult IsLoggedIn(string token)
+    public ActionResult IsLoggedIn()
     {
-        return _accountManager.IsTokenValid(token, DateTime.Now)? Ok()
-            : Unauthorized();
+        return Ok();
     }
 }
