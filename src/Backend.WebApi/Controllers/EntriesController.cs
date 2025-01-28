@@ -30,12 +30,13 @@ public class EntriesController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date, string accessToken)
+    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date)
     {
         try
         {
-            var userId = _accountManager.GetUserId(accessToken, DateTime.Now);
-            var result = _entryManager.GetByDate(date, userId)
+            var userId = HttpContext.Items[Constants.USER_ID] as int?;
+            var result = _entryManager.GetByDate(date, userId.Value)
                 .Select(e => new EntryPlain(e));
             return Ok(result);
         }
