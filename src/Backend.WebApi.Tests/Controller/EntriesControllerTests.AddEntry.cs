@@ -1,7 +1,9 @@
 using Backend.WebApi.Controllers;
 using Backend.Core.Manager;
 using Backend.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Moq;
 using Shouldly;
 
@@ -35,12 +37,8 @@ public partial class EntriesControllerTests
             Value = -123.22f,
             Date = new DateTime(2024, 3, 12)
         };
-        var accessToken = "johndoe-2024-12-07-07-08";
         var entryManager = new Mock<IEntryManager>();
         var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(
-                am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
-            .Returns(userId);
         accountManager.Setup(
                 am => am.GetById(userId))
             .Returns(new User
@@ -50,8 +48,9 @@ public partial class EntriesControllerTests
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
 
         //act
-        
-        var result = sut.AddEntry(inputEntry, accessToken);
+        sut.ControllerContext.HttpContext = new DefaultHttpContext();
+        sut.ControllerContext.HttpContext.Items[Constants.USER_ID] = userId;
+        var result = sut.AddEntry(inputEntry);
 
         //assert
         var verifyEntry = (Entry e) =>
@@ -65,81 +64,5 @@ public partial class EntriesControllerTests
             It.Is<Entry>(e => verifyEntry(e))), Times.Exactly(1));
         entryManager.VerifyNoOtherCalls();
         result.ShouldBeOfType<OkResult>();
-    }
-    
-    [Fact]
-    public void AddEntry_returns_unauthorized_when_user_is_invalid()
-    {
-        //arrange
-        var inputEntry = new EntryPlain
-        {
-            Title = "Grocery",
-            Value = -123.22f,
-            Date = new DateTime(2024, 3, 12)
-        };
-        var accessToken = "johndoe-2024-12-07-07-08-09";
-        var entryManager = new Mock<IEntryManager>();
-        var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
-            .Throws(new UserNotFoundException());
-        var sut = new EntriesController(entryManager.Object, accountManager.Object);
-
-        //act
-        
-        var result = sut.AddEntry(inputEntry, accessToken);
-
-        //assert
-        entryManager.VerifyNoOtherCalls();
-        result.ShouldBeOfType<UnauthorizedResult>();
-    }
-    
-    [Fact]
-    public void AddEntry_returns_unauthorized_when_token_expired()
-    {
-        //arrange
-        var inputEntry = new EntryPlain
-        {
-            Title = "Grocery",
-            Value = -123.22f,
-            Date = new DateTime(2024, 3, 12)
-        };
-        var accessToken = "johndoe-2024-12-07-07-08-09";
-        var entryManager = new Mock<IEntryManager>();
-        var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
-            .Throws(new TokenExpiredException());
-        var sut = new EntriesController(entryManager.Object, accountManager.Object);
-
-        //act
-        var result = sut.AddEntry(inputEntry, accessToken);
-
-        //assert
-        entryManager.VerifyNoOtherCalls();
-        result.ShouldBeOfType<UnauthorizedResult>();
-    }
-    
-    [Fact]
-    public void AddEntry_returns_unauthorized_when_token_is_malformed()
-    {
-        //arrange
-        var inputEntry = new EntryPlain
-        {
-            Title = "Grocery",
-            Value = -123.22f,
-            Date = new DateTime(2024, 3, 12)
-        };
-        var accessToken = "johndoe-2024-12-07-07-08-09";
-        var entryManager = new Mock<IEntryManager>();
-        var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.GetUserId(accessToken, It.IsAny<DateTime>()))
-            .Throws(new MalformedTokenException());
-        var sut = new EntriesController(entryManager.Object, accountManager.Object);
-
-        //act
-        var result = sut.AddEntry(inputEntry, accessToken);
-
-        //assert
-        entryManager.VerifyNoOtherCalls();
-        result.ShouldBeOfType<UnauthorizedResult>();
     }
 }
