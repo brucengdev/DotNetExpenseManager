@@ -1,4 +1,5 @@
 using Backend.Core.Manager;
+using Backend.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.WebApi.Controllers;
@@ -46,6 +47,7 @@ public class AccountController: ControllerBase
     }
 
     [HttpGet("[action]")]
+    [ServiceFilter(typeof(SecurityFilterAttribute))]
     public ActionResult IsLoggedIn(string token)
     {
         return _accountManager.IsTokenValid(token, DateTime.Now)? Ok()

@@ -23,7 +23,7 @@ public class SecurityFilterAttributeTests
         
         //act
         var context = CreateActionExecutingContext("?accessToken=123");
-        sut.OnActionExecuting(context);
+        sut.OnResultExecuting(context);
         
         //assert
         context.Result.ShouldBeNull();
@@ -40,7 +40,7 @@ public class SecurityFilterAttributeTests
         
         //act
         var context = CreateActionExecutingContext("?accessToken=123");
-        sut.OnActionExecuting(context);
+        sut.OnResultExecuting(context);
         
         //assert
         context.Result.ShouldNotBeNull();
@@ -57,7 +57,7 @@ public class SecurityFilterAttributeTests
         
         //act
         var context = CreateActionExecutingContext("?accessToken=123");
-        sut.OnActionExecuting(context);
+        sut.OnResultExecuting(context);
         
         //assert
         context.Result.ShouldNotBeNull();
@@ -74,7 +74,7 @@ public class SecurityFilterAttributeTests
         
         //act
         var context = CreateActionExecutingContext("?accessToken=123");
-        sut.OnActionExecuting(context);
+        sut.OnResultExecuting(context);
         
         //assert
         context.Result.ShouldNotBeNull();
@@ -91,13 +91,13 @@ public class SecurityFilterAttributeTests
         
         //act
         var context = CreateActionExecutingContext("");
-        sut.OnActionExecuting(context);
+        sut.OnResultExecuting(context);
         
         //assert
         context.Result.ShouldNotBeNull();
     }
     
-    private static ActionExecutingContext CreateActionExecutingContext(string queryStringText)
+    private static ResultExecutingContext CreateActionExecutingContext(string queryStringText)
     {
         var actionContext = new ActionContext();
         var httpContext = new DefaultHttpContext();
@@ -106,10 +106,9 @@ public class SecurityFilterAttributeTests
         actionContext.HttpContext = httpContext;
         actionContext.RouteData = new RouteData();
         actionContext.ActionDescriptor = new ActionDescriptor();
-        var context = new ActionExecutingContext(
-            actionContext, 
-            new List<IFilterMetadata>(),
-            new Dictionary<string, object?>(), new object());
+        var context = new ResultExecutingContext(actionContext, 
+            new List<IFilterMetadata>(), 
+            null, new object());
         return context;
     }
 }

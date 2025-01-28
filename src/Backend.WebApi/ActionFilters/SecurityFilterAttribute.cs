@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Backend.WebApi.ActionFilters;
 
-public class SecurityFilterAttribute: IActionFilter
+public class SecurityFilterAttribute: ActionFilterAttribute
 {
     private readonly IAccountManager _accountManager;
     public SecurityFilterAttribute(IAccountManager accountManager)
@@ -12,7 +12,7 @@ public class SecurityFilterAttribute: IActionFilter
         _accountManager = accountManager;
     }
     
-    public void OnActionExecuting(ActionExecutingContext context)
+    public override void OnResultExecuting(ResultExecutingContext context)
     {
         if (!context.HttpContext.Request.Query.ContainsKey("accessToken"))
         {
@@ -38,10 +38,5 @@ public class SecurityFilterAttribute: IActionFilter
         {
             context.Result = new UnauthorizedResult();
         }
-    }
-
-    public void OnActionExecuted(ActionExecutedContext context)
-    {
-        // Do something after the action executes.
     }
 }
