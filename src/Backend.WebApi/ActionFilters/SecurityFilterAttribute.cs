@@ -12,7 +12,7 @@ public class SecurityFilterAttribute: ActionFilterAttribute
         _accountManager = accountManager;
     }
     
-    public override void OnResultExecuting(ResultExecutingContext context)
+    public override void OnActionExecuting(ActionExecutingContext context)
     {
         if (!context.HttpContext.Request.Query.ContainsKey("accessToken"))
         {
