@@ -2,9 +2,9 @@ using Backend.WebApi;
 using Backend.Core.Manager;
 using Backend.Core.Repository;
 using Backend.Models;
+using Backend.WebApi.ActionFilters;
 using Backend.WebApi.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +37,8 @@ builder.Services.AddScoped<IEntryManager, EntryManager>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+
+builder.Services.AddScoped<SecurityFilterAttribute>();
 
 builder.Services.AddControllers();
 

@@ -1,5 +1,6 @@
 using Backend.Core.Manager;
 using Backend.Models;
+using Backend.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.WebApi.Controllers;
@@ -8,22 +9,20 @@ namespace Backend.WebApi.Controllers;
 [Route("[controller]")]
 public class CategoryController: ControllerBase
 {
-    private readonly IAccountManager _accountManager;
     private readonly ICategoryManager _categoryManager;
     public CategoryController(
-        IAccountManager accountManager,
         ICategoryManager categoryManager
         )
     {
-        _accountManager = accountManager;
         _categoryManager = categoryManager;
     }
 
     [HttpGet("[action]")]
-    public ActionResult<IEnumerable<Category>> GetCategories(string accessToken)
+    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    public ActionResult<IEnumerable<Category>> GetCategories()
     {
-        var userId = _accountManager.GetUserId(accessToken, DateTime.Now);
-        var result = _categoryManager.GetCategories(userId);
+        var userId = HttpContext.Items[Constants.USER_ID] as int?;
+        var result = _categoryManager.GetCategories(userId.Value);
         return Ok(result);
     }
 }

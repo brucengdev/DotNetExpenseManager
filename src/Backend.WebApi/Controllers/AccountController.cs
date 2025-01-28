@@ -1,4 +1,5 @@
 using Backend.Core.Manager;
+using Backend.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.WebApi.Controllers;
@@ -33,6 +34,7 @@ public class AccountController: ControllerBase
     }
 
     [HttpPost("[action]")]
+    [ServiceFilter(typeof(SecurityFilterAttribute))]
     public ActionResult<bool> CreateUser(
         [FromForm] string username, 
         [FromForm] string password)
@@ -46,9 +48,9 @@ public class AccountController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    public ActionResult IsLoggedIn(string token)
+    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    public ActionResult IsLoggedIn()
     {
-        return _accountManager.IsTokenValid(token, DateTime.Now)? Ok()
-            : Unauthorized();
+        return Ok();
     }
 }

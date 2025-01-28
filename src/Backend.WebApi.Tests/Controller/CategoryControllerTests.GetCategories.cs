@@ -1,6 +1,8 @@
 using Backend.Core.Manager;
 using Backend.Models;
+using Backend.WebApi.ActionFilters;
 using Backend.WebApi.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
@@ -20,15 +22,18 @@ public partial class CategoryControllerTests
 
         var getAttr = attributes[0] as HttpGetAttribute;
         getAttr.Template.ShouldBe("[action]");
+        
+        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute), true);
+        secAttrs.Length.ShouldBeGreaterThan(0);
+
+        var secAttr = secAttrs[0] as ServiceFilterAttribute;
+        secAttr.ServiceType.ShouldBe(typeof(SecurityFilterAttribute));
     }
     
     [Fact]
     public void GetCategories_must_return_categories_for_user()
     {
         //arrange
-        var accountManager = new Mock<IAccountManager>();
-        accountManager.Setup(am => am.GetUserId("dummyToken", It.IsAny<DateTime>()))
-            .Returns(1);
         var categoryManager = new Mock<ICategoryManager>();
         categoryManager.Setup(cm => cm.GetCategories(1))
             .Returns(new List<Category>
@@ -36,10 +41,13 @@ public partial class CategoryControllerTests
                 new() {Id = 1, Name = "Category 1", UserId = 1},
                 new() {Id = 2, Name = "Category 2", UserId = 1}
             });
-        var sut = new CategoryController(accountManager.Object, categoryManager.Object);
+        var sut = new CategoryController(categoryManager.Object);
+        sut.ControllerContext = new ControllerContext();
+        sut.ControllerContext.HttpContext = new DefaultHttpContext();
+        sut.ControllerContext.HttpContext.Items[Constants.USER_ID] = 1;
         
         //act
-        var result = sut.GetCategories("dummyToken");
+        var result = sut.GetCategories();
         
         //assert
         result.Result.ShouldBeOfType<OkObjectResult>();

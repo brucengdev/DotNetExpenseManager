@@ -45,9 +45,9 @@ export class Client implements IClient {
         this.token = ""
     }
 
-    private async IsTokenValid(token: string) {
+    private async IsTokenValid(accessToken: string) {
         const result = await fetch(`${url}/Account/IsLoggedIn?${new URLSearchParams({
-            token
+            accessToken
         }).toString()}`)
         return result.ok
     }

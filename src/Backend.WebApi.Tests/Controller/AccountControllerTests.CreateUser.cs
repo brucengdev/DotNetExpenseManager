@@ -1,5 +1,6 @@
 using Backend.WebApi.Controllers;
 using Backend.Core.Manager;
+using Backend.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
@@ -55,5 +56,11 @@ public partial class AccountControllerTests
 
         var postAttr = attributes[0] as HttpPostAttribute;
         postAttr.Template.ShouldBe("[action]");
+        
+        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute), true);
+        secAttrs.Length.ShouldBeGreaterThan(0);
+
+        var secAttr = secAttrs[0] as ServiceFilterAttribute;
+        secAttr.ServiceType.ShouldBe(typeof(SecurityFilterAttribute));
     }
 }
