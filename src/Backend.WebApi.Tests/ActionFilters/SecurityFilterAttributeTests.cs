@@ -20,23 +20,13 @@ public class SecurityFilterAttributeTests
         var sut = new SecurityFilterAttribute(accountManager.Object);
         
         //act
-        var actionContext = new ActionContext();
-        var httpContext = new DefaultHttpContext();
-        var queryString = new QueryString("?accessToken=123");
-        httpContext.Request.QueryString = queryString;
-        actionContext.HttpContext = httpContext;
-        actionContext.RouteData = new RouteData();
-        actionContext.ActionDescriptor = new ActionDescriptor();
-        var context = new ActionExecutingContext(
-            actionContext, 
-            new List<IFilterMetadata>(),
-            new Dictionary<string, object?>(), new object());
+        var context = CreateActionExecutingContext("?accessToken=123");
         sut.OnActionExecuting(context);
         
         //assert
         context.Result.ShouldBeNull();
     }
-    
+
     [Fact]
     public async Task Must_cancel_and_return_401_when_unauthorized()
     {
@@ -47,9 +37,18 @@ public class SecurityFilterAttributeTests
         var sut = new SecurityFilterAttribute(accountManager.Object);
         
         //act
+        var context = CreateActionExecutingContext("?accessToken=123");
+        sut.OnActionExecuting(context);
+        
+        //assert
+        context.Result.ShouldNotBeNull();
+    }
+    
+    private static ActionExecutingContext CreateActionExecutingContext(string queryStringText)
+    {
         var actionContext = new ActionContext();
         var httpContext = new DefaultHttpContext();
-        var queryString = new QueryString("?accessToken=123");
+        var queryString = new QueryString(queryStringText);
         httpContext.Request.QueryString = queryString;
         actionContext.HttpContext = httpContext;
         actionContext.RouteData = new RouteData();
@@ -58,9 +57,6 @@ public class SecurityFilterAttributeTests
             actionContext, 
             new List<IFilterMetadata>(),
             new Dictionary<string, object?>(), new object());
-        sut.OnActionExecuting(context);
-        
-        //assert
-        context.Result.ShouldNotBeNull();
+        return context;
     }
 }
