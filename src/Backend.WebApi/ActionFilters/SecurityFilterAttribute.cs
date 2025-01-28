@@ -24,6 +24,11 @@ public class SecurityFilterAttribute: IActionFilter
             //cancel the pipeline;
             context.Result = new UnauthorizedResult();
         }
+        catch(MalformedTokenException mte)
+        {
+            //cancel the pipeline;
+            context.Result = new UnauthorizedResult();
+        }
     }
 
     public void OnActionExecuted(ActionExecutedContext context)

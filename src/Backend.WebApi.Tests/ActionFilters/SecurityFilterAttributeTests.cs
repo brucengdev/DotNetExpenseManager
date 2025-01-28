@@ -28,12 +28,29 @@ public class SecurityFilterAttributeTests
     }
 
     [Fact]
-    public async Task Must_cancel_and_return_401_when_unauthorized()
+    public async Task Must_cancel_and_return_401_when_user_not_found()
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
         accountManager.Setup(am => am.GetUserId("123", It.IsAny<DateTime>()))
             .Throws(new UserNotFoundException());
+        var sut = new SecurityFilterAttribute(accountManager.Object);
+        
+        //act
+        var context = CreateActionExecutingContext("?accessToken=123");
+        sut.OnActionExecuting(context);
+        
+        //assert
+        context.Result.ShouldNotBeNull();
+    }
+    
+    [Fact]
+    public async Task Must_cancel_and_return_401_when_token_is_invalid()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId("123", It.IsAny<DateTime>()))
+            .Throws(new MalformedTokenException());
         var sut = new SecurityFilterAttribute(accountManager.Object);
         
         //act
