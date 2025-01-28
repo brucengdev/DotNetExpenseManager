@@ -8,16 +8,21 @@ namespace Backend.WebApi.Controllers;
 [Route("[controller]")]
 public class CategoryController: ControllerBase
 {
+    private readonly IAccountManager _accountManager;
+    private readonly ICategoryManager _categoryManager;
     public CategoryController(
         IAccountManager accountManager,
         ICategoryManager categoryManager
         )
     {
-        
+        _accountManager = accountManager;
+        _categoryManager = categoryManager;
     }
 
     public ActionResult<IEnumerable<Category>> GetCategories(string accessToken)
     {
-        return Ok(new List<Category>());
+        var userId = _accountManager.GetUserId(accessToken, DateTime.Now);
+        var result = _categoryManager.GetCategories(userId);
+        return Ok(result);
     }
 }

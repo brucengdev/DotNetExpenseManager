@@ -1,4 +1,5 @@
 using Backend.Core.Manager;
+using Backend.Models;
 using Backend.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -13,7 +14,15 @@ public partial class CategoryControllerTests
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId("dummyToken", It.IsAny<DateTime>()))
+            .Returns(1);
         var categoryManager = new Mock<ICategoryManager>();
+        categoryManager.Setup(cm => cm.GetCategories(1))
+            .Returns(new List<Category>
+            {
+                new() {Id = 1, Name = "Category 1", UserId = 1},
+                new() {Id = 2, Name = "Category 2", UserId = 1}
+            });
         var sut = new CategoryController(accountManager.Object, categoryManager.Object);
         
         //act
@@ -21,5 +30,11 @@ public partial class CategoryControllerTests
         
         //assert
         result.Result.ShouldBeOfType<OkObjectResult>();
+        var okResult = result.Result as OkObjectResult;
+        okResult.Value.ShouldBeEquivalentTo(new List<Category>
+        {
+            new() {Id = 1, Name = "Category 1", UserId = 1},
+            new() {Id = 2, Name = "Category 2", UserId = 1}
+        });
     }
 }
