@@ -14,6 +14,11 @@ public class SecurityFilterAttribute: IActionFilter
     
     public void OnActionExecuting(ActionExecutingContext context)
     {
+        if (!context.HttpContext.Request.Query.ContainsKey("accessToken"))
+        {
+            context.Result = new UnauthorizedResult();
+            return;
+        }
         var accessToken = context.HttpContext.Request.Query["accessToken"][0];
         try
         {

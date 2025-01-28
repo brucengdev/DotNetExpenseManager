@@ -17,6 +17,8 @@ public class SecurityFilterAttributeTests
     {
         //arrange
         var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId("123", It.IsAny<DateTime>()))
+            .Returns(1);
         var sut = new SecurityFilterAttribute(accountManager.Object);
         
         //act
@@ -72,6 +74,23 @@ public class SecurityFilterAttributeTests
         
         //act
         var context = CreateActionExecutingContext("?accessToken=123");
+        sut.OnActionExecuting(context);
+        
+        //assert
+        context.Result.ShouldNotBeNull();
+    }
+    
+    [Fact]
+    public async Task Must_cancel_and_return_401_when_no_token()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId(It.IsAny<string>(), It.IsAny<DateTime>()))
+            .Returns(1);
+        var sut = new SecurityFilterAttribute(accountManager.Object);
+        
+        //act
+        var context = CreateActionExecutingContext("");
         sut.OnActionExecuting(context);
         
         //assert
