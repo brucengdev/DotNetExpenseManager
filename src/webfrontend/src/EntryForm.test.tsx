@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
-import { EntryForm } from "../EntryForm";
-import { TestClient } from "./TestClient";
-import { sleep } from "./testutils";
-import { Category } from "../api/Category";
+import { EntryForm } from "./EntryForm";
+import { TestClient } from "./__test__/TestClient";
+import { sleep } from "./__test__/testutils";
+import { Category } from "./api/Category";
 import userEvent from "@testing-library/user-event"
 
 describe("EntryForm", () => {
