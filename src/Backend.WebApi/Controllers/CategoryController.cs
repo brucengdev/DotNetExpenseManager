@@ -19,6 +19,7 @@ public class CategoryController: ControllerBase
         _categoryManager = categoryManager;
     }
 
+    [HttpGet("[action]")]
     public ActionResult<IEnumerable<Category>> GetCategories(string accessToken)
     {
         var userId = _accountManager.GetUserId(accessToken, DateTime.Now);

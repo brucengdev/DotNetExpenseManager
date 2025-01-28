@@ -10,6 +10,19 @@ namespace Backend.WebApi.Tests.Controller;
 public partial class CategoryControllerTests
 {
     [Fact]
+    public void GetCategories_endpoint_config()
+    {
+        var method = Utils.GetMethod<CategoryController>(nameof(CategoryController.GetCategories));
+        method.ShouldNotBeNull();
+
+        var attributes = method?.GetCustomAttributes(typeof(HttpGetAttribute), true);
+        attributes.Length.ShouldBeGreaterThan(0);
+
+        var getAttr = attributes[0] as HttpGetAttribute;
+        getAttr.Template.ShouldBe("[action]");
+    }
+    
+    [Fact]
     public void GetCategories_must_return_categories_for_user()
     {
         //arrange
