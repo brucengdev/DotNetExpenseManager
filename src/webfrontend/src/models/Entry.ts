@@ -1,4 +1,4 @@
-import { Comparable } from "../models/Comparable"
+import { Comparable } from "./Comparable"
 import { sameDate } from "../utils"
 
 export class Entry implements Comparable<Entry>{

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest"
-import { Entry } from "../api/Entry"
+import { Entry } from "./Entry"
 
 describe("Entry", () => {
     test("test Equals", () => {

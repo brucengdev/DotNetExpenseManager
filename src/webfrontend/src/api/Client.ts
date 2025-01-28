@@ -1,5 +1,5 @@
-import { Category } from "./Category"
-import { Entry } from "./Entry"
+import { Category } from "../models/Category"
+import { Entry } from "../models/Entry"
 
 export interface IClient {
     Token: () => string | undefined

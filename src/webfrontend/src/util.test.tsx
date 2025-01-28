@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { Comparable } from "../models/Comparable";
-import { areSame } from "../utils";
+import { Comparable } from "./models/Comparable";
+import { areSame } from "./utils";
 
 class TestElement implements Comparable<TestElement> {
     public Value: string = ""

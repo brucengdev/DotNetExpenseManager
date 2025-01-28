@@ -1,4 +1,4 @@
-import { Comparable } from "../models/Comparable"
+import { Comparable } from "./Comparable"
 
 export class Category implements Comparable<Category> {
     public id: number = 0

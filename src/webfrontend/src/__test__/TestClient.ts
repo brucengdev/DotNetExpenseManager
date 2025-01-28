@@ -1,6 +1,6 @@
-import { Category } from "../api/Category";
+import { Category } from "../models/Category";
 import { IClient } from "../api/Client";
-import { Entry } from "../api/Entry";
+import { Entry } from "../models/Entry";
 import { sameDate } from "../utils";
 
 export const TEST_USER_NAME = "valid_user"

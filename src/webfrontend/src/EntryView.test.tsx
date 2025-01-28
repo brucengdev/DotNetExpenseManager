@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vitest } from "vitest";
-import { EntryView } from "../EntryView";
+import { EntryView } from "./EntryView";
 import '@testing-library/jest-dom'
 
 describe('EntryView', () => {
