@@ -61,6 +61,23 @@ public class SecurityFilterAttributeTests
         context.Result.ShouldNotBeNull();
     }
     
+    [Fact]
+    public async Task Must_cancel_and_return_401_when_token_expired()
+    {
+        //arrange
+        var accountManager = new Mock<IAccountManager>();
+        accountManager.Setup(am => am.GetUserId("123", It.IsAny<DateTime>()))
+            .Throws(new TokenExpiredException());
+        var sut = new SecurityFilterAttribute(accountManager.Object);
+        
+        //act
+        var context = CreateActionExecutingContext("?accessToken=123");
+        sut.OnActionExecuting(context);
+        
+        //assert
+        context.Result.ShouldNotBeNull();
+    }
+    
     private static ActionExecutingContext CreateActionExecutingContext(string queryStringText)
     {
         var actionContext = new ActionContext();
