@@ -1,5 +1,6 @@
 using Backend.Core.Manager;
 using Backend.Models;
+using Backend.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.WebApi.Controllers;
@@ -20,6 +21,7 @@ public class CategoryController: ControllerBase
     }
 
     [HttpGet("[action]")]
+    [ServiceFilter(typeof(SecurityFilterAttribute))]
     public ActionResult<IEnumerable<Category>> GetCategories(string accessToken)
     {
         var userId = _accountManager.GetUserId(accessToken, DateTime.Now);

@@ -1,5 +1,6 @@
 using Backend.Core.Manager;
 using Backend.Models;
+using Backend.WebApi.ActionFilters;
 using Backend.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -20,6 +21,12 @@ public partial class CategoryControllerTests
 
         var getAttr = attributes[0] as HttpGetAttribute;
         getAttr.Template.ShouldBe("[action]");
+        
+        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute), true);
+        secAttrs.Length.ShouldBeGreaterThan(0);
+
+        var secAttr = secAttrs[0] as ServiceFilterAttribute;
+        secAttr.ServiceType.ShouldBe(typeof(SecurityFilterAttribute));
     }
     
     [Fact]
