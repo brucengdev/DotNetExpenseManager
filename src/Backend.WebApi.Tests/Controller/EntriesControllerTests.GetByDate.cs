@@ -3,13 +3,12 @@ using Backend.Core.Manager;
 using Backend.Models;
 using Backend.WebApi;
 using Backend.WebApi.ActionFilters;
-using Backend.WebApi.Tests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
 
-namespace Backend.Core.WebApi.Controller;
+namespace Backend.WebApi.Tests.Controller;
 
 public partial class EntriesControllerTests
 {
