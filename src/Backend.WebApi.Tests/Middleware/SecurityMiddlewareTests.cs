@@ -1,3 +1,5 @@
+using Backend.WebApi.Middleware;
+
 namespace Backend.WebApi.Tests.Middleware;
 
 public class SecurityMiddlewareTests
