@@ -23,6 +23,7 @@ public class SecurityFilterAttribute: ActionFilterAttribute
         try
         {
             var userId = _accountManager.GetUserId(accessToken, DateTime.Now);
+            context.HttpContext.Items["UserId"] = userId;
         }
         catch (UserNotFoundException unfe)
         {
