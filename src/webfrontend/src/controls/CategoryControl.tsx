@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Category } from "../api/Category"
+import { Category } from "../models/Category"
 import { IClient } from "../api/Client"
 import { areSame } from "../utils"
 

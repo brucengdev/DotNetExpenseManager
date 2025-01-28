@@ -4,7 +4,7 @@ import '@testing-library/jest-dom'
 import { EntryForm } from "./EntryForm";
 import { TestClient } from "./__test__/TestClient";
 import { sleep } from "./__test__/testutils";
-import { Category } from "./api/Category";
+import { Category } from "./models/Category";
 import userEvent from "@testing-library/user-event"
 
 describe("EntryForm", () => {

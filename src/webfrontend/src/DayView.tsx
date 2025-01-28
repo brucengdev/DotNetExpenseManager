@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { IClient } from "./api/Client"
 import { EntryView } from "./EntryView"
-import { Entry } from "./api/Entry"
+import { Entry } from "./models/Entry"
 import { EntryForm } from "./EntryForm"
 import { addDays, areSame, formatDisplayDate } from "./utils"
 

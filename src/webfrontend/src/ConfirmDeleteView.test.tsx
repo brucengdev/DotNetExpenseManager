@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vitest } from "vitest";
 import '@testing-library/jest-dom'
-import { ConfirmDeleteView } from "../ConfirmDeleteView";
+import { ConfirmDeleteView } from "./ConfirmDeleteView";
 
 describe('ConfirmDeleteView', () => {
     it("shows yes and no buttons and heading", () => {

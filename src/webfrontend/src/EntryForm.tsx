@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { formatDateToDay } from "./utils"
 import { IClient } from "./api/Client"
-import { Entry } from "./api/Entry"
+import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
 
 export interface EntryFormProps {

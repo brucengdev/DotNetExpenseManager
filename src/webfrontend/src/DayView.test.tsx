@@ -1,12 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
-import { DayView } from "../DayView";
-import { TestClient } from "./TestClient";
-import { sleep } from "./testutils";
-import { Entry } from "../api/Entry";
-import { sameDate } from "../utils";
-import { Category } from "../api/Category";
+import { DayView } from "./DayView";
+import { TestClient } from "./__test__/TestClient";
+import { sleep } from "./__test__/testutils";
+import { Entry } from "./models/Entry";
+import { sameDate } from "./utils";
+import { Category } from "./models/Category";
 import userEvent from "@testing-library/user-event";
 
 describe("DayView", () => {

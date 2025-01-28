@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest"
 import { TestClient } from "../__test__/TestClient"
 import { sleep } from "../__test__/testutils"
-import { Category } from "../api/Category"
+import { Category } from "../models/Category"
 import { render, screen } from "@testing-library/react"
 import { CategoryControl } from "./CategoryControl"
 import '@testing-library/jest-dom'

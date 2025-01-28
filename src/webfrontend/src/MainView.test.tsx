@@ -1,8 +1,8 @@
 import { screen, render } from "@testing-library/react";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
-import { MainView } from "../MainView";
-import { TestClient } from "./TestClient";
+import { MainView } from "./MainView";
+import { TestClient } from "./__test__/TestClient";
 
 describe("MainView", () => {
     it("has necessary ui components", () => {
