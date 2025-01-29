@@ -28,7 +28,7 @@ public class CategoryController: ControllerBase
 
     [HttpPost("[action]")]
     [ServiceFilter(typeof(SecurityFilterAttribute))]
-    public ActionResult AddCategory()
+    public ActionResult AddCategory(Category category)
     {
         return Ok();
     }

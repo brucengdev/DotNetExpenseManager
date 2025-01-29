@@ -29,33 +29,22 @@ public partial class CategoryControllerTests
         var secAttr = secAttrs[0] as ServiceFilterAttribute;
         secAttr.ServiceType.ShouldBe(typeof(SecurityFilterAttribute));
     }
-    //
-    // [Fact]
-    // public void AddCategories_must_return_categories_for_user()
-    // {
-    //     //arrange
-    //     var categoryManager = new Mock<ICategoryManager>();
-    //     categoryManager.Setup(cm => cm.GetCategories(1))
-    //         .Returns(new List<Category>
-    //         {
-    //             new() {Id = 1, Name = "Category 1", UserId = 1},
-    //             new() {Id = 2, Name = "Category 2", UserId = 1}
-    //         });
-    //     var sut = new CategoryController(categoryManager.Object);
-    //     sut.ControllerContext = new ControllerContext();
-    //     sut.ControllerContext.HttpContext = new DefaultHttpContext();
-    //     sut.ControllerContext.HttpContext.Items[Constants.USER_ID] = 1;
-    //     
-    //     //act
-    //     var result = sut.GetCategories();
-    //     
-    //     //assert
-    //     result.Result.ShouldBeOfType<OkObjectResult>();
-    //     var okResult = result.Result as OkObjectResult;
-    //     okResult.Value.ShouldBeEquivalentTo(new List<Category>
-    //     {
-    //         new() {Id = 1, Name = "Category 1", UserId = 1},
-    //         new() {Id = 2, Name = "Category 2", UserId = 1}
-    //     });
-    // }
+    
+    [Fact]
+    public void AddCategories_must_add_new_category()
+    {
+        //arrange
+        var categoryManager = new Mock<ICategoryManager>();
+        var sut = new CategoryController(categoryManager.Object);
+        
+        //act
+        var result = sut.AddCategory(new Category()
+        {
+            Name = "Category 1",
+            UserId = 1
+        });
+        
+        //assert
+        result.ShouldBeOfType<OkResult>();
+    }
 }
