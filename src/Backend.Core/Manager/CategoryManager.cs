@@ -18,6 +18,10 @@ public class CategoryManager: ICategoryManager
 
     public void AddCategory(Category category)
     {
+        if (_repository.Exists(category.UserId, category.Name))
+        {
+            throw new Exception();
+        }
         _repository.AddCategory(category);
     }
 }

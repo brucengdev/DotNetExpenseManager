@@ -18,4 +18,9 @@ public class TestCategoryRepository: ICategoryRepository
             .Max() + 1;
         Categories.Add(category);
     }
+
+    public bool Exists(int userId, string name)
+    {
+        return Categories.Any(c => c.UserId == userId && c.Name == name);
+    }
 }

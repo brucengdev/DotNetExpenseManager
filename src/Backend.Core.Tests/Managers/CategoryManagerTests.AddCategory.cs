@@ -30,4 +30,28 @@ public partial class CategoryManagerTests
             Id = 1, Name = "Cat1", UserId = 1
         });
     }
+    
+    [Fact]
+    public void AddCategory_must_fail_if_category_name_exists()
+    {
+        //arrange
+        var categoryRepo = new TestCategoryRepository();
+        categoryRepo.AddCategory(new Category()
+        {
+            Name = "Cat1", UserId = 1
+        });
+        var sut = new CategoryManager(categoryRepo);
+        
+        //act
+        var exception = Record.Exception(() => sut.AddCategory(new Category()
+        {
+            Id = 0,
+            Name = "Cat1",
+            UserId = 1
+        }));
+        
+        //assert
+        exception.ShouldNotBeNull();
+        categoryRepo.Categories.Count().ShouldBe(1);
+    }
 }

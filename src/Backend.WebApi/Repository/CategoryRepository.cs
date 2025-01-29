@@ -19,6 +19,12 @@ public class CategoryRepository: ICategoryRepository
 
     public void AddCategory(Category category)
     {
+        _dbContext.Categories.Add(category);
+        _dbContext.SaveChanges();
+    }
+
+    public bool Exists(int categoryUserId, string categoryName)
+    {
         throw new NotImplementedException();
     }
 }
