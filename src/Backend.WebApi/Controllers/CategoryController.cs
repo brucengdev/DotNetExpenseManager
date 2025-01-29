@@ -25,4 +25,11 @@ public class CategoryController: ControllerBase
         var result = _categoryManager.GetCategories(userId.Value);
         return Ok(result);
     }
+
+    [HttpPost("[action]")]
+    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    public ActionResult AddCategory()
+    {
+        return Ok();
+    }
 }
