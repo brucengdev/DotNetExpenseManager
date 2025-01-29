@@ -20,7 +20,7 @@ public class CategoryManager: ICategoryManager
     {
         if (_repository.Exists(category.UserId, category.Name))
         {
-            throw new Exception();
+            throw new CategoryAlreadyExistsException();
         }
         _repository.AddCategory(category);
     }

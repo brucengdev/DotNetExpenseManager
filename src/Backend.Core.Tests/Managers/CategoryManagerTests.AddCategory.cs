@@ -52,6 +52,7 @@ public partial class CategoryManagerTests
         
         //assert
         exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<CategoryAlreadyExistsException>();
         categoryRepo.Categories.Count().ShouldBe(1);
     }
 }
