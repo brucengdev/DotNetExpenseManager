@@ -23,8 +23,9 @@ public class CategoryRepository: ICategoryRepository
         _dbContext.SaveChanges();
     }
 
-    public bool Exists(int categoryUserId, string categoryName)
+    public bool Exists(int userId, string name)
     {
-        throw new NotImplementedException();
+        return _dbContext.Categories
+            .Any(c => c.UserId == userId && c.Name == name);
     }
 }
