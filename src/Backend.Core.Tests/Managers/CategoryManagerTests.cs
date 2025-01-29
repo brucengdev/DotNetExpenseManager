@@ -5,7 +5,7 @@ using Shouldly;
 
 namespace Backend.Core.Tests;
 
-public class CategoryManagerTests
+public partial class CategoryManagerTests
 {
     [Fact]
     public void GetCategories_must_return()

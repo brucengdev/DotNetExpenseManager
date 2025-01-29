@@ -25,4 +25,21 @@ public class CategoryController: ControllerBase
         var result = _categoryManager.GetCategories(userId.Value);
         return Ok(result);
     }
+
+    [HttpPost("[action]")]
+    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    public ActionResult AddCategory(Category category)
+    {
+        category.UserId = (HttpContext.Items[Constants.USER_ID] as int?).Value;
+        try
+        {
+            _categoryManager.AddCategory(category);
+        }
+        catch (CategoryAlreadyExistsException)
+        {
+            return Conflict();
+        }
+
+        return Ok();
+    }
 }

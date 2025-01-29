@@ -6,4 +6,14 @@ public class Category
     public string Name { get; set; }
     public int UserId { get; set; }
 
+    public override bool Equals(object? other)
+    {
+        if (other is not Category otherCat)
+        {
+            return false;
+        }
+        return Id == otherCat.Id 
+               && Name == otherCat.Name 
+               && UserId == otherCat.UserId;
+    }
 }

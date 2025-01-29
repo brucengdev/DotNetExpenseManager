@@ -15,4 +15,13 @@ public class CategoryManager: ICategoryManager
     {
         return _repository.GetAllByUserId(userId);
     }
+
+    public void AddCategory(Category category)
+    {
+        if (_repository.Exists(category.UserId, category.Name))
+        {
+            throw new CategoryAlreadyExistsException();
+        }
+        _repository.AddCategory(category);
+    }
 }

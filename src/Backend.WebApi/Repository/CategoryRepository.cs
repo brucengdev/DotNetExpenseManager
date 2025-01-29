@@ -16,4 +16,16 @@ public class CategoryRepository: ICategoryRepository
         return _dbContext.Categories
             .Where(e => e.UserId == userId);
     }
+
+    public void AddCategory(Category category)
+    {
+        _dbContext.Categories.Add(category);
+        _dbContext.SaveChanges();
+    }
+
+    public bool Exists(int userId, string name)
+    {
+        return _dbContext.Categories
+            .Any(c => c.UserId == userId && c.Name == name);
+    }
 }
