@@ -36,6 +36,8 @@ public partial class CategoryControllerTests
     {
         //arrange
         var categoryManager = new TestCategoryManager();
+        categoryManager.AddCategory(new(){ Name = "Cat1", UserId = 2 });
+        categoryManager.AddCategory(new(){ Name = "Cat2", UserId = 2 });
         var sut = new CategoryController(categoryManager);
         sut.ControllerContext = new ControllerContext();
         sut.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -45,7 +47,7 @@ public partial class CategoryControllerTests
         var result = sut.AddCategory(new Category()
         {
             Id = 0,
-            Name = "Category 1",
+            Name = "Cat3",
             UserId = 0
         });
         
@@ -54,7 +56,7 @@ public partial class CategoryControllerTests
         var cats = categoryManager.GetCategories(1);
         cats.ShouldBeEquivalentTo(new List<Category>
         {
-            new () { Id = 1, Name = "Category 1", UserId = 1}
+            new () { Id = 3, Name = "Cat3", UserId = 1}
         });
     }
 }
