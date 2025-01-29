@@ -31,7 +31,15 @@ public class CategoryController: ControllerBase
     public ActionResult AddCategory(Category category)
     {
         category.UserId = (HttpContext.Items[Constants.USER_ID] as int?).Value;
-        _categoryManager.AddCategory(category);
+        try
+        {
+            _categoryManager.AddCategory(category);
+        }
+        catch (CategoryAlreadyExistsException)
+        {
+            return Conflict();
+        }
+
         return Ok();
     }
 }

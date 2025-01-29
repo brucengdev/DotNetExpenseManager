@@ -59,4 +59,28 @@ public partial class CategoryControllerTests
             new () { Id = 3, Name = "Cat3", UserId = 1}
         });
     }
+    
+    [Fact]
+    public void AddCategories_must_return_409_if_category_already_exists()
+    {
+        //arrange
+        var categoryManager = new Mock<ICategoryManager>();
+        categoryManager.Setup(cm => cm.AddCategory(It.IsAny<Category>()))
+            .Throws(new CategoryAlreadyExistsException());
+        var sut = new CategoryController(categoryManager.Object);
+        sut.ControllerContext = new ControllerContext();
+        sut.ControllerContext.HttpContext = new DefaultHttpContext();
+        sut.ControllerContext.HttpContext.Items[Constants.USER_ID] = 1;
+        
+        //act
+        var result = sut.AddCategory(new Category()
+        {
+            Id = 0,
+            Name = "Cat3",
+            UserId = 0
+        });
+        
+        //assert
+        result.ShouldBeOfType<ConflictResult>();
+    }
 }
