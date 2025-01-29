@@ -16,4 +16,9 @@ public class CategoryRepository: ICategoryRepository
         return _dbContext.Categories
             .Where(e => e.UserId == userId);
     }
+
+    public void AddCategory(Category category)
+    {
+        throw new NotImplementedException();
+    }
 }

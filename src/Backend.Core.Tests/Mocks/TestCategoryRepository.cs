@@ -10,4 +10,12 @@ public class TestCategoryRepository: ICategoryRepository
     {
         return Categories.Where(c => c.UserId == userId).ToList();
     }
+
+    public void AddCategory(Category category)
+    {
+        category.Id = Categories.Select(c => c.Id)
+            .Concat(new List<int> { 0 })
+            .Max() + 1;
+        Categories.Add(category);
+    }
 }

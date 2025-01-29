@@ -18,6 +18,6 @@ public class CategoryManager: ICategoryManager
 
     public void AddCategory(Category category)
     {
-        throw new NotImplementedException();
+        _repository.AddCategory(category);
     }
 }

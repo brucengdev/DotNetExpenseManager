@@ -5,4 +5,5 @@ namespace Backend.Core.Repository;
 public interface ICategoryRepository
 {
     IEnumerable<Category> GetAllByUserId(int userId);
+    void AddCategory(Category category);
 }
