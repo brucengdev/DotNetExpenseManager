@@ -30,6 +30,8 @@ public class CategoryController: ControllerBase
     [ServiceFilter(typeof(SecurityFilterAttribute))]
     public ActionResult AddCategory(Category category)
     {
+        category.UserId = (HttpContext.Items[Constants.USER_ID] as int?).Value;
+        _categoryManager.AddCategory(category);
         return Ok();
     }
 }

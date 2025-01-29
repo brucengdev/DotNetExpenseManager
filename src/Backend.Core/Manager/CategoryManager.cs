@@ -15,4 +15,9 @@ public class CategoryManager: ICategoryManager
     {
         return _repository.GetAllByUserId(userId);
     }
+
+    public void AddCategory(Category category)
+    {
+        throw new NotImplementedException();
+    }
 }
