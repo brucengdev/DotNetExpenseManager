@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest"
+import { describe, it, expect, vitest } from "vitest"
 import { TestClient } from "../__test__/TestClient"
 import { sleep } from "../__test__/testutils"
 import { Category } from "../models/Category"
@@ -68,9 +68,13 @@ describe("CategoryControl", () => {
         client.Categories = [
             new Category(1, "household") 
         ]
+        let selectedCatId: number | undefined = undefined
+        const onChange = vitest.fn((catId: number) => {
+            selectedCatId = catId
+        })
         render(<CategoryControl client={client} 
             categoryId={0} 
-            onChange={_ => { }}
+            onChange={onChange}
             />)
         await sleep(100)
 
@@ -80,5 +84,8 @@ describe("CategoryControl", () => {
 
         const householdCat = screen.getByRole("link", { name: "household"})
         fireEvent.click(householdCat)
+
+        expect(onChange).toHaveBeenCalled()
+        expect(selectedCatId).toBe(1)
     })
 })
