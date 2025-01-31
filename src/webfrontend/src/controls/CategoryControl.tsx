@@ -19,12 +19,18 @@ export function CategoryControl(props: CategoryControlProps) {
             setCategories(cats)
         }
     })
+    const cats: Category[] = [
+        new Category(0, "Uncategorized"),
+        ... categories
+    ]
     return <div data-testid="category-control">
         <label>
             Category
             <input type="text" value="" onFocus={() => setFocused(true)} />
         </label>
-        {focused? <a href="#">Uncategorized</a> :<></>}
+        {focused
+            ? cats.map(c => <a href="#">{c.name}</a>)
+            :<></>}
         <label>
             Category
             <select value={categoryId} onChange={(e) => { 

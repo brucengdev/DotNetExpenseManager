@@ -58,5 +58,7 @@ describe("CategoryControl", () => {
 
         expect(screen.getByRole("link", { name: "Uncategorized"}))
             .toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "household"}))
+            .toBeInTheDocument()
     })
 })
