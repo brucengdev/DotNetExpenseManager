@@ -18,22 +18,28 @@ export function CategoryControl(props: CategoryControlProps) {
             setCategories(cats)
         }
     })
-    return <label data-testid="category-control">
-        Category
-        <select value={categoryId} onChange={(e) => { 
-                const newCatId = parseInt(e.target.value)
-                onChange(newCatId)
-            }}>
-            <option data-testid="category-option" value="0">
-                Uncategorized
-            </option>
-            {categories.map(cat => 
-                <option data-testid="category-option" 
-                    value={cat.id}
-                    >
-                    {cat.name}
-                </option>)
-            }
-        </select>
-    </label>
+    return <div data-testid="category-control">
+        <label>
+            Category
+            <input type="text" />
+        </label>
+        <label >
+            Category
+            <select value={categoryId} onChange={(e) => { 
+                    const newCatId = parseInt(e.target.value)
+                    onChange(newCatId)
+                }}>
+                <option data-testid="category-option" value="0">
+                    Uncategorized
+                </option>
+                {categories.map(cat => 
+                    <option data-testid="category-option" 
+                        value={cat.id}
+                        >
+                        {cat.name}
+                    </option>)
+                }
+            </select>
+        </label>
+    </div>
 }
