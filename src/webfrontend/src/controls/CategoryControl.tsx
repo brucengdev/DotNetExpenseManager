@@ -23,7 +23,8 @@ export function CategoryControl(props: CategoryControlProps) {
             Category
             <input type="text" value="" />
         </label>
-        <label >
+        <a href='#'>Uncategorized</a>
+        <label>
             Category
             <select value={categoryId} onChange={(e) => { 
                     const newCatId = parseInt(e.target.value)
