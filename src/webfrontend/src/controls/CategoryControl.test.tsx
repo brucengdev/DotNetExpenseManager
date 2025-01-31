@@ -18,7 +18,9 @@ describe("CategoryControl", () => {
             />)
         await sleep(100)
 
-        const cagoryFilterField = screen.getByRole("textbox", { name: "Category"})
+        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
+        expect(categoryFilterField).toBeInTheDocument()
+        expect(categoryFilterField).toHaveAttribute("value", "Uncategorized")
 
         const categoryField = screen.getByRole("combobox", { name: "Category"})
         expect(categoryField).toBeInTheDocument()

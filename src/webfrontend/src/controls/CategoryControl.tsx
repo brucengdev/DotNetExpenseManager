@@ -21,7 +21,7 @@ export function CategoryControl(props: CategoryControlProps) {
     return <div data-testid="category-control">
         <label>
             Category
-            <input type="text" />
+            <input type="text" value="Uncategorized" />
         </label>
         <label >
             Category
