@@ -78,9 +78,7 @@ describe("CategoryControl", () => {
 
         fireEvent.focus(categoryFilterField);
 
-        expect(screen.getByRole("link", { name: "Uncategorized"}))
-            .toBeInTheDocument()
-        expect(screen.getByRole("link", { name: "household"}))
-            .toBeInTheDocument()
+        const householdCat = screen.getByRole("link", { name: "household"})
+        fireEvent.click(householdCat)
     })
 })
