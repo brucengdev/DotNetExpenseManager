@@ -12,6 +12,7 @@ interface CategoryControlProps {
 export function CategoryControl(props: CategoryControlProps) {
     const { client, categoryId, onChange } = props
     const [categories, setCategories] = useState([] as Category[])
+    const [focused, setFocused] = useState(false)
     client.GetCategories()
     .then(cats => {
         if(!areSame(cats, categories)) {
@@ -21,9 +22,9 @@ export function CategoryControl(props: CategoryControlProps) {
     return <div data-testid="category-control">
         <label>
             Category
-            <input type="text" value="" />
+            <input type="text" value="" onFocus={() => setFocused(true)} />
         </label>
-        <a href='#'>Uncategorized</a>
+        {focused? <a href="#">Uncategorized</a> :<></>}
         <label>
             Category
             <select value={categoryId} onChange={(e) => { 

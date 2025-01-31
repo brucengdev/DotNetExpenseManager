@@ -24,10 +24,11 @@ describe("CategoryControl", () => {
         expect(categoryFilterField).toBeInTheDocument()
         expect(categoryFilterField).toHaveAttribute("value", "")
 
-        fireEvent.focus(categoryFilterField);
-
         const categoryField = screen.getByRole("combobox", { name: "Category"})
         expect(categoryField).toBeInTheDocument()
+
+        expect(screen.queryByRole("link", { name: "Uncategorized"}))
+            .not.toBeInTheDocument()
         
         var categoryOptions = screen.getAllByTestId("category-option")
         expect(categoryOptions.length).toBe(2)
