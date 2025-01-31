@@ -23,6 +23,7 @@ describe("CategoryControl", () => {
         const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
         expect(categoryFilterField).toBeInTheDocument()
         expect(categoryFilterField).toHaveAttribute("value", "")
+        expect(categoryFilterField).toHaveAttribute("placeholder", "Uncategorized")
 
         const categoryField = screen.getByRole("combobox", { name: "Category"})
         expect(categoryField).toBeInTheDocument()
@@ -42,6 +43,27 @@ describe("CategoryControl", () => {
     })
 
     it("shows list of categories on focus", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        render(<CategoryControl client={client} 
+            categoryId={0} 
+            onChange={_ => { }}
+            />)
+        await sleep(100)
+
+        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
+
+        fireEvent.focus(categoryFilterField);
+
+        expect(screen.getByRole("link", { name: "Uncategorized"}))
+            .toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "household"}))
+            .toBeInTheDocument()
+    })
+
+    it("selects a category when clicked", async () => {
         const client = new TestClient()
         client.Categories = [
             new Category(1, "household") 

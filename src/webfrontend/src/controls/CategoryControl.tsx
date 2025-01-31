@@ -26,7 +26,10 @@ export function CategoryControl(props: CategoryControlProps) {
     return <div data-testid="category-control">
         <label>
             Category
-            <input type="text" value="" onFocus={() => setFocused(true)} />
+            <input type="text" 
+                value=""
+                placeholder="Uncategorized" 
+                onFocus={() => setFocused(true)} />
         </label>
         {focused
             ? cats.map(c => <a href="#">{c.name}</a>)
