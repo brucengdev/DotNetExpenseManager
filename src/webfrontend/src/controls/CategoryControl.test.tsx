@@ -22,7 +22,7 @@ describe("CategoryControl", () => {
 
         const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
         expect(categoryFilterField).toBeInTheDocument()
-        expect(categoryFilterField).toHaveAttribute("value", "Uncategorized")
+        expect(categoryFilterField).toHaveAttribute("value", "")
 
         const categoryField = screen.getByRole("combobox", { name: "Category"})
         expect(categoryField).toBeInTheDocument()
