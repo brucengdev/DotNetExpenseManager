@@ -68,14 +68,12 @@ describe("EntryForm", () => {
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         await sleep(10)
         
-        const category = screen.getByRole("combobox", { name: "Category" })
-
-        await userEvent.selectOptions(category, "1")
+        fireEvent.focus(screen.getByRole("textbox", { name : "Category" }))
+        fireEvent.click(screen.getByRole("link", { name: "household" }))
         await sleep(10)
         
-        var categoryOptions = screen.getAllByTestId("category-option")
-        expect((categoryOptions[0] as any).selected).toBeFalsy()
-        expect((categoryOptions[1] as any).selected).toBeTruthy()
+        expect(screen.getByRole("textbox", { name: "Category"}))
+            .toHaveAttribute("value", "household")
     })
 
     it("saves entries and executes callback when clicking save successfully", async () => {

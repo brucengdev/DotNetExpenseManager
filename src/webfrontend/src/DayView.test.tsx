@@ -150,7 +150,8 @@ describe("DayView", () => {
 
         await sleep(10)
 
-        await userEvent.selectOptions(screen.getByRole("combobox", { name: "Category" }), "12")
+        fireEvent.focus(screen.getByRole("textbox", { name: "Category"}))
+        fireEvent.click(screen.getByRole("link", { name: "Household"}))
 
         fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
         fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})
