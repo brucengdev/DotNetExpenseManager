@@ -27,6 +27,8 @@ describe("CategoryControl", () => {
 
         expect(screen.queryByRole("link", { name: "Uncategorized"}))
             .not.toBeInTheDocument()
+        expect(screen.queryByRole("link", { name: "household"}))
+            .not.toBeInTheDocument()
     })
 
     it("shows list of categories on focus", async () => {
