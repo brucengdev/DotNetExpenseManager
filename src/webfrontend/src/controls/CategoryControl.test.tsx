@@ -31,6 +31,29 @@ describe("CategoryControl", () => {
             .not.toBeInTheDocument()
     })
 
+    it("shows exact selected category", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        render(<CategoryControl client={client} 
+            categoryId={1} 
+            onChange={_ => { }}
+            />)
+        await sleep(100)
+
+        expect(screen.getByTestId("category-control")).toBeInTheDocument();
+
+        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
+        expect(categoryFilterField).toBeInTheDocument()
+        expect(categoryFilterField).toHaveAttribute("value", "household")
+
+        expect(screen.queryByRole("link", { name: "Uncategorized"}))
+            .not.toBeInTheDocument()
+        expect(screen.queryByRole("link", { name: "household"}))
+            .not.toBeInTheDocument()
+    })
+
     it("shows list of categories on focus", async () => {
         const client = new TestClient()
         client.Categories = [
