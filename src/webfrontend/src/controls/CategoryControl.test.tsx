@@ -18,6 +18,8 @@ describe("CategoryControl", () => {
             />)
         await sleep(100)
 
+        expect(screen.getByTestId("category-control")).toBeInTheDocument();
+
         const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
         expect(categoryFilterField).toBeInTheDocument()
         expect(categoryFilterField).toHaveAttribute("value", "Uncategorized")
