@@ -67,7 +67,7 @@ describe("EntryForm", () => {
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         await sleep(10)
         
-        fireEvent.focus(screen.getByRole("textbox", { name : "Category" }))
+        fireEvent.click(screen.getByRole("link", { name: "Uncategorized" }))
         fireEvent.click(screen.getByRole("link", { name: "household" }))
         await sleep(10)
         

@@ -22,10 +22,8 @@ describe("CategoryControl", () => {
 
         expect(screen.getByRole("link", { name: "Uncategorized"})).toBeInTheDocument()
 
-        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
-        expect(categoryFilterField).toBeInTheDocument()
-        expect(categoryFilterField).toHaveAttribute("value", "")
-        expect(categoryFilterField).toHaveAttribute("placeholder", "Uncategorized")
+        const categoryFilterField = screen.queryByRole("textbox", { name: "Category"})
+        expect(categoryFilterField).not.toBeInTheDocument()
 
         expect(screen.queryAllByTestId("category-option").length).toBe(0)
     })
@@ -43,15 +41,11 @@ describe("CategoryControl", () => {
 
         expect(screen.getByTestId("category-control")).toBeInTheDocument();
 
-        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
-        expect(categoryFilterField).toBeInTheDocument()
-        expect(categoryFilterField).toHaveAttribute("value", "household")
-
-        const options = screen.queryAllByTestId("category-option")
-        expect(options.length).toBe(0)
+        expect(screen.getByRole("link", { name: "household"}))
+            .toBeInTheDocument()
     })
 
-    it("shows list of categories on focus", async () => {
+    it("shows list of categories when clicked on link", async () => {
         const client = new TestClient()
         client.Categories = [
             new Category(1, "household") 
@@ -62,13 +56,41 @@ describe("CategoryControl", () => {
             />)
         await sleep(100)
 
-        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
+        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        await sleep(10)
 
-        fireEvent.focus(categoryFilterField);
+        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
+        expect(categoryFilterField).toBeInTheDocument()
 
         expect(screen.getByRole("link", { name: "Uncategorized"}))
             .toBeInTheDocument()
         expect(screen.getByRole("link", { name: "household"}))
+            .toBeInTheDocument()
+    })
+
+    it("filters list of categories", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household"),
+            new Category(2, "travel")
+        ]
+        render(<CategoryControl client={client} 
+            categoryId={0} 
+            onChange={_ => { }}
+            />)
+        await sleep(100)
+
+        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        await sleep(10)
+
+        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
+        fireEvent.change(categoryFilterField, { target: { value: "tr"}})
+        
+        expect(screen.queryByRole("link", { name: "Uncategorized"}))
+            .not.toBeInTheDocument()
+        expect(screen.queryByRole("link", { name: "household"}))
+            .not.toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "travel"}))
             .toBeInTheDocument()
     })
 
@@ -87,9 +109,8 @@ describe("CategoryControl", () => {
             />)
         await sleep(100)
 
-        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
-
-        fireEvent.focus(categoryFilterField);
+        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        await sleep(10)
 
         const householdCat = screen.getByRole("link", { name: "household"})
         fireEvent.click(householdCat)

@@ -150,7 +150,7 @@ describe("DayView", () => {
 
         await sleep(10)
 
-        fireEvent.focus(screen.getByRole("textbox", { name: "Category"}))
+        fireEvent.click(screen.getByRole("link", { name: "Uncategorized"}))
         fireEvent.click(screen.getByRole("link", { name: "Household"}))
 
         fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})

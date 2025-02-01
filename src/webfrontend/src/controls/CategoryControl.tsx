@@ -12,7 +12,7 @@ interface CategoryControlProps {
 export function CategoryControl(props: CategoryControlProps) {
     const { client, categoryId, onChange } = props
     const [categories, setCategories] = useState([] as Category[])
-    const [focused, setFocused] = useState(false)
+    const [selecting, setSelecting] = useState(false)
     client.GetCategories()
     .then(cats => {
         if(!areSame(cats, categories)) {
@@ -25,11 +25,7 @@ export function CategoryControl(props: CategoryControlProps) {
     })
     const [filterText, setFilterText] = useState("")
     const matchedCategory = categories.find(c => c.id === categoryId)
-    const initialCategoryName = categoryId === 0? "": matchedCategory?.name ?? ""
-    if(filterText === "" && initialCategoryName !== "") {
-        setFilterText(initialCategoryName)
-    }
-    console.log("Filter text = " + filterText)
+    const categoryName = matchedCategory?.name ?? "Uncategorized"
     const cats: Category[] = [
         new Category(0, "Uncategorized"),
         ... categories
@@ -38,28 +34,31 @@ export function CategoryControl(props: CategoryControlProps) {
     console.log("cats = " + cats.map(c => c.name).join(","))
      
     return <div data-testid="category-control">
-        {!focused?<label>
+        {!selecting?<label>
             Category
-            <a href="#">Uncategorized</a>
+            <a href="#" onClick={e => {
+                e.preventDefault()
+                setSelecting(true)
+            }}>
+                {categoryName}
+            </a>
         </label>
-        :<></>}
-        <label>
+        : <div><label>
             Category
             <input type="text" 
                 value={filterText}
                 onChange={(e) => {
                     const newFilterText = e.target.value
-                    console.log("newFilterText = " + newFilterText)
                     setFilterText(newFilterText)
                 }}
                 placeholder="Uncategorized" 
-                onFocus={() => setFocused(true)} />
+                />
         </label>
-        {focused
-            ? cats.map(c => <a href="#" onClick={() => {
-                const newCatId = c.id
-                onChange(newCatId)
-            }}>{c.name}</a>)
-            :<></>}
+        {cats.map(c => <a href="#" onClick={() => {
+            const newCatId = c.id
+            onChange(newCatId)
+        }}>{c.name}</a>)}
+        </div>
+        }
     </div>
 }
