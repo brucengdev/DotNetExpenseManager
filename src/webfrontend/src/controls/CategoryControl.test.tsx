@@ -142,4 +142,24 @@ describe("CategoryControl", () => {
         expect(screen.getByRole("button", { name: "+"}))
             .toBeInTheDocument()
     })
+
+    it("adds new category when add button is clicked", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        render(<CategoryControl client={client} 
+            categoryId={0} 
+            onChange={_ => { }}
+            />)
+        await sleep(100)
+
+        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        fireEvent.change(screen.getByRole("textbox", { name: "Category"}),
+            {target: { value: "foo" }})
+
+        fireEvent.click(screen.getByRole("button", { name: "+"}))
+
+        expect(client.Categories).toContain(new Category(2, "foo"))
+    })
 })
