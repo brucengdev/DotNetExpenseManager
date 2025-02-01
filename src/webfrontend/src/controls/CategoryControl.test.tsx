@@ -20,15 +20,14 @@ describe("CategoryControl", () => {
 
         expect(screen.getByTestId("category-control")).toBeInTheDocument();
 
+        expect(screen.getByRole("link", { name: "Uncategorized"})).toBeInTheDocument()
+
         const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
         expect(categoryFilterField).toBeInTheDocument()
         expect(categoryFilterField).toHaveAttribute("value", "")
         expect(categoryFilterField).toHaveAttribute("placeholder", "Uncategorized")
 
-        expect(screen.queryByRole("link", { name: "Uncategorized"}))
-            .not.toBeInTheDocument()
-        expect(screen.queryByRole("link", { name: "household"}))
-            .not.toBeInTheDocument()
+        expect(screen.queryAllByTestId("category-option").length).toBe(0)
     })
 
     it("shows exact selected category", async () => {
@@ -48,10 +47,8 @@ describe("CategoryControl", () => {
         expect(categoryFilterField).toBeInTheDocument()
         expect(categoryFilterField).toHaveAttribute("value", "household")
 
-        expect(screen.queryByRole("link", { name: "Uncategorized"}))
-            .not.toBeInTheDocument()
-        expect(screen.queryByRole("link", { name: "household"}))
-            .not.toBeInTheDocument()
+        const options = screen.queryAllByTestId("category-option")
+        expect(options.length).toBe(0)
     })
 
     it("shows list of categories on focus", async () => {

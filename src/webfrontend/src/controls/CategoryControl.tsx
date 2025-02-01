@@ -38,6 +38,11 @@ export function CategoryControl(props: CategoryControlProps) {
     console.log("cats = " + cats.map(c => c.name).join(","))
      
     return <div data-testid="category-control">
+        {!focused?<label>
+            Category
+            <a href="#">Uncategorized</a>
+        </label>
+        :<></>}
         <label>
             Category
             <input type="text" 
