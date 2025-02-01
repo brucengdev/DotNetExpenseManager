@@ -18,18 +18,35 @@ export function CategoryControl(props: CategoryControlProps) {
         if(!areSame(cats, categories)) {
             setCategories(cats)
         }
+        const matchedCategory = categories.find(c => c.id === categoryId)
+        if(matchedCategory) {
+            setFilterText(matchedCategory.name)
+        }
     })
+    const [filterText, setFilterText] = useState("")
+    const matchedCategory = categories.find(c => c.id === categoryId)
+    const initialCategoryName = categoryId === 0? "": matchedCategory?.name ?? ""
+    if(filterText === "" && initialCategoryName !== "") {
+        setFilterText(initialCategoryName)
+    }
+    console.log("Filter text = " + filterText)
     const cats: Category[] = [
         new Category(0, "Uncategorized"),
         ... categories
-    ]
-    const matchedCategory = cats.find(c => c.id === categoryId)
-    const categoryName = categoryId === 0? "": matchedCategory?.name ?? ""
+    ].filter(c => c.name.indexOf(filterText) !== -1)
+
+    console.log("cats = " + cats.map(c => c.name).join(","))
+     
     return <div data-testid="category-control">
         <label>
             Category
             <input type="text" 
-                value={categoryName}
+                value={filterText}
+                onChange={(e) => {
+                    const newFilterText = e.target.value
+                    console.log("newFilterText = " + newFilterText)
+                    setFilterText(newFilterText)
+                }}
                 placeholder="Uncategorized" 
                 onFocus={() => setFocused(true)} />
         </label>
