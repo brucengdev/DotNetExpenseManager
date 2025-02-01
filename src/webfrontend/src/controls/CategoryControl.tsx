@@ -12,28 +12,50 @@ interface CategoryControlProps {
 export function CategoryControl(props: CategoryControlProps) {
     const { client, categoryId, onChange } = props
     const [categories, setCategories] = useState([] as Category[])
+    const [selecting, setSelecting] = useState(false)
     client.GetCategories()
     .then(cats => {
         if(!areSame(cats, categories)) {
             setCategories(cats)
         }
     })
-    return <label data-testid="category-control">
-        Category
-        <select value={categoryId} onChange={(e) => { 
-                const newCatId = parseInt(e.target.value)
-                onChange(newCatId)
+    const [filterText, setFilterText] = useState("")
+    const matchedCategory = categories.find(c => c.id === categoryId)
+    const categoryName = matchedCategory?.name ?? "Uncategorized"
+    const cats: Category[] = [
+        new Category(0, "Uncategorized"),
+        ... categories
+    ].filter(c => c.name.indexOf(filterText) !== -1)
+
+    console.log("cats = " + cats.map(c => c.name).join(","))
+     
+    return <div data-testid="category-control">
+        {!selecting?<label>
+            Category
+            <a href="#" onClick={e => {
+                e.preventDefault()
+                setSelecting(true)
             }}>
-            <option data-testid="category-option" value="0">
-                Uncategorized
-            </option>
-            {categories.map(cat => 
-                <option data-testid="category-option" 
-                    value={cat.id}
-                    >
-                    {cat.name}
-                </option>)
-            }
-        </select>
-    </label>
+                {categoryName}
+            </a>
+        </label>
+        : <div><label>
+            Category
+            <input type="text" 
+                value={filterText}
+                onChange={(e) => {
+                    const newFilterText = e.target.value
+                    setFilterText(newFilterText)
+                }}
+                placeholder="Uncategorized" 
+                />
+        </label>
+        {cats.map(c => <a href="#" onClick={() => {
+            const newCatId = c.id
+            onChange(newCatId)
+            setSelecting(false)
+        }}>{c.name}</a>)}
+        </div>
+        }
+    </div>
 }

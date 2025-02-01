@@ -7,7 +7,6 @@ import { sleep } from "./__test__/testutils";
 import { Entry } from "./models/Entry";
 import { sameDate } from "./utils";
 import { Category } from "./models/Category";
-import userEvent from "@testing-library/user-event";
 
 describe("DayView", () => {
     it("shows entries by day", async () => {
@@ -150,7 +149,8 @@ describe("DayView", () => {
 
         await sleep(10)
 
-        await userEvent.selectOptions(screen.getByRole("combobox", { name: "Category" }), "12")
+        fireEvent.click(screen.getByRole("link", { name: "Uncategorized"}))
+        fireEvent.click(screen.getByRole("link", { name: "Household"}))
 
         fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
         fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})

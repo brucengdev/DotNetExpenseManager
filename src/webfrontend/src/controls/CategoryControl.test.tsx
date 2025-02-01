@@ -1,8 +1,8 @@
-import { describe, it, expect } from "vitest"
+import { describe, it, expect, vitest } from "vitest"
 import { TestClient } from "../__test__/TestClient"
 import { sleep } from "../__test__/testutils"
 import { Category } from "../models/Category"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { CategoryControl } from "./CategoryControl"
 import '@testing-library/jest-dom'
 
@@ -18,17 +18,107 @@ describe("CategoryControl", () => {
             />)
         await sleep(100)
 
-        const categoryField = screen.getByRole("combobox", { name: "Category"})
-        expect(categoryField).toBeInTheDocument()
-        
-        var categoryOptions = screen.getAllByTestId("category-option")
-        expect(categoryOptions.length).toBe(2)
-        expect(categoryOptions[0].innerHTML).toBe("Uncategorized")
-        expect(categoryOptions[0]).toHaveAttribute("value", "0")
-        expect((categoryOptions[0] as any).selected).toBeTruthy()
+        expect(screen.getByTestId("category-control")).toBeInTheDocument();
 
-        expect(categoryOptions[1].innerHTML).toBe("household")
-        expect(categoryOptions[1]).toHaveAttribute("value", "1")
-        expect((categoryOptions[1] as any).selected).toBeFalsy()
+        expect(screen.getByRole("link", { name: "Uncategorized"})).toBeInTheDocument()
+
+        const categoryFilterField = screen.queryByRole("textbox", { name: "Category"})
+        expect(categoryFilterField).not.toBeInTheDocument()
+
+        expect(screen.queryAllByTestId("category-option").length).toBe(0)
+    })
+
+    it("shows exact selected category", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        render(<CategoryControl client={client} 
+            categoryId={1} 
+            onChange={_ => { }}
+            />)
+        await sleep(100)
+
+        expect(screen.getByTestId("category-control")).toBeInTheDocument();
+
+        expect(screen.getByRole("link", { name: "household"}))
+            .toBeInTheDocument()
+    })
+
+    it("shows list of categories when clicked on link", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        render(<CategoryControl client={client} 
+            categoryId={0} 
+            onChange={_ => { }}
+            />)
+        await sleep(100)
+
+        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        await sleep(10)
+
+        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
+        expect(categoryFilterField).toBeInTheDocument()
+
+        expect(screen.getByRole("link", { name: "Uncategorized"}))
+            .toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "household"}))
+            .toBeInTheDocument()
+    })
+
+    it("filters list of categories", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household"),
+            new Category(2, "travel")
+        ]
+        render(<CategoryControl client={client} 
+            categoryId={0} 
+            onChange={_ => { }}
+            />)
+        await sleep(100)
+
+        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        await sleep(10)
+
+        const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
+        fireEvent.change(categoryFilterField, { target: { value: "tr"}})
+        
+        expect(screen.queryByRole("link", { name: "Uncategorized"}))
+            .not.toBeInTheDocument()
+        expect(screen.queryByRole("link", { name: "household"}))
+            .not.toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "travel"}))
+            .toBeInTheDocument()
+    })
+
+    it("selects a category when clicked", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        let selectedCatId: number | undefined = undefined
+        const onChange = vitest.fn((catId: number) => {
+            selectedCatId = catId
+        })
+        render(<CategoryControl client={client} 
+            categoryId={0} 
+            onChange={onChange}
+            />)
+        await sleep(100)
+
+        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        await sleep(10)
+
+        const householdCat = screen.getByRole("link", { name: "household"})
+        fireEvent.click(householdCat)
+
+        expect(onChange).toHaveBeenCalled()
+        expect(selectedCatId).toBe(1)
+
+        expect(screen.queryByRole("textbox", { name: "Category" }))
+            .not.toBeInTheDocument()
     })
 })

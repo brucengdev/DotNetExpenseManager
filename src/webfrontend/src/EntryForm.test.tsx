@@ -5,7 +5,6 @@ import { EntryForm } from "./EntryForm";
 import { TestClient } from "./__test__/TestClient";
 import { sleep } from "./__test__/testutils";
 import { Category } from "./models/Category";
-import userEvent from "@testing-library/user-event"
 
 describe("EntryForm", () => {
     it("shows form input", async () => {
@@ -68,14 +67,12 @@ describe("EntryForm", () => {
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         await sleep(10)
         
-        const category = screen.getByRole("combobox", { name: "Category" })
-
-        await userEvent.selectOptions(category, "1")
+        fireEvent.click(screen.getByRole("link", { name: "Uncategorized" }))
+        fireEvent.click(screen.getByRole("link", { name: "household" }))
         await sleep(10)
         
-        var categoryOptions = screen.getAllByTestId("category-option")
-        expect((categoryOptions[0] as any).selected).toBeFalsy()
-        expect((categoryOptions[1] as any).selected).toBeTruthy()
+        expect(screen.getByRole("link", { name: "household"}))
+            .toBeInTheDocument()
     })
 
     it("saves entries and executes callback when clicking save successfully", async () => {
