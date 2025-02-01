@@ -7,7 +7,6 @@ import { sleep } from "./__test__/testutils";
 import { Entry } from "./models/Entry";
 import { sameDate } from "./utils";
 import { Category } from "./models/Category";
-import userEvent from "@testing-library/user-event";
 
 describe("DayView", () => {
     it("shows entries by day", async () => {
