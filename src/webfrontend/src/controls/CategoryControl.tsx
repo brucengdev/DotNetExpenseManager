@@ -53,6 +53,7 @@ export function CategoryControl(props: CategoryControlProps) {
         {cats.map(c => <a href="#" onClick={() => {
             const newCatId = c.id
             onChange(newCatId)
+            setSelecting(false)
         }}>{c.name}</a>)}
         </div>
         }

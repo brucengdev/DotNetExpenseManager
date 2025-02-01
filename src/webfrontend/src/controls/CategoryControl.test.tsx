@@ -117,5 +117,8 @@ describe("CategoryControl", () => {
 
         expect(onChange).toHaveBeenCalled()
         expect(selectedCatId).toBe(1)
+
+        expect(screen.queryByRole("textbox", { name: "Category" }))
+            .not.toBeInTheDocument()
     })
 })
