@@ -121,4 +121,25 @@ describe("CategoryControl", () => {
         expect(screen.queryByRole("textbox", { name: "Category" }))
             .not.toBeInTheDocument()
     })
+
+    it("shows add category button when filter finds nothing", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        render(<CategoryControl client={client} 
+            categoryId={0} 
+            onChange={_ => { }}
+            />)
+        await sleep(100)
+
+        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        await sleep(10)
+
+        fireEvent.change(screen.getByRole("textbox", { name: "Category"}),
+            {target: { value: "foo" }})
+
+        expect(screen.getByRole("button", { name: "+"}))
+            .toBeInTheDocument()
+    })
 })

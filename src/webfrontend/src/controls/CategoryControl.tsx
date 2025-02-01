@@ -50,11 +50,18 @@ export function CategoryControl(props: CategoryControlProps) {
                 placeholder="Uncategorized" 
                 />
         </label>
-        {cats.map(c => <a href="#" onClick={() => {
-            const newCatId = c.id
-            onChange(newCatId)
-            setSelecting(false)
-        }}>{c.name}</a>)}
+        {
+            cats.length > 0
+            ?cats.map(c => 
+                    <a href="#" onClick={() => {
+                        const newCatId = c.id
+                        onChange(newCatId)
+                        setSelecting(false)
+                    }}>
+                        {c.name}
+                    </a>)
+            :<button>+</button>
+        }
         </div>
         }
     </div>
