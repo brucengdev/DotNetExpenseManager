@@ -18,10 +18,6 @@ export function CategoryControl(props: CategoryControlProps) {
         if(!areSame(cats, categories)) {
             setCategories(cats)
         }
-        const matchedCategory = categories.find(c => c.id === categoryId)
-        if(matchedCategory) {
-            setFilterText(matchedCategory.name)
-        }
     })
     const [filterText, setFilterText] = useState("")
     const matchedCategory = categories.find(c => c.id === categoryId)

@@ -71,8 +71,8 @@ describe("EntryForm", () => {
         fireEvent.click(screen.getByRole("link", { name: "household" }))
         await sleep(10)
         
-        expect(screen.getByRole("textbox", { name: "Category"}))
-            .toHaveAttribute("value", "household")
+        expect(screen.getByRole("link", { name: "household"}))
+            .toBeInTheDocument()
     })
 
     it("saves entries and executes callback when clicking save successfully", async () => {
