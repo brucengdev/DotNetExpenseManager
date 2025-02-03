@@ -152,14 +152,18 @@ describe("CategoryControl", () => {
             categoryId={0} 
             onChange={_ => { }}
             />)
-        await sleep(100)
+        await sleep(10)
 
         fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
         fireEvent.change(screen.getByRole("textbox", { name: "Category"}),
             {target: { value: "foo" }})
 
         fireEvent.click(screen.getByRole("button", { name: "+"}))
+        
+        await sleep(10)
 
         expect(client.Categories).toContainEqual(new Category(2, "foo"))
+
+        expect(screen.queryByRole("button", { name: "+"})).not.toBeInTheDocument()
     })
 })

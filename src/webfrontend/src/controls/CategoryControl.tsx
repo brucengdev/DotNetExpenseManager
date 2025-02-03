@@ -13,12 +13,7 @@ export function CategoryControl(props: CategoryControlProps) {
     const { client, categoryId, onChange } = props
     const [categories, setCategories] = useState([] as Category[])
     const [selecting, setSelecting] = useState(false)
-    client.GetCategories()
-    .then(cats => {
-        if(!areSame(cats, categories)) {
-            setCategories(cats)
-        }
-    })
+    reloadCategories(client, categories, setCategories)
     const [filterText, setFilterText] = useState("")
     const matchedCategory = categories.find(c => c.id === categoryId)
     const categoryName = matchedCategory?.name ?? "Uncategorized"
@@ -27,8 +22,6 @@ export function CategoryControl(props: CategoryControlProps) {
         ... categories
     ].filter(c => c.name.indexOf(filterText) !== -1)
 
-    console.log("cats = " + cats.map(c => c.name).join(","))
-     
     return <div data-testid="category-control">
         {!selecting?<label>
             Category
@@ -62,9 +55,23 @@ export function CategoryControl(props: CategoryControlProps) {
                     </a>)
             :<button onClick={() => {
                 client.AddCategory(filterText)
+                .then(succeeded => {
+                    if(succeeded) {
+                        setFilterText("")
+                    }
+                })
             }}>+</button>
         }
         </div>
         }
     </div>
+}
+
+function reloadCategories(client: IClient, currentCats: Category[], setCategories: (cats: Category[]) => void) {
+    client.GetCategories()
+        .then(cats => {
+            if (!areSame(cats, currentCats)) {
+                setCategories(cats)
+            }
+        })
 }
