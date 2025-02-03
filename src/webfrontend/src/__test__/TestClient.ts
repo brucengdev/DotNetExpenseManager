@@ -53,4 +53,8 @@ export class TestClient implements IClient {
     async GetCategories(): Promise<Category[]> {
         return this.Categories
     }
+
+    async AddCategory(categoryName: string):Promise<void> {
+        this.Categories.push(new Category(this.Categories.length + 1, categoryName))
+    }
 }

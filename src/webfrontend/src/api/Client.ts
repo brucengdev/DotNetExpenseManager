@@ -11,6 +11,7 @@ export interface IClient {
     AddEntry: (entry: Entry) => Promise<boolean>
     DeleteEntry(id: number): Promise<boolean>
     GetCategories: () => Promise<Category[]>
+    AddCategory: (name: string) => Promise<void>
 }
 
 const devUrl = "https://localhost:7146"
@@ -103,5 +104,9 @@ export class Client implements IClient {
             return await result.json()
         }
         return []
+    }
+
+    async AddCategory(_: string): Promise<void> {
+        throw new Error("Not implemented")
     }
 }

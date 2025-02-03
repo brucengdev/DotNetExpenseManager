@@ -160,6 +160,6 @@ describe("CategoryControl", () => {
 
         fireEvent.click(screen.getByRole("button", { name: "+"}))
 
-        expect(client.Categories).toContain(new Category(2, "foo"))
+        expect(client.Categories).toContainEqual(new Category(2, "foo"))
     })
 })

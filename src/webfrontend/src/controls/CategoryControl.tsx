@@ -60,7 +60,9 @@ export function CategoryControl(props: CategoryControlProps) {
                     }}>
                         {c.name}
                     </a>)
-            :<button>+</button>
+            :<button onClick={() => {
+                client.AddCategory(filterText)
+            }}>+</button>
         }
         </div>
         }
