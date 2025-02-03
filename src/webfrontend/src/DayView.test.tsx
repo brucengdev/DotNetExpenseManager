@@ -11,11 +11,15 @@ import { Category } from "./models/Category";
 describe("DayView", () => {
     it("shows entries by day", async () => {
         const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household"),
+            new Category(2, "leisure"),
+        ]
         client.Entries = [
-            new Entry(0, new Date(2024, 5, 11), "grocery", -120),
-            new Entry(1, new Date(2024, 5, 8), "toys", -100),
-            new Entry(2, new Date(2024, 5, 9), "eat out", -60),
-            new Entry(3, new Date(2024, 5, 11), "eat out", -65),
+            new Entry(0, new Date(2024, 5, 11), "grocery", -120, 1),
+            new Entry(1, new Date(2024, 5, 8), "toys", -100, 1),
+            new Entry(2, new Date(2024, 5, 9), "eat out", -60, 2),
+            new Entry(3, new Date(2024, 5, 11), "eat out", -65, 2),
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
@@ -32,10 +36,12 @@ describe("DayView", () => {
         expect(entries.length).toBe(2)
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
+        expect(entries[0].querySelector('[data-testid="category"]')?.textContent).toBe("household")
         expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
         expect(entries[0].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
 
         expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("eat out")
+        expect(entries[1].querySelector('[data-testid="category"]')?.textContent).toBe("leisure")
         expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
         expect(entries[1].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
     })

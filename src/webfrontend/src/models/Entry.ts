@@ -8,11 +8,16 @@ export class Entry implements Comparable<Entry>{
     public date: Date = new Date()
     public categoryId: number = 0
 
-    constructor(id: number, date: Date, title: string, value: number) {
+    constructor(id: number, 
+        date: Date, 
+        title: string, 
+        value: number,
+        categoryId: number = 0) {
         this.id = id
         this.date = date
         this.title = title
         this.value = value
+        this.categoryId = categoryId
     }
 
     public Equals(other: Entry): boolean {

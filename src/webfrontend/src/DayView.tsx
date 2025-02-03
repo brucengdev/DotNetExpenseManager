@@ -4,6 +4,7 @@ import { EntryView } from "./EntryView"
 import { Entry } from "./models/Entry"
 import { EntryForm } from "./EntryForm"
 import { addDays, areSame, formatDisplayDate } from "./utils"
+import { Category } from "./models/Category"
 
 export interface DayViewProps {
     client: IClient
@@ -13,7 +14,14 @@ export interface DayViewProps {
 export const DayView = ({client, initialDate}: DayViewProps) => {
     const [addingEntry, setAddingEntry] = useState(false)
     const [entries, setEntries] = useState([] as Entry[])
+    const [categories, setCategories] = useState([] as Category[])
     const [date, setDate] = useState(initialDate)
+    client.GetCategories()
+    .then(serverCategories => {
+        if(!areSame(serverCategories, categories)) {
+            setCategories(serverCategories)
+        }
+    })
     client.GetEntriesByDate(date)
     .then(serverEntries => {
         if(!areSame(serverEntries, entries)) {
@@ -35,7 +43,12 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                             <h2 className="col">{formatDisplayDate(date)}</h2>
                             <button className="col" onClick={() => setDate(addDays(date, 1))}>&gt;</button>
                         </div>
-                        {entries.map(({id, title, value}) => <EntryView title={title} value={value} onDelete={() => client.DeleteEntry(id)} />)}
+                        {entries.map(({id, title, value, categoryId}) => 
+                            <EntryView 
+                                title={title}
+                                value={value}
+                                categoryName={categories.find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
+                                onDelete={() => client.DeleteEntry(id)} />)}
                     </div>
                     <button onClick={() => setAddingEntry(true)}>+</button>
                 </div>
