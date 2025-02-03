@@ -11,7 +11,7 @@ export interface IClient {
     AddEntry: (entry: Entry) => Promise<boolean>
     DeleteEntry(id: number): Promise<boolean>
     GetCategories: () => Promise<Category[]>
-    AddCategory: (name: string) => Promise<void>
+    AddCategory: (name: string) => Promise<boolean>
 }
 
 const devUrl = "https://localhost:7146"
@@ -106,7 +106,16 @@ export class Client implements IClient {
         return []
     }
 
-    async AddCategory(_: string): Promise<void> {
-        throw new Error("Not implemented")
+    async AddCategory(name: string): Promise<boolean> {
+        const result = await fetch(`${url}/Category/AddCategory?${new URLSearchParams({
+            accessToken: this.token
+        }).toString()}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(new Category(0, name))
+        })  
+        return result.ok
     }
 }

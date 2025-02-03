@@ -54,7 +54,8 @@ export class TestClient implements IClient {
         return this.Categories
     }
 
-    async AddCategory(categoryName: string):Promise<void> {
+    async AddCategory(categoryName: string):Promise<boolean> {
         this.Categories.push(new Category(this.Categories.length + 1, categoryName))
+        return true
     }
 }
