@@ -36,10 +36,12 @@ describe("DayView", () => {
         expect(entries.length).toBe(2)
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
+        expect(entries[0].querySelector('[data-testid="category"]')?.textContent).toBe("household")
         expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
         expect(entries[0].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
 
         expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("eat out")
+        expect(entries[1].querySelector('[data-testid="category"]')?.textContent).toBe("leisure")
         expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
         expect(entries[1].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
     })
