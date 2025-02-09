@@ -13,6 +13,8 @@
             User = other.User;
         }
         public User User { get; set; }
+        
+        public Category Category { get; set; }
     }
     
     public class EntryPlain
@@ -29,5 +31,7 @@
         public DateTime Date { get; set; }
         public string Title { get;set; }
         public int UserId { get; set; }
+        
+        public int CategoryId { get; set; }
     }
 }

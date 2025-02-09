@@ -20,7 +20,8 @@ namespace Backend.Core.Tests
                 Title = "Test entry",
                 Value = -10.22f,
                 Date = new DateTime(2022, 4, 22),
-                UserId = 23
+                UserId = 23,
+                CategoryId = 1
             };
             sut.AddEntry(inputEntry);
             
@@ -31,6 +32,7 @@ namespace Backend.Core.Tests
             savedEntry.Date.ShouldBe(new DateTime(2022, 4, 22));
             savedEntry.Value.ShouldBe(-10.22f);
             savedEntry.UserId.ShouldBe(23);
+            savedEntry.CategoryId.ShouldBe(1);
         }
 
         [Theory]
