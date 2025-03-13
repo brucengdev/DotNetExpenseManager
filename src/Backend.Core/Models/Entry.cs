@@ -25,6 +25,7 @@
             Value = other.Value;
             Date = other.Date;
             Title = other.Title;
+            CategoryId = other.CategoryId;
         }
         public int Id { get; set; }
         public float Value { get; set; }
