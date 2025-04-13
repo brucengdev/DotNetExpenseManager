@@ -88,6 +88,7 @@ describe("EntryForm", () => {
         await sleep(10)
 
         expect(client.Entries.length).toBe(1)
+        expect(client.Entries[0].categoryId).toBeUndefined()
         expect(saveHandler).toHaveBeenCalled()
     })
 

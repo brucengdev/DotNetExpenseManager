@@ -13,6 +13,8 @@
             User = other.User;
         }
         public User User { get; set; }
+        
+        public Category Category { get; set; }
     }
     
     public class EntryPlain
@@ -23,11 +25,14 @@
             Value = other.Value;
             Date = other.Date;
             Title = other.Title;
+            CategoryId = other.CategoryId;
         }
         public int Id { get; set; }
         public float Value { get; set; }
         public DateTime Date { get; set; }
         public string Title { get;set; }
         public int UserId { get; set; }
+        
+        public int? CategoryId { get; set; }
     }
 }

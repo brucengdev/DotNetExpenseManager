@@ -5,7 +5,7 @@ import { areSame } from "../utils"
 
 interface CategoryControlProps {
     client: IClient
-    categoryId: number
+    categoryId: number | undefined
     onChange: (newCatId: number) => void
 }
 
