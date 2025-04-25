@@ -23,4 +23,9 @@ internal class EntryRepository: IEntryRepository
         return _dbContext.Entries
             .Where(e => e.UserId == userId && e.Date.Date == date.Date);
     }
+
+    public void DeleteEntry(int entryId)
+    {
+        throw new NotImplementedException();
+    }
 }

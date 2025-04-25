@@ -27,4 +27,9 @@ public class EntryManager: IEntryManager
     {
         return _entryRepository.GetByDateAndUser(date, userId);
     }
+
+    public void DeleteEntry(int entryId)
+    {
+        _entryRepository.DeleteEntry(entryId);
+    }
 }
