@@ -20,8 +20,9 @@ internal class EntryRepository: IEntryRepository
 
     public IEnumerable<Entry> GetByDateAndUser(DateTime date, int userId)
     {
-        return _dbContext.Entries
+        var result = _dbContext.Entries
             .Where(e => e.UserId == userId && e.Date.Date == date.Date);
+        return result;
     }
 
     public void DeleteEntry(int id)

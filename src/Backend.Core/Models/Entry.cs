@@ -26,7 +26,23 @@
             Date = other.Date;
             Title = other.Title;
             CategoryId = other.CategoryId;
+            Id = other.Id;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not EntryPlain other)
+            {
+                return false;
+            }
+
+            return Value == other.Value
+                   && Date == other.Date
+                   && Title == other.Title
+                   && CategoryId == other.CategoryId
+                   && Id == other.Id;
+        }
+
         public int Id { get; set; }
         public float Value { get; set; }
         public DateTime Date { get; set; }
