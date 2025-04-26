@@ -33,8 +33,10 @@ describe('EntryView', () => {
 
         fireEvent.click(screen.getByRole("button", {name: "X"}))
         expect(screen.queryByTestId("confirmDeleteView")).toBeInTheDocument()
+        
         fireEvent.click(screen.getByRole("button", { name: "Yes"}))
         expect(onDelete).toHaveBeenCalled()
+        expect(screen.queryByTestId("confirmDeleteView")).not.toBeInTheDocument()
     })
     
     it("hides confirmation view when No is clicked", () => {
