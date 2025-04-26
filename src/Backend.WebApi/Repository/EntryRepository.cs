@@ -26,6 +26,10 @@ internal class EntryRepository: IEntryRepository
 
     public void DeleteEntry(int entryId)
     {
-        throw new NotImplementedException();
+        var entry = _dbContext.Entries.Find(entryId);
+        if (entry != null)
+        {
+            _dbContext.Entries.Remove(entry);
+        }
     }
 }
