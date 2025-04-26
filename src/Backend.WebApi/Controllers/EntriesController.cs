@@ -47,7 +47,7 @@ public class EntriesController: ControllerBase
     }
 
     [HttpDelete("[action]")]
-    public ActionResult DeleteEntry(int id)
+    public ActionResult Delete(int id)
     {
         _entryManager.DeleteEntry(id);
         return Ok();

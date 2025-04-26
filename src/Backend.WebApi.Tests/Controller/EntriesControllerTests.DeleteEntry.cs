@@ -15,7 +15,7 @@ public partial class EntriesControllerTests
     [Fact]
     public void DeleteEntry_endpoint_config()
     {
-        var method = Utils.GetMethod<EntriesController>(nameof(EntriesController.DeleteEntry));
+        var method = Utils.GetMethod<EntriesController>(nameof(EntriesController.Delete));
         method.ShouldNotBeNull();
 
         var attributes = method?.GetCustomAttributes(typeof(HttpDeleteAttribute), true);
@@ -34,7 +34,7 @@ public partial class EntriesControllerTests
         var sut = new EntriesController(entryManager.Object, accountManager.Object);
     
         //act
-        var result = sut.DeleteEntry(1);
+        var result = sut.Delete(1);
     
         //assert
         entryManager.Verify(em => em.DeleteEntry(1), Times.Exactly(1));
