@@ -7,5 +7,5 @@ public interface IEntryRepository
     bool AddEntry(Entry entry);
     IEnumerable<Entry> GetByDateAndUser(DateTime date, int userId);
 
-    void DeleteEntry(int entryId);
+    void DeleteEntry(int id);
 }

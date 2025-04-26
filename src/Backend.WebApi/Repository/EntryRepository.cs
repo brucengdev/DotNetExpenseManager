@@ -24,12 +24,13 @@ internal class EntryRepository: IEntryRepository
             .Where(e => e.UserId == userId && e.Date.Date == date.Date);
     }
 
-    public void DeleteEntry(int entryId)
+    public void DeleteEntry(int id)
     {
-        var entry = _dbContext.Entries.Find(entryId);
+        var entry = _dbContext.Entries.Find(id);
         if (entry != null)
         {
             _dbContext.Entries.Remove(entry);
+            _dbContext.SaveChanges();
         }
     }
 }
