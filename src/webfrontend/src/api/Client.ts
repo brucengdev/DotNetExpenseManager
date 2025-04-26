@@ -89,7 +89,7 @@ export class Client implements IClient {
             accessToken: this.token,
             id: id.toString()
         }).toString()}`, {
-            method: "POST",
+            method: "DELETE",
         })  
         return result.ok
     }

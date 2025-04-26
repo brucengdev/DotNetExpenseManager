@@ -45,4 +45,11 @@ public class EntriesController: ControllerBase
             return Unauthorized();
         }
     }
+
+    [HttpDelete("[action]")]
+    public ActionResult Delete(int id)
+    {
+        _entryManager.DeleteEntry(id);
+        return Ok();
+    }
 }

@@ -25,6 +25,7 @@ if (builder.Environment.IsDevelopment())
         {
             policyBuilder.AllowAnyOrigin();
             policyBuilder.AllowAnyHeader();
+            policyBuilder.AllowAnyMethod();
         });
     });
 }

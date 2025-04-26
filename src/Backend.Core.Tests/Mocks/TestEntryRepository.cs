@@ -16,4 +16,10 @@ public class TestEntryRepository: IEntryRepository
     {
         return Entries.Where(e => e.UserId == userId & e.Date.Date == date.Date);
     }
+
+    public void DeleteEntry(int id)
+    {
+        var entry = Entries.First(e  => e.Id == id);
+        Entries.Remove(entry);
+    }
 }
