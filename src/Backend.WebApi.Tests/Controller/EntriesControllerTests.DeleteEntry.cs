@@ -26,7 +26,7 @@ public partial class EntriesControllerTests
         deleteAttr.Template.ShouldBe("[action]");
         
         attributes = method?.GetCustomAttributes(typeof(ServiceFilterAttribute<SecurityFilterAttribute>), true);
-        attributes.Length.ShouldBeGreaterThan(0);
+        attributes.Length.ShouldBeGreaterThan(0, "Must require authorization");
     }
     
     [Fact]
