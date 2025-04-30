@@ -1,6 +1,7 @@
 using Backend.WebApi.Controllers;
 using Backend.Core.Manager;
 using Backend.Models;
+using Backend.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -23,6 +24,9 @@ public partial class EntriesControllerTests
 
         var deleteAttr = attributes[0] as HttpDeleteAttribute;
         deleteAttr.Template.ShouldBe("[action]");
+        
+        attributes = method?.GetCustomAttributes(typeof(ServiceFilterAttribute<SecurityFilterAttribute>), true);
+        attributes.Length.ShouldBeGreaterThan(0);
     }
     
     [Fact]

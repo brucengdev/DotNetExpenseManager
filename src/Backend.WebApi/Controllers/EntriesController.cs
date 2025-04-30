@@ -47,6 +47,7 @@ public class EntriesController: ControllerBase
     }
 
     [HttpDelete("[action]")]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult Delete(int id)
     {
         _entryManager.DeleteEntry(id);
