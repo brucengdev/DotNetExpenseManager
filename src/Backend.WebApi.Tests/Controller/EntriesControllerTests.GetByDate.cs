@@ -25,10 +25,8 @@ public partial class EntriesControllerTests
         var getAttr = attributes[0] as HttpGetAttribute;
         getAttr.Template.ShouldBe("[action]");
         
-        var secAtts = method?.GetCustomAttributes(typeof(ServiceFilterAttribute), true);
-        secAtts.Length.ShouldBeGreaterThan(0);
-        var secAtt = secAtts[0] as ServiceFilterAttribute;
-        secAtt.ServiceType.ShouldBe(typeof(SecurityFilterAttribute));
+        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute<SecurityFilterAttribute>), true);
+        secAttrs.Length.ShouldBeGreaterThan(0, "Must require authorization");
     }
 
     [Fact]

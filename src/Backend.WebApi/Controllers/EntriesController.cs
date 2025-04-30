@@ -30,7 +30,7 @@ public class EntriesController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date)
     {
         try
