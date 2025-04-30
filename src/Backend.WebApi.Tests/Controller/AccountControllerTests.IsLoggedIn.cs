@@ -21,9 +21,8 @@ public partial class AccountControllerTests
         var attribute = attributes[0] as HttpGetAttribute;
         attribute.Template.ShouldBe("[action]");
         
-        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute), true);
-        secAttrs.Length.ShouldBeGreaterThan(0);
-        (secAttrs.First() as ServiceFilterAttribute).ServiceType.ShouldBe(typeof(SecurityFilterAttribute));
+        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute<SecurityFilterAttribute>), true);
+        secAttrs.Length.ShouldBeGreaterThan(0, "Must require authorization");
     }
     
     [Fact]

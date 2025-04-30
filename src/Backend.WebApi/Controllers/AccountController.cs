@@ -48,7 +48,7 @@ public class AccountController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult IsLoggedIn()
     {
         return Ok();
