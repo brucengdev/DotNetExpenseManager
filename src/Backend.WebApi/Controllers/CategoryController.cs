@@ -27,7 +27,7 @@ public class CategoryController: ControllerBase
     }
 
     [HttpPost("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult AddCategory(Category category)
     {
         category.UserId = (HttpContext.Items[Constants.USER_ID] as int?).Value;
