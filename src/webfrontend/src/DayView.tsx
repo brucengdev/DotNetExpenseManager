@@ -48,7 +48,12 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                 title={title}
                                 value={value}
                                 categoryName={categories.find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
-                                onDelete={() => client.DeleteEntry(id)} />)}
+                                onDelete={async () => {
+                                    const success = await client.DeleteEntry(id)
+                                    if(success) {
+                                        setEntries(entries.filter(e => e.id !== id))
+                                    }
+                                 }} />)}
                     </div>
                     <button onClick={() => setAddingEntry(true)}>+</button>
                 </div>

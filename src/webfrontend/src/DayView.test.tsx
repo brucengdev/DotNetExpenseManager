@@ -204,5 +204,11 @@ describe("DayView", () => {
         fireEvent.click(screen.getByRole("button", {name: "Yes"}))
 
         expect(client.Entries.length).toBe(0)
+
+        await sleep(10)
+
+        const entryListAfter = screen.getByTestId("entry-list")
+        const entriesAfter = entryListAfter.querySelectorAll('[data-testid="entry"]')
+        expect(entriesAfter.length).toBe(0) 
     })
 })
