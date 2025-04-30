@@ -18,7 +18,7 @@ public class CategoryController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult<IEnumerable<Category>> GetCategories()
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
