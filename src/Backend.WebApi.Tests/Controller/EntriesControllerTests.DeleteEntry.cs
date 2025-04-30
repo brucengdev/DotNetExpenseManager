@@ -45,4 +45,22 @@ public partial class EntriesControllerTests
         entryManager.VerifyNoOtherCalls();
         result.ShouldBeOfType<OkResult>();
     }
+
+    [Fact]
+    public void DeleteEntry_returns_not_found_if_entry_does_not_exist()
+    {
+        //arrange
+        var entryManager = new Mock<IEntryManager>();
+        entryManager.Setup(em => em.DeleteEntry(1)).Throws<EntryNotFoundException>();
+        var accountManager = new Mock<IAccountManager>();
+        var sut = new EntriesController(entryManager.Object, accountManager.Object);
+    
+        //act
+        var result = sut.Delete(1);
+    
+        //assert
+        entryManager.Verify(em => em.DeleteEntry(1), Times.Exactly(1));
+        entryManager.VerifyNoOtherCalls();
+        result.ShouldBeOfType<NotFoundResult>();
+    }
 }

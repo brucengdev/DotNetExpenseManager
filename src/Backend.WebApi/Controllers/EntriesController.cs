@@ -50,7 +50,14 @@ public class EntriesController: ControllerBase
     [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult Delete(int id)
     {
-        _entryManager.DeleteEntry(id);
-        return Ok();
+        try
+        {
+            _entryManager.DeleteEntry(id);
+            return Ok();
+        }
+        catch (EntryNotFoundException)
+        {
+            return NotFound();
+        }
     }
 }
