@@ -22,4 +22,9 @@ public class TestEntryRepository: IEntryRepository
         var entry = Entries.First(e  => e.Id == id);
         Entries.Remove(entry);
     }
+
+    public bool Exists(int id)
+    {
+        return Entries.Exists(e => e.Id == id);
+    }
 }

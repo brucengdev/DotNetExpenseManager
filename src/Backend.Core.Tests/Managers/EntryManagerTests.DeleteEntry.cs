@@ -39,5 +39,29 @@ namespace Backend.Core.Tests
             entryRepo.Entries.Count().ShouldBe(1);
             entryRepo.Entries[0].Id.ShouldBe(1);
         }
+
+        [Fact]
+        public void DeleteEntry_must_throw_EntryNotFoundException_for_non_existing_entry()
+        {
+            //arrange
+            var entryRepo = new TestEntryRepository();
+            var sut = new EntryManager(entryRepo);
+            entryRepo.Entries.Add(new Entry()
+            {
+                Id = 1,
+                Title = "Test entry B",
+                Value = -10.22f,
+                Date = new DateTime(2022, 4, 22),
+                UserId = 23,
+                CategoryId = 1
+            });
+            
+            //act
+            var exception = Record.Exception(() => sut.DeleteEntry(2));
+            
+            //assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<EntryNotFoundException>();
+        }
     }
 }
