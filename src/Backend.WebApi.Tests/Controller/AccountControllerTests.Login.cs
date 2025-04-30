@@ -1,5 +1,6 @@
 using Backend.WebApi.Controllers;
 using Backend.Core.Manager;
+using Backend.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
@@ -19,6 +20,9 @@ public partial class AccountControllerTests
         
         var postAttr = attributes[0] as HttpPostAttribute;
         postAttr.Template.ShouldBe("[action]");
+        
+        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute<SecurityFilterAttribute>), true);
+        secAttrs.Length.ShouldBe(0, "Must not require authorization");
     }
     
     [Fact]
