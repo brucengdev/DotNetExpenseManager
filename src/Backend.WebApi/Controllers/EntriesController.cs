@@ -18,7 +18,7 @@ public class EntriesController: ControllerBase
     }
 
     [HttpPost("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult AddEntry([FromBody] EntryPlain inputEntry)
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
