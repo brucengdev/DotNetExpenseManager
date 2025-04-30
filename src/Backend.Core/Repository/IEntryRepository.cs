@@ -8,4 +8,6 @@ public interface IEntryRepository
     IEnumerable<Entry> GetByDateAndUser(DateTime date, int userId);
 
     void DeleteEntry(int id);
+
+    bool Exists(int id);
 }

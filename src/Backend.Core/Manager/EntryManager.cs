@@ -2,10 +2,9 @@ using Backend.Core.Repository;
 using Backend.Models;
 namespace Backend.Core.Manager;
 
-public class InvalidUserIdException : Exception
-{
-    
-}
+public class InvalidUserIdException : Exception { }
+
+public class EntryNotFoundException: Exception { }
 
 public class EntryManager: IEntryManager
 {
@@ -30,6 +29,10 @@ public class EntryManager: IEntryManager
 
     public void DeleteEntry(int entryId)
     {
+        if (!_entryRepository.Exists(entryId))
+        {
+            throw new EntryNotFoundException();
+        }
         _entryRepository.DeleteEntry(entryId);
     }
 }

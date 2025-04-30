@@ -23,11 +23,8 @@ public partial class CategoryControllerTests
         var getAttr = attributes[0] as HttpGetAttribute;
         getAttr.Template.ShouldBe("[action]");
         
-        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute), true);
-        secAttrs.Length.ShouldBeGreaterThan(0);
-
-        var secAttr = secAttrs[0] as ServiceFilterAttribute;
-        secAttr.ServiceType.ShouldBe(typeof(SecurityFilterAttribute));
+        var secAttrs = method?.GetCustomAttributes(typeof(ServiceFilterAttribute<SecurityFilterAttribute>), true);
+        secAttrs.Length.ShouldBeGreaterThan(0, "Must require authorization");
     }
     
     [Fact]

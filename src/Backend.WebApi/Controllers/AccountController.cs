@@ -34,7 +34,7 @@ public class AccountController: ControllerBase
     }
 
     [HttpPost("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult<bool> CreateUser(
         [FromForm] string username, 
         [FromForm] string password)
@@ -48,7 +48,7 @@ public class AccountController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult IsLoggedIn()
     {
         return Ok();

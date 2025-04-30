@@ -34,4 +34,9 @@ internal class EntryRepository: IEntryRepository
             _dbContext.SaveChanges();
         }
     }
+
+    public bool Exists(int id)
+    {
+        return _dbContext.Entries.Find(id) != null;
+    }
 }

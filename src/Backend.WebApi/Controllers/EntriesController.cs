@@ -18,7 +18,7 @@ public class EntriesController: ControllerBase
     }
 
     [HttpPost("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult AddEntry([FromBody] EntryPlain inputEntry)
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
@@ -30,7 +30,7 @@ public class EntriesController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    [ServiceFilter(typeof(SecurityFilterAttribute))]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date)
     {
         try
@@ -47,9 +47,17 @@ public class EntriesController: ControllerBase
     }
 
     [HttpDelete("[action]")]
+    [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult Delete(int id)
     {
-        _entryManager.DeleteEntry(id);
-        return Ok();
+        try
+        {
+            _entryManager.DeleteEntry(id);
+            return Ok();
+        }
+        catch (EntryNotFoundException)
+        {
+            return NotFound();
+        }
     }
 }
