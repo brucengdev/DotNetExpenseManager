@@ -25,7 +25,7 @@ export function Login({client, storage, onLogin}: LoginProps) {
             <label className="form-label">
                 Username
                 <input type="text" 
-                    className={(usernameWarn? "mandatory": "") + " form-control"} 
+                    className={(usernameWarn? "border-danger": "") + " form-control"} 
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                     ></input>
@@ -35,7 +35,7 @@ export function Login({client, storage, onLogin}: LoginProps) {
             <label className="form-label">
                 Password
                 <input type="password" 
-                    className={(passwordWarn? "mandatory": "") + " form-control"}
+                    className={(passwordWarn? "border-danger": "") + " form-control"}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     ></input>
@@ -43,7 +43,8 @@ export function Login({client, storage, onLogin}: LoginProps) {
       </div>
       <button 
         className="btn btn-primary"
-        onClick={() => {
+        onClick={(e) => {
+            e.preventDefault()
             const valid = validateForm()
             if(valid) {
                 login(client, storage, username, password, onLogin)
