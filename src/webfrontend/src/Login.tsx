@@ -20,33 +20,39 @@ export function Login({client, storage, onLogin}: LoginProps) {
         return valid
     }
 
-    return <div data-testid="login-view">
-      <label>
-        Username
-        <input type="text" 
-            className={usernameWarn? "mandatory": ""} 
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            ></input>
-      </label>
-      <label>
-        Password
-        <input type="password" 
-            className={passwordWarn? "mandatory": ""}
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            ></input>
-      </label>
-      <button onClick={() => {
-        const valid = validateForm()
-        if(valid) {
-            login(client, storage, username, password, onLogin)
+    return <form data-testid="login-view" className="container">
+        <div className="mb-3">
+            <label className="form-label">
+                Username
+                <input type="text" 
+                    className={(usernameWarn? "mandatory": "") + " form-control"} 
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    ></input>
+            </label>
+        </div>
+        <div className="mb-3">
+            <label className="form-label">
+                Password
+                <input type="password" 
+                    className={(passwordWarn? "mandatory": "") + " form-control"}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    ></input>
+            </label>
+      </div>
+      <button 
+        className="btn btn-primary"
+        onClick={() => {
+            const valid = validateForm()
+            if(valid) {
+                login(client, storage, username, password, onLogin)
+            }
+            setUsernameWarn(username == "")
+            setPasswordWarn(password == "")
         }
-        setUsernameWarn(username == "")
-        setPasswordWarn(password == "")
-      }
-    }>Login</button>
-    </div>
+        }>Login</button>
+    </form>
 }
 
 const login = async (client: IClient, storage: IStorage, username: string, password:string, onLogin: () => void) => {
