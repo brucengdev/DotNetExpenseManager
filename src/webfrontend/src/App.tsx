@@ -3,6 +3,8 @@ import { IClient } from './api/Client'
 import { Login } from './Login'
 import { MainView } from './MainView'
 import { IStorage, STORED_TOKEN } from './storage/Storage'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 export interface AppProps {
   client: IClient,
