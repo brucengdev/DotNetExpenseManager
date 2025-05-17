@@ -35,6 +35,7 @@ export function CategoryControl(props: CategoryControlProps) {
         : <div><label>
             Category
             <input type="text" 
+                className="form-control"
                 value={filterText}
                 onChange={(e) => {
                     const newFilterText = e.target.value
@@ -53,13 +54,15 @@ export function CategoryControl(props: CategoryControlProps) {
                     }}>
                         {c.name}
                     </a>)
-            :<button onClick={() => {
-                client.AddCategory(filterText)
-                .then(succeeded => {
-                    if(succeeded) {
-                        setFilterText("")
-                    }
-                })
+            :<button 
+                className="btn btn-primary"
+                onClick={() => {
+                    client.AddCategory(filterText)
+                    .then(succeeded => {
+                        if(succeeded) {
+                            setFilterText("")
+                        }
+                    })
             }}>+</button>
         }
         </div>
