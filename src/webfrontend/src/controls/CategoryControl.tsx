@@ -23,9 +23,12 @@ export function CategoryControl(props: CategoryControlProps) {
     ].filter(c => c.name.indexOf(filterText) !== -1)
 
     return <div data-testid="category-control">
-        {!selecting?<label>
+        {!selecting?
+        <label className="form-label">
             Category
-            <a href="#" onClick={e => {
+            <a 
+                className="form-control"
+                href="#" onClick={e => {
                 e.preventDefault()
                 setSelecting(true)
             }}>
