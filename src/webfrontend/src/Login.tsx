@@ -22,7 +22,7 @@ export function Login({client, storage, onLogin}: LoginProps) {
 
     return <form data-testid="login-view" className="row">
                 <div className="row">
-                    <label className="form-label">
+                    <label className="form-label col">
                         Username
                         <input type="text" 
                             className={(usernameWarn? "border-danger": "") + " form-control"} 
@@ -32,7 +32,7 @@ export function Login({client, storage, onLogin}: LoginProps) {
                     </label>
                 </div>
                 <div className="row">
-                    <label className="form-label">
+                    <label className="form-label col">
                         Password
                         <input type="password" 
                             className={(passwordWarn? "border-danger": "") + " form-control"}
