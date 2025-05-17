@@ -46,14 +46,20 @@ export function CategoryControl(props: CategoryControlProps) {
         </label>
         {
             cats.length > 0
-            ?cats.map(c => 
-                    <a href="#" onClick={() => {
-                        const newCatId = c.id
-                        onChange(newCatId)
-                        setSelecting(false)
-                    }}>
-                        {c.name}
-                    </a>)
+            ?
+            <ul className="list-group">
+                {cats.map(c => 
+                        <a 
+                            className="list-group-item"
+                            href="#" onClick={() => {
+                            const newCatId = c.id
+                            onChange(newCatId)
+                            setSelecting(false)
+                        }}>
+                            {c.name}
+                        </a>)
+                }
+            </ul>
             :<button 
                 className="btn btn-primary"
                 onClick={() => {
