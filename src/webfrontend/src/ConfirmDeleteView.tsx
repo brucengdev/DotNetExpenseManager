@@ -8,10 +8,10 @@ export function ConfirmDeleteView({onYes, onNo}: ConfirmDeleteViewProps) {
         <h2 className="row">Confirm to delete?</h2>
         <div className="row">
             <button 
-                className="btn btn-danger col-3"
+                className="btn btn-danger col-1"
                 onClick={() => {if(onYes) {onYes()}}} >Yes</button>
             <button 
-                className="btn btn-primary col-3"
+                className="btn btn-primary col-1"
                 onClick={() => {if(onNo) {onNo()}}} >No</button>
         </div>
     </div>
