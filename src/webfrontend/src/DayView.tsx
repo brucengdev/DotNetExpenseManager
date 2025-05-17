@@ -29,7 +29,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
         }
     })
 
-    return <div data-testid="day-view">
+    return <div data-testid="day-view" className="row">
             {addingEntry? <EntryForm 
                         client={client} 
                         date={date} 
@@ -38,10 +38,10 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                         /> :
                 <div>
                     <div data-testid="entry-list">
-                        <div>
-                            <button className="col" onClick={() => setDate(addDays(date, -1))}>&lt;</button>
+                        <div className="row">
+                            <button className="col btn btn-secondary" onClick={() => setDate(addDays(date, -1))}>&lt;</button>
                             <h2 className="col">{formatDisplayDate(date)}</h2>
-                            <button className="col" onClick={() => setDate(addDays(date, 1))}>&gt;</button>
+                            <button className="col btn btn-secondary" onClick={() => setDate(addDays(date, 1))}>&gt;</button>
                         </div>
                         {entries.map(({id, title, value, categoryId}) => 
                             <EntryView 
@@ -55,7 +55,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                     }
                                  }} />)}
                     </div>
-                    <button onClick={() => setAddingEntry(true)}>+</button>
+                    <button className="btn btn-primary row" onClick={() => setAddingEntry(true)}>+</button>
                 </div>
             }
         </div>

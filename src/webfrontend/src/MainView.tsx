@@ -9,8 +9,8 @@ export interface MainViewProps {
 
 export function MainView({client, onLogout} : MainViewProps) {
     return <div data-testid="main-view">
-      <button className="selected">Day</button>
+      <button className="selected btn btn-info">Day</button>
       <DayView client={client} initialDate={new Date()} />
-      <button onClick={() => onLogout()}>Log out</button>
+      <button className="btn btn-danger" onClick={() => onLogout()}>Log out</button>
     </div>
 }
