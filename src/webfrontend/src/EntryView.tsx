@@ -11,11 +11,17 @@ export interface EntryProps {
 
 export const EntryView = ({title, value, categoryName, onDelete}: EntryProps) => {
     const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
-    return <div data-testid="entry">
-        <div className="col entryLabel" data-testid="title">{title}</div>
-        <div className="col categoryLabel" data-testid="category">{categoryName}</div>
-        <div className="col entryValue" data-testid="value">{value}</div>
-        {onDelete? <button data-testid="deleteBtn" onClick={() => setShowConfirmDeletion(true)}>X</button>: <></>}
+    return <div data-testid="entry" className="row">
+        <div className="col-5 entryLabel" data-testid="title">{title}</div>
+        <div className="col-3 categoryLabel" data-testid="category">{categoryName}</div>
+        <div className="col-3 entryValue" data-testid="value">{value}</div>
+        <div className="col-1">
+            {onDelete
+                ? <button
+                    className="btn btn-danger"
+                    data-testid="deleteBtn" onClick={() => setShowConfirmDeletion(true)}>X</button>
+                : <></>}
+        </div>
         {showConfirmDeletion?
          <ConfirmDeleteView 
             onYes={() => {
