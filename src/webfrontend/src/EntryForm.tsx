@@ -20,25 +20,27 @@ export const EntryForm = (props: EntryFormProps) => {
     const [value, setValue] = useState("0")
     const [categoryId, setCategoryId] = useState(undefined as number | undefined)
     return <div data-testid="entry-form">
-        <label>
+        <label className="row">
             Title
             <input type="text"
+                className="form-control"
                 value={title}
                 onChange={event => setTitle(event.target.value)}
              />
         </label>
-        <label>
+        <label className="row">
             Value
             <input 
-                className={isNaN(parseFloat(value))? "invalid": ""}
+                className={isNaN(parseFloat(value))? "invalid form-control": "form-control"}
                 type="number" 
                 value={value}
                 onChange={event => setValue(event.target.value)}
             />
         </label>
-        <label>
+        <label className="row">
             Date
             <input type="date" 
+                    className="form-control"
                     value={formatDateToDay(date)}
                     onChange={(event) => setDate(new Date(event.target.value))} 
                     />
@@ -48,18 +50,24 @@ export const EntryForm = (props: EntryFormProps) => {
             categoryId={categoryId}
             onChange={newCatId => setCategoryId(newCatId)} 
             />
-        <button onClick={() => {
-            const valueFloat = parseFloat(value)
-            if(isNaN(valueFloat)) {
-                return
-            }
-            const entry = new Entry(0, date, title, valueFloat)
-            entry.categoryId = categoryId
-            client.AddEntry(entry)
-            .then(onSave)
-        }}>Save</button>
-        <button onClick={() => {
-            if(onCancel) { onCancel()}
-        }}>Cancel</button>
+        <div className="row">
+            <button 
+                className="btn btn-primary col-4"
+                onClick={() => {
+                    const valueFloat = parseFloat(value)
+                    if(isNaN(valueFloat)) {
+                        return
+                    }
+                    const entry = new Entry(0, date, title, valueFloat)
+                    entry.categoryId = categoryId
+                    client.AddEntry(entry)
+                    .then(onSave)
+            }}>Save</button>
+            <button 
+                className="btn btn-secondary col-4"
+                onClick={() => {
+                    if(onCancel) { onCancel()}
+            }}>Cancel</button>
+        </div>
     </div>
 }

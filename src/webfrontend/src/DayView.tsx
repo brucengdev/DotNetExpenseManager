@@ -29,19 +29,19 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
         }
     })
 
-    return <div data-testid="day-view">
+    return <div data-testid="day-view" className="row">
             {addingEntry? <EntryForm 
                         client={client} 
                         date={date} 
                         onSave={() => { setAddingEntry(false) } } 
                         onCancel={() => setAddingEntry(false) }
                         /> :
-                <div>
-                    <div data-testid="entry-list">
-                        <div>
-                            <button className="col" onClick={() => setDate(addDays(date, -1))}>&lt;</button>
-                            <h2 className="col">{formatDisplayDate(date)}</h2>
-                            <button className="col" onClick={() => setDate(addDays(date, 1))}>&gt;</button>
+                <div className="row">
+                    <div data-testid="entry-list" className="row">
+                        <div className="row">
+                            <button className="col-1 btn btn-secondary" onClick={() => setDate(addDays(date, -1))}>&lt;</button>
+                            <h2 className="col-10">{formatDisplayDate(date)}</h2>
+                            <button className="col-1 btn btn-secondary" onClick={() => setDate(addDays(date, 1))}>&gt;</button>
                         </div>
                         {entries.map(({id, title, value, categoryId}) => 
                             <EntryView 
@@ -55,7 +55,9 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                     }
                                  }} />)}
                     </div>
-                    <button onClick={() => setAddingEntry(true)}>+</button>
+                    <div className="row">
+                        <button className="btn btn-primary col-1" onClick={() => setAddingEntry(true)}>+</button>
+                    </div>
                 </div>
             }
         </div>

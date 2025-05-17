@@ -20,9 +20,9 @@ export function Login({client, storage, onLogin}: LoginProps) {
         return valid
     }
 
-    return <form data-testid="login-view" className="container-fluid">
-                <div className="mb-3">
-                    <label className="form-label">
+    return <form data-testid="login-view" className="row">
+                <div className="row">
+                    <label className="form-label col">
                         Username
                         <input type="text" 
                             className={(usernameWarn? "border-danger": "") + " form-control"} 
@@ -31,8 +31,8 @@ export function Login({client, storage, onLogin}: LoginProps) {
                             ></input>
                     </label>
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">
+                <div className="row">
+                    <label className="form-label col">
                         Password
                         <input type="password" 
                             className={(passwordWarn? "border-danger": "") + " form-control"}
@@ -40,20 +40,20 @@ export function Login({client, storage, onLogin}: LoginProps) {
                             onChange={e => setPassword(e.target.value)}
                             ></input>
                     </label>
-            </div>
-            <button 
-                className="btn btn-primary"
-                onClick={(e) => {
-                    e.preventDefault()
-                    const valid = validateForm()
-                    if(valid) {
-                        login(client, storage, username, password, onLogin)
+                </div>
+                <button 
+                    className="btn btn-primary row"
+                    onClick={(e) => {
+                        e.preventDefault()
+                        const valid = validateForm()
+                        if(valid) {
+                            login(client, storage, username, password, onLogin)
+                        }
+                        setUsernameWarn(username == "")
+                        setPasswordWarn(password == "")
                     }
-                    setUsernameWarn(username == "")
-                    setPasswordWarn(password == "")
-                }
                 }>Login</button>
-            </form>
+        </form>
 }
 
 const login = async (client: IClient, storage: IStorage, username: string, password:string, onLogin: () => void) => {

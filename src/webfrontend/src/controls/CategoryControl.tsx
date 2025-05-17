@@ -23,9 +23,12 @@ export function CategoryControl(props: CategoryControlProps) {
     ].filter(c => c.name.indexOf(filterText) !== -1)
 
     return <div data-testid="category-control">
-        {!selecting?<label>
+        {!selecting?
+        <label className="form-label">
             Category
-            <a href="#" onClick={e => {
+            <a 
+                className="form-control"
+                href="#" onClick={e => {
                 e.preventDefault()
                 setSelecting(true)
             }}>
@@ -35,6 +38,7 @@ export function CategoryControl(props: CategoryControlProps) {
         : <div><label>
             Category
             <input type="text" 
+                className="form-control"
                 value={filterText}
                 onChange={(e) => {
                     const newFilterText = e.target.value
@@ -45,21 +49,29 @@ export function CategoryControl(props: CategoryControlProps) {
         </label>
         {
             cats.length > 0
-            ?cats.map(c => 
-                    <a href="#" onClick={() => {
-                        const newCatId = c.id
-                        onChange(newCatId)
-                        setSelecting(false)
-                    }}>
-                        {c.name}
-                    </a>)
-            :<button onClick={() => {
-                client.AddCategory(filterText)
-                .then(succeeded => {
-                    if(succeeded) {
-                        setFilterText("")
-                    }
-                })
+            ?
+            <ul className="list-group">
+                {cats.map(c => 
+                        <a 
+                            className="list-group-item"
+                            href="#" onClick={() => {
+                            const newCatId = c.id
+                            onChange(newCatId)
+                            setSelecting(false)
+                        }}>
+                            {c.name}
+                        </a>)
+                }
+            </ul>
+            :<button 
+                className="btn btn-primary"
+                onClick={() => {
+                    client.AddCategory(filterText)
+                    .then(succeeded => {
+                        if(succeeded) {
+                            setFilterText("")
+                        }
+                    })
             }}>+</button>
         }
         </div>

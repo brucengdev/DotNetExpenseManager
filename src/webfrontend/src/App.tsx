@@ -29,7 +29,7 @@ function App({client, storage}: AppProps) {
     }
 })
   return (
-    <>
+    <div>
       {loggedIn
       ? <MainView client={client} onLogout={() => { 
         storage.Clear(STORED_TOKEN)
@@ -41,7 +41,7 @@ function App({client, storage}: AppProps) {
         } 
       }
       />}
-    </>
+    </div>
   )
 }
 
