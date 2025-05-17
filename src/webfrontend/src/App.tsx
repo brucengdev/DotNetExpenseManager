@@ -29,7 +29,7 @@ function App({client, storage}: AppProps) {
     }
 })
   return (
-    <div className="container-fluid">
+    <div>
       {loggedIn
       ? <MainView client={client} onLogout={() => { 
         storage.Clear(STORED_TOKEN)
