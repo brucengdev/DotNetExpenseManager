@@ -13,7 +13,7 @@ describe("Login", () => {
 
         expect(screen.getByTestId("login-view")).toBeInTheDocument()
         expect(screen.getByRole("textbox", { name: "Username"})).toBeInTheDocument()
-        expect(screen.getByRole("textbox", { name: "Username"}).className).toBe(" form-control")
+        expect(screen.getByRole("textbox", { name: "Username"}).className).not.toContain("border-red-600")
         expect(screen.getByLabelText("Password")).toBeInTheDocument()
         expect(screen.getByRole("button", { name: "Login"})).toBeInTheDocument()
     })
@@ -27,8 +27,8 @@ describe("Login", () => {
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
 
 
-        expect(screen.getByRole("textbox", { name: "Username" }).className).toContain("border-danger")
-        expect(screen.getByLabelText("Password").className).toContain("border-danger")
+        expect(screen.getByRole("textbox", { name: "Username" }).className).toContain("border-red-600")
+        expect(screen.getByLabelText("Password").className).toContain("border-red-600")
         expect(client.Login).not.toHaveBeenCalled()
         expect(onLogin).not.toHaveBeenCalled()
         client.Login = vitest.fn()
@@ -38,8 +38,8 @@ describe("Login", () => {
 
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
 
-        expect(screen.getByRole("textbox", { name: "Username" }).className).toBe(" form-control")
-        expect(screen.getByLabelText("Password").className).toBe(" form-control")
+        expect(screen.getByRole("textbox", { name: "Username" }).className).not.toContain("border-red-600")
+        expect(screen.getByLabelText("Password").className).not.toContain("border-red-600")
     })
 
     it("has mandatory field checks 2", async () => {
@@ -52,8 +52,8 @@ describe("Login", () => {
 
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
 
-        expect(screen.getByRole("textbox", { name: "Username" }).className).toBe(" form-control")
-        expect(screen.getByLabelText("Password").className).toContain("border-danger")
+        expect(screen.getByRole("textbox", { name: "Username" }).className).not.toContain("border-red-600")
+        expect(screen.getByLabelText("Password").className).toContain("border-red-600")
 
         expect(client.Login).not.toHaveBeenCalled()
         expect(onLogin).not.toHaveBeenCalled()
@@ -72,8 +72,8 @@ describe("Login", () => {
 
         await sleep(10)
 
-        expect(screen.getByRole("textbox", { name: "Username" }).className).toBe(" form-control")
-        expect(screen.getByLabelText("Password").className).toBe(" form-control")
+        expect(screen.getByRole("textbox", { name: "Username" }).className).not.toContain("border-red-600")
+        expect(screen.getByLabelText("Password").className).not.toContain("border-red-600")
 
         expect(onLogin).toHaveBeenCalled()
         expect(storage.Get(STORED_TOKEN)).toBe(TEST_TOKEN)
@@ -92,8 +92,8 @@ describe("Login", () => {
 
         await sleep(10)
 
-        expect(screen.getByRole("textbox", { name: "Username" }).className).toBe(" form-control")
-        expect(screen.getByLabelText("Password").className).toBe(" form-control")
+        expect(screen.getByRole("textbox", { name: "Username" }).className).not.toContain("border-red-600")
+        expect(screen.getByLabelText("Password").className).not.toContain("border-red-600")
 
         expect(client.Login).toHaveBeenCalledOnce()
         expect(client.Login).toHaveBeenCalledWith("user1", "hispass")
