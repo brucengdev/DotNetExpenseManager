@@ -14,7 +14,7 @@ export enum ButtonMode {
 export function Button({text, mode, onClick, extraClasses}: ButtonProps) {
     let classes = "block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold " +
                     "shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 " +
-                    " focus-visible:outline-indigo-600 "
+                    ` focus-visible:outline-indigo-600 ${extraClasses} `
     switch(mode) {
         case ButtonMode.SECONDARY: 
             classes += " bg-gray-300 hover:bg-gray-200 text-black"
