@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { IClient } from "./api/Client"
 import { IStorage, STORED_TOKEN } from "./storage/Storage"
+import { Button } from "./controls/Button"
 
 interface LoginProps {
     client: IClient
@@ -56,8 +57,9 @@ export function Login({client, storage, onLogin}: LoginProps) {
             </div>
             </div>
             <div className="mt-10">
-            <button type="submit" 
-                onClick={(e) => {
+                <Button
+                    text="Login"
+                    onClick={(e) => {
                                 e.preventDefault()
                                 const valid = validateForm()
                                 if(valid) {
@@ -66,11 +68,7 @@ export function Login({client, storage, onLogin}: LoginProps) {
                                 setUsernameWarn(username == "")
                                 setPasswordWarn(password == "")
                             }}
-                className={"block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold " +
-                    "text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 " +
-                    " focus-visible:outline-indigo-600"}>
-                    Login
-                </button>
+                />
             </div>
         </form>
     </div>
