@@ -1,4 +1,5 @@
 import { IClient } from "./api/Client"
+import { Button } from "./controls/Button"
 import { DayView } from "./DayView"
 import "./MainView.css"
 
@@ -15,8 +16,9 @@ export function MainView({client, onLogout} : MainViewProps) {
       <div className="row">
         <DayView client={client} initialDate={new Date()} />
       </div>
-      <div className="row">
-        <button className="btn btn-danger col-2" onClick={() => onLogout()}>Log out</button>
-      </div>
+      <Button 
+        text="Log out"
+        onClick={() => onLogout()}
+      />
     </div>
 }

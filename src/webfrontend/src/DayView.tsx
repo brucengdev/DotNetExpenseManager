@@ -5,7 +5,7 @@ import { Entry } from "./models/Entry"
 import { EntryForm } from "./EntryForm"
 import { addDays, areSame, formatDisplayDate } from "./utils"
 import { Category } from "./models/Category"
-import { Button } from "./controls/Button"
+import { Button, ButtonMode } from "./controls/Button"
 
 export interface DayViewProps {
     client: IClient
@@ -40,9 +40,9 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                 <div className="row">
                     <div data-testid="entry-list" className="row">
                         <div className="row">
-                            <button className="col-1 btn btn-secondary" onClick={() => setDate(addDays(date, -1))}>&lt;</button>
+                            <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
                             <h2 className="col-10">{formatDisplayDate(date)}</h2>
-                            <button className="col-1 btn btn-secondary" onClick={() => setDate(addDays(date, 1))}>&gt;</button>
+                            <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
                         </div>
                         {entries.map(({id, title, value, categoryId}) => 
                             <EntryView 
