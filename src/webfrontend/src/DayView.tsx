@@ -5,6 +5,7 @@ import { Entry } from "./models/Entry"
 import { EntryForm } from "./EntryForm"
 import { addDays, areSame, formatDisplayDate } from "./utils"
 import { Category } from "./models/Category"
+import { Button } from "./controls/Button"
 
 export interface DayViewProps {
     client: IClient
@@ -56,9 +57,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                  }} />)}
                     </div>
                     <div className="row">
-                        <button className={"block rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold " +
-                    "text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 " +
-                    " focus-visible:outline-indigo-600"} onClick={() => setAddingEntry(true)}>+</button>
+                        <Button text="+"  onClick={() => setAddingEntry(true)} />
                     </div>
                 </div>
             }
