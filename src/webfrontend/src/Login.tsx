@@ -36,21 +36,16 @@ export function Login({client, storage, onLogin}: LoginProps) {
                 onChange={e => setUsername(e.target.value)}
                 inputClassName={usernameWarn?"border-red-600":""}
              />
-            <div className="sm:col-span-2">
-                <label htmlFor="password" className="block text-sm/6 font-semibold text-gray-900">Password</label>
-                <div className="mt-2.5">
-                <input type="password" name="password" 
-                    id="password" autoComplete="password" 
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    className={"block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 " +
-                        "-outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 " +
-                        "focus:-outline-offset-2 focus:outline-indigo-600"
-                        + (passwordWarn? "border-red-600": "")
-                    }
-                    />
-                </div>
-            </div>
+             <TextBox
+                className="sm:col-span-2"
+                name="password"
+                label="Password"
+                type="password"
+                value={password}
+                autoComplete="password"
+                onChange={e => setPassword(e.target.value)}
+                inputClassName={passwordWarn?"border-red-600":""}
+             />
             </div>
             <div className="mt-10">
                 <Button
