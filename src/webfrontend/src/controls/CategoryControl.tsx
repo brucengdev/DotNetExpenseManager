@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Category } from "../models/Category"
 import { IClient } from "../api/Client"
 import { areSame } from "../utils"
+import { TextBox } from "./TextBox"
 
 interface CategoryControlProps {
     client: IClient
@@ -35,18 +36,18 @@ export function CategoryControl(props: CategoryControlProps) {
                 {categoryName}
             </a>
         </label>
-        : <div><label>
-            Category
-            <input type="text" 
-                className="form-control"
+        : <div>
+            <TextBox
+                label="Category"
+                type="text"
+                name="category"
                 value={filterText}
                 onChange={(e) => {
                     const newFilterText = e.target.value
                     setFilterText(newFilterText)
                 }}
                 placeholder="Uncategorized" 
-                />
-        </label>
+            />
         {
             cats.length > 0
             ?

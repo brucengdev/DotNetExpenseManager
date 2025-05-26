@@ -9,12 +9,13 @@ interface TextBoxProps {
     inputClassName?: string
     autoComplete?: string
     type?: string
+    placeholder?: string
 }
 
 export function TextBox(props: TextBoxProps) {
     const { name, value, onChange, 
         className, label, inputClassName,
-        autoComplete, type } = props
+        autoComplete, type, placeholder } = props
     return <div className={className || ""}>
                 <label htmlFor={name} className="block text-sm/6 font-semibold text-gray-900">{label}</label>
                 <div className="mt-2.5">
@@ -26,6 +27,7 @@ export function TextBox(props: TextBoxProps) {
                         "outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 " +
                         (inputClassName || "")
                     }
+                    placeholder={placeholder}
                     />
                 </div>
             </div>
