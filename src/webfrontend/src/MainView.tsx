@@ -9,13 +9,11 @@ export interface MainViewProps {
 }
 
 export function MainView({client, onLogout} : MainViewProps) {
-    return <div data-testid="main-view" className="row">
-      <div className="row">
-        <button className="selected btn btn-info col-2">Day</button>
+    return <div data-testid="main-view" className="row-auto">
+      <div>
+        <Button extraClasses="selected" text="Day" />
       </div>
-      <div className="row">
         <DayView client={client} initialDate={new Date()} />
-      </div>
       <Button 
         text="Log out"
         onClick={() => onLogout()}

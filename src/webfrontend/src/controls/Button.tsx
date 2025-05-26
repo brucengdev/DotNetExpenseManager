@@ -2,7 +2,7 @@ import { MouseEventHandler } from "react"
 
 interface ButtonProps {
     text: string
-    onClick: MouseEventHandler<HTMLButtonElement>
+    onClick?: MouseEventHandler<HTMLButtonElement>
     extraClasses?: string
     mode?: ButtonMode
 }
