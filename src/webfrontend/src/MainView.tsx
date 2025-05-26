@@ -1,7 +1,6 @@
 import { IClient } from "./api/Client"
 import { Button } from "./controls/Button"
 import { DayView } from "./DayView"
-import "./MainView.css"
 
 export interface MainViewProps {
   client: IClient
@@ -11,7 +10,7 @@ export interface MainViewProps {
 export function MainView({client, onLogout} : MainViewProps) {
     return <div data-testid="main-view" className="row-auto">
       <div>
-        <Button extraClasses="selected" text="Day" />
+        <Button text="Day" />
       </div>
         <DayView client={client} initialDate={new Date()} />
       <Button 
