@@ -50,7 +50,7 @@ export const EntryForm = (props: EntryFormProps) => {
             />
         <div>
             <Button
-                extraClasses="inline-block"
+                className="inline-block"
                 text="Save"
                 onClick={() => {
                     const valueFloat = parseFloat(value)
@@ -64,7 +64,7 @@ export const EntryForm = (props: EntryFormProps) => {
                 }}
             />
             <Button
-                extraClasses="inline-block"
+                className="inline-block"
                 text="Cancel"
                 mode={ButtonMode.SECONDARY}
                 onClick={() => {

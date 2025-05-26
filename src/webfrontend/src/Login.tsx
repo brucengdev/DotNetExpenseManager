@@ -50,7 +50,7 @@ export function Login({client, storage, onLogin}: LoginProps) {
             <div className="mt-10">
                 <Button
                     text="Login"
-                    extraClasses="w-full"
+                    className="w-full"
                     onClick={(e) => {
                                 e.preventDefault()
                                 const valid = validateForm()
