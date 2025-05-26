@@ -7,15 +7,19 @@ interface TextBoxProps {
     className?: string
     label: string
     inputClassName?: string
+    autoComplete?: string
+    type?: string
 }
 
 export function TextBox(props: TextBoxProps) {
-    const { name, value, onChange, className, label, inputClassName } = props
+    const { name, value, onChange, 
+        className, label, inputClassName,
+        autoComplete, type } = props
     return <div className={className || ""}>
                 <label htmlFor={name} className="block text-sm/6 font-semibold text-gray-900">{label}</label>
                 <div className="mt-2.5">
-                <input type="text" name={name} 
-                    id={name} autoComplete={name} 
+                <input type={type || "text"} name={name} 
+                    id={name} autoComplete={autoComplete} 
                     value={value}
                     onChange={onChange}
                     className={"block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 " +

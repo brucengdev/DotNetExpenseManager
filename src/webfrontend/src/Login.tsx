@@ -32,6 +32,7 @@ export function Login({client, storage, onLogin}: LoginProps) {
                 name="username"
                 label="Username"
                 value={username}
+                autoComplete="username"
                 onChange={e => setUsername(e.target.value)}
                 inputClassName={usernameWarn?"border-red-600":""}
              />
