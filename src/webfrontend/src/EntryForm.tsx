@@ -34,7 +34,7 @@ export const EntryForm = (props: EntryFormProps) => {
             type="number"
             value={value}
             onChange={event => setValue(event.target.value)}
-            inputClassName={isNaN(parseFloat(value))? "invalid": ""}
+            inputClassName={isNaN(parseFloat(value))? "border-red-600": ""}
         />
         <TextBox
             name="date"
