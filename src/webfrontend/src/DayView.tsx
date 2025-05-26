@@ -30,16 +30,16 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
         }
     })
 
-    return <div data-testid="day-view" className="row">
+    return <div data-testid="day-view">
             {addingEntry? <EntryForm 
                         client={client} 
                         date={date} 
                         onSave={() => { setAddingEntry(false) } } 
                         onCancel={() => setAddingEntry(false) }
                         /> :
-                <div className="row">
-                    <div data-testid="entry-list" className="row">
-                        <div className="row">
+                <div>
+                    <div data-testid="entry-list">
+                        <div className="columns-3">
                             <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
                             <h2 className="col-10">{formatDisplayDate(date)}</h2>
                             <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
@@ -56,7 +56,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                     }
                                  }} />)}
                     </div>
-                    <div className="row">
+                    <div>
                         <Button text="+"  onClick={() => setAddingEntry(true)} />
                     </div>
                 </div>
