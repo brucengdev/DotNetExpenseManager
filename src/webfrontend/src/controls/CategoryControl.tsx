@@ -3,6 +3,7 @@ import { Category } from "../models/Category"
 import { IClient } from "../api/Client"
 import { areSame } from "../utils"
 import { TextBox } from "./TextBox"
+import { Button, ButtonMode } from "./Button"
 
 interface CategoryControlProps {
     client: IClient
@@ -64,8 +65,10 @@ export function CategoryControl(props: CategoryControlProps) {
                         </a>)
                 }
             </ul>
-            :<button 
-                className="btn btn-primary"
+            :
+            <Button
+                mode={ButtonMode.PRIMARY}
+                text="+"
                 onClick={() => {
                     client.AddCategory(filterText)
                     .then(succeeded => {
@@ -73,7 +76,8 @@ export function CategoryControl(props: CategoryControlProps) {
                             setFilterText("")
                         }
                     })
-            }}>+</button>
+                }}
+            />
         }
         </div>
         }
