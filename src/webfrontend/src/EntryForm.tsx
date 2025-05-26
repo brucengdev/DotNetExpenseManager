@@ -48,9 +48,9 @@ export const EntryForm = (props: EntryFormProps) => {
             categoryId={categoryId}
             onChange={newCatId => setCategoryId(newCatId)} 
             />
-        <div>
+        <div className="mb-2">
             <Button
-                className="inline-block"
+                className="inline-block mr-2"
                 text="Save"
                 onClick={() => {
                     const valueFloat = parseFloat(value)
