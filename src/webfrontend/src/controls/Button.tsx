@@ -8,7 +8,8 @@ interface ButtonProps {
 }
 
 export enum ButtonMode {
-    SECONDARY
+    SECONDARY,
+    PRIMARY
 }
 
 export function Button({text, mode, onClick, extraClasses}: ButtonProps) {
@@ -19,6 +20,7 @@ export function Button({text, mode, onClick, extraClasses}: ButtonProps) {
         case ButtonMode.SECONDARY: 
             classes += " bg-gray-300 hover:bg-gray-200 text-black"
             break;
+        case ButtonMode.PRIMARY:
         default:
             classes += " bg-indigo-600 hover:bg-indigo-500 text-white"
     }
