@@ -4,6 +4,7 @@ import { IClient } from "./api/Client"
 import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
 import { TextBox } from "./controls/TextBox"
+import { Button } from "./controls/Button"
 
 export interface EntryFormProps {
     date: Date
@@ -35,22 +36,21 @@ export const EntryForm = (props: EntryFormProps) => {
             onChange={event => setValue(event.target.value)}
             inputClassName={isNaN(parseFloat(value))? "invalid": ""}
         />
-        <label>
-            Date
-            <input type="date" 
-                    className="form-control"
-                    value={formatDateToDay(date)}
-                    onChange={(event) => setDate(new Date(event.target.value))} 
-                    />
-        </label>
+        <TextBox
+            name="date"
+            label="Date"
+            type="date"
+            value={formatDateToDay(date)}
+            onChange={(event) => setDate(new Date(event.target.value))} 
+        />
         <CategoryControl 
             client={client}
             categoryId={categoryId}
             onChange={newCatId => setCategoryId(newCatId)} 
             />
         <div>
-            <button 
-                className="btn btn-primary col-4"
+            <Button
+                text="Save"
                 onClick={() => {
                     const valueFloat = parseFloat(value)
                     if(isNaN(valueFloat)) {
@@ -60,7 +60,8 @@ export const EntryForm = (props: EntryFormProps) => {
                     entry.categoryId = categoryId
                     client.AddEntry(entry)
                     .then(onSave)
-            }}>Save</button>
+                }}
+            />
             <button 
                 className="btn btn-secondary col-4"
                 onClick={() => {
