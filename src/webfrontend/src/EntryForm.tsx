@@ -21,7 +21,7 @@ export const EntryForm = (props: EntryFormProps) => {
     const [title, setTitle] = useState("")
     const [value, setValue] = useState("0")
     const [categoryId, setCategoryId] = useState(undefined as number | undefined)
-    return <div data-testid="entry-form">
+    return <div data-testid="entry-form" className="max-w-xl">
         <TextBox
             name="title"
             label="Title"
@@ -50,6 +50,7 @@ export const EntryForm = (props: EntryFormProps) => {
             />
         <div>
             <Button
+                extraClasses="inline-block"
                 text="Save"
                 onClick={() => {
                     const valueFloat = parseFloat(value)
@@ -63,6 +64,7 @@ export const EntryForm = (props: EntryFormProps) => {
                 }}
             />
             <Button
+                extraClasses="inline-block"
                 text="Cancel"
                 mode={ButtonMode.SECONDARY}
                 onClick={() => {
