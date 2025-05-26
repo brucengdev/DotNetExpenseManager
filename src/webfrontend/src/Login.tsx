@@ -2,6 +2,7 @@ import { useState } from "react"
 import { IClient } from "./api/Client"
 import { IStorage, STORED_TOKEN } from "./storage/Storage"
 import { Button } from "./controls/Button"
+import { TextBox } from "./controls/TextBox"
 
 interface LoginProps {
     client: IClient
@@ -26,20 +27,14 @@ export function Login({client, storage, onLogin}: LoginProps) {
         </div>
         <form data-testid="login-view" action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-            <div className="sm:col-span-2">
-                <label htmlFor="username" className="block text-sm/6 font-semibold text-gray-900">Username</label>
-                <div className="mt-2.5">
-                <input type="text" name="username" 
-                    id="username" autoComplete="username" 
-                    value={username}
-                    onChange={e => setUsername(e.target.value)}
-                    className={"block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 " +
-                        "outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" +
-                        (usernameWarn?"border-red-600":"")
-                    }
-                    />
-                </div>
-            </div>
+            <TextBox
+                className="sm:col-span-2"
+                name="username"
+                label="Username"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                inputClassName={usernameWarn?"border-red-600":""}
+             />
             <div className="sm:col-span-2">
                 <label htmlFor="password" className="block text-sm/6 font-semibold text-gray-900">Password</label>
                 <div className="mt-2.5">
