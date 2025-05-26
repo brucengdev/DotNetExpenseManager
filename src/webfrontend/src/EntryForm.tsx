@@ -4,7 +4,7 @@ import { IClient } from "./api/Client"
 import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
 import { TextBox } from "./controls/TextBox"
-import { Button } from "./controls/Button"
+import { Button, ButtonMode } from "./controls/Button"
 
 export interface EntryFormProps {
     date: Date
@@ -62,11 +62,13 @@ export const EntryForm = (props: EntryFormProps) => {
                     .then(onSave)
                 }}
             />
-            <button 
-                className="btn btn-secondary col-4"
+            <Button
+                text="Cancel"
+                mode={ButtonMode.SECONDARY}
                 onClick={() => {
                     if(onCancel) { onCancel()}
-            }}>Cancel</button>
+                }}
+            />
         </div>
     </div>
 }
