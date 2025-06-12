@@ -15,7 +15,7 @@ export const EntryView = ({title, value, categoryName, onDelete}: EntryProps) =>
         <div data-testid="title">{title}</div>
         <div data-testid="category">{categoryName}</div>
         <div data-testid="value">{value}</div>
-        <div className="text-right">
+        <div>
             {onDelete
                 ? <Button
                     mode={ButtonMode.DANGER}
