@@ -26,17 +26,22 @@ export function CategoryControl(props: CategoryControlProps) {
 
     return <div data-testid="category-control">
         {!selecting?
-        <label className="form-label">
-            Category
-            <a 
-                className="form-control"
-                href="#" onClick={e => {
-                e.preventDefault()
-                setSelecting(true)
-            }}>
-                {categoryName}
-            </a>
-        </label>
+        <div>
+            <label htmlFor="categoryName" className="block text-sm/6 font-semibold text-gray-900">
+                Category
+            </label>
+            <div className="mt-2.5 mb-2.5">
+                <a 
+                    className="block"
+                    id="categoryName"
+                    href="#" onClick={e => {
+                    e.preventDefault()
+                    setSelecting(true)
+                }}>
+                    {categoryName}
+                </a>
+            </div>
+        </div>
         : <div>
             <TextBox
                 label="Category"
@@ -52,10 +57,9 @@ export function CategoryControl(props: CategoryControlProps) {
         {
             cats.length > 0
             ?
-            <ul className="list-group">
+            <ul className="list-disc">
                 {cats.map(c => 
-                        <a 
-                            className="list-group-item"
+                        <a className="list-item" 
                             href="#" onClick={() => {
                             const newCatId = c.id
                             onChange(newCatId)
