@@ -41,7 +41,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                     <div data-testid="entry-list">
                         <div className="columns-3">
                             <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
-                            <h2 className="col-10">{formatDisplayDate(date)}</h2>
+                            <h2>{formatDisplayDate(date)}</h2>
                             <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
                         </div>
                         {entries.map(({id, title, value, categoryId}) => 
