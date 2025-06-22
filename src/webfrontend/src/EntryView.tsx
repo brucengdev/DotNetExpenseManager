@@ -11,11 +11,11 @@ export interface EntryProps {
 
 export const EntryView = ({title, value, categoryName, onDelete}: EntryProps) => {
     const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
-    return <div data-testid="entry" className="columns-4">
+    return <div data-testid="entry" className="grid grid-cols-4">
         <div data-testid="title">{title}</div>
         <div data-testid="category">{categoryName}</div>
         <div data-testid="value">{value}</div>
-        <div>
+        <div className="place-items-end">
             {onDelete
                 ? <Button
                     mode={ButtonMode.DANGER}
