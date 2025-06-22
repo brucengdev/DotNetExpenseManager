@@ -39,10 +39,14 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                         /> :
                 <div>
                     <div data-testid="entry-list">
-                        <div className="columns-3">
-                            <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
-                            <h2>{formatDisplayDate(date)}</h2>
-                            <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
+                        <div className="grid grid-cols-4">
+                            <div>
+                                <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
+                            </div>
+                            <h2 className="col-span-2 text-center">{formatDisplayDate(date)}</h2>
+                            <div className="place-items-end">
+                                <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
+                            </div>
                         </div>
                         {entries.map(({id, title, value, categoryId}) => 
                             <EntryView 
