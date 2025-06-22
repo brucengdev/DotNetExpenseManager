@@ -3,6 +3,8 @@ import { formatDateToDay } from "./utils"
 import { IClient } from "./api/Client"
 import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
+import { TextBox } from "./controls/TextBox"
+import { Button, ButtonMode } from "./controls/Button"
 
 export interface EntryFormProps {
     date: Date
@@ -20,39 +22,36 @@ export const EntryForm = (props: EntryFormProps) => {
     const [value, setValue] = useState("0")
     const [categoryId, setCategoryId] = useState(undefined as number | undefined)
     return <div data-testid="entry-form">
-        <label className="row">
-            Title
-            <input type="text"
-                className="form-control"
-                value={title}
-                onChange={event => setTitle(event.target.value)}
-             />
-        </label>
-        <label className="row">
-            Value
-            <input 
-                className={isNaN(parseFloat(value))? "invalid form-control": "form-control"}
-                type="number" 
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </label>
-        <label className="row">
-            Date
-            <input type="date" 
-                    className="form-control"
-                    value={formatDateToDay(date)}
-                    onChange={(event) => setDate(new Date(event.target.value))} 
-                    />
-        </label>
+        <TextBox
+            name="title"
+            label="Title"
+            value={title}
+            onChange={event => setTitle(event.target.value)}
+        />
+        <TextBox
+            name="value"
+            label="Value"
+            type="number"
+            value={value}
+            onChange={event => setValue(event.target.value)}
+            inputClassName={isNaN(parseFloat(value))? "border-red-600": ""}
+        />
+        <TextBox
+            name="date"
+            label="Date"
+            type="date"
+            value={formatDateToDay(date)}
+            onChange={(event) => setDate(new Date(event.target.value))} 
+        />
         <CategoryControl 
             client={client}
             categoryId={categoryId}
             onChange={newCatId => setCategoryId(newCatId)} 
             />
-        <div className="row">
-            <button 
-                className="btn btn-primary col-4"
+        <div>
+            <Button
+                className="inline-block mr-2"
+                text="Save"
                 onClick={() => {
                     const valueFloat = parseFloat(value)
                     if(isNaN(valueFloat)) {
@@ -62,12 +61,16 @@ export const EntryForm = (props: EntryFormProps) => {
                     entry.categoryId = categoryId
                     client.AddEntry(entry)
                     .then(onSave)
-            }}>Save</button>
-            <button 
-                className="btn btn-secondary col-4"
+                }}
+            />
+            <Button
+                className="inline-block"
+                text="Cancel"
+                mode={ButtonMode.SECONDARY}
                 onClick={() => {
                     if(onCancel) { onCancel()}
-            }}>Cancel</button>
+                }}
+            />
         </div>
     </div>
 }

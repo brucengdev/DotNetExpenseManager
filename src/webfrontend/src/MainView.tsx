@@ -1,7 +1,6 @@
 import { IClient } from "./api/Client"
-import { Button } from "./controls/Button"
+import { Button, ButtonMode } from "./controls/Button"
 import { DayView } from "./DayView"
-import "./MainView.css"
 
 export interface MainViewProps {
   client: IClient
@@ -9,13 +8,14 @@ export interface MainViewProps {
 }
 
 export function MainView({client, onLogout} : MainViewProps) {
-    return <div data-testid="main-view" className="row">
-      <div className="row">
-        <button className="selected btn btn-info col-2">Day</button>
+    return <div data-testid="main-view" className="row-auto">
+      <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-semibold text-gray-900">Expenses</h2>
       </div>
-      <div className="row">
+      <div className="mb-5">
+        <Button text="Day" mode={ButtonMode.PRIMARY}/>
+      </div>
         <DayView client={client} initialDate={new Date()} />
-      </div>
       <Button 
         text="Log out"
         onClick={() => onLogout()}

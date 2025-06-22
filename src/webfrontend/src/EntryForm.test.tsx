@@ -99,7 +99,7 @@ describe("EntryForm", () => {
         
         fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-"}})
 
-        expect(screen.getByLabelText("Value")).toHaveClass("invalid")
+        expect(screen.getByLabelText("Value")).toHaveClass("border-red-600")
     })
 
     it("does not save entry if form is invalid", async () => {

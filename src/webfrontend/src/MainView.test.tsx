@@ -20,7 +20,7 @@ describe("MainView", () => {
 
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
-        expect(dayButton.className).toContain("selected")
+        expect(dayButton.className).toContain("bg-indigo-600")
 
         const dayView = screen.getByTestId("day-view")
         expect(dayView).toBeInTheDocument()

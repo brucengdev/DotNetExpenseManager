@@ -1,6 +1,6 @@
 import { useState } from "react"
-import "./EntryView.css"
 import { ConfirmDeleteView } from "./ConfirmDeleteView"
+import { Button, ButtonMode } from "./controls/Button"
 
 export interface EntryProps {
     title: string
@@ -11,15 +11,16 @@ export interface EntryProps {
 
 export const EntryView = ({title, value, categoryName, onDelete}: EntryProps) => {
     const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
-    return <div data-testid="entry" className="row">
-        <div className="col-5 entryLabel" data-testid="title">{title}</div>
-        <div className="col-3 categoryLabel" data-testid="category">{categoryName}</div>
-        <div className="col-3 entryValue" data-testid="value">{value}</div>
-        <div className="col-1">
+    return <div data-testid="entry" className="grid grid-cols-4 mb-1">
+        <div data-testid="title">{title}</div>
+        <div data-testid="category">{categoryName}</div>
+        <div data-testid="value">{value}</div>
+        <div className="place-items-end">
             {onDelete
-                ? <button
-                    className="btn btn-danger"
-                    data-testid="deleteBtn" onClick={() => setShowConfirmDeletion(true)}>X</button>
+                ? <Button
+                    mode={ButtonMode.DANGER}
+                    dataTestId="deleteBtn"
+                    onClick={() => setShowConfirmDeletion(true)} text="X" />
                 : <></>}
         </div>
         {showConfirmDeletion?

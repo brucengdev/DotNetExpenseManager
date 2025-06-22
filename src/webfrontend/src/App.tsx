@@ -28,7 +28,7 @@ function App({client, storage}: AppProps) {
     }
 })
   return (
-    <div>
+    <div className="xl:px-100 md:px-30 lg:px-60 pt-5">
       {loggedIn
       ? <MainView client={client} onLogout={() => { 
         storage.Clear(STORED_TOKEN)

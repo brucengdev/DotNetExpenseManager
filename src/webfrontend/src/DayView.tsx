@@ -30,19 +30,23 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
         }
     })
 
-    return <div data-testid="day-view" className="row">
+    return <div data-testid="day-view" className="mb-5">
             {addingEntry? <EntryForm 
                         client={client} 
                         date={date} 
                         onSave={() => { setAddingEntry(false) } } 
                         onCancel={() => setAddingEntry(false) }
                         /> :
-                <div className="row">
-                    <div data-testid="entry-list" className="row">
-                        <div className="row">
-                            <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
-                            <h2 className="col-10">{formatDisplayDate(date)}</h2>
-                            <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
+                <div>
+                    <div data-testid="entry-list">
+                        <div className="grid grid-cols-4 mb-5">
+                            <div>
+                                <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
+                            </div>
+                            <h2 className="col-span-2 text-center">{formatDisplayDate(date)}</h2>
+                            <div className="place-items-end">
+                                <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
+                            </div>
                         </div>
                         {entries.map(({id, title, value, categoryId}) => 
                             <EntryView 
@@ -56,7 +60,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                     }
                                  }} />)}
                     </div>
-                    <div className="row">
+                    <div>
                         <Button text="+"  onClick={() => setAddingEntry(true)} />
                     </div>
                 </div>

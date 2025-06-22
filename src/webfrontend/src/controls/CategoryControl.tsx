@@ -2,6 +2,8 @@ import { useState } from "react"
 import { Category } from "../models/Category"
 import { IClient } from "../api/Client"
 import { areSame } from "../utils"
+import { TextBox } from "./TextBox"
+import { Button, ButtonMode } from "./Button"
 
 interface CategoryControlProps {
     client: IClient
@@ -24,36 +26,40 @@ export function CategoryControl(props: CategoryControlProps) {
 
     return <div data-testid="category-control">
         {!selecting?
-        <label className="form-label">
-            Category
-            <a 
-                className="form-control"
-                href="#" onClick={e => {
-                e.preventDefault()
-                setSelecting(true)
-            }}>
-                {categoryName}
-            </a>
-        </label>
-        : <div><label>
-            Category
-            <input type="text" 
-                className="form-control"
+        <div>
+            <label htmlFor="categoryName" className="block text-sm/6 font-semibold text-gray-900">
+                Category
+            </label>
+            <div className="mt-2.5 mb-2.5">
+                <a 
+                    className="block"
+                    id="categoryName"
+                    href="#" onClick={e => {
+                    e.preventDefault()
+                    setSelecting(true)
+                }}>
+                    {categoryName}
+                </a>
+            </div>
+        </div>
+        : <div>
+            <TextBox
+                label="Category"
+                type="text"
+                name="category"
                 value={filterText}
                 onChange={(e) => {
                     const newFilterText = e.target.value
                     setFilterText(newFilterText)
                 }}
                 placeholder="Uncategorized" 
-                />
-        </label>
+            />
         {
             cats.length > 0
             ?
-            <ul className="list-group">
+            <ul className="list-disc list-inside text-blue-600 underline">
                 {cats.map(c => 
-                        <a 
-                            className="list-group-item"
+                        <a className="list-item" 
                             href="#" onClick={() => {
                             const newCatId = c.id
                             onChange(newCatId)
@@ -63,8 +69,10 @@ export function CategoryControl(props: CategoryControlProps) {
                         </a>)
                 }
             </ul>
-            :<button 
-                className="btn btn-primary"
+            :
+            <Button
+                mode={ButtonMode.PRIMARY}
+                text={`Create new category ${filterText}`}
                 onClick={() => {
                     client.AddCategory(filterText)
                     .then(succeeded => {
@@ -72,7 +80,8 @@ export function CategoryControl(props: CategoryControlProps) {
                             setFilterText("")
                         }
                     })
-            }}>+</button>
+                }}
+            />
         }
         </div>
         }

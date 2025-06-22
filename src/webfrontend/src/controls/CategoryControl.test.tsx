@@ -139,7 +139,7 @@ describe("CategoryControl", () => {
         fireEvent.change(screen.getByRole("textbox", { name: "Category"}),
             {target: { value: "foo" }})
 
-        expect(screen.getByRole("button", { name: "+"}))
+        expect(screen.getByRole("button", { name: "Create new category foo"}))
             .toBeInTheDocument()
     })
 
@@ -158,7 +158,7 @@ describe("CategoryControl", () => {
         fireEvent.change(screen.getByRole("textbox", { name: "Category"}),
             {target: { value: "foo" }})
 
-        fireEvent.click(screen.getByRole("button", { name: "+"}))
+        fireEvent.click(screen.getByRole("button", { name: "Create new category foo"}))
         
         await sleep(10)
 
