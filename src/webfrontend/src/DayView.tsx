@@ -30,7 +30,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
         }
     })
 
-    return <div data-testid="day-view">
+    return <div data-testid="day-view" className="mb-5">
             {addingEntry? <EntryForm 
                         client={client} 
                         date={date} 

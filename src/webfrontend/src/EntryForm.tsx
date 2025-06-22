@@ -48,7 +48,7 @@ export const EntryForm = (props: EntryFormProps) => {
             categoryId={categoryId}
             onChange={newCatId => setCategoryId(newCatId)} 
             />
-        <div className="mb-2">
+        <div>
             <Button
                 className="inline-block mr-2"
                 text="Save"
