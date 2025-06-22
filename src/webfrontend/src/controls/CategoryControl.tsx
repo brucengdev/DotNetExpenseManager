@@ -57,7 +57,7 @@ export function CategoryControl(props: CategoryControlProps) {
         {
             cats.length > 0
             ?
-            <ul className="list-disc">
+            <ul className="list-disc list-inside text-blue-600 underline">
                 {cats.map(c => 
                         <a className="list-item" 
                             href="#" onClick={() => {
@@ -72,7 +72,7 @@ export function CategoryControl(props: CategoryControlProps) {
             :
             <Button
                 mode={ButtonMode.PRIMARY}
-                text="+"
+                text={`Create new category ${filterText}`}
                 onClick={() => {
                     client.AddCategory(filterText)
                     .then(succeeded => {
