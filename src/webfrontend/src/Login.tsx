@@ -21,7 +21,7 @@ export function Login({client, storage, onLogin}: LoginProps) {
         return valid
     }
 
-    return <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+    return <div className="isolate bg-white">
         <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">Login to expenses</h2>
         </div>
