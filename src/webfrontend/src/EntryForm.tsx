@@ -21,7 +21,7 @@ export const EntryForm = (props: EntryFormProps) => {
     const [title, setTitle] = useState("")
     const [value, setValue] = useState("0")
     const [categoryId, setCategoryId] = useState(undefined as number | undefined)
-    return <div data-testid="entry-form" className="max-w-xl">
+    return <div data-testid="entry-form">
         <TextBox
             name="title"
             label="Title"
