@@ -39,7 +39,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                         /> :
                 <div>
                     <div data-testid="entry-list">
-                        <div className="grid grid-cols-4">
+                        <div className="grid grid-cols-4 mb-5">
                             <div>
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
                             </div>
