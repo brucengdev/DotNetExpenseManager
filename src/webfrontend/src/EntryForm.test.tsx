@@ -3,7 +3,6 @@ import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { EntryForm } from "./EntryForm";
 import { TestClient } from "./__test__/TestClient";
-import { sleep } from "./__test__/testutils";
 import { Category } from "./models/Category";
 
 describe("EntryForm", () => {
@@ -13,12 +12,11 @@ describe("EntryForm", () => {
             new Category(1, "household") 
         ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
-        await sleep(100)
 
-        expect(screen.getByRole("textbox", {name: "Title"})).toBeInTheDocument()
-        expect(screen.getByLabelText("Value")).toBeInTheDocument()
+        expect(await screen.findByRole("textbox", {name: "Title"})).toBeInTheDocument()
+        expect(await screen.findByLabelText("Value")).toBeInTheDocument()
         
-        const dateField = screen.getByLabelText("Date")
+        const dateField = await screen.findByLabelText("Date")
         expect(dateField).toBeInTheDocument()
         expect(dateField).toHaveAttribute("value", "2024-05-31")
 
@@ -65,13 +63,11 @@ describe("EntryForm", () => {
             new Category(1, "household") 
         ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
-        await sleep(10)
         
-        fireEvent.click(screen.getByRole("link", { name: "Uncategorized" }))
-        fireEvent.click(screen.getByRole("link", { name: "household" }))
-        await sleep(10)
+        fireEvent.click(await screen.findByRole("link", { name: "Uncategorized" }))
+        fireEvent.click(await screen.findByRole("link", { name: "household" }))
         
-        expect(screen.getByRole("link", { name: "household"}))
+        expect(await screen.findByRole("link", { name: "household"}))
             .toBeInTheDocument()
     })
 
@@ -80,12 +76,11 @@ describe("EntryForm", () => {
         const client = new TestClient()
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} />)
         
-        fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
-        fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})
-        fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
-        fireEvent.click(screen.getByRole("button", { name: "Save" }))
+        fireEvent.change(await screen.findByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
+        fireEvent.change(await screen.findByLabelText("Value"), { target: { value: "-120.23"}})
+        fireEvent.change(await screen.findByLabelText("Date"), { target: { value: "2023-01-02"}})
+        fireEvent.click(await screen.findByRole("button", { name: "Save" }))
 
-        await sleep(10)
 
         expect(client.Entries.length).toBe(1)
         expect(client.Entries[0].categoryId).toBeUndefined()
@@ -112,7 +107,6 @@ describe("EntryForm", () => {
         fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-"}})
         fireEvent.click(screen.getByRole("button", { name: "Save" }))
 
-        await sleep(10)
 
         expect(saveHandler).not.toHaveBeenCalled()
     })
