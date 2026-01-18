@@ -3,7 +3,6 @@ import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { DayView } from "./DayView";
 import { TestClient } from "./__test__/TestClient";
-import { sleep } from "./__test__/testutils";
 import { Entry } from "./models/Entry";
 import { sameDate } from "./utils";
 import { Category } from "./models/Category";
@@ -23,9 +22,7 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
-        await sleep(10)
-
-        const entryList = screen.getByTestId("entry-list")
+        const entryList = await screen.findByTestId("entry-list")
         expect(entryList).toBeInTheDocument()
 
         expect(screen.getByRole("heading", { name: "11/6/2024"})).toBeInTheDocument()
@@ -56,9 +53,7 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2023, 12, 11)} />)
         
-        await sleep(10)
-
-        const entryList = screen.getByTestId("entry-list")
+        const entryList = await screen.findByTestId("entry-list")
         expect(entryList).toBeInTheDocument()
 
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
@@ -76,14 +71,10 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
         
-        await sleep(10)
-
-        expect(screen.getByRole("heading", { name: "1/6/2024"})).toBeInTheDocument()
+        expect(await screen.findByRole("heading", { name: "1/6/2024"})).toBeInTheDocument()
         fireEvent.click(screen.getByRole("button", {name: "<"}))
 
-        await sleep(10)
-
-        expect(screen.getByRole("heading", {name: "31/5/2024"})).toBeInTheDocument()
+        expect(await screen.findByRole("heading", {name: "31/5/2024"})).toBeInTheDocument()
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
@@ -106,14 +97,10 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
         
-        await sleep(10)
-
-        expect(screen.getByRole("heading", { name: "31/5/2024"})).toBeInTheDocument()
+        expect(await screen.findByRole("heading", { name: "31/5/2024"})).toBeInTheDocument()
         fireEvent.click(screen.getByRole("button", {name: ">"}))
         
-        await sleep(10)
-
-        expect(screen.getByRole("heading", {name: "1/6/2024"})).toBeInTheDocument()
+        expect(await screen.findByRole("heading", {name: "1/6/2024"})).toBeInTheDocument()
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
@@ -148,14 +135,11 @@ describe("DayView", () => {
             new Category(12, "Household")
         ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
-        await sleep(10)
 
-        const logButton = screen.getByRole("button", {name: "+"})
+        const logButton = await screen.findByRole("button", {name: "+"})
         fireEvent.click(logButton)
 
-        await sleep(10)
-
-        fireEvent.click(screen.getByRole("link", { name: "Uncategorized"}))
+        fireEvent.click(await screen.findByRole("link", { name: "Uncategorized"}))
         fireEvent.click(screen.getByRole("link", { name: "Household"}))
 
         fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
@@ -163,9 +147,7 @@ describe("DayView", () => {
         fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
         fireEvent.click(screen.getByRole("button", { name: "Save" }))
 
-        await sleep(10) 
-
-        expect(screen.getByTestId("entry-list")).toBeInTheDocument()
+        expect(await screen.findByTestId("entry-list")).toBeInTheDocument()
 
         expect(client.Entries.length).toBe(1)
         const entry = client.Entries[0]
@@ -182,9 +164,7 @@ describe("DayView", () => {
         fireEvent.click(screen.getByRole("button", {name: "+"}))
         fireEvent.click(screen.getByRole("button", { name: "Cancel" }))
 
-        await sleep(10)
-
-        expect(screen.getByTestId("entry-list")).toBeInTheDocument()
+        expect(await screen.findByTestId("entry-list")).toBeInTheDocument()
     })
 
     it("deletes an entry", async() => {
@@ -193,9 +173,8 @@ describe("DayView", () => {
             new Entry(13, new Date(2024, 5, 1), "grocery", -120),
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
-        await sleep(10)
 
-        const entryList = screen.getByTestId("entry-list")
+        const entryList = await screen.findByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
         expect(entries.length).toBe(1) 
 
@@ -205,9 +184,7 @@ describe("DayView", () => {
 
         expect(client.Entries.length).toBe(0)
 
-        await sleep(10)
-
-        const entryListAfter = screen.getByTestId("entry-list")
+        const entryListAfter = await screen.findByTestId("entry-list")
         const entriesAfter = entryListAfter.querySelectorAll('[data-testid="entry"]')
         expect(entriesAfter.length).toBe(0) 
     })

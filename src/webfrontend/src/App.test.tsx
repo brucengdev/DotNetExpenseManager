@@ -3,7 +3,6 @@ import App from "./App";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { TEST_PASSWORD, TEST_TOKEN, TEST_USER_NAME, TestClient } from "./__test__/TestClient";
-import { sleep } from "./__test__/testutils";
 import { TestStorage } from "./__test__/TestStorage";
 import { STORED_TOKEN } from "./storage/Storage";
 
