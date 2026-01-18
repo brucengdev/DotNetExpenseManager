@@ -21,9 +21,7 @@ describe("App", () => {
         testStorage.Set(STORED_TOKEN, TEST_TOKEN)
         render(<App client={client} storage={testStorage} />)
 
-        await sleep(10)
-
-        expect(screen.getByTestId("main-view")).toBeInTheDocument()
+        expect(await screen.findByTestId("main-view")).toBeInTheDocument()
     })
 
     it("shows login form after logging out", async () => {
@@ -32,9 +30,7 @@ describe("App", () => {
         testStorage.Set(STORED_TOKEN, TEST_TOKEN)
         render(<App client={client} storage={testStorage} />)
 
-        await sleep(10)
-
-        expect(screen.getByTestId("main-view")).toBeInTheDocument()
+        expect(await screen.findByTestId("main-view")).toBeInTheDocument()
 
         fireEvent.click(screen.getByRole("button", { name: "Log out" }))
 
@@ -47,42 +43,34 @@ describe("App", () => {
         client.Login(TEST_USER_NAME, TEST_PASSWORD)
         render(<App client={client} storage={new TestStorage()} />)
 
-        await sleep(10)
-
-        expect(screen.getByTestId("main-view")).toBeInTheDocument()
+        expect(await screen.findByTestId("main-view")).toBeInTheDocument()
     })
 
     it("shows main view after logging in", async () => {
         const client = new TestClient()
         render(<App client={client} storage={new TestStorage()} />)
         
-        await sleep(10)
-
-        expect(screen.getByTestId("login-view")).toBeInTheDocument()
+        expect(await screen.findByTestId("login-view")).toBeInTheDocument()
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: TEST_USER_NAME}})
         fireEvent.change(screen.getByLabelText("Password"), { target: { value: TEST_PASSWORD}})
 
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
-        await sleep(10)
 
-        expect(screen.getByTestId("main-view")).toBeInTheDocument()
+        expect(await screen.findByTestId("main-view")).toBeInTheDocument()
     })
 
     it("still shows login form if logging in was failed", async () => {
         const client = new TestClient()
         render(<App client={client} storage={new TestStorage()} />)
         
-        await sleep(10)
-
-        expect(screen.getByTestId("login-view")).toBeInTheDocument()
+        expect(await screen.findByTestId("login-view")).toBeInTheDocument()
 
         fireEvent.change(screen.getByRole("textbox", { name: "Username"}), { target: { value: "incorrect_user"}})
         fireEvent.change(screen.getByLabelText("Password"), { target: { value: "incorrect_pass"}})
 
         fireEvent.click(screen.getByRole("button", { name: "Login"}))
-        await sleep(10)
 
-        expect(screen.getByTestId("login-view")).toBeInTheDocument()
+        expect(await screen.findByTestId("login-view")).toBeInTheDocument()
     })
 })
