@@ -1,6 +1,5 @@
 import { describe, it, expect, vitest } from "vitest"
 import { TestClient } from "../__test__/TestClient"
-import { sleep } from "../__test__/testutils"
 import { Category } from "../models/Category"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { CategoryControl } from "./CategoryControl"
@@ -16,9 +15,8 @@ describe("CategoryControl", () => {
             categoryId={0} 
             onChange={_ => { }}
             />)
-        await sleep(100)
 
-        expect(screen.getByTestId("category-control")).toBeInTheDocument();
+        expect(await screen.findByTestId("category-control")).toBeInTheDocument();
 
         expect(screen.getByRole("link", { name: "Uncategorized"})).toBeInTheDocument()
 
@@ -37,9 +35,8 @@ describe("CategoryControl", () => {
             categoryId={1} 
             onChange={_ => { }}
             />)
-        await sleep(100)
 
-        expect(screen.getByTestId("category-control")).toBeInTheDocument();
+        expect(await screen.findByTestId("category-control")).toBeInTheDocument();
 
         expect(screen.getByRole("link", { name: "household"}))
             .toBeInTheDocument()
@@ -54,10 +51,8 @@ describe("CategoryControl", () => {
             categoryId={0} 
             onChange={_ => { }}
             />)
-        await sleep(100)
 
-        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
-        await sleep(10)
+        fireEvent.click(await screen.findByRole("link", {name: "Uncategorized"}))
 
         const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
         expect(categoryFilterField).toBeInTheDocument()
@@ -78,10 +73,8 @@ describe("CategoryControl", () => {
             categoryId={0} 
             onChange={_ => { }}
             />)
-        await sleep(100)
 
-        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
-        await sleep(10)
+        fireEvent.click(await screen.findByRole("link", {name: "Uncategorized"}))
 
         const categoryFilterField = screen.getByRole("textbox", { name: "Category"})
         fireEvent.change(categoryFilterField, { target: { value: "tr"}})
@@ -107,10 +100,8 @@ describe("CategoryControl", () => {
             categoryId={0} 
             onChange={onChange}
             />)
-        await sleep(100)
 
-        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
-        await sleep(10)
+        fireEvent.click(await screen.findByRole("link", {name: "Uncategorized"}))
 
         const householdCat = screen.getByRole("link", { name: "household"})
         fireEvent.click(householdCat)
@@ -131,10 +122,8 @@ describe("CategoryControl", () => {
             categoryId={0} 
             onChange={_ => { }}
             />)
-        await sleep(100)
 
-        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
-        await sleep(10)
+        fireEvent.click(await screen.findByRole("link", {name: "Uncategorized"}))
 
         fireEvent.change(screen.getByRole("textbox", { name: "Category"}),
             {target: { value: "foo" }})
@@ -152,15 +141,13 @@ describe("CategoryControl", () => {
             categoryId={0} 
             onChange={_ => { }}
             />)
-        await sleep(10)
 
-        fireEvent.click(screen.getByRole("link", {name: "Uncategorized"}))
+        fireEvent.click(await screen.findByRole("link", {name: "Uncategorized"}))
         fireEvent.change(screen.getByRole("textbox", { name: "Category"}),
             {target: { value: "foo" }})
 
         fireEvent.click(screen.getByRole("button", { name: "Create new category foo"}))
         
-        await sleep(10)
 
         expect(client.Categories).toContainEqual(new Category(2, "foo"))
 
