@@ -1,4 +1,4 @@
-import { screen, render, fireEvent } from "@testing-library/react";
+import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { Login } from "./Login";
@@ -71,7 +71,7 @@ describe("Login", () => {
         expect(screen.getByRole("textbox", { name: "Username" }).className).not.toContain("border-red-600")
         expect(screen.getByLabelText("Password").className).not.toContain("border-red-600")
 
-        expect(onLogin).toHaveBeenCalled()
+        await waitFor(() => expect(onLogin).toHaveBeenCalled())
         expect(storage.Get(STORED_TOKEN)).toBe(TEST_TOKEN)
     })
 
