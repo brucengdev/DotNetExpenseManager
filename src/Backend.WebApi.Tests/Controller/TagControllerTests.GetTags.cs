@@ -31,7 +31,7 @@ public partial class TagControllerTests
     public void GetTags_must_return_categories_for_user()
     {
         //arrange
-        var categoryManager = new Mock<ITagManager>();
+        var categoryManager = new Mock<ITagsManager>();
         categoryManager.Setup(cm => cm.GetTags(1))
             .Returns(new List<Tag>
             {

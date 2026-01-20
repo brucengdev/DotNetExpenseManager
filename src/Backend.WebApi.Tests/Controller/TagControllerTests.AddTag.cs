@@ -32,7 +32,7 @@ public partial class TagControllerTests
     public void AddTags_must_add_new_tag()
     {
         //arrange
-        var tagManager = new TestTagManager();
+        var tagManager = new TestTagsManager();
         tagManager.AddTag(new(){ Name = "Cat1", UserId = 2 });
         tagManager.AddTag(new(){ Name = "Cat2", UserId = 2 });
         var sut = new TagsController(tagManager);
@@ -61,7 +61,7 @@ public partial class TagControllerTests
     public void AddTags_must_return_409_if_tag_already_exists()
     {
         //arrange
-        var tagManager = new Mock<ITagManager>();
+        var tagManager = new Mock<ITagsManager>();
         tagManager.Setup(cm => cm.AddTag(It.IsAny<Tag>()))
             .Throws(new TagAlreadyExistsException());
         var sut = new TagsController(tagManager.Object);

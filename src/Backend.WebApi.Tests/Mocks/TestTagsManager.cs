@@ -3,7 +3,7 @@ using Backend.Models;
 
 namespace Backend.WebApi.Tests.Mocks;
 
-public class TestTagManager: ITagManager
+public class TestTagsManager: ITagsManager
 {
     public List<Tag> Tags { get; set; } = new();
 

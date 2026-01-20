@@ -9,12 +9,12 @@ namespace Backend.WebApi.Controllers;
 [Route("[controller]")]
 public class TagsController: ControllerBase
 {
-    private readonly ITagManager _tagManager;
+    private readonly ITagsManager _tagsManager;
     public TagsController(
-        ITagManager tagManager
+        ITagsManager tagsManager
         )
     {
-        _tagManager = tagManager;
+        _tagsManager = tagsManager;
     }
 
     [HttpGet]
@@ -22,7 +22,7 @@ public class TagsController: ControllerBase
     public ActionResult<IEnumerable<Category>> GetTags()
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
-        var result = _tagManager.GetTags(userId.Value);
+        var result = _tagsManager.GetTags(userId.Value);
         return Ok(result);
     }
 
@@ -33,7 +33,7 @@ public class TagsController: ControllerBase
         tag.UserId = (HttpContext.Items[Constants.USER_ID] as int?).Value;
         try
         {
-            _tagManager.AddTag(tag);
+            _tagsManager.AddTag(tag);
         }
         catch (TagAlreadyExistsException)
         {
