@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { EntryForm } from "./EntryForm";
@@ -84,7 +84,7 @@ describe("EntryForm", () => {
 
         expect(client.Entries.length).toBe(1)
         expect(client.Entries[0].categoryId).toBeUndefined()
-        expect(saveHandler).toHaveBeenCalled()
+        await waitFor(() => expect(saveHandler).toHaveBeenCalled())
     })
 
     it("hightlights textbox when value is invalid", async () => {
