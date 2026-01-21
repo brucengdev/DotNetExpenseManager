@@ -1,4 +1,4 @@
-import { screen, render } from "@testing-library/react";
+import { screen, render, fireEvent } from "@testing-library/react";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { MainView } from "./MainView";
@@ -28,5 +28,15 @@ describe("MainView", () => {
         const dayView = screen.getByTestId("day-view")
         expect(dayView).toBeInTheDocument()
     })
+    it("shows tags view when clicked on", () => {
+        render(<MainView client={new TestClient()} onLogout={() => { }} />)
 
+        const tagsButton = screen.getByRole("button", { name: "Tags"})
+        expect(tagsButton).toBeInTheDocument()
+
+        fireEvent.click(tagsButton)
+
+        const tagsView = screen.getByTestId("tags-view")
+        expect(tagsView).toBeInTheDocument()
+    })
 })

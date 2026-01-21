@@ -1,6 +1,7 @@
 import { IClient } from "./api/Client"
 import { Button, ButtonMode } from "./controls/Button"
 import { DayView } from "./DayView"
+import { TagsView } from "./TagsView"
 
 export interface MainViewProps {
   client: IClient
@@ -17,6 +18,7 @@ export function MainView({client, onLogout} : MainViewProps) {
         <Button text="Tags" mode={ButtonMode.PRIMARY}/>
       </div>
         <DayView client={client} initialDate={new Date()} />
+        <TagsView />
       <Button 
         text="Log out"
         onClick={() => onLogout()}
