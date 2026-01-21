@@ -14,6 +14,7 @@ export function MainView({client, onLogout} : MainViewProps) {
       </div>
       <div className="mb-5">
         <Button text="Day" mode={ButtonMode.PRIMARY}/>
+        <Button text="Tags" mode={ButtonMode.PRIMARY}/>
       </div>
         <DayView client={client} initialDate={new Date()} />
       <Button 

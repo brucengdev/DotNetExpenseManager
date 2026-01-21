@@ -11,6 +11,9 @@ describe("MainView", () => {
         const dayButton = screen.getByRole("button", { name: "Day"})
         expect(dayButton).toBeInTheDocument()
 
+        const tagButton = screen.getByRole("button", { name: "Tags"})
+        expect(tagButton).toBeInTheDocument()
+
         const logoutButton = screen.getByRole("button", { name: "Log out"})
         expect(logoutButton).toBeInTheDocument()
     })
@@ -25,4 +28,5 @@ describe("MainView", () => {
         const dayView = screen.getByTestId("day-view")
         expect(dayView).toBeInTheDocument()
     })
+
 })
