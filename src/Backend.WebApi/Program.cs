@@ -39,6 +39,9 @@ builder.Services.AddScoped<IEntryManager, EntryManager>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryManager, CategoryManager>();
 
+builder.Services.AddScoped<ITagsRepository, TagsRepository>();
+builder.Services.AddScoped<ITagsManager, TagsManager>();
+
 builder.Services.AddScoped<SecurityFilterAttribute>();
 
 builder.Services.AddControllers();
