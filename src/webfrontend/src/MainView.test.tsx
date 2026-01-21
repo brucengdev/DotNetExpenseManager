@@ -43,4 +43,25 @@ describe("MainView", () => {
 
         expect(screen.queryByTestId("day-view")).not.toBeInTheDocument()
     })
+
+    it("shows days view when clicked on", () => {
+        render(<MainView client={new TestClient()} onLogout={() => { }} />)
+
+        const tagsButton = screen.getByRole("button", { name: "Tags"})
+        expect(tagsButton).toBeInTheDocument()
+
+        fireEvent.click(tagsButton)
+
+        const tagsView = screen.getByTestId("tags-view")
+        expect(tagsView).toBeInTheDocument()
+
+        expect(screen.queryByTestId("day-view")).not.toBeInTheDocument()
+
+        fireEvent.click(screen.getByRole("button", { name: "Day"}))
+
+        const dayView = screen.getByTestId("day-view")
+        expect(dayView).toBeInTheDocument()
+
+        expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
+    })
 })

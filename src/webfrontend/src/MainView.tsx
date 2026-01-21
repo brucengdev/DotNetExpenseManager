@@ -21,7 +21,7 @@ export function MainView({client, onLogout} : MainViewProps) {
             <h2 className="text-2xl font-semibold text-gray-900">Expenses</h2>
       </div>
       <div className="mb-5">
-        <Button text="Day" mode={ButtonMode.PRIMARY}/>
+        <Button text="Day" mode={ButtonMode.PRIMARY} onClick={() => setView(View.DAY)}/>
         <Button text="Tags" mode={ButtonMode.PRIMARY} onClick={() => setView(View.TAGS)}/>
       </div>
         {view === View.DAY? <DayView client={client} initialDate={new Date()} />: <></>}
