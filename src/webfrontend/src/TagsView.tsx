@@ -1,7 +1,9 @@
+import { IClient } from "./api/Client"
 import { Button } from "./controls/Button"
 import { TagItemView } from "./TagItemView"
 
 export interface TagsViewProps {
+    client: IClient
 }
 
 export const TagsView = (_: TagsViewProps) => {
