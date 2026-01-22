@@ -1,4 +1,4 @@
-import { screen, render, waitFor } from "@testing-library/react";
+import { screen, render, waitFor, fireEvent } from "@testing-library/react";
 import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { TagsView } from "./TagsView";
@@ -25,5 +25,13 @@ describe("TagsView", () => {
         expect(tagNames).toStrictEqual(["Tag 1", "Tag 2"])
 
         expect(screen.getByRole("button", { name: "+"})).toBeInTheDocument()
+    })
+
+    it("shows add tag form when add button is clicked", async () => {
+        const testClient = new TestClient()
+        render(<TagsView client={testClient} />)
+        
+        fireEvent.click(screen.getByRole("button", { name: "+"}))
+        expect(await screen.findByTestId("add-tag-form")).toBeInTheDocument()
     })
 })
