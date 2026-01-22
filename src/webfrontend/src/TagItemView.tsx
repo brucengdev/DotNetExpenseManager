@@ -1,5 +1,11 @@
-export const TagItemView = () => {
+import { Tag } from "./models/Tag"
+
+interface TagItemViewProps {
+    tag: Tag
+}
+
+export const TagItemView = ({tag}: TagItemViewProps) => {
     return <div data-testid="tag">
-        Sample tag
+        <div data-testid="tag-name">{tag.name}</div>
     </div>
 }

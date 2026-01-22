@@ -2,6 +2,7 @@ import { Category } from "../models/Category";
 import { IClient } from "../api/Client";
 import { Entry } from "../models/Entry";
 import { sameDate } from "../utils";
+import { Tag } from "../models/Tag";
 
 export const TEST_USER_NAME = "valid_user"
 export const TEST_PASSWORD = "correct_pass"
@@ -12,6 +13,7 @@ export class TestClient implements IClient {
     public Token() { return this._token }
     public Entries: Entry[] = []
     public Categories: Category[] = []
+    public Tags: Tag[] = []
     async IsLoggedIn() {
         return this._token === TEST_TOKEN
     }
@@ -57,5 +59,9 @@ export class TestClient implements IClient {
     async AddCategory(categoryName: string):Promise<boolean> {
         this.Categories.push(new Category(this.Categories.length + 1, categoryName))
         return true
+    }
+
+    async GetTags(): Promise<Tag[]> {
+        return this.Tags
     }
 }
