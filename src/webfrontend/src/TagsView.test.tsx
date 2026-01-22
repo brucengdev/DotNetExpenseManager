@@ -6,7 +6,7 @@ import { TagsView } from "./TagsView";
 describe("TagsView", () => {
     it("has necessary ui components", () => {
         render(<TagsView />)
-        expect(screen.queryAllByTestId("tag")).toHaveLength(1)
+        expect(screen.queryAllByTestId("tag")).toHaveLength(2)
         expect(screen.getByRole("button", { name: "+"})).toBeInTheDocument()
     })
 })
