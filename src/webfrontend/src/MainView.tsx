@@ -25,7 +25,7 @@ export function MainView({client, onLogout} : MainViewProps) {
         <Button text="Tags" mode={ButtonMode.PRIMARY} onClick={() => setView(View.TAGS)}/>
       </div>
         {view === View.DAY? <DayView client={client} initialDate={new Date()} />: <></>}
-        {view === View.TAGS? <TagsView />: <></>}
+        {view === View.TAGS? <TagsView client={client} />: <></>}
       <Button 
         text="Log out"
         onClick={() => onLogout()}
