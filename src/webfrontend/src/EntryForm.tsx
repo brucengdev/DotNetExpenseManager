@@ -5,6 +5,7 @@ import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
 import { TextBox } from "./controls/TextBox"
 import { Button, ButtonMode } from "./controls/Button"
+import { MultiSelect } from "./controls/MultiSelect"
 
 export interface EntryFormProps {
     date: Date
@@ -48,6 +49,12 @@ export const EntryForm = (props: EntryFormProps) => {
             categoryId={categoryId}
             onChange={newCatId => setCategoryId(newCatId)} 
             />
+
+        <MultiSelect
+            selectDataTestId="tags-control"
+            options={[]}
+            selectedValues={[]}
+        />
         <div>
             <Button
                 className="inline-block mr-2"
