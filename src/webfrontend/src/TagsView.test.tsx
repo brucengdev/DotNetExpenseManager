@@ -43,5 +43,7 @@ describe("TagsView", () => {
         fireEvent.click(screen.getByRole("button", { name: "+"}))
 
         fireEvent.change(screen.getByLabelText("Tag name"), { target: { value: "New Tag"}})
+
+        fireEvent.click(screen.getByRole("button", { name: "Save"}))
     })
 })
