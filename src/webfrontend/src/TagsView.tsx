@@ -3,6 +3,7 @@ import { IClient } from "./api/Client"
 import { Button } from "./controls/Button"
 import { TagItemView } from "./TagItemView"
 import { Tag } from "./models/Tag"
+import { AddTagForm } from "./AddTagForm"
 
 export interface TagsViewProps {
     client: IClient
@@ -23,5 +24,6 @@ export const TagsView = (props: TagsViewProps) => {
             })
         }
         <Button text="+" />
+        <AddTagForm />
     </div>
 }
