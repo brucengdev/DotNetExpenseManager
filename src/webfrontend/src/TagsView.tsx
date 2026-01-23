@@ -28,6 +28,7 @@ export const TagsView = (props: TagsViewProps) => {
             ? <AddTagForm 
                 onSave={(tagName) => {
                     client.AddTag(tagName)
+                    .then(() => setTags(undefined))
                     .then(() => setShowsAddTagForm(false))
                 }}
                 onCancel={() => setShowsAddTagForm(false)}
