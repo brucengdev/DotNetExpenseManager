@@ -3,17 +3,14 @@ import {describe, expect, it} from 'vitest'
 import '@testing-library/jest-dom'
 import { TagsView } from "./TagsView";
 import { TestClient } from "./__test__/TestClient";
+import { Tag } from "./models/Tag";
 
 describe("TagsView", () => {
     it("has necessary ui components", async () => {
         const testClient = new TestClient()
         testClient.Tags = [
-            {
-                id: 1, name: "Tag 1"
-            },
-            {
-                id: 2, name: "Tag 2"
-            }
+            new Tag(1, "Tag 1"),
+            new Tag(2, "Tag 2")
         ]
         render(<TagsView client={testClient} />)
         await waitFor(() => {
@@ -48,9 +45,9 @@ describe("TagsView", () => {
 
         fireEvent.click(screen.getByRole("button", { name: "Save"}))
 
-        expect(screen.queryByTestId("add-tag-form")).not.toBeInTheDocument()
-
         await waitFor(() => {
+            expect(screen.queryByTestId("add-tag-form")).not.toBeInTheDocument()
+            
             const tagNames = screen.queryAllByTestId("tag-name").map(t => t.textContent)
             expect(tagNames).toStrictEqual(["New Tag"])
         })

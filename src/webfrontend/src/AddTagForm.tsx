@@ -12,7 +12,7 @@ export function AddTagForm(props: AddTagFormProps) {
     return <div data-testid="add-tag-form">
         <TextBox label="Tag name" name="edit-tag-name" value={tagName} onChange={(e) => setTagName(e.target.value)} />
         <Button text="Save" onClick={() => {
-            if(onSave) { onSave() }
+            if(onSave) { onSave(tagName) }
         }} />
     </div>;
 }

@@ -14,6 +14,7 @@ export interface IClient {
     GetCategories: () => Promise<Category[]>
     AddCategory: (name: string) => Promise<boolean>
 
+    AddTag: (name: string) => Promise<boolean>
     GetTags: () => Promise<Tag[]>
 }
 
@@ -118,6 +119,19 @@ export class Client implements IClient {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(new Category(0, name))
+        })  
+        return result.ok
+    }
+
+    async AddTag(name: string): Promise<boolean> {
+        const result = await fetch(`${url}/tags?${new URLSearchParams({
+            accessToken: this.token
+        }).toString()}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(new Tag(0, name))
         })  
         return result.ok
     }

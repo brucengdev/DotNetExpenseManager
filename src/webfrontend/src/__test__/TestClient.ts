@@ -64,4 +64,9 @@ export class TestClient implements IClient {
     async GetTags(): Promise<Tag[]> {
         return this.Tags
     }
+
+    async AddTag(tagName: string):Promise<boolean> {
+        this.Tags.push(new Tag(this.Tags.length + 1, tagName))
+        return true
+    }
 }
