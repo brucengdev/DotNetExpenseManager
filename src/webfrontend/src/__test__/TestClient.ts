@@ -43,7 +43,7 @@ export class TestClient implements IClient {
     }
 
     async AddEntry(entry: Entry): Promise<boolean> {
-        this.Entries.push(entry)
+        this.Entries = [...this.Entries, entry]
         return true
     }
 
@@ -53,20 +53,20 @@ export class TestClient implements IClient {
     }
 
     async GetCategories(): Promise<Category[]> {
-        return this.Categories
+        return [...this.Categories]//use spread to return a clone to simulate how react state updates
     }
 
     async AddCategory(categoryName: string):Promise<boolean> {
-        this.Categories.push(new Category(this.Categories.length + 1, categoryName))
+        this.Categories = [...this.Categories, new Category(this.Categories.length + 1, categoryName)]
         return true
     }
 
     async GetTags(): Promise<Tag[]> {
-        return this.Tags
+        return [...this.Tags]//use spread to return a clone to simulate how react state updates
     }
 
     async AddTag(tagName: string):Promise<boolean> {
-        this.Tags.push(new Tag(this.Tags.length + 1, tagName))
+        this.Tags = [...this.Tags, new Tag(this.Tags.length + 1, tagName)]
         return true
     }
 }
