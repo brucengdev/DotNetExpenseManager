@@ -25,7 +25,10 @@ export const TagsView = (props: TagsViewProps) => {
             })
         }
         {showsAddTagForm
-            ? <AddTagForm onSave={() => setShowsAddTagForm(false) }/>
+            ? <AddTagForm onSave={(tagName) => {
+                client.CreateTag(tagName)
+                setShowsAddTagForm(false) 
+            }}/>
             : <Button text="+" onClick={() => setShowsAddTagForm(true)}/>}
     </div>
 }

@@ -44,8 +44,15 @@ describe("TagsView", () => {
 
         fireEvent.change(screen.getByLabelText("Tag name"), { target: { value: "New Tag"}})
 
+        expect(screen.getByLabelText("Tag name")).toHaveValue("New Tag")
+
         fireEvent.click(screen.getByRole("button", { name: "Save"}))
 
         expect(screen.queryByTestId("add-tag-form")).not.toBeInTheDocument()
+
+        await waitFor(() => {
+            const tagNames = screen.queryAllByTestId("tag-name").map(t => t.textContent)
+            expect(tagNames).toStrictEqual(["New Tag"])
+        })
     })
 })
