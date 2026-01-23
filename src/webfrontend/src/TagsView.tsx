@@ -12,6 +12,7 @@ export interface TagsViewProps {
 export const TagsView = (props: TagsViewProps) => {
     const { client } = props
     const [tags, setTags] = useState<Tag[] | undefined>(undefined)
+    const [showsAddTagForm, setShowsAddTagForm] = useState(false)
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -23,7 +24,8 @@ export const TagsView = (props: TagsViewProps) => {
                 return <TagItemView key={tag.id} tag={tag} />
             })
         }
-        <Button text="+" />
-        <AddTagForm />
+        {showsAddTagForm
+            ? <AddTagForm />
+            : <Button text="+" onClick={() => setShowsAddTagForm(true)}/>}
     </div>
 }

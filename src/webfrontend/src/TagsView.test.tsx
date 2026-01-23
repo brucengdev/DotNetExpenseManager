@@ -25,6 +25,7 @@ describe("TagsView", () => {
         expect(tagNames).toStrictEqual(["Tag 1", "Tag 2"])
 
         expect(screen.getByRole("button", { name: "+"})).toBeInTheDocument()
+        expect(screen.queryByTestId("add-tag-form")).not.toBeInTheDocument()
     })
 
     it("shows add tag form when add button is clicked", async () => {
