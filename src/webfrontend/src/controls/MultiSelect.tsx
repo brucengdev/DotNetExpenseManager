@@ -14,6 +14,7 @@ export function MultiSelect(props: MultiSelectProps) {
     return <select 
                 className="border border-gray-300 block w-full"
                 data-testId={selectDataTestId}
+                id={selectDataTestId}
                 multiple
                 onChange={e => {
                     if(onChange) {

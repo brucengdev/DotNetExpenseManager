@@ -50,11 +50,15 @@ export const EntryForm = (props: EntryFormProps) => {
             onChange={newCatId => setCategoryId(newCatId)} 
             />
 
-        <MultiSelect
-            selectDataTestId="tags-control"
-            options={[]}
-            selectedValues={[]}
-        />
+        <div>
+            <label htmlFor="tags-control" className="block text-sm/6 font-semibold text-gray-900">Tags</label>
+            <MultiSelect
+                selectDataTestId="tags-control"
+                options={[]}
+                selectedValues={[]}
+            />
+        </div>
+        
         <div>
             <Button
                 className="inline-block mr-2"
