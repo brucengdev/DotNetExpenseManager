@@ -25,7 +25,7 @@ export const TagsView = (props: TagsViewProps) => {
             })
         }
         {showsAddTagForm
-            ? <AddTagForm />
+            ? <AddTagForm onSave={() => setShowsAddTagForm(false) }/>
             : <Button text="+" onClick={() => setShowsAddTagForm(true)}/>}
     </div>
 }

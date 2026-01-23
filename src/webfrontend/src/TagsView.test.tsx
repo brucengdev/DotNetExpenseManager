@@ -45,5 +45,7 @@ describe("TagsView", () => {
         fireEvent.change(screen.getByLabelText("Tag name"), { target: { value: "New Tag"}})
 
         fireEvent.click(screen.getByRole("button", { name: "Save"}))
+
+        expect(screen.queryByTestId("add-tag-form")).not.toBeInTheDocument()
     })
 })
