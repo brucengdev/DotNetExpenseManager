@@ -4,12 +4,16 @@ import '@testing-library/jest-dom'
 import { EntryForm } from "./EntryForm";
 import { TestClient } from "./__test__/TestClient";
 import { Category } from "./models/Category";
+import { Tag } from "./models/Tag";
 
 describe("EntryForm", () => {
     it("shows form input", async () => {
         const client = new TestClient()
         client.Categories = [
             new Category(1, "household") 
+        ]
+        client.Tags = [
+            new Tag(1, "tag1")
         ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
 
@@ -25,6 +29,7 @@ describe("EntryForm", () => {
 
         const tagsField = screen.getByTestId("tags-control")
         expect(tagsField).toBeInTheDocument()
+        expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument()
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
