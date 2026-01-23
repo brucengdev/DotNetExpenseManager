@@ -33,6 +33,17 @@ describe("TagsView", () => {
         expect(await screen.findByTestId("add-tag-form")).toBeInTheDocument()
     })
 
+    it("hides add tag form when cancel button is clicked", async () => {
+        const testClient = new TestClient()
+        render(<TagsView client={testClient} />)
+        
+        fireEvent.click(screen.getByRole("button", { name: "+"}))
+        expect(await screen.findByTestId("add-tag-form")).toBeInTheDocument()
+
+        fireEvent.click(screen.getByRole("button", { name: "Cancel"}))
+        expect(screen.queryByTestId("add-tag-form")).not.toBeInTheDocument()
+    })
+
     it("creates and shows new tag", async () => {
         const testClient = new TestClient()
         render(<TagsView client={testClient} />)
@@ -47,7 +58,7 @@ describe("TagsView", () => {
 
         await waitFor(() => {
             expect(screen.queryByTestId("add-tag-form")).not.toBeInTheDocument()
-            
+
             const tagNames = screen.queryAllByTestId("tag-name").map(t => t.textContent)
             expect(tagNames).toStrictEqual(["New Tag"])
         })
