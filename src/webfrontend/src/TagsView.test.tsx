@@ -35,4 +35,13 @@ describe("TagsView", () => {
         fireEvent.click(screen.getByRole("button", { name: "+"}))
         expect(await screen.findByTestId("add-tag-form")).toBeInTheDocument()
     })
+
+    it("creates and shows new tag", async () => {
+        const testClient = new TestClient()
+        render(<TagsView client={testClient} />)
+        
+        fireEvent.click(screen.getByRole("button", { name: "+"}))
+
+        fireEvent.change(screen.getByLabelText("Tag name"), { target: { value: "New Tag"}})
+    })
 })
