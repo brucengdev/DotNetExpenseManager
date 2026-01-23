@@ -27,6 +27,7 @@ describe("EntryForm", () => {
         const categoryField = screen.getByTestId("category-control")
         expect(categoryField).toBeInTheDocument()
 
+        expect(screen.getByLabelText("Tags")).toBeInTheDocument()
         const tagsField = screen.getByTestId("tags-control")
         expect(tagsField).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument()
