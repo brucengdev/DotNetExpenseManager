@@ -46,7 +46,12 @@ describe("TagsView", () => {
 
     it("creates and shows new tag", async () => {
         const testClient = new TestClient()
+        testClient.Tags = [
+            new Tag(1, "Existing Tag")
+        ]
         render(<TagsView client={testClient} />)
+
+        expect(await screen.findAllByTestId("tag")).toHaveLength(1)
         
         fireEvent.click(screen.getByRole("button", { name: "+"}))
 
@@ -59,8 +64,10 @@ describe("TagsView", () => {
         await waitFor(() => {
             expect(screen.queryByTestId("add-tag-form")).not.toBeInTheDocument()
 
+            expect(screen.getAllByTestId("tag")).toHaveLength(2)
+
             const tagNames = screen.queryAllByTestId("tag-name").map(t => t.textContent)
-            expect(tagNames).toStrictEqual(["New Tag"])
+            expect(tagNames).toStrictEqual(["Existing Tag", "New Tag"])
         })
     })
 })
