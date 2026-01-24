@@ -6,6 +6,7 @@ import { CategoryControl } from "./controls/CategoryControl"
 import { TextBox } from "./controls/TextBox"
 import { Button, ButtonMode } from "./controls/Button"
 import { MultiSelect } from "./controls/MultiSelect"
+import { Tag } from "./models/Tag"
 
 export interface EntryFormProps {
     date: Date
@@ -22,6 +23,11 @@ export const EntryForm = (props: EntryFormProps) => {
     const [title, setTitle] = useState("")
     const [value, setValue] = useState("0")
     const [categoryId, setCategoryId] = useState(undefined as number | undefined)
+    const [tags, setTags] = useState<Tag[] | undefined>(undefined)
+    if(tags === undefined) {
+        client.GetTags()
+        .then(retrievedTags => setTags(retrievedTags))
+    }
     return <div data-testid="entry-form">
         <TextBox
             name="title"
@@ -54,7 +60,7 @@ export const EntryForm = (props: EntryFormProps) => {
             <label htmlFor="tags-control" className="block text-sm/6 font-semibold text-gray-900">Tags</label>
             <MultiSelect
                 selectDataTestId="tags-control"
-                options={[]}
+                options={tags ? tags.map(tag => ({ value: tag.id.toString(), text: tag.name })) : []}
                 selectedValues={[]}
             />
         </div>
