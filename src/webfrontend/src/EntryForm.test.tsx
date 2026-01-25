@@ -125,6 +125,7 @@ describe("EntryForm", () => {
         expect(client.Entries[0].value).toBe(-120.23)
         expect(client.Entries[0].date.toISOString().substring(0,10)).toBe("2023-01-02")
         expect(client.Entries[0].categoryId).toBe(1)
+        expect(client.Entries[0].tagIds).toEqual([1,2])
         
         await waitFor(() => expect(saveHandler).toHaveBeenCalled())
     })
