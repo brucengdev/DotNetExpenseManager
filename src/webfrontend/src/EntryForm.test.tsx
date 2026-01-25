@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from '@testing-library/user-event';
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { EntryForm } from "./EntryForm";
@@ -78,6 +79,24 @@ describe("EntryForm", () => {
         
         expect(await screen.findByRole("link", { name: "household"}))
             .toBeInTheDocument()
+    })
+
+    it("changes tags", async () => {
+        const client = new TestClient()
+        client.Tags = [
+            new Tag(1, "tag1"),
+            new Tag(2, "tag2"),
+            new Tag(3, "tag3")
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+
+        userEvent.selectOptions(await screen.findByTestId("tags-control"), ["1", "2"])
+
+        await waitFor(() => {
+            expect((screen.getByRole("option", { name: "tag1"}) as HTMLOptionElement).selected).toBeTruthy()
+            expect((screen.getByRole("option", { name: "tag2"}) as HTMLOptionElement).selected).toBeTruthy()
+            expect((screen.getByRole("option", { name: "tag3"}) as HTMLOptionElement).selected).toBeFalsy()
+        })
     })
 
     it("saves entries and executes callback when clicking save successfully", async () => {
