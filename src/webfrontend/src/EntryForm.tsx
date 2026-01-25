@@ -24,6 +24,7 @@ export const EntryForm = (props: EntryFormProps) => {
     const [value, setValue] = useState("0")
     const [categoryId, setCategoryId] = useState(undefined as number | undefined)
     const [tags, setTags] = useState<Tag[] | undefined>(undefined)
+    const [tagIds, setTagIds] = useState<number[]>([])
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -61,7 +62,10 @@ export const EntryForm = (props: EntryFormProps) => {
             <MultiSelect
                 selectDataTestId="tags-control"
                 options={tags ? tags.map(tag => ({ value: tag.id.toString(), text: tag.name })) : []}
-                selectedValues={[]}
+                selectedValues={tagIds.map(id => id.toString())}
+                onChange={values => {
+                    setTagIds(values.map(v => parseInt(v)))
+                }}
             />
         </div>
         
@@ -74,8 +78,7 @@ export const EntryForm = (props: EntryFormProps) => {
                     if(isNaN(valueFloat)) {
                         return
                     }
-                    const entry = new Entry(0, date, title, valueFloat)
-                    entry.categoryId = categoryId
+                    const entry = new Entry(0, date, title, valueFloat, categoryId, tagIds)
                     client.AddEntry(entry)
                     .then(onSave)
                 }}
