@@ -102,16 +102,30 @@ describe("EntryForm", () => {
     it("saves entries and executes callback when clicking save successfully", async () => {
         const saveHandler = vitest.fn()
         const client = new TestClient()
+        client.Categories = [
+            new Category(1, "household") 
+        ]
+        client.Tags = [
+            new Tag(1, "tag1"),
+            new Tag(2, "tag2"),
+            new Tag(3, "tag3")
+        ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} />)
         
         fireEvent.change(await screen.findByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
         fireEvent.change(await screen.findByLabelText("Value"), { target: { value: "-120.23"}})
         fireEvent.change(await screen.findByLabelText("Date"), { target: { value: "2023-01-02"}})
+        fireEvent.click(await screen.findByRole("link", { name: "Uncategorized" }))
+        fireEvent.click(await screen.findByRole("link", { name: "household" }))
+        userEvent.selectOptions(await screen.findByTestId("tags-control"), ["1", "2"])
         fireEvent.click(await screen.findByRole("button", { name: "Save" }))
 
-
         expect(client.Entries.length).toBe(1)
-        expect(client.Entries[0].categoryId).toBeUndefined()
+        expect(client.Entries[0].title).toBe("foo")
+        expect(client.Entries[0].value).toBe(-120.23)
+        expect(client.Entries[0].date.toISOString().substring(0,10)).toBe("2023-01-02")
+        expect(client.Entries[0].categoryId).toBe(1)
+        
         await waitFor(() => expect(saveHandler).toHaveBeenCalled())
     })
 
