@@ -4,6 +4,13 @@ import { EntryView } from "./EntryView";
 import '@testing-library/jest-dom'
 
 describe('EntryView', () => {
+    it("shows values of expense entry", () => {
+        render(<EntryView title="Foo" categoryName="Cat1" value={-12} />)
+
+        expect(screen.getByTestId("title").textContent).toBe("Foo")
+        expect(screen.getByTestId("value").textContent).toBe("-12")
+        expect(screen.getByTestId("category").textContent).toBe("Cat1")
+    })
     it("shows delete button when there is delete callback", () => {
         const onDelete = vitest.fn()
         render(<EntryView title="Foo" categoryName="Cat1" value={-12} onDelete={onDelete} />)
