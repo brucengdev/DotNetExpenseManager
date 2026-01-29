@@ -34,7 +34,7 @@ export function areSame<T extends Comparable<T>>(first: T[], second: T[]): boole
     }
 
     for(let i = 0; i < first.length; i++) {
-        if(first[i] !== second[i]) {
+        if(!first[i].Equals(second[i])) {
             return false
         }
     }
