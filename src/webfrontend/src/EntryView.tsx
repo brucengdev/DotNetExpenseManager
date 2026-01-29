@@ -7,7 +7,7 @@ export interface EntryProps {
     value: number,
     categoryName: string,
     onDelete?: () => void,
-    tags: string,
+    tags?: string,
 }
 
 export const EntryView = (props: EntryProps) => {
@@ -17,7 +17,7 @@ export const EntryView = (props: EntryProps) => {
         <div data-testid="title">{title}</div>
         <div data-testid="category">{categoryName}</div>
         <div data-testid="value">{value}</div>
-        <div data-testid="tags">{tags}</div>
+        <div data-testid="tags">{tags ?? ""}</div>
         <div className="place-items-end">
             {onDelete
                 ? <Button
