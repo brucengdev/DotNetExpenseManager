@@ -41,7 +41,8 @@ public partial class EntriesControllerTests
             Title = "Grocery",
             Value = -123.22f,
             Date = new DateTime(2024, 3, 12),
-            CategoryId = 1
+            CategoryId = 1,
+            TagIds = new List<int> {1, 2}
         };
         var entryManager = new Mock<IEntryManager>();
         var accountManager = new Mock<IAccountManager>();
