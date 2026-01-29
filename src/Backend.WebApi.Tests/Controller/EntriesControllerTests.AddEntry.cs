@@ -40,7 +40,8 @@ public partial class EntriesControllerTests
         {
             Title = "Grocery",
             Value = -123.22f,
-            Date = new DateTime(2024, 3, 12)
+            Date = new DateTime(2024, 3, 12),
+            CategoryId = 1
         };
         var entryManager = new Mock<IEntryManager>();
         var accountManager = new Mock<IAccountManager>();
@@ -63,7 +64,8 @@ public partial class EntriesControllerTests
             return e.Title == "Grocery"
                    && e.Value == -123.22f
                    && e.Date == new DateTime(2024, 3, 12)
-                   && e.UserId == userId;
+                   && e.UserId == userId
+                   && e.CategoryId == 1;
         };
         entryManager.Verify(em => em.AddEntry(
             It.Is<Entry>(e => verifyEntry(e))), Times.Exactly(1));
