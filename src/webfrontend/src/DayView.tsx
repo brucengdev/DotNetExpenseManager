@@ -39,6 +39,9 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     })
 
     function buildTagsString(tagIds: number[], tags: Tag[]): string {
+        if(tagIds === undefined || tagIds === null || tagIds.length === 0) {
+            return ""
+        }
         return tagIds.map(tagId => (tags ?? []).find(t => t.id === tagId)?.name ?? "")
             .join(",")
     }
