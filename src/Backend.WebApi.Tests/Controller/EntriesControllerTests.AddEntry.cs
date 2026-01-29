@@ -2,6 +2,7 @@ using Backend.WebApi.Controllers;
 using Backend.Core.Manager;
 using Backend.Models;
 using Backend.WebApi.ActionFilters;
+using Backend.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -35,7 +36,7 @@ public partial class EntriesControllerTests
     public void AddEntry_is_successful(int userId)
     {
         //arrange
-        var inputEntry = new EntryPlain
+        var inputEntry = new EntryServiceModel()
         {
             Title = "Grocery",
             Value = -123.22f,
