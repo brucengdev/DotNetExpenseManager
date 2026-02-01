@@ -35,6 +35,8 @@ namespace Backend.Core.Tests
             savedEntry.Value.ShouldBe(-10.22f);
             savedEntry.UserId.ShouldBe(23);
             savedEntry.CategoryId.ShouldBe(1);
+
+            entryRepo.EntryTagMappings.Count().ShouldBe(2);
         }
 
         [Theory]
