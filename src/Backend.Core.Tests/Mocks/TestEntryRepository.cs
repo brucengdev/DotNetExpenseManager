@@ -10,6 +10,13 @@ public class TestEntryRepository: IEntryRepository
     public List<EntryTagMapping> EntryTagMappings { get; set; } = new();
     public bool AddEntry(Entry entry)
     {
+        entry.Id = Entries.Count + 1;
+        foreach (var tagMapping in entry.EntryTagMappings)
+        {
+            tagMapping.Id = EntryTagMappings.Count + 1;
+            tagMapping.EntryId = entry.Id;
+            EntryTagMappings.Add(tagMapping);
+        }
         Entries.Add(entry);
         return true;
     }

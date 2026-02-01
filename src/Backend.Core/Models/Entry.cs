@@ -1,4 +1,7 @@
-﻿namespace Backend.Models
+﻿using Backend.Core.Models;
+using Backend.WebApi.Models;
+
+namespace Backend.Models
 {
     public class Entry: EntryPlain
     {
@@ -8,6 +11,17 @@
         
         public Entry(EntryPlain other): base(other) { }
 
+        public Entry(EntryServiceModel other) : base(other)
+        {
+            EntryTagMappings = other.TagIds
+                .Select(tagId => new EntryTagMapping()
+                {
+                    Id = 0,
+                    TagId = tagId,
+                    EntryId = other.Id
+                }).ToList();
+        }
+
         public Entry(Entry other): base(other)
         {
             User = other.User;
@@ -15,6 +29,8 @@
         public User User { get; set; }
         
         public Category Category { get; set; }
+        
+        public IList<EntryTagMapping> EntryTagMappings { get; set; }
     }
     
     public class EntryPlain
