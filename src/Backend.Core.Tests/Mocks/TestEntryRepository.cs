@@ -1,3 +1,4 @@
+using Backend.Core.Models;
 using Backend.Core.Repository;
 using Backend.Models;
 
@@ -6,6 +7,7 @@ namespace Backend.Core.Tests.Mocks;
 public class TestEntryRepository: IEntryRepository
 {
     public List<Entry> Entries { get; set; } = new();
+    public List<EntryTagMapping> EntryTagMappings { get; set; } = new();
     public bool AddEntry(Entry entry)
     {
         Entries.Add(entry);

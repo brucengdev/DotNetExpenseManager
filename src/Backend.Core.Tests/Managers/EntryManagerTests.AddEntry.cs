@@ -1,4 +1,5 @@
 using Backend.Core.Manager;
+using Backend.Core.Models;
 using Backend.Models;
 using Backend.Core.Tests.Mocks;
 using Backend.WebApi.Models;
@@ -36,7 +37,10 @@ namespace Backend.Core.Tests
             savedEntry.UserId.ShouldBe(23);
             savedEntry.CategoryId.ShouldBe(1);
 
-            entryRepo.EntryTagMappings.Count().ShouldBe(2);
+            entryRepo.EntryTagMappings.ShouldBeEquivalentTo(new List<EntryTagMapping> {
+                new() { Id = 1, EntryId = 1, TagId = 1 },
+                new() { Id = 2, EntryId = 1, TagId = 2 }
+            });
         }
 
         [Theory]
