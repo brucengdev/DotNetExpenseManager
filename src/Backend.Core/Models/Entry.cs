@@ -27,6 +27,7 @@
             Title = other.Title;
             CategoryId = other.CategoryId;
             Id = other.Id;
+            UserId = other.UserId;
         }
 
         public override bool Equals(object? obj)
