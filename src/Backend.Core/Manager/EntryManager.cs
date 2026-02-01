@@ -1,5 +1,7 @@
 using Backend.Core.Repository;
 using Backend.Models;
+using Backend.WebApi.Models;
+
 namespace Backend.Core.Manager;
 
 public class InvalidUserIdException : Exception { }
@@ -13,13 +15,15 @@ public class EntryManager: IEntryManager
     {
         _entryRepository = entryRepo;
     }
-    public bool AddEntry(Entry input)
+    public bool AddEntry(EntryServiceModel input)
     {
         if (input.UserId <= 0)
         {
             throw new InvalidUserIdException();
         }
-        return _entryRepository.AddEntry(input);
+
+        var entry = new Entry(input);
+        return _entryRepository.AddEntry(entry);
     }
 
     public IEnumerable<Entry> GetByDate(DateTime date, int userId)

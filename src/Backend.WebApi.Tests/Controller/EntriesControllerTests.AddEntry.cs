@@ -60,16 +60,18 @@ public partial class EntriesControllerTests
         var result = sut.AddEntry(inputEntry);
 
         //assert
-        var verifyEntry = (Entry e) =>
+        var verifyEntry = (EntryServiceModel e) =>
         {
-            return e.Title == "Grocery"
-                   && e.Value == -123.22f
-                   && e.Date == new DateTime(2024, 3, 12)
-                   && e.UserId == userId
-                   && e.CategoryId == 1;
+            e.Title.ShouldBe("Grocery"); 
+            e.Value.ShouldBe(-123.22f);
+            e.Date.ShouldBe(new DateTime(2024, 3, 12)); 
+            e.UserId.ShouldBe(userId);
+            e.CategoryId.ShouldBe(1);
+            e.TagIds.ShouldBe([1, 2]);
+            return true;
         };
         entryManager.Verify(em => em.AddEntry(
-            It.Is<Entry>(e => verifyEntry(e))), Times.Exactly(1));
+            It.Is<EntryServiceModel>(e => verifyEntry(e))), Times.Exactly(1));
         entryManager.VerifyNoOtherCalls();
         result.ShouldBeOfType<OkResult>();
     }

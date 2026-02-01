@@ -23,10 +23,8 @@ public class EntriesController: ControllerBase
     public ActionResult AddEntry([FromBody] EntryServiceModel inputEntry)
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
-        var resolvedEntry = new Entry(inputEntry);
-        resolvedEntry.UserId = userId.Value;
-        resolvedEntry.User = _accountManager.GetById(resolvedEntry.UserId);
-        _entryManager.AddEntry(resolvedEntry);
+        inputEntry.UserId = userId.Value;
+        _entryManager.AddEntry(inputEntry);
         return Ok();
     }
 
