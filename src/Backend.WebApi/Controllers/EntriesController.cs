@@ -1,6 +1,7 @@
 using Backend.Core.Manager;
 using Backend.Models;
 using Backend.WebApi.ActionFilters;
+using Backend.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.WebApi.Controllers;
@@ -19,13 +20,11 @@ public class EntriesController: ControllerBase
 
     [HttpPost("[action]")]
     [ServiceFilter<SecurityFilterAttribute>]
-    public ActionResult AddEntry([FromBody] EntryPlain inputEntry)
+    public ActionResult AddEntry([FromBody] EntryServiceModel inputEntry)
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
-        var resolvedEntry = new Entry(inputEntry);
-        resolvedEntry.UserId = userId.Value;
-        resolvedEntry.User = _accountManager.GetById(resolvedEntry.UserId);
-        _entryManager.AddEntry(resolvedEntry);
+        inputEntry.UserId = userId.Value;
+        _entryManager.AddEntry(inputEntry);
         return Ok();
     }
 

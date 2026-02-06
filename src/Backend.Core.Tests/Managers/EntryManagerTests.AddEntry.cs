@@ -1,6 +1,8 @@
 using Backend.Core.Manager;
+using Backend.Core.Models;
 using Backend.Models;
 using Backend.Core.Tests.Mocks;
+using Backend.WebApi.Models;
 using Shouldly;
 
 namespace Backend.Core.Tests
@@ -15,13 +17,14 @@ namespace Backend.Core.Tests
             var sut = new EntryManager(entryRepo);
             
             //act
-            var inputEntry = new Entry()
+            var inputEntry = new EntryServiceModel
             {
                 Title = "Test entry",
                 Value = -10.22f,
                 Date = new DateTime(2022, 4, 22),
                 UserId = 23,
-                CategoryId = 1
+                CategoryId = 1,
+                TagIds = [1, 2]
             };
             sut.AddEntry(inputEntry);
             
@@ -33,6 +36,11 @@ namespace Backend.Core.Tests
             savedEntry.Value.ShouldBe(-10.22f);
             savedEntry.UserId.ShouldBe(23);
             savedEntry.CategoryId.ShouldBe(1);
+
+            entryRepo.EntryTagMappings.ShouldBeEquivalentTo(new List<EntryTagMapping> {
+                new() { Id = 1, EntryId = 1, TagId = 1 },
+                new() { Id = 2, EntryId = 1, TagId = 2 }
+            });
         }
 
         [Theory]
@@ -46,12 +54,13 @@ namespace Backend.Core.Tests
             var sut = new EntryManager(entryRepo);
             
             //act & assert
-            var inputEntry = new Entry()
+            var inputEntry = new EntryServiceModel()
             {
                 Title = "Test entry",
                 Value = -10.22f,
                 Date = new DateTime(2022, 4, 22),
-                UserId = userId
+                UserId = userId,
+                TagIds = [1, 2]
             };
             Should.Throw<InvalidUserIdException>(() => sut.AddEntry(inputEntry));
         }
