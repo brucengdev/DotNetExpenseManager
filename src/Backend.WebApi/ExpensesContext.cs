@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Backend.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Models
 {
@@ -8,6 +9,7 @@ namespace Backend.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         
+        public DbSet<EntryTagMapping> EntryTagMappings { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
         public ExpensesContext(DbContextOptions<ExpensesContext> options)
