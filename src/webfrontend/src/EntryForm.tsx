@@ -5,6 +5,8 @@ import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
 import { TextBox } from "./controls/TextBox"
 import { Button, ButtonMode } from "./controls/Button"
+import { MultiSelect } from "./controls/MultiSelect"
+import { Tag } from "./models/Tag"
 
 export interface EntryFormProps {
     date: Date
@@ -21,6 +23,12 @@ export const EntryForm = (props: EntryFormProps) => {
     const [title, setTitle] = useState("")
     const [value, setValue] = useState("0")
     const [categoryId, setCategoryId] = useState(undefined as number | undefined)
+    const [tags, setTags] = useState<Tag[] | undefined>(undefined)
+    const [tagIds, setTagIds] = useState<number[]>([])
+    if(tags === undefined) {
+        client.GetTags()
+        .then(retrievedTags => setTags(retrievedTags))
+    }
     return <div data-testid="entry-form">
         <TextBox
             name="title"
@@ -48,6 +56,19 @@ export const EntryForm = (props: EntryFormProps) => {
             categoryId={categoryId}
             onChange={newCatId => setCategoryId(newCatId)} 
             />
+
+        <div>
+            <label htmlFor="tags-control" className="block text-sm/6 font-semibold text-gray-900">Tags</label>
+            <MultiSelect
+                selectDataTestId="tags-control"
+                options={tags ? tags.map(tag => ({ value: tag.id.toString(), text: tag.name })) : []}
+                selectedValues={tagIds.map(id => id.toString())}
+                onChange={values => {
+                    setTagIds(values.map(v => parseInt(v)))
+                }}
+            />
+        </div>
+        
         <div>
             <Button
                 className="inline-block mr-2"
@@ -57,8 +78,7 @@ export const EntryForm = (props: EntryFormProps) => {
                     if(isNaN(valueFloat)) {
                         return
                     }
-                    const entry = new Entry(0, date, title, valueFloat)
-                    entry.categoryId = categoryId
+                    const entry = new Entry(0, date, title, valueFloat, categoryId, tagIds)
                     client.AddEntry(entry)
                     .then(onSave)
                 }}

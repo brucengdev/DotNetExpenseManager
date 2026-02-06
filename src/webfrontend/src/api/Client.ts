@@ -1,5 +1,6 @@
 import { Category } from "../models/Category"
 import { Entry } from "../models/Entry"
+import { Tag } from "../models/Tag"
 
 export interface IClient {
     Token: () => string | undefined
@@ -12,6 +13,9 @@ export interface IClient {
     DeleteEntry(id: number): Promise<boolean>
     GetCategories: () => Promise<Category[]>
     AddCategory: (name: string) => Promise<boolean>
+
+    AddTag: (name: string) => Promise<boolean>
+    GetTags: () => Promise<Tag[]>
 }
 
 const devUrl = "https://localhost:7146"
@@ -117,5 +121,30 @@ export class Client implements IClient {
             body: JSON.stringify(new Category(0, name))
         })  
         return result.ok
+    }
+
+    async AddTag(name: string): Promise<boolean> {
+        const result = await fetch(`${url}/tags?${new URLSearchParams({
+            accessToken: this.token
+        }).toString()}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(new Tag(0, name))
+        })  
+        return result.ok
+    }
+
+    async GetTags(): Promise<Tag[]> {
+        const result = await fetch(`${url}/tags?${new URLSearchParams({
+            accessToken: this.token,
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return await result.json()
+        }
+        return []
     }
 }

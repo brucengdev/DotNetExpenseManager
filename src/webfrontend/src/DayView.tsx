@@ -6,6 +6,7 @@ import { EntryForm } from "./EntryForm"
 import { addDays, areSame, formatDisplayDate } from "./utils"
 import { Category } from "./models/Category"
 import { Button, ButtonMode } from "./controls/Button"
+import { Tag } from "./models/Tag"
 
 export interface DayViewProps {
     client: IClient
@@ -16,6 +17,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     const [addingEntry, setAddingEntry] = useState(false)
     const [entries, setEntries] = useState([] as Entry[])
     const [categories, setCategories] = useState([] as Category[])
+    const [tags, setTags] = useState([] as Tag[])
     const [date, setDate] = useState(initialDate)
     client.GetCategories()
     .then(serverCategories => {
@@ -29,6 +31,20 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
             setEntries(serverEntries)
         }
     })
+    client.GetTags()
+    .then(serverTags => {
+        if(!areSame(serverTags, tags)) {
+            setTags(serverTags)
+        }
+    })
+
+    function buildTagsString(tagIds: number[], tags: Tag[]): string {
+        if(tagIds === undefined || tagIds === null || tagIds.length === 0) {
+            return ""
+        }
+        return tagIds.map(tagId => (tags ?? []).find(t => t.id === tagId)?.name ?? "")
+            .join(",")
+    }
 
     return <div data-testid="day-view" className="mb-5">
             {addingEntry? <EntryForm 
@@ -48,10 +64,11 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
                             </div>
                         </div>
-                        {entries.map(({id, title, value, categoryId}) => 
+                        {entries.map(({id, title, value, categoryId, tagIds}) => 
                             <EntryView 
                                 title={title}
                                 value={value}
+                                tags={buildTagsString(tagIds, tags)}
                                 categoryName={categories.find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
                                 onDelete={async () => {
                                     const success = await client.DeleteEntry(id)
