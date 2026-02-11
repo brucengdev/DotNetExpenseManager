@@ -1,5 +1,6 @@
 using Backend.Core.Repository;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.WebApi.Repository;
 
@@ -21,7 +22,8 @@ internal class EntryRepository: IEntryRepository
     public IEnumerable<Entry> GetByDateAndUser(DateTime date, int userId)
     {
         var result = _dbContext.Entries
-            .Where(e => e.UserId == userId && e.Date.Date == date.Date);
+            .Where(e => e.UserId == userId && e.Date.Date == date.Date)
+            .Include(e => e.EntryTagMappings);
         return result;
     }
 
