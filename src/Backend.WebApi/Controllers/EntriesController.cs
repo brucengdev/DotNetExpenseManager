@@ -30,13 +30,13 @@ public class EntriesController: ControllerBase
 
     [HttpGet("[action]")]
     [ServiceFilter<SecurityFilterAttribute>]
-    public ActionResult<IEnumerable<EntryPlain>> GetByDate(DateTime date)
+    public ActionResult<IEnumerable<EntryServiceModel>> GetByDate(DateTime date)
     {
         try
         {
             var userId = HttpContext.Items[Constants.USER_ID] as int?;
             var result = _entryManager.GetByDate(date, userId.Value)
-                .Select(e => new EntryPlain(e));
+                .Select(e => new EntryServiceModel(e));
             return Ok(result);
         }
         catch (UserNotFoundException)

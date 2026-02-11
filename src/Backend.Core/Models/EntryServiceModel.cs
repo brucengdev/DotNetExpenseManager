@@ -12,5 +12,27 @@ public class EntryServiceModel: EntryPlain
     {
         TagIds = new List<int>(other.TagIds);
     }
+    
+    
+    public EntryServiceModel(Entry other) : base(other)
+    {
+        TagIds = other.EntryTagMappings?.Select(m => m.TagId).ToList();
+    }
     public IList<int> TagIds { get; set;  }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not EntryServiceModel other)
+        {
+            return false;
+        }
+
+        var bothTagIdsNull = TagIds == null && other.TagIds == null;
+        var sameTagIds = bothTagIdsNull;
+        if (!bothTagIdsNull)
+        {
+            sameTagIds = TagIds != null && other.TagIds != null && TagIds.SequenceEqual(other.TagIds);
+        }
+        return base.Equals(obj) && sameTagIds;
+    }
 }
