@@ -9,6 +9,8 @@ public class Payee
     public User User { get; set; }
 
     public string Name { get; set; }
+    
+    public Payee() { }
     public Payee(NewPayee newPayee, int userId)
     {
         Name = newPayee.Name;
