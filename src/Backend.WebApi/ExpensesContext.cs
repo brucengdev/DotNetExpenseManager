@@ -19,5 +19,15 @@ namespace Backend.Models
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Payee>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<Payee>()
+                .Property(p => p.Name)
+                .IsRequired();
+        }
     }
 }
