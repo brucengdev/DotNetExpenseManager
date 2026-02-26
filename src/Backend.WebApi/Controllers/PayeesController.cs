@@ -9,10 +9,10 @@ namespace Backend.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PayeeController: ControllerBase
+public class PayeesController: ControllerBase
 {
     private IPayeeManager _payeeManager;
-    public PayeeController(IPayeeManager payeeManager)
+    public PayeesController(IPayeeManager payeeManager)
     {
         _payeeManager = payeeManager;
     }
@@ -26,7 +26,7 @@ public class PayeeController: ControllerBase
         return Created();
     }
 
-    [HttpPost]
+    [HttpGet]
     [ServiceFilter<SecurityFilterAttribute>]
     public IEnumerable<PayeeServiceModel> GetPayees()
     {

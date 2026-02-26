@@ -9,17 +9,17 @@ public partial class PaypeeControllerTests
     [Fact]
     public void Controller_config()
     {
-        typeof(PayeeController).IsVisible.ShouldBeTrue();
+        typeof(PayeesController).IsVisible.ShouldBeTrue();
         
-        Attribute.GetCustomAttribute(typeof(PayeeController), typeof(ApiControllerAttribute))
+        Attribute.GetCustomAttribute(typeof(PayeesController), typeof(ApiControllerAttribute))
             .ShouldNotBeNull();
 
-        var routeAttr = Attribute.GetCustomAttribute(typeof(PayeeController), typeof(RouteAttribute))
+        var routeAttr = Attribute.GetCustomAttribute(typeof(PayeesController), typeof(RouteAttribute))
             as RouteAttribute;
         routeAttr.ShouldNotBeNull();
         routeAttr.Template.ShouldBe("[controller]");
         
-        typeof(PayeeController).BaseType
+        typeof(PayeesController).BaseType
             .IsAssignableTo(typeof(ControllerBase)).ShouldBeTrue();
     }
 }

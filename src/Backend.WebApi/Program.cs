@@ -42,6 +42,9 @@ builder.Services.AddScoped<ICategoryManager, CategoryManager>();
 builder.Services.AddScoped<ITagsRepository, TagsRepository>();
 builder.Services.AddScoped<ITagsManager, TagsManager>();
 
+builder.Services.AddScoped<IPayeeRepository, PayeeRepository>();
+builder.Services.AddScoped<IPayeeManager, PayeeManager>();
+
 builder.Services.AddScoped<SecurityFilterAttribute>();
 
 builder.Services.AddControllers();

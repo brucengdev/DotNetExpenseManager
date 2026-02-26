@@ -11,7 +11,7 @@ public partial class PaypeeControllerTests
     [Fact]
     public void Add_payee_config()
     {
-        var method = Utils.GetMethod<PayeeController>(nameof(PayeeController.AddPayee));
+        var method = Utils.GetMethod<PayeesController>(nameof(PayeesController.AddPayee));
         method.ShouldNotBeNull();
 
         var attributes = method?.GetCustomAttributes(typeof(HttpPostAttribute), true);
