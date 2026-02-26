@@ -9,4 +9,10 @@ namespace Backend.WebApi.Controllers;
 [Route("[controller]")]
 public class PayeeController: ControllerBase
 {
+    [HttpPost]
+    [ServiceFilter<SecurityFilterAttribute>]
+    public ActionResult AddPayee()
+    {
+        return Ok();
+    }
 }
