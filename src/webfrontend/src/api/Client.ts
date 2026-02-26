@@ -1,5 +1,6 @@
 import { Category } from "../models/Category"
 import { Entry } from "../models/Entry"
+import { Payee } from "../models/Payee"
 import { Tag } from "../models/Tag"
 
 export interface IClient {
@@ -16,6 +17,8 @@ export interface IClient {
 
     AddTag: (name: string) => Promise<boolean>
     GetTags: () => Promise<Tag[]>
+
+    GetPayees: () => Promise<Payee[]>
 }
 
 const devUrl = "https://localhost:7146"
@@ -138,6 +141,18 @@ export class Client implements IClient {
 
     async GetTags(): Promise<Tag[]> {
         const result = await fetch(`${url}/tags?${new URLSearchParams({
+            accessToken: this.token,
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return await result.json()
+        }
+        return []
+    }
+
+    async GetPayees(): Promise<Payee[]> {
+        const result = await fetch(`${url}/payees?${new URLSearchParams({
             accessToken: this.token,
         }).toString()}`, {
             method: "GET"

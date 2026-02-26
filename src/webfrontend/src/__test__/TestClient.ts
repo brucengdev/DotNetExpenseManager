@@ -3,6 +3,7 @@ import { IClient } from "../api/Client";
 import { Entry } from "../models/Entry";
 import { sameDate } from "../utils";
 import { Tag } from "../models/Tag";
+import { Payee } from "../models/Payee";
 
 export const TEST_USER_NAME = "valid_user"
 export const TEST_PASSWORD = "correct_pass"
@@ -14,6 +15,7 @@ export class TestClient implements IClient {
     public Entries: Entry[] = []
     public Categories: Category[] = []
     public Tags: Tag[] = []
+    public Payees: Payee[] = []
     async IsLoggedIn() {
         return this._token === TEST_TOKEN
     }
@@ -68,5 +70,9 @@ export class TestClient implements IClient {
     async AddTag(tagName: string):Promise<boolean> {
         this.Tags = [...this.Tags, new Tag(this.Tags.length + 1, tagName)]
         return true
+    }
+
+    async GetPayees(): Promise<Payee[]> {
+        return [...this.Payees]//use spread to return a clone to simulate how react state updates
     }
 }

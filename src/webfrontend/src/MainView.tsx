@@ -29,7 +29,7 @@ export function MainView({client, onLogout} : MainViewProps) {
       </div>
         {view === View.DAY? <DayView client={client} initialDate={new Date()} />: <></>}
         {view === View.TAGS? <TagsView client={client} />: <></>}
-        {view === View.PAYEES? <PayeesView />:<></>}
+        {view === View.PAYEES? <PayeesView client={client}/>:<></>}
       <Button 
         text="Log out"
         onClick={() => onLogout()}
