@@ -22,7 +22,7 @@ export const EntryForm = (props: EntryFormProps) => {
     const [date, setDate] = useState(initialDate)
     const [title, setTitle] = useState("")
     const [value, setValue] = useState("0")
-    const [categoryId, setCategoryId] = useState(undefined as number | undefined)
+    const [categoryId, setCategoryId] = useState(1)
     const [tags, setTags] = useState<Tag[] | undefined>(undefined)
     const [tagIds, setTagIds] = useState<number[]>([])
     if(tags === undefined) {

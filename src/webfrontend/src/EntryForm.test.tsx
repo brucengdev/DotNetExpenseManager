@@ -103,7 +103,7 @@ describe("EntryForm", () => {
         const saveHandler = vitest.fn()
         const client = new TestClient()
         client.Categories = [
-            new Category(1, "household") 
+            new Category(2, "household") 
         ]
         client.Tags = [
             new Tag(1, "tag1"),
@@ -124,8 +124,30 @@ describe("EntryForm", () => {
         expect(client.Entries[0].title).toBe("foo")
         expect(client.Entries[0].value).toBe(-120.23)
         expect(client.Entries[0].date.toISOString().substring(0,10)).toBe("2023-01-02")
-        expect(client.Entries[0].categoryId).toBe(1)
+        expect(client.Entries[0].categoryId).toBe(2)
         expect(client.Entries[0].tagIds).toEqual([1,2])
+        
+        await waitFor(() => expect(saveHandler).toHaveBeenCalled())
+    })
+
+    it("saves uncategorized entries", async () => {
+        const saveHandler = vitest.fn()
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "Uncategorized"),
+            new Category(2, "household") 
+        ]
+        client.Tags = [
+            new Tag(1, "tag1"),
+            new Tag(2, "tag2"),
+            new Tag(3, "tag3")
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} />)
+        
+        fireEvent.click(await screen.findByRole("button", { name: "Save" }))
+
+        expect(client.Entries.length).toBe(1)
+        expect(client.Entries[0].categoryId).toBe(1)
         
         await waitFor(() => expect(saveHandler).toHaveBeenCalled())
     })
