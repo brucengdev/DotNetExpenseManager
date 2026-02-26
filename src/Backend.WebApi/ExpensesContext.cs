@@ -11,6 +11,8 @@ namespace Backend.Models
         
         public DbSet<EntryTagMapping> EntryTagMappings { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        
+        public DbSet<Payee> Payees { get; set; }
 
         public ExpensesContext(DbContextOptions<ExpensesContext> options)
             : base(options)
