@@ -18,6 +18,7 @@ export interface IClient {
     AddTag: (name: string) => Promise<boolean>
     GetTags: () => Promise<Tag[]>
 
+    AddPayee: (name: string) => Promise<boolean>
     GetPayees: () => Promise<Payee[]>
 }
 
@@ -149,6 +150,19 @@ export class Client implements IClient {
             return await result.json()
         }
         return []
+    }
+
+    async AddPayee(name: string): Promise<boolean> {
+        const result = await fetch(`${url}/payees?${new URLSearchParams({
+            accessToken: this.token
+        }).toString()}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(new Payee(0, name))
+        })  
+        return result.ok
     }
 
     async GetPayees(): Promise<Payee[]> {

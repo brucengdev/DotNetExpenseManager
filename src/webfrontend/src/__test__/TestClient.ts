@@ -75,4 +75,9 @@ export class TestClient implements IClient {
     async GetPayees(): Promise<Payee[]> {
         return [...this.Payees]//use spread to return a clone to simulate how react state updates
     }
+
+    async AddPayee(payeeName: string):Promise<boolean> {
+        this.Payees = [...this.Payees, new Payee(this.Payees.length + 1, payeeName)]
+        return true
+    }
 }
