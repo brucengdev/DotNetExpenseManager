@@ -64,4 +64,25 @@ describe("MainView", () => {
 
         expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
     })
+
+    it("shows payees view when clicked on", () => {
+        render(<MainView client={new TestClient()} onLogout={() => { }} />)
+
+        const payeesButton = screen.getByRole("button", { name: "Payees"})
+        expect(payeesButton).toBeInTheDocument()
+
+        fireEvent.click(payeesButton)
+
+        const payeesView = screen.getByTestId("payees-view")
+        expect(payeesView).toBeInTheDocument()
+
+        expect(screen.queryByTestId("day-view")).not.toBeInTheDocument()
+
+        fireEvent.click(screen.getByRole("button", { name: "Day"}))
+
+        const dayView = screen.getByTestId("day-view")
+        expect(dayView).toBeInTheDocument()
+
+        expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
+    })
 })
