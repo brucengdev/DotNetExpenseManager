@@ -1,5 +1,6 @@
 using Backend.WebApi.ActionFilters;
 using Backend.WebApi.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shouldly;
 
