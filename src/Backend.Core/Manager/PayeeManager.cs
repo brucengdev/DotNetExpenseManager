@@ -15,4 +15,9 @@ public class PayeeManager: IPayeeManager
     {
         _payeeRepository.AddPayee(new Payee(newPayee, userId));
     }
+
+    public IEnumerable<Payee> GetPayees(int userId)
+    {
+        return _payeeRepository.GetPayees(userId);
+    }
 }

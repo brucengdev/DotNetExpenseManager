@@ -16,4 +16,9 @@ public class PayeeRepository: IPayeeRepository
         _dbContext.Payees.Add(payee);
         _dbContext.SaveChanges();
     }
+
+    public IEnumerable<Payee> GetPayees(int userId)
+    {
+        return _dbContext.Payees.Where(p => p.UserId == userId);
+    }
 }
