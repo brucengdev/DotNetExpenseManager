@@ -7,6 +7,7 @@ import { TextBox } from "./controls/TextBox"
 import { Button, ButtonMode } from "./controls/Button"
 import { MultiSelect } from "./controls/MultiSelect"
 import { Tag } from "./models/Tag"
+import { Payee } from "./models/Payee"
 
 export interface EntryFormProps {
     date: Date
@@ -24,10 +25,15 @@ export const EntryForm = (props: EntryFormProps) => {
     const [value, setValue] = useState("0")
     const [categoryId, setCategoryId] = useState(1)
     const [tags, setTags] = useState<Tag[] | undefined>(undefined)
+    const [payees, setPayees] = useState<Payee[] | undefined>(undefined)
     const [tagIds, setTagIds] = useState<number[]>([])
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
+    }
+    if(payees === undefined) {
+        client.GetPayees()
+        .then(retrievedPayees => setPayees(retrievedPayees))
     }
     return <div data-testid="entry-form">
         <TextBox
@@ -71,7 +77,11 @@ export const EntryForm = (props: EntryFormProps) => {
 
         <div>
             <label htmlFor="payee-select" className="block text-sm/6 font-semibold text-gray-900">Payee</label>
-            <select id="payee-select"></select>
+            <select id="payee-select">
+                {payees ? payees.map(payee => (
+                    <option key={payee.id} value={payee.id}>{payee.name}</option>
+                )) : null}
+            </select>
         </div>
         
         <div>

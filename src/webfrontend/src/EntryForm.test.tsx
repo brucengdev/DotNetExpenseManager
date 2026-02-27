@@ -6,6 +6,7 @@ import { EntryForm } from "./EntryForm";
 import { TestClient } from "./__test__/TestClient";
 import { Category } from "./models/Category";
 import { Tag } from "./models/Tag";
+import { Payee } from "./models/Payee";
 
 describe("EntryForm", () => {
     it("shows form input", async () => {
@@ -15,6 +16,9 @@ describe("EntryForm", () => {
         ]
         client.Tags = [
             new Tag(1, "tag1")
+        ]
+        client.Payees = [
+            new Payee(1, "Tom")
         ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
 
@@ -34,6 +38,7 @@ describe("EntryForm", () => {
         expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument()
 
         expect(screen.getByLabelText("Payee")).toBeInTheDocument()
+        expect(screen.getByRole("option", { name: "Tom"})).toBeInTheDocument()
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
