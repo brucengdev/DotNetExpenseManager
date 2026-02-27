@@ -39,6 +39,7 @@ describe("EntryForm", () => {
 
         expect(screen.getByLabelText("Payee")).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "[No payee]"})).toBeInTheDocument()
+        expect((screen.getByRole("option", { name: "[No payee]"}) as HTMLOptionElement).selected).toBeTruthy()
         expect(screen.getByRole("option", { name: "Tom"})).toBeInTheDocument()
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
@@ -104,6 +105,20 @@ describe("EntryForm", () => {
             expect((screen.getByRole("option", { name: "tag1"}) as HTMLOptionElement).selected).toBeTruthy()
             expect((screen.getByRole("option", { name: "tag2"}) as HTMLOptionElement).selected).toBeTruthy()
             expect((screen.getByRole("option", { name: "tag3"}) as HTMLOptionElement).selected).toBeFalsy()
+        })
+    })
+
+    it("changes payee", async () => {
+        const client = new TestClient()
+        client.Payees = [
+            new Payee(1, "Tom")
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+
+        userEvent.selectOptions(await screen.findByLabelText("Payee"), "1")
+        
+        await waitFor(() => {
+            expect((screen.getByRole("option", { name: "Tom"}) as HTMLOptionElement).selected).toBeTruthy()
         })
     })
 
