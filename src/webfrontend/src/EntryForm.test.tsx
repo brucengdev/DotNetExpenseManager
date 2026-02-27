@@ -43,6 +43,7 @@ describe("EntryForm", () => {
         expect(screen.getByRole("option", { name: "Tom"})).toBeInTheDocument()
 
         expect(await screen.findByRole("textbox", {name: "Notes"})).toBeInTheDocument()
+        expect(await screen.findByRole("textbox", {name: "Notes"})).toHaveValue("")
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
@@ -52,30 +53,30 @@ describe("EntryForm", () => {
         render(<EntryForm client={new TestClient()} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
         const dateField = screen.getByLabelText("Date")
-        expect(dateField).toHaveAttribute("value", "2024-05-31")
+        expect(dateField).toHaveValue("2024-05-31")
 
         fireEvent.change(dateField, { target: { value: "2023-01-02"}})
-        expect(dateField).toHaveAttribute("value", "2023-01-02")
+        expect(dateField).toHaveValue("2023-01-02")
     })
 
     it("changes title", async () => {
         render(<EntryForm client={new TestClient()} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
         const titleTextbox = screen.getByRole("textbox", {name: "Title"})
-        expect(titleTextbox).toHaveAttribute("value", "")
+        expect(titleTextbox).toHaveValue("")
 
         fireEvent.change(titleTextbox, { target: { value: "foo"}})
-        expect(titleTextbox).toHaveAttribute("value", "foo")
+        expect(titleTextbox).toHaveValue("foo")
     })
 
     it("changes value", async () => {
         render(<EntryForm client={new TestClient()} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
         const valueTextbox = screen.getByLabelText("Value")
-        expect(valueTextbox).toHaveAttribute("value", "0")
+        expect(valueTextbox).toHaveValue(0)
 
         fireEvent.change(valueTextbox, { target: { value: "-120.23"}})
-        expect(valueTextbox).toHaveAttribute("value", "-120.23")
+        expect(valueTextbox).toHaveValue(-120.23)
     })
 
     it("changes category", async () => {
@@ -122,6 +123,16 @@ describe("EntryForm", () => {
         await waitFor(() => {
             expect((screen.getByRole("option", { name: "Tom"}) as HTMLOptionElement).selected).toBeTruthy()
         })
+    })
+
+    it("changes notes", async () => {
+        render(<EntryForm client={new TestClient()} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+        
+        const titleTextbox = screen.getByRole("textbox", {name: "Notes"})
+        expect(titleTextbox).toHaveValue("")
+
+        fireEvent.change(titleTextbox, { target: { value: "foo"}})
+        expect(titleTextbox).toHaveValue("foo")
     })
 
     it("saves entries and executes callback when clicking save successfully", async () => {
