@@ -28,7 +28,7 @@ describe("DayView", () => {
             new Entry(0, new Date(2024, 5, 11), "grocery", -120, 1, [1,3]),
             new Entry(1, new Date(2024, 5, 8), "toys", -100, 1),
             new Entry(2, new Date(2024, 5, 9), "eat out", -60, 2, [2,3]),
-            new Entry(3, new Date(2024, 5, 11), "eat out", -65, 2, [], 1),
+            new Entry(3, new Date(2024, 5, 11), "eat out", -65, 2, [], 1, "this is some note"),
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
@@ -53,6 +53,7 @@ describe("DayView", () => {
         expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
         expect(entries[1].querySelector('[data-testid="tags"]')?.textContent).toBe("")
         expect(entries[1].querySelector('[data-testid="payee"]')?.textContent).toBe("Tom")
+        expect(entries[1].querySelector('[data-testid="notes"]')?.textContent).toBe("this is some note")
         expect(entries[1].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
     })
 

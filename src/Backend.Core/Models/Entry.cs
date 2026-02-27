@@ -47,6 +47,7 @@ namespace Backend.Models
             Id = other.Id;
             UserId = other.UserId;
             PayeeId = other.PayeeId;
+            Notes = other.Notes;
         }
 
         public override bool Equals(object? obj)
@@ -61,7 +62,8 @@ namespace Backend.Models
                    && Title == other.Title
                    && CategoryId == other.CategoryId
                    && Id == other.Id
-                   && PayeeId == other.PayeeId;
+                   && PayeeId == other.PayeeId
+                   && Notes == other.Notes;
         }
 
         public int Id { get; set; }
@@ -73,5 +75,7 @@ namespace Backend.Models
         public int? CategoryId { get; set; }
         
         public int? PayeeId { get; set; }
+        
+        public string? Notes {get; set;}
     }
 }
