@@ -7,6 +7,7 @@ import { addDays, areSame, formatDisplayDate } from "./utils"
 import { Category } from "./models/Category"
 import { Button, ButtonMode } from "./controls/Button"
 import { Tag } from "./models/Tag"
+import { Payee } from "./models/Payee"
 
 export interface DayViewProps {
     client: IClient
@@ -19,10 +20,17 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     const [categories, setCategories] = useState([] as Category[])
     const [tags, setTags] = useState([] as Tag[])
     const [date, setDate] = useState(initialDate)
+    const [payees, setPayees] = useState<Payee[]>([])
     client.GetCategories()
     .then(serverCategories => {
         if(!areSame(serverCategories, categories)) {
             setCategories(serverCategories)
+        }
+    })
+    client.GetPayees()
+    .then(serverPayees => {
+        if(!areSame(serverPayees, payees)) {
+            setPayees(serverPayees)
         }
     })
     client.GetEntriesByDate(date)
@@ -64,12 +72,13 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
                             </div>
                         </div>
-                        {entries.map(({id, title, value, categoryId, tagIds}) => 
+                        {entries.map(({id, title, value, categoryId, tagIds, payeeId}) => 
                             <EntryView 
                                 title={title}
                                 value={value}
                                 tags={buildTagsString(tagIds, tags)}
                                 categoryName={categories.find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
+                                payee={payees.find(p => p.id === payeeId)?.name ?? ""}
                                 onDelete={async () => {
                                     const success = await client.DeleteEntry(id)
                                     if(success) {
