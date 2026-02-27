@@ -73,5 +73,7 @@ namespace Backend.Models
         public int? CategoryId { get; set; }
         
         public int? PayeeId { get; set; }
+        
+        public string? Notes {get; set;}
     }
 }
