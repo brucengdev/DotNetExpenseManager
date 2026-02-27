@@ -5,12 +5,19 @@ import '@testing-library/jest-dom'
 
 describe('EntryView', () => {
     it("shows values of expense entry", () => {
-        render(<EntryView title="Foo" categoryName="Cat1" value={-12} tags="tag1,tag2" />)
+        render(<EntryView 
+            title="Foo" 
+            categoryName="Cat1" 
+            value={-12} 
+            tags="tag1,tag2" 
+            payee="Tom"
+        />)
 
         expect(screen.getByTestId("title").textContent).toBe("Foo")
         expect(screen.getByTestId("value").textContent).toBe("-12")
         expect(screen.getByTestId("category").textContent).toBe("Cat1")
         expect(screen.getByTestId("tags").textContent).toBe("tag1,tag2")
+        expect(screen.getByTestId("payee").textContent).toBe("Tom")
     })
     it("shows delete button when there is delete callback", () => {
         const onDelete = vitest.fn()
