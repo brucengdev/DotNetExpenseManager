@@ -11,6 +11,7 @@ describe('EntryView', () => {
             value={-12} 
             tags="tag1,tag2" 
             payee="Tom"
+            notes="Some notes"
         />)
 
         expect(screen.getByTestId("title").textContent).toBe("Foo")
@@ -18,6 +19,7 @@ describe('EntryView', () => {
         expect(screen.getByTestId("category").textContent).toBe("Cat1")
         expect(screen.getByTestId("tags").textContent).toBe("tag1,tag2")
         expect(screen.getByTestId("payee").textContent).toBe("Tom")
+        expect(screen.getByTestId("notes").textContent).toBe("Some notes")
     })
     it("shows delete button when there is delete callback", () => {
         const onDelete = vitest.fn()

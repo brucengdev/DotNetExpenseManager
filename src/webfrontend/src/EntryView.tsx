@@ -4,15 +4,16 @@ import { Button, ButtonMode } from "./controls/Button"
 
 export interface EntryProps {
     title: string
-    value: number,
-    categoryName: string,
-    onDelete?: () => void,
-    tags?: string,
+    value: number
+    categoryName: string
+    onDelete?: () => void
+    tags?: string
     payee?: string
+    notes?: string
 }
 
 export const EntryView = (props: EntryProps) => {
-    const {title, value, categoryName, tags, payee, onDelete} = props
+    const {title, value, categoryName, tags, payee, notes, onDelete} = props
     const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
     return <div data-testid="entry" className="grid grid-cols-6 mb-1">
         <div data-testid="title">{title}</div>
@@ -20,6 +21,7 @@ export const EntryView = (props: EntryProps) => {
         <div data-testid="value">{value}</div>
         <div data-testid="tags">{tags ?? ""}</div>
         <div data-testid="payee">{payee ?? ""}</div>
+        <div data-testid="notes">{notes ?? ""}</div>
         <div className="place-items-end">
             {onDelete
                 ? <Button
