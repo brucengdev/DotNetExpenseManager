@@ -15,7 +15,7 @@ export interface EntryProps {
 export const EntryView = (props: EntryProps) => {
     const {title, value, categoryName, tags, payee, notes, onDelete} = props
     const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
-    return <div data-testid="entry" className="grid grid-cols-6 mb-1">
+    return <div data-testid="entry" className="grid grid-cols-7 mb-1">
         <div data-testid="title">{title}</div>
         <div data-testid="category">{categoryName}</div>
         <div data-testid="value">{value}</div>
