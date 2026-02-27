@@ -44,6 +44,7 @@ namespace Backend.Models
             CategoryId = other.CategoryId;
             Id = other.Id;
             UserId = other.UserId;
+            PayeeId = other.PayeeId;
         }
 
         public override bool Equals(object? obj)
