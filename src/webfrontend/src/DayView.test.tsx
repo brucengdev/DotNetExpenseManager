@@ -7,6 +7,7 @@ import { Entry } from "./models/Entry";
 import { sameDate } from "./utils";
 import { Category } from "./models/Category";
 import { Tag } from "./models/Tag";
+import { Payee } from "./models/Payee";
 
 describe("DayView", () => {
     it("shows entries by day", async () => {
@@ -20,11 +21,14 @@ describe("DayView", () => {
             new Tag(2, "tag2"),
             new Tag(3, "tag3")
         ]
+        client.Payees = [
+            new Payee(1, "Tom")
+        ]
         client.Entries = [
             new Entry(0, new Date(2024, 5, 11), "grocery", -120, 1, [1,3]),
             new Entry(1, new Date(2024, 5, 8), "toys", -100, 1),
             new Entry(2, new Date(2024, 5, 9), "eat out", -60, 2, [2,3]),
-            new Entry(3, new Date(2024, 5, 11), "eat out", -65, 2),
+            new Entry(3, new Date(2024, 5, 11), "eat out", -65, 2, [], 1),
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
@@ -48,6 +52,7 @@ describe("DayView", () => {
         expect(entries[1].querySelector('[data-testid="category"]')?.textContent).toBe("leisure")
         expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
         expect(entries[1].querySelector('[data-testid="tags"]')?.textContent).toBe("")
+        expect(entries[1].querySelector('[data-testid="payee"]')?.textContent).toBe("Tom")
         expect(entries[1].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
     })
 

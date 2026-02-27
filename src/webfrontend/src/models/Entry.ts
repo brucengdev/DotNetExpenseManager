@@ -8,13 +8,15 @@ export class Entry implements Comparable<Entry>{
     public date: Date = new Date()
     public categoryId: number | undefined = undefined
     public tagIds: number[] = []
+    public payeeId: number | undefined = undefined
 
     constructor(id: number, 
         date: Date, 
         title: string, 
         value: number,
         categoryId: number = 0,
-        tagIds: number[] = []
+        tagIds: number[] = [],
+        payeeId: number | undefined = undefined
     ) {
         this.id = id
         this.date = date
@@ -22,6 +24,7 @@ export class Entry implements Comparable<Entry>{
         this.value = value
         this.categoryId = categoryId
         this.tagIds = tagIds
+        this.payeeId = payeeId
     }
 
     public Equals(other: Entry): boolean {
@@ -32,5 +35,6 @@ export class Entry implements Comparable<Entry>{
                 && sameDate(this.date, other.date)
                 && this.categoryId === other.categoryId
                 && hasSameTags
+                && this.payeeId === other.payeeId
     }
 }

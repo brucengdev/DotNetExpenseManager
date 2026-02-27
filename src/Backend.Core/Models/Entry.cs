@@ -30,6 +30,8 @@ namespace Backend.Models
         
         public Category Category { get; set; }
         
+        public Payee Payee { get; set; }
+        
         public IList<EntryTagMapping> EntryTagMappings { get; set; }
     }
     
@@ -44,6 +46,7 @@ namespace Backend.Models
             CategoryId = other.CategoryId;
             Id = other.Id;
             UserId = other.UserId;
+            PayeeId = other.PayeeId;
         }
 
         public override bool Equals(object? obj)
@@ -57,7 +60,8 @@ namespace Backend.Models
                    && Date == other.Date
                    && Title == other.Title
                    && CategoryId == other.CategoryId
-                   && Id == other.Id;
+                   && Id == other.Id
+                   && PayeeId == other.PayeeId;
         }
 
         public int Id { get; set; }
@@ -67,5 +71,7 @@ namespace Backend.Models
         public int UserId { get; set; }
         
         public int? CategoryId { get; set; }
+        
+        public int? PayeeId { get; set; }
     }
 }

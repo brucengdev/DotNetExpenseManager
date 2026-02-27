@@ -6,6 +6,7 @@ import { EntryForm } from "./EntryForm";
 import { TestClient } from "./__test__/TestClient";
 import { Category } from "./models/Category";
 import { Tag } from "./models/Tag";
+import { Payee } from "./models/Payee";
 
 describe("EntryForm", () => {
     it("shows form input", async () => {
@@ -15,6 +16,9 @@ describe("EntryForm", () => {
         ]
         client.Tags = [
             new Tag(1, "tag1")
+        ]
+        client.Payees = [
+            new Payee(1, "Tom")
         ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
 
@@ -32,6 +36,11 @@ describe("EntryForm", () => {
         const tagsField = screen.getByTestId("tags-control")
         expect(tagsField).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument()
+
+        expect(screen.getByLabelText("Payee")).toBeInTheDocument()
+        expect(screen.getByRole("option", { name: "[No payee]"})).toBeInTheDocument()
+        expect((screen.getByRole("option", { name: "[No payee]"}) as HTMLOptionElement).selected).toBeTruthy()
+        expect(screen.getByRole("option", { name: "Tom"})).toBeInTheDocument()
 
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
@@ -99,6 +108,20 @@ describe("EntryForm", () => {
         })
     })
 
+    it("changes payee", async () => {
+        const client = new TestClient()
+        client.Payees = [
+            new Payee(1, "Tom")
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+
+        userEvent.selectOptions(await screen.findByLabelText("Payee"), "1")
+        
+        await waitFor(() => {
+            expect((screen.getByRole("option", { name: "Tom"}) as HTMLOptionElement).selected).toBeTruthy()
+        })
+    })
+
     it("saves entries and executes callback when clicking save successfully", async () => {
         const saveHandler = vitest.fn()
         const client = new TestClient()
@@ -110,6 +133,9 @@ describe("EntryForm", () => {
             new Tag(2, "tag2"),
             new Tag(3, "tag3")
         ]
+        client.Payees = [
+            new Payee(1, "Tom")
+        ]
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={saveHandler} />)
         
         fireEvent.change(await screen.findByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
@@ -118,6 +144,10 @@ describe("EntryForm", () => {
         fireEvent.click(await screen.findByRole("link", { name: "Uncategorized" }))
         fireEvent.click(await screen.findByRole("link", { name: "household" }))
         userEvent.selectOptions(await screen.findByTestId("tags-control"), ["1", "2"])
+        userEvent.selectOptions(await screen.findByLabelText("Payee"), "1")
+        await waitFor(() => {
+            expect((screen.getByRole("option", { name: "Tom"}) as HTMLOptionElement).selected).toBeTruthy()
+        })
         fireEvent.click(await screen.findByRole("button", { name: "Save" }))
 
         expect(client.Entries.length).toBe(1)
@@ -126,7 +156,8 @@ describe("EntryForm", () => {
         expect(client.Entries[0].date.toISOString().substring(0,10)).toBe("2023-01-02")
         expect(client.Entries[0].categoryId).toBe(2)
         expect(client.Entries[0].tagIds).toEqual([1,2])
-        
+        expect(client.Entries[0].payeeId).toBe(1)
+
         await waitFor(() => expect(saveHandler).toHaveBeenCalled())
     })
 
