@@ -109,7 +109,8 @@ export const EntryForm = (props: EntryFormProps) => {
                     if(isNaN(valueFloat)) {
                         return
                     }
-                    const entry = new Entry(0, date, title, valueFloat, categoryId, tagIds, payeeId)
+                    const entry = new Entry(0, date, title, valueFloat, 
+                        categoryId, tagIds, payeeId, notes)
                     client.AddEntry(entry)
                     .then(onSave)
                 }}

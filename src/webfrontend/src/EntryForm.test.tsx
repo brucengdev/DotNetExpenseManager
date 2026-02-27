@@ -161,6 +161,7 @@ describe("EntryForm", () => {
         await waitFor(() => {
             expect((screen.getByRole("option", { name: "Tom"}) as HTMLOptionElement).selected).toBeTruthy()
         })
+        fireEvent.change(screen.getByRole("textbox", { name: "Notes"}), {target: { value: "Some notes"}})
         fireEvent.click(await screen.findByRole("button", { name: "Save" }))
 
         expect(client.Entries.length).toBe(1)
@@ -170,7 +171,7 @@ describe("EntryForm", () => {
         expect(client.Entries[0].categoryId).toBe(2)
         expect(client.Entries[0].tagIds).toEqual([1,2])
         expect(client.Entries[0].payeeId).toBe(1)
-
+        expect(client.Entries[0].notes).toBe("Some notes")
         await waitFor(() => expect(saveHandler).toHaveBeenCalled())
     })
 
