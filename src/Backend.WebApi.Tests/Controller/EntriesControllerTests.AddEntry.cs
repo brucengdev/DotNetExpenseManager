@@ -42,7 +42,8 @@ public partial class EntriesControllerTests
             Value = -123.22f,
             Date = new DateTime(2024, 3, 12),
             CategoryId = 1,
-            TagIds = new List<int> {1, 2}
+            TagIds = new List<int> {1, 2},
+            PayeeId = 1
         };
         var entryManager = new Mock<IEntryManager>();
         var accountManager = new Mock<IAccountManager>();
@@ -68,6 +69,7 @@ public partial class EntriesControllerTests
             e.UserId.ShouldBe(userId);
             e.CategoryId.ShouldBe(1);
             e.TagIds.ShouldBe([1, 2]);
+            e.PayeeId.ShouldBe(1);
             return true;
         };
         entryManager.Verify(em => em.AddEntry(
