@@ -42,6 +42,8 @@ describe("EntryForm", () => {
         expect((screen.getByRole("option", { name: "[No payee]"}) as HTMLOptionElement).selected).toBeTruthy()
         expect(screen.getByRole("option", { name: "Tom"})).toBeInTheDocument()
 
+        expect(await screen.findByRole("textbox", {name: "Notes"})).toBeInTheDocument()
+
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
     })

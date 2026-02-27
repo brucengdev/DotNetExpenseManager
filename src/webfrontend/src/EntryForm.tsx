@@ -90,6 +90,13 @@ export const EntryForm = (props: EntryFormProps) => {
                 )) : null}
             </select>
         </div>
+
+        <TextBox
+            name="notes"
+            label="Notes"
+            type="text"
+            value=""
+        />
         
         <div>
             <Button
