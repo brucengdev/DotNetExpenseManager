@@ -28,6 +28,7 @@ export const EntryForm = (props: EntryFormProps) => {
     const [payees, setPayees] = useState<Payee[] | undefined>(undefined)
     const [tagIds, setTagIds] = useState<number[]>([])
     const [payeeId, setPayeeId] = useState<number | undefined>(undefined)
+    const [notes, setNotes] = useState("")
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -95,7 +96,8 @@ export const EntryForm = (props: EntryFormProps) => {
             name="notes"
             label="Notes"
             type="text"
-            value=""
+            value={notes}
+            onChange={event => setNotes(event.target.value)}
         />
         
         <div>
