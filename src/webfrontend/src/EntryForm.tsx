@@ -78,6 +78,7 @@ export const EntryForm = (props: EntryFormProps) => {
         <div>
             <label htmlFor="payee-select" className="block text-sm/6 font-semibold text-gray-900">Payee</label>
             <select id="payee-select">
+                <option key={0} value={undefined}>[No payee]</option>
                 {payees ? payees.map(payee => (
                     <option key={payee.id} value={payee.id}>{payee.name}</option>
                 )) : null}
