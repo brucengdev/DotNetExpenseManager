@@ -25,7 +25,8 @@ namespace Backend.Core.Tests
                 UserId = 23,
                 CategoryId = 1,
                 TagIds = [1, 2],
-                PayeeId = 1
+                PayeeId = 1,
+                Notes = "Foo"
             };
             sut.AddEntry(inputEntry);
             
@@ -38,6 +39,7 @@ namespace Backend.Core.Tests
             savedEntry.UserId.ShouldBe(23);
             savedEntry.CategoryId.ShouldBe(1);
             savedEntry.PayeeId.ShouldBe(1);
+            savedEntry.Notes.ShouldBe("Foo");
 
             entryRepo.EntryTagMappings.ShouldBeEquivalentTo(new List<EntryTagMapping> {
                 new() { Id = 1, EntryId = 1, TagId = 1 },
