@@ -72,13 +72,14 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
                             </div>
                         </div>
-                        {entries.map(({id, title, value, categoryId, tagIds, payeeId}) => 
+                        {entries.map(({id, title, value, categoryId, tagIds, payeeId, notes}) => 
                             <EntryView 
                                 title={title}
                                 value={value}
                                 tags={buildTagsString(tagIds, tags)}
                                 categoryName={categories.find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
                                 payee={payees.find(p => p.id === payeeId)?.name ?? ""}
+                                notes={notes}
                                 onDelete={async () => {
                                     const success = await client.DeleteEntry(id)
                                     if(success) {
