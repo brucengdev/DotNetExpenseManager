@@ -68,6 +68,11 @@ export const EntryForm = (props: EntryFormProps) => {
                 }}
             />
         </div>
+
+        <div>
+            <label htmlFor="payee-select" className="block text-sm/6 font-semibold text-gray-900">Payee</label>
+            <select id="payee-select"></select>
+        </div>
         
         <div>
             <Button

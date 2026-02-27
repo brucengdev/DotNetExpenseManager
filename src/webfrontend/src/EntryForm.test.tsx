@@ -33,6 +33,8 @@ describe("EntryForm", () => {
         expect(tagsField).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument()
 
+        expect(screen.getByLabelText("Payee")).toBeInTheDocument()
+
         expect(screen.getByRole("button", {name: "Save"})).toBeInTheDocument()
         expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
     })
