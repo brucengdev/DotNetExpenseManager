@@ -78,7 +78,12 @@ export const EntryForm = (props: EntryFormProps) => {
 
         <div>
             <label htmlFor="payee-select" className="block text-sm/6 font-semibold text-gray-900">Payee</label>
-            <select id="payee-select" value={payeeId} onChange={event => setPayeeId(event.target.value ? parseInt(event.target.value) : undefined)}>
+            <select id="payee-select" value={payeeId} 
+                onChange={event => {
+                    const newPayeeId = event.target.value ? parseInt(event.target.value) : undefined
+                    setPayeeId(newPayeeId)}
+                }
+            >
                 <option key={0} value={undefined}>[No payee]</option>
                 {payees ? payees.map(payee => (
                     <option key={payee.id} value={payee.id}>{payee.name}</option>
@@ -95,7 +100,7 @@ export const EntryForm = (props: EntryFormProps) => {
                     if(isNaN(valueFloat)) {
                         return
                     }
-                    const entry = new Entry(0, date, title, valueFloat, categoryId, tagIds)
+                    const entry = new Entry(0, date, title, valueFloat, categoryId, tagIds, payeeId)
                     client.AddEntry(entry)
                     .then(onSave)
                 }}
