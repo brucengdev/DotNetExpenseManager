@@ -56,7 +56,11 @@ using(var serviceScope = app.Services.CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetService<ExpensesContext>();
     context.Database.Migrate();
-    SeedData.Initialize(context);
+    var adminPassword = builder.Configuration.GetValue<string>("AdminPassword") 
+                        ?? Constants.DEFAULT_ADMIN_PASSWORD;
+    var salt = builder.Configuration.GetValue<string>("HashSalt") 
+               ?? Constants.DEFAULT_HASH_SALT;
+    SeedData.Initialize(context, adminPassword, salt);
 }
 
 app.UseDefaultFiles();

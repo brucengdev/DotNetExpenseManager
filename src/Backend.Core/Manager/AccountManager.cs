@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using Backend.Core.Repository;
 using Backend.Models;
 
@@ -26,10 +28,14 @@ public class TokenExpiredException : Exception
 public class AccountManager: IAccountManager
 {
     internal IUserRepository _userRepository;
+    private readonly string _salt;
+    private readonly int _hoursTillExpiration;
 
-    public AccountManager(IUserRepository userRepository)
+    public AccountManager(IUserRepository userRepository, string salt, int hoursTillExpiration = 1)
     {
+        _salt = salt;
         _userRepository = userRepository;
+        _hoursTillExpiration = hoursTillExpiration;
     }
     private bool VerifyUser(string username, string password)
     {
@@ -39,7 +45,7 @@ public class AccountManager: IAccountManager
             throw new UserNotFoundException();
         }
 
-        if (user.Password != password)
+        if (CreateHash(password, _salt) != user.PasswordHash)
         {
             throw new WrongPasswordException();
         }
@@ -56,7 +62,7 @@ public class AccountManager: IAccountManager
         _userRepository.AddUser(new User()
         {
             Username = username,
-            Password = password
+            PasswordHash = CreateHash(password, _salt)
         });
         return CreateUserResult.Success;
     }
@@ -64,9 +70,22 @@ public class AccountManager: IAccountManager
     public string CreateAccessToken(string username, string password, DateTime creationTime)
     {
         VerifyUser(username, password);
-        var expiryTime = creationTime.AddHours(1);
-        return $"{username}-{expiryTime.ToString("yyyy-MM-dd-HH-mm")}";
+        var user = _userRepository.GetUser(username);
+        var expiryTime = creationTime.AddHours(_hoursTillExpiration);
+        var info = $"{username}-{expiryTime.ToString("yyyy-MM-dd-HH-mm")}";
+        var infoAndPasswordHash = info + user.PasswordHash;
+        var hasedInfoAndPassHash = CreateHash(infoAndPasswordHash, _salt);
+        return $"{info}-{hasedInfoAndPassHash}";
     }
+
+    public static string CreateHash(string input, string salt)
+    {
+        using var algo = SHA256.Create();
+        var phraseToHash = input + salt;
+        var hash = algo.ComputeHash(Encoding.UTF8.GetBytes(phraseToHash));
+        return Convert.ToBase64String(hash);
+    }
+
 
     public bool IsTokenValid(string token, DateTime currentTime)
     {
@@ -84,6 +103,8 @@ public class AccountManager: IAccountManager
     public int GetUserId(string accessToken, DateTime currentTime)
     {
         var username = "";
+        var info = "";
+        var hash = "";
         DateTime expiry;
         try
         {
@@ -95,6 +116,8 @@ public class AccountManager: IAccountManager
                 Convert.ToInt32(parts[4]),
                 Convert.ToInt32(parts[5]),
                 0);
+            
+            info = accessToken.Substring(0, accessToken.LastIndexOf('-'));
         }
         catch (Exception)
         {
@@ -106,10 +129,18 @@ public class AccountManager: IAccountManager
         {
             throw new UserNotFoundException();
         }
+
+        var recreatedToken = info + "-" + CreateHash(info + user.PasswordHash, _salt);
+        if (recreatedToken != accessToken)
+        {
+            throw new MalformedTokenException();
+        }
+        
         if (currentTime > expiry)
         {
             throw new TokenExpiredException();
         }
+        
         return user.Id;
     }
 

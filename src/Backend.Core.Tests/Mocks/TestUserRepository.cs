@@ -1,6 +1,5 @@
 using Backend.Core.Repository;
 using Backend.Models;
-using Backend.WebApi.Repository;
 
 namespace Backend.Core.Tests.Mocks;
 
@@ -26,4 +25,9 @@ public class TestUserRepository: IUserRepository
 
     public bool UserExists(string username)
         => _users.ContainsKey(username);
+
+    public bool UserExists(int userId)
+    {
+        return _users.Values.Any(u => u.Id == userId);
+    }
 }

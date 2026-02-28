@@ -24,12 +24,13 @@ namespace Backend.Core.Tests
             userRepo.AddUser(new User
             {
                 Username = "johndoe",
-                Password = "testPassword"
+                PasswordHash = HashPassword("testPassword")
             });
-            var sut = new AccountManager(userRepo);
+            var sut = new AccountManager(userRepo, AccountManagerTests.HashSalt);
             
             //act
-            var result = sut.IsTokenValid("johndoe-2024-12-31-19-04", currentTime);
+            var token = Utilities.Token("johndoe-2024-12-31-19-04", "testPassword");
+            var result = sut.IsTokenValid(token, currentTime);
             
             //assert
             result.ShouldBeTrue();
@@ -42,49 +43,56 @@ namespace Backend.Core.Tests
                 "wrong username",
                 "johndoe2", 
                 new DateTime(2024, 12, 31, 19, 4, 0),
-                "johndoe-2024-12-31-19-04"
+                Utilities.Token("johndoe-2024-12-31-19-04", "testPassword")
+            },
+            new object[]
+            {
+                "invalid hash",
+                "johndoe", 
+                new DateTime(2024, 12, 31, 19, 4, 0),
+                Utilities.Token("johndoe-2024-12-31-19-04", "wrongPassword")
             },
             new object[]
             {
                 "expired token 1",
                 "johndoe", 
                 new DateTime(2024, 12, 31, 19, 5, 0),
-                "johndoe-2024-12-31-19-04"
+                Utilities.Token("johndoe-2024-12-31-19-04", "testPassword")
             },
             new object[]
             {
                 "expired token 2",
                 "johndoe", 
                 new DateTime(2024, 12, 31, 20, 4, 0),
-                "johndoe-2024-12-31-19-04"
+                Utilities.Token("johndoe-2024-12-31-19-04", "testPassword")
             },
             new object[]
             {
                 "expired token 3",
                 "johndoe", 
                 new DateTime(2025, 1, 1, 19, 5, 0),
-                "johndoe-2024-12-31-19-04"
+                Utilities.Token("johndoe-2024-12-31-19-04", "testPassword")
             },
             new object[]
             {
                 "invalid token format 1",
                 "johndoe", 
                 new DateTime(2024, 12, 31, 19, 5, 0),
-                "johndoe-202412311904"
+                Utilities.Token("johndoe-202412311904", "testPassword")
             },
             new object[]
             {
                 "invalid token format 2",
                 "johndoe", 
                 new DateTime(2024, 12, 31, 19, 5, 0),
-                "johndoe202412311904"
+                Utilities.Token("johndoe202412311904", "testPassword")
             },
             new object[]
             {
                 "empty token",
                 "johndoe", 
                 new DateTime(2024, 12, 31, 19, 5, 0),
-                ""
+                Utilities.Token("", "testPassword")
             },
             new object[]
             {
@@ -108,9 +116,9 @@ namespace Backend.Core.Tests
             userRepo.AddUser(new User
             {
                 Username = username,
-                Password = "testPassword"
+                PasswordHash = HashPassword("testPassword")
             });
-            var sut = new AccountManager(userRepo);
+            var sut = new AccountManager(userRepo, AccountManagerTests.HashSalt);
             
             //act
             var result = sut.IsTokenValid(token, currentTime);

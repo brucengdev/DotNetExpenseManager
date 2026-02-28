@@ -1,9 +1,10 @@
+using Backend.Core.Manager;
 using Backend.Models;
 
 namespace Backend.WebApi;
 
 public static class SeedData {
-    public static void Initialize(ExpensesContext context)
+    public static void Initialize(ExpensesContext context, string adminPassword, string salt)
     {
         if (context.Users != null && context.Users.Any())
         {
@@ -13,8 +14,8 @@ public static class SeedData {
         context.Users.Add(new User
         {
             Id = 0,
-            Username = "admin",
-            Password = "admin"
+            Username = Constants.ADMIN_USERNAME,
+            PasswordHash = AccountManager.CreateHash(adminPassword, salt)
         });
 
         context.Categories.Add(new Category

@@ -11,4 +11,6 @@ public interface IUserRepository
     bool AddUser(User user);
 
     bool UserExists(string username);
+
+    bool UserExists(int userId);
 }
