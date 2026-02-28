@@ -32,11 +32,12 @@ export class Client implements IClient {
     private token: string = ""
     public Token() { return this.token }
     public async Login(username: string, password: string): Promise<boolean> {
-        const result = await fetch(`${url}/Account/Login?${new URLSearchParams({
-            username,
-            password
-        }).toString()}`, {
-            method: "POST"
+        const formData = new FormData()
+        formData.append("username", username)
+        formData.append("password", password)
+        const result = await fetch(`${url}/Account/Login`, {
+            method: "POST",
+            body: formData
         })
         if(result.ok) {
             this.token = await result.text()

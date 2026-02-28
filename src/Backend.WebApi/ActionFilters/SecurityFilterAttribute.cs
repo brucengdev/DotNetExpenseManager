@@ -1,4 +1,5 @@
 using Backend.Core.Manager;
+using Backend.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -39,5 +40,10 @@ public class SecurityFilterAttribute: ActionFilterAttribute
         {
             context.Result = new UnauthorizedResult();
         }
+    }
+
+    public static int GetUserId(ControllerBase controller)
+    {
+        return Convert.ToInt32(controller.HttpContext.Items["UserId"]);
     }
 }

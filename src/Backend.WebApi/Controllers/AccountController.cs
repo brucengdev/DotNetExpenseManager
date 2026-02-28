@@ -1,5 +1,6 @@
 using Backend.Core.Manager;
 using Backend.WebApi.ActionFilters;
+using Backend.WebApi.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.WebApi.Controllers;
@@ -16,7 +17,8 @@ public class AccountController: ControllerBase
     
     [HttpPost("[action]")]
     public ActionResult<string> Login(
-        string username, string password)
+        [FromForm] string username,
+        [FromForm] string password)
     {
         try
         {
@@ -39,6 +41,11 @@ public class AccountController: ControllerBase
         [FromForm] string username, 
         [FromForm] string password)
     {
+        var user = _accountManager.GetById(this.CurrentUserId());
+        if (user.Username != Constants.ADMIN_USERNAME)
+        {
+            return Unauthorized();
+        }
         var result = _accountManager.CreateUser(username, password);
         if (result == CreateUserResult.AlreadyExists)
         {

@@ -3,7 +3,7 @@ using Backend.Models;
 
 namespace Backend.WebApi.Repository;
 
-internal class UserRepository: IUserRepository
+public class UserRepository: IUserRepository
 {
     private readonly ExpensesContext _dbContext;
     public UserRepository(ExpensesContext context)
@@ -32,5 +32,10 @@ internal class UserRepository: IUserRepository
     public bool UserExists(string username)
     {
         return _dbContext.Users.Any(u => u.Username == username);
+    }
+
+    public bool UserExists(int userId)
+    {
+        return _dbContext.Users.Any(u => u.Id == userId);
     }
 }

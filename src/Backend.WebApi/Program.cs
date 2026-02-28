@@ -31,8 +31,15 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IAccountManager, AccountManager>();
-
+builder.Services.AddScoped<IAccountManager, AccountManager>((services) =>
+{
+    var userRepo = services.GetRequiredService<IUserRepository>();
+    var configuration = services.GetRequiredService<IConfiguration>();
+    var salt = configuration.GetValue<string>("HashSalt") ?? Constants.DEFAULT_HASH_SALT;
+    var tokenExpiration = configuration.GetValue<int?>("TokenExpirationHours") ?? Constants.TOKEN_EXPIRATION_HOURS;
+    var am = new AccountManager(userRepo, salt, tokenExpiration);
+    return am;
+});
 builder.Services.AddScoped<IEntryRepository, EntryRepository>();
 builder.Services.AddScoped<IEntryManager, EntryManager>();
 
@@ -56,7 +63,11 @@ using(var serviceScope = app.Services.CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetService<ExpensesContext>();
     context.Database.Migrate();
-    SeedData.Initialize(context);
+    var adminPassword = builder.Configuration.GetValue<string>("AdminPassword") 
+                        ?? Constants.DEFAULT_ADMIN_PASSWORD;
+    var salt = builder.Configuration.GetValue<string>("HashSalt") 
+               ?? Constants.DEFAULT_HASH_SALT;
+    SeedData.Initialize(context, adminPassword, salt);
 }
 
 app.UseDefaultFiles();
