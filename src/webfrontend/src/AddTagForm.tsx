@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "./controls/Button";
+import { Button, ButtonMode } from "./controls/Button";
 import { TextBox } from "./controls/TextBox";
 
 interface AddTagFormProps {
@@ -12,10 +12,10 @@ export function AddTagForm(props: AddTagFormProps) {
     const { onSave, onCancel } = props
     return <div data-testid="add-tag-form">
         <TextBox label="Tag name" name="edit-tag-name" value={tagName} onChange={(e) => setTagName(e.target.value)} />
-        <Button text="Save" onClick={() => {
+        <Button text="Save" className="mt-2" onClick={() => {
             if(onSave) { onSave(tagName) }
         }} />
-        <Button text="Cancel" onClick={() => {
+        <Button text="Cancel" mode={ButtonMode.SECONDARY} className="mt-2" onClick={() => {
             if(onCancel) { onCancel() }
         }} />
     </div>;
