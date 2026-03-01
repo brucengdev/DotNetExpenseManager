@@ -32,6 +32,7 @@ describe("MainView", () => {
         expect(dayView).toBeInTheDocument()
 
         expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
     })
     it("shows tags view when clicked on", () => {
         render(<MainView client={new TestClient()} onLogout={() => { }} />)
@@ -45,6 +46,7 @@ describe("MainView", () => {
         expect(tagsView).toBeInTheDocument()
 
         expect(screen.queryByTestId("day-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
     })
 
     it("shows days view when clicked on", () => {
@@ -66,6 +68,7 @@ describe("MainView", () => {
         expect(dayView).toBeInTheDocument()
 
         expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
     })
 
     it("shows payees view when clicked on", () => {
