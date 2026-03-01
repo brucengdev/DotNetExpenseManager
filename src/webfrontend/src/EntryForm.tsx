@@ -79,7 +79,10 @@ export const EntryForm = (props: EntryFormProps) => {
 
         <div>
             <label htmlFor="payee-select" className="block text-sm/6 font-semibold text-gray-900">Payee</label>
-            <select id="payee-select" value={payeeId} 
+            <select id="payee-select" 
+                className={"block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 " +
+                        "outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 "}
+                value={payeeId} 
                 onChange={event => {
                     const newPayeeId = event.target.value ? parseInt(event.target.value) : undefined
                     setPayeeId(newPayeeId)}
@@ -100,7 +103,7 @@ export const EntryForm = (props: EntryFormProps) => {
             onChange={event => setNotes(event.target.value)}
         />
         
-        <div>
+        <div className="mt-5">
             <Button
                 className="inline-block mr-2"
                 text="Save"
