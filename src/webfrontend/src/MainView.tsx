@@ -28,9 +28,9 @@ export function MainView({client, onLogout} : MainViewProps) {
         />
       </div>
       <div className="mb-5 grid grid-cols-3 gap-2">
-        <Button text="Day" mode={ButtonMode.PRIMARY} onClick={() => setView(View.DAY)}/>
-        <Button text="Tags" mode={ButtonMode.PRIMARY} onClick={() => setView(View.TAGS)}/>
-        <Button text="Payees" mode={ButtonMode.PRIMARY} onClick={() => setView(View.PAYEES)}/>
+        <Button text="Day" mode={view === View.DAY? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.DAY)}/>
+        <Button text="Tags" mode={view === View.TAGS? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.TAGS)}/>
+        <Button text="Payees" mode={view === View.PAYEES? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.PAYEES)}/>
       </div>
         {view === View.DAY? <DayView client={client} initialDate={new Date()} />: <></>}
         {view === View.TAGS? <TagsView client={client} />: <></>}
