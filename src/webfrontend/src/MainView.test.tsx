@@ -14,6 +14,9 @@ describe("MainView", () => {
         const tagButton = screen.getByRole("button", { name: "Tags"})
         expect(tagButton).toBeInTheDocument()
 
+        const payeesButton = screen.getByRole("button", { name: "Payees"})
+        expect(payeesButton).toBeInTheDocument()
+
         const logoutButton = screen.getByRole("button", { name: "Log out"})
         expect(logoutButton).toBeInTheDocument()
     })
