@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "./controls/Button";
+import { Button, ButtonMode } from "./controls/Button";
 import { TextBox } from "./controls/TextBox";
 
 interface AddPayeeFormProps {
@@ -12,10 +12,10 @@ export function AddPayeeForm(props: AddPayeeFormProps) {
     const { onSave, onCancel } = props
     return <div data-testid="add-payee-form">
         <TextBox label="Payee name" name="edit-payee-name" value={payeeName} onChange={(e) => setPayeeName(e.target.value)} />
-        <Button text="Save" onClick={() => {
+        <Button text="Save" className="mt-2" onClick={() => {
             if(onSave) { onSave(payeeName) }
         }} />
-        <Button text="Cancel" onClick={() => {
+        <Button text="Cancel" mode={ButtonMode.SECONDARY} className="mt-2" onClick={() => {
             if(onCancel) { onCancel() }
         }} />
     </div>;

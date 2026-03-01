@@ -8,10 +8,10 @@ interface ConfirmDeleteViewProps {
 export function ConfirmDeleteView({onYes, onNo}: ConfirmDeleteViewProps) {
     return <div data-testid="confirmDeleteView">
         <h2>Confirm to delete?</h2>
-        <div>
+        <div className="mt-2 mb-5">
             <Button text="Yes" mode={ButtonMode.DANGER} 
                 onClick={() => {if(onYes) {onYes()}}} />
-            <Button text="No" mode={ButtonMode.PRIMARY}
+            <Button text="No" className="mt-2" mode={ButtonMode.PRIMARY}
                 onClick={() => {if(onNo) {onNo()}}} />
         </div>
     </div>
