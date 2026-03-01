@@ -22,7 +22,7 @@ export function MainView({client, onLogout} : MainViewProps) {
       <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-semibold text-gray-900">Expenses</h2>
       </div>
-      <div className="mb-5">
+      <div className="mb-5 grid grid-cols-3 gap-2">
         <Button text="Day" mode={ButtonMode.PRIMARY} onClick={() => setView(View.DAY)}/>
         <Button text="Tags" mode={ButtonMode.PRIMARY} onClick={() => setView(View.TAGS)}/>
         <Button text="Payees" mode={ButtonMode.PRIMARY} onClick={() => setView(View.PAYEES)}/>
