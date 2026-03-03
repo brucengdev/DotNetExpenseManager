@@ -1,4 +1,5 @@
-﻿using Backend.Core.Repository;
+﻿using Backend.Core.Models;
+using Backend.Core.Repository;
 using Backend.Models;
 
 namespace Backend.Core.Manager;
@@ -6,90 +7,150 @@ namespace Backend.Core.Manager;
 public class DataManager:IDataManager
 {
     private readonly IEntryRepository _entryRepository;
+    private readonly ITagsRepository _tagsRepository;
+    private readonly IPayeeRepository _payeeRepository;
+    private readonly ICategoryRepository _categoryRepository;
     public DataManager(
-        IEntryRepository entryRepo)
+        IEntryRepository entryRepo,
+        ITagsRepository tagsRepo,
+        ICategoryRepository categoryRepo,
+        IPayeeRepository payeeRepo)
     {
         _entryRepository = entryRepo;
+        _tagsRepository = tagsRepo;
+        _payeeRepository = payeeRepo;
+        _categoryRepository = categoryRepo;
     }
-    public void Import(ExportedData data, int userId)
+    public void Import(IEnumerable<ExportedEntry> entries, int userId)
     {
-        //clear data
-        _entryRepository.Clear(userId);
-        
         //import data
-        var projectIdMap = ImportProjects(data, userId);
-        var tagIdMap = ImportTags(data, userId);
-        ImportTasks(data, projectIdMap, tagIdMap, userId);
+        var categoryNameIdMap = ImportCategories(entries, userId);
+        var tagNameIdMap = ImportTags(entries, userId);
+        var payeeNameIdMap = ImportPayees(entries, userId);
+        ImportEntries(entries, categoryNameIdMap, tagNameIdMap, payeeNameIdMap, userId);
     }
 
-    private void ImportTasks(
-        ExportedData data, 
-        Dictionary<int, int> projectIdMap, 
-        Dictionary<int, int> tagIdMap,
+    private void ImportEntries(
+        IEnumerable<ExportedEntry> entries, 
+        Dictionary<string, int> categoryNameIdMap, 
+        Dictionary<string, int> tagNameIdMap,
+        Dictionary<string, int> payeeNameIdMap,
         int userId)
     {
-        foreach (var exportedTask in data.Tasks ?? [])
+        foreach (var exportedEntry in entries ?? [])
         {
-            int? projectId = null;
-            if (exportedTask.ProjectId != null 
-                && projectIdMap.TryGetValue(exportedTask.ProjectId.Value, out var savedProjectId))
+            int categoryId = 1;//1 is Uncategorized
+            if (exportedEntry.CategoryName != null 
+                && categoryNameIdMap.TryGetValue(exportedEntry.CategoryName, out var savedCategoryId))
             {
-                projectId = savedProjectId;
+                categoryId = savedCategoryId;
+            }
+
+            var entryTagMappings = (exportedEntry.TagNames ?? [])
+                .Select(tagName => new EntryTagMapping()
+                {
+                    TagId = tagNameIdMap[tagName]
+                }).ToList();
+
+            int? payeeId = null;
+            if (exportedEntry.PayeeName != null && payeeNameIdMap.TryGetValue(exportedEntry.PayeeName, out var savedPayeeId))
+            {
+                payeeId = savedPayeeId;
             }
             
-            var item = new Entry()
+            var entry = new Entry()
             {
-                Title = exportedTask.Name,
-                Value = exportedTask.Completed,
+                Title = exportedEntry.Title,
+                Value = exportedEntry.Value,
+                Date = exportedEntry.Date,
+                Notes = exportedEntry.Notes,
                 UserId = userId,
-                PayeeId = exportedTask.PayeeId
+                PayeeId = payeeId,
+                CategoryId = categoryId,
+                EntryTagMappings = entryTagMappings
             };
-            var itemId = _entryRepository.CreateItem(item);
-            foreach (var exportedTagId in exportedTask.TagIds ?? [])
+            _entryRepository.AddEntry(entry);
+        }
+    }
+
+    private Dictionary<string, int> ImportTags(IEnumerable<ExportedEntry> entries, int userId)
+    {
+        var nameIdMap = new Dictionary<string, int>();
+        
+        foreach (var entry in entries ?? [])
+        {
+            foreach (var tagName in entry.TagNames)
             {
-                if (!tagIdMap.TryGetValue(exportedTagId, out var savedTagId)) { continue; }
-                _itemTagMappingRepo.CreateMapping(new()
+                if (nameIdMap.ContainsKey(tagName))
                 {
-                    ItemId = itemId,
-                    TagId = savedTagId
-                });
+                    continue;
+                }
+                var tag = new Tag()
+                {
+                    Name = tagName,
+                    UserId = userId
+                };
+                _tagsRepository.AddTag(tag);
+                nameIdMap[tagName] = tag.Id;
             }
         }
+
+        return nameIdMap;
     }
 
-    private Dictionary<int, int> ImportTags(ExportedData data, int userId)
+    private Dictionary<string, int> ImportCategories(IEnumerable<ExportedEntry> data, int userId)
     {
-        var idMap = new Dictionary<int, int>();
-        foreach (var exportedTag in data.Tags ?? [])
+        var nameIdMap = new Dictionary<string, int>();
+
+        foreach (var entry in data ?? [])
         {
-            var tag = new Tag()
+            if (entry.CategoryName == null)
             {
-                Name = exportedTag.Name,
+                continue;
+            }
+
+            var categoryName = entry.CategoryName;
+            if (nameIdMap.ContainsKey(categoryName))
+            {
+                continue;
+            }
+
+            var category = new Category()
+            {
+                Name = categoryName,
                 UserId = userId
             };
-            var tagId = _tagRepo.CreateTag(tag);
-            idMap[exportedTag.Id] = tagId;
+            _categoryRepository.AddCategory(category);
+            nameIdMap[categoryName] = category.Id;
         }
-
-        return idMap;
+        return nameIdMap;
     }
-
-    private Dictionary<int, int> ImportCategories(ExportedData data, int userId)
+    
+    private Dictionary<string, int> ImportPayees(IEnumerable<ExportedEntry> data, int userId)
     {
-        var idMap = new Dictionary<int, int>();
-        foreach (var exportedProject in data.Projects ?? [])
+        var nameIdMap = new Dictionary<string, int>();
+
+        foreach (var entry in data ?? [])
         {
-            var project = new Project()
+            if (entry.PayeeName == null)
             {
-                Name = exportedProject.Name,
-                Done = exportedProject.Completed,
-                Later = exportedProject.Later,
+                continue;
+            }
+
+            var payeeName = entry.PayeeName;
+            if (nameIdMap.ContainsKey(payeeName))
+            {
+                continue;
+            }
+
+            var payee = new Payee()
+            {
+                Name = payeeName,
                 UserId = userId
             };
-            var projectId = _projectRepo.CreateProject(project);
-            idMap[exportedProject.Id] = projectId;
+            _payeeRepository.AddPayee(payee);
+            nameIdMap[payeeName] = payee.Id;
         }
-
-        return idMap;
+        return nameIdMap;
     }
 }

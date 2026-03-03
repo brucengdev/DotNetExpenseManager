@@ -2,74 +2,19 @@
 
 namespace Backend.Models;
 
-public class ExportedData
+public class ExportedEntry
 {
-    [JsonPropertyName("projects")]
-    public List<ExportedProject> Projects { get; set; }
+    public string Title { get; set; }
     
-    [JsonPropertyName("tags")]
-    public List<ExportedTag> Tags { get; set; }
+    public string? Notes { get; set; }
     
-    [JsonPropertyName("tasks")]
-    public List<ExportedTask> Tasks { get; set; }
-}
+    public string? CategoryName { get; set; }
+    
+    public IEnumerable<string>? TagNames { get; set; }
+    
+    public string? PayeeName { get; set; }
 
-public class ExportedProject
-{
-    [JsonPropertyName("completed")]
-    public bool Completed { get; set; }
+    public DateTime Date { get; set; }
     
-    [JsonPropertyName("later")]
-    public bool Later { get; set; }
-    
-    [JsonPropertyName("id")]
-    public int Id { get; set; }
-    
-    [JsonPropertyName("name")]
-    public string Name { get; set; }
-    
-    [JsonPropertyName("description")]
-    public string? Description { get; set; }
-}
-
-public class ExportedTag
-{
-    [JsonPropertyName("id")]
-    public int Id { get; set; }
-    
-    [JsonPropertyName("name")]
-    public string Name { get; set; }
-}
-
-public class ExportedTask
-{
-    [JsonPropertyName("id")]
-    public int Id { get; set; }
-    
-    [JsonPropertyName("name")]
-    public string Name { get; set; }
-    
-    [JsonPropertyName("description")]
-    public string? Description { get; set; }
-    
-    [JsonPropertyName("completed")]
-    public bool Completed { get; set; }
-    
-    [JsonPropertyName("later")]
-    public bool Later { get; set; }
-
-    [JsonPropertyName("projectId")]
-    public int? ProjectId { get; set; }
-    
-    [JsonPropertyName("tagIds")]
-    public IEnumerable<int>? TagIds { get; set; }
-    
-    [JsonPropertyName("note")]
-    public string? Note { get; set; }
-    
-    [JsonPropertyName("pinned")]
-    public bool? Pinned { get; set; }
-    
-    [JsonPropertyName("priority")]
-    public bool? Priority { get; set; }
+    public float Value { get; set; }
 }

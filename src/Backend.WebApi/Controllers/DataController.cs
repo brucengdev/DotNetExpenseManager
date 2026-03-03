@@ -19,7 +19,7 @@ public class DataController:ControllerBase
     
     [HttpPut("[action]")]
     [ServiceFilter<SecurityFilterAttribute>]
-    public ActionResult Import([FromBody] ExportedData data)
+    public ActionResult Import([FromBody] IEnumerable<ExportedEntry> data)
     {
         _dataManager.Import(data, this.CurrentUserId());
         return Ok();
