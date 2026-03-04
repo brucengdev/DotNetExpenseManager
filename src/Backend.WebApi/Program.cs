@@ -52,6 +52,8 @@ builder.Services.AddScoped<ITagsManager, TagsManager>();
 builder.Services.AddScoped<IPayeeRepository, PayeeRepository>();
 builder.Services.AddScoped<IPayeeManager, PayeeManager>();
 
+builder.Services.AddScoped<IDataManager, DataManager>();
+
 builder.Services.AddScoped<SecurityFilterAttribute>();
 
 builder.Services.AddControllers();
