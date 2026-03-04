@@ -19,9 +19,13 @@ public class DataController:ControllerBase
     
     [HttpPut("[action]")]
     [ServiceFilter<SecurityFilterAttribute>]
-    public ActionResult Import([FromBody] IEnumerable<ExportedEntry> data)
+    public async Task<ActionResult> Import()
     {
-        _dataManager.Import(data, this.CurrentUserId());
+        using var streamReader = new StreamReader(Request.Body);
+        var csvData = await streamReader.ReadToEndAsync();
+        var exportedData = new ExportedData();
+        exportedData.Parse(csvData);
+        _dataManager.Import(exportedData, this.CurrentUserId());
         return Ok();
     }
 }

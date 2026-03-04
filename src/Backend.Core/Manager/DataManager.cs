@@ -21,8 +21,10 @@ public class DataManager:IDataManager
         _payeeRepository = payeeRepo;
         _categoryRepository = categoryRepo;
     }
-    public void Import(IEnumerable<ExportedEntry> entries, int userId)
+    public void Import(ExportedData data, int userId)
     {
+        var entries = data.Entries;
+        
         //import data
         var categoryNameIdMap = ImportCategories(entries, userId);
         var tagNameIdMap = ImportTags(entries, userId);
