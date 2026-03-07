@@ -3,7 +3,7 @@ import { IClient } from "./api/Client"
 import { EntryView } from "./EntryView"
 import { Entry } from "./models/Entry"
 import { EntryForm } from "./EntryForm"
-import { addDays, areSame, formatDisplayDate } from "./utils"
+import { addDays, areSame, formatDateToDay, formatDisplayDate } from "./utils"
 import { Category } from "./models/Category"
 import { Button, ButtonMode } from "./controls/Button"
 import { Tag } from "./models/Tag"
@@ -68,7 +68,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                             <div>
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
                             </div>
-                            <TextBox name="date" label="Date" value={formatDisplayDate(date)} />
+                            <TextBox name="date" label="Date" value={formatDateToDay(date)} />
                             <div className="place-items-end">
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
                             </div>
