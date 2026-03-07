@@ -35,7 +35,10 @@ describe("DayView", () => {
         const entryList = await screen.findByTestId("entry-list")
         expect(entryList).toBeInTheDocument()
 
-        expect(screen.getByRole("heading", { name: "11/6/2024"})).toBeInTheDocument()
+        const dateField = await screen.findByLabelText("Date")
+        expect(dateField).toHaveValue("2024-06-11")
+        expect(dateField).toHaveAttribute("type", "date")
+
         expect(screen.getByRole("button", { name: "<" })).toBeInTheDocument()
         expect(screen.getByRole("button", { name: ">" })).toBeInTheDocument()
 
@@ -85,10 +88,10 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
         
-        expect(await screen.findByRole("heading", { name: "1/6/2024"})).toBeInTheDocument()
+        expect(await screen.findByLabelText("Date")).toHaveValue("2024-06-01")
         fireEvent.click(screen.getByRole("button", {name: "<"}))
 
-        expect(await screen.findByRole("heading", {name: "31/5/2024"})).toBeInTheDocument()
+        expect(await screen.findByLabelText("Date")).toHaveValue("2024-05-31")
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
@@ -111,10 +114,39 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
         
-        expect(await screen.findByRole("heading", { name: "31/5/2024"})).toBeInTheDocument()
+        const dateField = await screen.findByLabelText("Date")
+        expect(dateField).toHaveValue("2024-05-31")
         fireEvent.click(screen.getByRole("button", {name: ">"}))
         
-        expect(await screen.findByRole("heading", {name: "1/6/2024"})).toBeInTheDocument()
+        expect(await screen.findByLabelText("Date")).toHaveValue("2024-06-01")
+
+        const entryList = screen.getByTestId("entry-list")
+        const entries = entryList.querySelectorAll('[data-testid="entry"]')
+        expect(entries.length).toBe(2) 
+
+        expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+
+        expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("toys")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100")
+    })
+
+    it("switches to next day when date field is changed", async () => {
+        const client = new TestClient()
+        client.Entries = [
+            new Entry(0, new Date(2024, 5, 1), "grocery", -120),
+            new Entry(1, new Date(2024, 5, 1), "toys", -100),
+            new Entry(2, new Date(2024, 12, 9), "eat out", -60),
+            new Entry(3, new Date(2024, 12, 11), "eat out", -65),
+        ]
+        render(<DayView client={client} initialDate={new Date(2024, 4, 2)} />)
+        
+        const dateField = await screen.findByLabelText("Date")
+        expect(dateField).toHaveValue("2024-05-02")
+
+        fireEvent.change(dateField, { target: { value: "2024-06-01"}})
+        
+        expect(await screen.findByLabelText("Date")).toHaveValue("2024-06-01")
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')

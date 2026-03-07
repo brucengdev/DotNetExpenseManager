@@ -3,11 +3,12 @@ import { IClient } from "./api/Client"
 import { EntryView } from "./EntryView"
 import { Entry } from "./models/Entry"
 import { EntryForm } from "./EntryForm"
-import { addDays, areSame, formatDisplayDate } from "./utils"
+import { addDays, areSame, formatDateToDay } from "./utils"
 import { Category } from "./models/Category"
 import { Button, ButtonMode } from "./controls/Button"
 import { Tag } from "./models/Tag"
 import { Payee } from "./models/Payee"
+import { TextBox } from "./controls/TextBox"
 
 export interface DayViewProps {
     client: IClient
@@ -67,7 +68,14 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                             <div>
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
                             </div>
-                            <h2 className="col-span-2 text-center">{formatDisplayDate(date)}</h2>
+                            <TextBox 
+                                name="date" 
+                                label="Date" 
+                                type="date"
+                                className="col-span-2"
+                                value={formatDateToDay(date)} 
+                                onChange={(e) => setDate(new Date(e.target.value))}
+                            />
                             <div className="place-items-end">
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
                             </div>
