@@ -35,7 +35,10 @@ describe("DayView", () => {
         const entryList = await screen.findByTestId("entry-list")
         expect(entryList).toBeInTheDocument()
 
-        expect(screen.getByRole("textbox", { name: "Date"})).toHaveValue("2024-06-11")
+        const dateField = await screen.findByLabelText("Date")
+        expect(dateField).toHaveValue("2024-06-11")
+        expect(dateField).toHaveAttribute("type", "date")
+
         expect(screen.getByRole("button", { name: "<" })).toBeInTheDocument()
         expect(screen.getByRole("button", { name: ">" })).toBeInTheDocument()
 
@@ -85,10 +88,10 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
         
-        expect(await screen.findByRole("textbox", { name: "Date"})).toHaveValue("2024-06-01")
+        expect(await screen.findByLabelText("Date")).toHaveValue("2024-06-01")
         fireEvent.click(screen.getByRole("button", {name: "<"}))
 
-        expect(await screen.findByRole("textbox", {name: "Date"})).toHaveValue("2024-05-31")
+        expect(await screen.findByLabelText("Date")).toHaveValue("2024-05-31")
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
@@ -111,11 +114,11 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
         
-        const dateField = await screen.findByRole("textbox", { name: "Date"})
+        const dateField = await screen.findByLabelText("Date")
         expect(dateField).toHaveValue("2024-05-31")
         fireEvent.click(screen.getByRole("button", {name: ">"}))
         
-        expect(await screen.findByRole("textbox", {name: "Date"})).toHaveValue("2024-06-01")
+        expect(await screen.findByLabelText("Date")).toHaveValue("2024-06-01")
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
@@ -138,12 +141,12 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 2)} />)
         
-        const dateField = await screen.findByRole("textbox", { name: "Date"})
+        const dateField = await screen.findByLabelText("Date")
         expect(dateField).toHaveValue("2024-05-02")
 
         fireEvent.change(dateField, { target: { value: "2024-06-01"}})
         
-        expect(await screen.findByRole("textbox", {name: "Date"})).toHaveValue("2024-06-01")
+        expect(await screen.findByLabelText("Date")).toHaveValue("2024-06-01")
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')

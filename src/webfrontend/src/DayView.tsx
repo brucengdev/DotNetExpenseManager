@@ -71,6 +71,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                             <TextBox 
                                 name="date" 
                                 label="Date" 
+                                type="date"
                                 value={formatDateToDay(date)} 
                                 onChange={(e) => setDate(new Date(e.target.value))}
                             />
