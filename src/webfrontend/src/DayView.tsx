@@ -68,7 +68,12 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                             <div>
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, -1))} text="&lt;" />
                             </div>
-                            <TextBox name="date" label="Date" value={formatDateToDay(date)} />
+                            <TextBox 
+                                name="date" 
+                                label="Date" 
+                                value={formatDateToDay(date)} 
+                                onChange={(e) => setDate(new Date(e.target.value))}
+                            />
                             <div className="place-items-end">
                                 <Button mode={ButtonMode.SECONDARY} onClick={() => setDate(addDays(date, 1))} text="&gt;" />
                             </div>
