@@ -35,7 +35,7 @@ describe("DayView", () => {
         const entryList = await screen.findByTestId("entry-list")
         expect(entryList).toBeInTheDocument()
 
-        expect(screen.getByRole("heading", { name: "11/6/2024"})).toBeInTheDocument()
+        expect(screen.getByRole("textbox", { name: "Date"})).toHaveValue("11/6/2024")
         expect(screen.getByRole("button", { name: "<" })).toBeInTheDocument()
         expect(screen.getByRole("button", { name: ">" })).toBeInTheDocument()
 
@@ -85,10 +85,10 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
         
-        expect(await screen.findByRole("heading", { name: "1/6/2024"})).toBeInTheDocument()
+        expect(await screen.findByRole("textbox", { name: "Date"})).toHaveValue("1/6/2024")
         fireEvent.click(screen.getByRole("button", {name: "<"}))
 
-        expect(await screen.findByRole("heading", {name: "31/5/2024"})).toBeInTheDocument()
+        expect(await screen.findByRole("textbox", {name: "Date"})).toHaveValue("31/5/2024")
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
@@ -111,10 +111,11 @@ describe("DayView", () => {
         ]
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
         
-        expect(await screen.findByRole("heading", { name: "31/5/2024"})).toBeInTheDocument()
+        const dateField = await screen.findByRole("textbox", { name: "Date"})
+        expect(dateField).toHaveValue("31/5/2024")
         fireEvent.click(screen.getByRole("button", {name: ">"}))
         
-        expect(await screen.findByRole("heading", {name: "1/6/2024"})).toBeInTheDocument()
+        expect(await screen.findByRole("textbox", {name: "Date"})).toHaveValue("1/6/2024")
 
         const entryList = screen.getByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
