@@ -72,6 +72,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                 name="date" 
                                 label="Date" 
                                 type="date"
+                                className="col-span-2"
                                 value={formatDateToDay(date)} 
                                 onChange={(e) => setDate(new Date(e.target.value))}
                             />
