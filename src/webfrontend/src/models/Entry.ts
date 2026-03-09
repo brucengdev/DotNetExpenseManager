@@ -21,13 +21,26 @@ export class Entry implements Comparable<Entry>{
         notes: string | undefined = undefined
     ) {
         this.id = id
-        this.date = date
+        this.date = new Date(date)
         this.title = title
         this.value = value
         this.categoryId = categoryId
         this.tagIds = tagIds
         this.payeeId = payeeId
         this.notes = notes
+    }
+
+    public static FromOther(entry: Entry): Entry {
+        return new Entry(
+            entry.id, 
+            new Date(entry.date),
+            entry.title,
+            entry.value,
+            entry.categoryId ?? 0,
+            entry.tagIds,
+            entry.payeeId,
+            entry.notes
+        )
     }
 
     public Equals(other: Entry): boolean {
