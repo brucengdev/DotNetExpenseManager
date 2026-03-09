@@ -30,6 +30,19 @@ export class Entry implements Comparable<Entry>{
         this.notes = notes
     }
 
+    public static FromOther(entry: Entry): Entry {
+        return new Entry(
+            entry.id, 
+            entry.date,
+            entry.title,
+            entry.value,
+            entry.categoryId ?? 0,
+            entry.tagIds,
+            entry.payeeId,
+            entry.notes
+        )
+    }
+
     public Equals(other: Entry): boolean {
         const hasSameTags = this.tagIds.every(tId => other.tagIds.includes(tId)) 
             && this.tagIds.length === other.tagIds.length

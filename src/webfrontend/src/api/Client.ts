@@ -76,7 +76,8 @@ export class Client implements IClient {
             method: "GET"
         })
         if(result.ok) {
-            return await result.json()
+            return ((await result.json()) as Entry[])
+                    .map(e => Entry.FromOther(e))
         }
         return []
     }
@@ -110,7 +111,8 @@ export class Client implements IClient {
             method: "GET"
         })
         if(result.ok) {
-            return await result.json()
+            return ((await result.json()) as Category[])
+                .map(c => new Category(c.id, c.name))
         }
         return []
     }
@@ -148,7 +150,8 @@ export class Client implements IClient {
             method: "GET"
         })
         if(result.ok) {
-            return await result.json()
+            return ((await result.json()) as Tag[])
+                .map(t => new Tag(t.id, t.name))
         }
         return []
     }
@@ -173,7 +176,8 @@ export class Client implements IClient {
             method: "GET"
         })
         if(result.ok) {
-            return await result.json()
+            return ((await result.json()) as Payee[])
+                .map(p => new Payee(p.id, p.name))
         }
         return []
     }
