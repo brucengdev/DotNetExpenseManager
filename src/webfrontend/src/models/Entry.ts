@@ -21,7 +21,7 @@ export class Entry implements Comparable<Entry>{
         notes: string | undefined = undefined
     ) {
         this.id = id
-        this.date = date
+        this.date = new Date(date)
         this.title = title
         this.value = value
         this.categoryId = categoryId
@@ -33,7 +33,7 @@ export class Entry implements Comparable<Entry>{
     public static FromOther(entry: Entry): Entry {
         return new Entry(
             entry.id, 
-            entry.date,
+            new Date(entry.date),
             entry.title,
             entry.value,
             entry.categoryId ?? 0,
