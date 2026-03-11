@@ -69,7 +69,7 @@ export const EntryForm = (props: EntryFormProps) => {
             <label htmlFor="tags-control" className="block text-sm/6 font-semibold text-gray-900">Tags</label>
             <MultiSelect
                 selectDataTestId="tags-control"
-                options={tags ? tags.map(tag => ({ value: tag.id.toString(), text: tag.name })) : []}
+                options={tags ? [...tags].sort((a, b) => a.name.localeCompare(b.name)).map(tag => ({ value: tag.id.toString(), text: tag.name })) : []}
                 selectedValues={tagIds.map(id => id.toString())}
                 onChange={values => {
                     setTagIds(values.map(v => parseInt(v)))

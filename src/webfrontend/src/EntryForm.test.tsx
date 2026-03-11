@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
@@ -126,6 +126,21 @@ describe("EntryForm", () => {
             expect((screen.getByRole("option", { name: "tag2"}) as HTMLOptionElement).selected).toBeTruthy()
             expect((screen.getByRole("option", { name: "tag3"}) as HTMLOptionElement).selected).toBeFalsy()
         })
+    })
+
+    it("sorts tags alphabetically", async () => {
+        const client = new TestClient()
+        client.Tags = [
+            new Tag(1, "chicken"),
+            new Tag(2, "dog"),
+            new Tag(3, "abacus")
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+
+        const tagControl = await screen.findByTestId("tags-control")
+        const options = within(tagControl).getAllByRole("option")
+        const tagTexts = options.map(o => o.textContent)
+        expect(tagTexts).toEqual(["abacus", "chicken", "dog"])
     })
 
     it("changes payee", async () => {
