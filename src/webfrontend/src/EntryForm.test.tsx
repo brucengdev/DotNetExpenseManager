@@ -37,7 +37,7 @@ describe("EntryForm", () => {
         expect(tagsField).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument()
 
-        expect(screen.getByLabelText("Payee")).toBeInTheDocument()
+        expect(screen.getByRole("combobox", { name: "Payee" })).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "[No payee]"})).toBeInTheDocument()
         expect((screen.getByRole("option", { name: "[No payee]"}) as HTMLOptionElement).selected).toBeTruthy()
         expect(screen.getByRole("option", { name: "Tom"})).toBeInTheDocument()
@@ -203,7 +203,7 @@ describe("EntryForm", () => {
         fireEvent.click(await screen.findByRole("link", { name: "Uncategorized" }))
         fireEvent.click(await screen.findByRole("link", { name: "household" }))
         userEvent.selectOptions(await screen.findByTestId("tags-control"), ["1", "2"])
-        userEvent.selectOptions(await screen.findByLabelText("Payee"), "1")
+        userEvent.selectOptions(await screen.findByRole("combobox", { name: "Payee" }), "1")
         await waitFor(() => {
             expect((screen.getByRole("option", { name: "Tom"}) as HTMLOptionElement).selected).toBeTruthy()
         })
