@@ -157,6 +157,20 @@ describe("EntryForm", () => {
         })
     })
 
+    it("sorts payees alphabetically", async () => {
+        const client = new TestClient()
+        client.Payees = [
+            new Payee(1, "Tom"),
+            new Payee(2, "Alice")
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+
+        const payeeSelect = await screen.findByRole("combobox", { name: "Payee" })
+        const options = within(payeeSelect).getAllByRole("option")
+        const payeeTexts = options.map(o => o.textContent)
+        expect(payeeTexts).toEqual(["[No payee]", "Alice", "Tom"])     
+    })
+
     it("changes notes", async () => {
         render(<EntryForm client={new TestClient()} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         

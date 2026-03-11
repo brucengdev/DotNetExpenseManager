@@ -39,6 +39,7 @@ export const EntryForm = (props: EntryFormProps) => {
     }
 
     const sortedTags = (tags || []).sort((a, b) => a.name.localeCompare(b.name))
+    const sortedPayees = (payees || []).sort((a, b) => a.name.localeCompare(b.name))
 
     return <div data-testid="entry-form">
         <TextBox
@@ -92,9 +93,9 @@ export const EntryForm = (props: EntryFormProps) => {
                 }
             >
                 <option key={0} value={undefined}>[No payee]</option>
-                {payees ? payees.map(payee => (
+                {sortedPayees.map(payee => (
                     <option key={payee.id} value={payee.id}>{payee.name}</option>
-                )) : null}
+                ))}
             </select>
         </div>
 
