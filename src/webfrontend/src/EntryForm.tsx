@@ -37,6 +37,10 @@ export const EntryForm = (props: EntryFormProps) => {
         client.GetPayees()
         .then(retrievedPayees => setPayees(retrievedPayees))
     }
+
+    const sortedTags = (tags || []).sort((a, b) => a.name.localeCompare(b.name))
+    const sortedPayees = (payees || []).sort((a, b) => a.name.localeCompare(b.name))
+
     return <div data-testid="entry-form">
         <TextBox
             name="title"
@@ -69,7 +73,7 @@ export const EntryForm = (props: EntryFormProps) => {
             <label htmlFor="tags-control" className="block text-sm/6 font-semibold text-gray-900">Tags</label>
             <MultiSelect
                 selectDataTestId="tags-control"
-                options={tags ? tags.map(tag => ({ value: tag.id.toString(), text: tag.name })) : []}
+                options={sortedTags.map(tag => ({ value: tag.id.toString(), text: tag.name }))}
                 selectedValues={tagIds.map(id => id.toString())}
                 onChange={values => {
                     setTagIds(values.map(v => parseInt(v)))
@@ -89,9 +93,9 @@ export const EntryForm = (props: EntryFormProps) => {
                 }
             >
                 <option key={0} value={undefined}>[No payee]</option>
-                {payees ? payees.map(payee => (
+                {sortedPayees.map(payee => (
                     <option key={payee.id} value={payee.id}>{payee.name}</option>
-                )) : null}
+                ))}
             </select>
         </div>
 

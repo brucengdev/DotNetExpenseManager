@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
@@ -37,7 +37,7 @@ describe("EntryForm", () => {
         expect(tagsField).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument()
 
-        expect(screen.getByLabelText("Payee")).toBeInTheDocument()
+        expect(screen.getByRole("combobox", { name: "Payee" })).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "[No payee]"})).toBeInTheDocument()
         expect((screen.getByRole("option", { name: "[No payee]"}) as HTMLOptionElement).selected).toBeTruthy()
         expect(screen.getByRole("option", { name: "Tom"})).toBeInTheDocument()
@@ -93,6 +93,23 @@ describe("EntryForm", () => {
             .toBeInTheDocument()
     })
 
+    it("sorts categories alphabetically", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(2, "household"),
+            new Category(3, "entertainment"),
+            new Category(4, "food")  
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+
+        await screen.findByTestId("category-control")
+        fireEvent.click(await screen.findByRole("link", { name: "Uncategorized" }))
+
+        const categoryTexts = screen.getAllByRole("link").map(l => l.textContent)
+        
+        expect(categoryTexts).toEqual(["Uncategorized", "entertainment", "food", "household"])
+    })
+
     it("changes tags", async () => {
         const client = new TestClient()
         client.Tags = [
@@ -111,6 +128,21 @@ describe("EntryForm", () => {
         })
     })
 
+    it("sorts tags alphabetically", async () => {
+        const client = new TestClient()
+        client.Tags = [
+            new Tag(1, "chicken"),
+            new Tag(2, "dog"),
+            new Tag(3, "abacus")
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+
+        const tagControl = await screen.findByTestId("tags-control")
+        const options = within(tagControl).getAllByRole("option")
+        const tagTexts = options.map(o => o.textContent)
+        expect(tagTexts).toEqual(["abacus", "chicken", "dog"])
+    })
+
     it("changes payee", async () => {
         const client = new TestClient()
         client.Payees = [
@@ -123,6 +155,20 @@ describe("EntryForm", () => {
         await waitFor(() => {
             expect((screen.getByRole("option", { name: "Tom"}) as HTMLOptionElement).selected).toBeTruthy()
         })
+    })
+
+    it("sorts payees alphabetically", async () => {
+        const client = new TestClient()
+        client.Payees = [
+            new Payee(1, "Tom"),
+            new Payee(2, "Alice")
+        ]
+        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+
+        const payeeSelect = await screen.findByRole("combobox", { name: "Payee" })
+        const options = within(payeeSelect).getAllByRole("option")
+        const payeeTexts = options.map(o => o.textContent)
+        expect(payeeTexts).toEqual(["[No payee]", "Alice", "Tom"])     
     })
 
     it("changes notes", async () => {
@@ -157,7 +203,7 @@ describe("EntryForm", () => {
         fireEvent.click(await screen.findByRole("link", { name: "Uncategorized" }))
         fireEvent.click(await screen.findByRole("link", { name: "household" }))
         userEvent.selectOptions(await screen.findByTestId("tags-control"), ["1", "2"])
-        userEvent.selectOptions(await screen.findByLabelText("Payee"), "1")
+        userEvent.selectOptions(await screen.findByRole("combobox", { name: "Payee" }), "1")
         await waitFor(() => {
             expect((screen.getByRole("option", { name: "Tom"}) as HTMLOptionElement).selected).toBeTruthy()
         })

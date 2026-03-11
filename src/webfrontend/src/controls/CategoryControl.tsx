@@ -19,9 +19,11 @@ export function CategoryControl(props: CategoryControlProps) {
     const [filterText, setFilterText] = useState("")
     const matchedCategory = categories.find(c => c.id === categoryId)
     const categoryName = matchedCategory?.name ?? "Uncategorized"
+    
+    const sortedCategories = [...categories].sort((a, b) => a.name.localeCompare(b.name))
     const cats: Category[] = [
         new Category(0, "Uncategorized"),
-        ... categories
+        ... sortedCategories
     ].filter(c => c.name.indexOf(filterText) !== -1)
 
     return <div data-testid="category-control">
