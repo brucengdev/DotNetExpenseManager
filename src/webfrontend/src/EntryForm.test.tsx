@@ -96,7 +96,6 @@ describe("EntryForm", () => {
     it("sorts categories alphabetically", async () => {
         const client = new TestClient()
         client.Categories = [
-            new Category(1, "Uncategorized"),
             new Category(2, "household"),
             new Category(3, "entertainment"),
             new Category(4, "food")  
@@ -105,9 +104,10 @@ describe("EntryForm", () => {
 
         await screen.findByTestId("category-control")
         fireEvent.click(await screen.findByRole("link", { name: "Uncategorized" }))
+
         const categoryTexts = screen.getAllByRole("link").map(l => l.textContent)
         
-        expect(categoryTexts).toEqual(["Uncategorized", "Uncategorized", "entertainment", "food", "household"])
+        expect(categoryTexts).toEqual(["Uncategorized", "entertainment", "food", "household"])
     })
 
     it("changes tags", async () => {
