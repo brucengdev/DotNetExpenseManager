@@ -4,6 +4,7 @@ import { Button, ButtonMode } from "./controls/Button"
 import { DayView } from "./DayView"
 import { TagsView } from "./TagsView"
 import { PayeesView } from "./PayeesView"
+import { ReportsView } from "./reports/ReportsView"
 
 export interface MainViewProps {
   client: IClient
@@ -13,7 +14,8 @@ export interface MainViewProps {
 enum View {
   DAY,
   TAGS,
-  PAYEES
+  PAYEES,
+  REPORTS
 }
 
 export function MainView({client, onLogout} : MainViewProps) {
@@ -31,9 +33,11 @@ export function MainView({client, onLogout} : MainViewProps) {
         <Button text="Day" mode={view === View.DAY? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.DAY)}/>
         <Button text="Tags" mode={view === View.TAGS? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.TAGS)}/>
         <Button text="Payees" mode={view === View.PAYEES? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.PAYEES)}/>
+        <Button text="Reports" mode={view === View.REPORTS? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.REPORTS)}/>
       </div>
         {view === View.DAY? <DayView client={client} initialDate={new Date()} />: <></>}
         {view === View.TAGS? <TagsView client={client} />: <></>}
         {view === View.PAYEES? <PayeesView client={client}/>:<></>}
+        {view === View.REPORTS? <ReportsView client={client}/>:<></>}
     </div>
 }
