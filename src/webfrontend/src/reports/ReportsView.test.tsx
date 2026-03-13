@@ -10,6 +10,8 @@ describe("ReportsView", () => {
 
         expect(screen.getByTestId("reports-view")).toBeInTheDocument()
 
-        await screen.findByRole("button", { name: "Monthly"})
+        expect(screen.getByRole("button", { name: "Monthly"})).toBeInTheDocument()
+
+        expect(screen.getByTestId("monthly-report-view")).toBeInTheDocument()
     })
 })
