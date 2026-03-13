@@ -9,5 +9,7 @@ describe("ReportsView", () => {
         await render(<ReportsView client={new TestClient()} />)
 
         expect(screen.getByTestId("reports-view")).toBeInTheDocument()
+
+        await screen.findByRole("button", { name: "Monthly"})
     })
 })
