@@ -61,10 +61,10 @@ describe("MonthlyReportView", () => {
         expect(monthControl).toHaveValue("2026-03")
 
         await waitFor(() => {
-            expect(screen.getByTestId("total-spendings")).toHaveTextContent("-10")
+            expect(screen.getByTestId("total-spendings")).toHaveTextContent("Total spendings: -10")
         })
-        expect(screen.getByTestId("total-income")).toHaveTextContent("30")
-        expect(screen.getByTestId("savings")).toHaveTextContent("20")
+        expect(screen.getByTestId("total-income")).toHaveTextContent("Total income: 30")
+        expect(screen.getByTestId("savings")).toHaveTextContent("Savings: 20")
 
         const byCategories = screen.getByTestId("by-categories")
         expect(byCategories).toBeInTheDocument()
