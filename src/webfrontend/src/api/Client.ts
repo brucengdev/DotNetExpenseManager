@@ -3,7 +3,7 @@ import { Entry } from "../models/Entry"
 import { MonthlyReport } from "../models/MonthlyReport"
 import { Payee } from "../models/Payee"
 import { Tag } from "../models/Tag"
-import { formatDateToDay } from "../utils"
+import { formatDateToDay, formatDateToMonthYear } from "../utils"
 
 export interface IClient {
     Token: () => string | undefined
@@ -190,13 +190,19 @@ export class Client implements IClient {
     }
 
     async GetMonthlyReport(month: Date) {
+        const monthStr = formatDateToMonthYear(month)
+        const result = await fetch(`${url}/reports/monthly/${monthStr}?${new URLSearchParams({
+            accessToken: this.token,
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return (await result.json()) as MonthlyReport
+        }
         return {
-            ByCategories: {
-                "Cat1": 1,
-                "Cat2": -2
-            },
-            TotalSpendings: -10,
-            TotalIncome: 10,
+            ByCategories: {},
+            TotalSpendings: 0,
+            TotalIncome: 0,
             Savings: 0
         }
     }
