@@ -1,8 +1,8 @@
 using Backend.Core.Models;
 
-namespace Backend.Core.Manager;
+namespace Backend.Core.Repository;
 
-public interface IReportManager
+public interface IReportsRepository
 {
     MonthlyReport GetMonthlyReport(int userId, DateTime month);
 }

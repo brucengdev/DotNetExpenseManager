@@ -6,12 +6,18 @@ public class MonthlyReportServiceModel
 {
     public static MonthlyReportServiceModel From(MonthlyReport monthlyReport)
     {
-        throw new NotImplementedException();
+        return new MonthlyReportServiceModel()
+        {
+            ByCategories = monthlyReport.CategorySummaries.ToDictionary(s => s.CategoryName, s => s.Total),
+            TotalSpendings = monthlyReport.TotalSpendings,
+            TotalIncome = monthlyReport.TotalIncome,
+            Savings = monthlyReport.Savings
+        };
     }
 
     public Dictionary<string, float> ByCategories { get; set; } = new();
 
     public float TotalIncome { get; set; }
     public float TotalSpendings { get; set; }
-    public float TotalExpenses { get; set; }
+    public float Savings { get; set; }
 }

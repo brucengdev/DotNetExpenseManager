@@ -9,11 +9,11 @@ namespace Backend.WebApi.Controllers;
 [Route("[controller]")]
 public class ReportsController: ControllerBase
 {
-    private readonly IReportManager _reportManager;
+    private readonly IReportsManager _reportsManager;
 
-    public ReportsController(IReportManager reportManager)
+    public ReportsController(IReportsManager reportsManager)
     {
-        _reportManager = reportManager;
+        _reportsManager = reportsManager;
     }
     
     [HttpGet("monthly/{month}")]
@@ -21,6 +21,6 @@ public class ReportsController: ControllerBase
     public MonthlyReportServiceModel GetMonthlyReport(DateTime month)
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
-        return MonthlyReportServiceModel.From(_reportManager.GetMonthlyReport(userId.Value!, month));
+        return MonthlyReportServiceModel.From(_reportsManager.GetMonthlyReport(userId.Value!, month));
     }
 }
