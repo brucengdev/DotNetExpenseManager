@@ -29,7 +29,7 @@ export function MainView({client, onLogout} : MainViewProps) {
           onClick={() => onLogout()}
         />
       </div>
-      <div className="mb-5 grid grid-cols-3 gap-2">
+      <div className="mb-5 grid grid-cols-4 gap-2">
         <Button text="Day" mode={view === View.DAY? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.DAY)}/>
         <Button text="Tags" mode={view === View.TAGS? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.TAGS)}/>
         <Button text="Payees" mode={view === View.PAYEES? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.PAYEES)}/>
