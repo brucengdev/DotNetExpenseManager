@@ -1,8 +1,9 @@
 import { Category } from "../models/Category"
 import { Entry } from "../models/Entry"
+import { MonthlyReport } from "../models/MonthlyReport"
 import { Payee } from "../models/Payee"
 import { Tag } from "../models/Tag"
-import { formatDateToDay } from "../utils"
+import { formatDateToDay, formatDateToMonthYear } from "../utils"
 
 export interface IClient {
     Token: () => string | undefined
@@ -21,6 +22,9 @@ export interface IClient {
 
     AddPayee: (name: string) => Promise<boolean>
     GetPayees: () => Promise<Payee[]>
+
+    //reports
+    GetMonthlyReport: (month: Date) => Promise<MonthlyReport>
 }
 
 const devUrl = "https://localhost:7146"
@@ -183,5 +187,23 @@ export class Client implements IClient {
                 .map(p => new Payee(p.id, p.name))
         }
         return []
+    }
+
+    async GetMonthlyReport(month: Date) {
+        const monthStr = formatDateToMonthYear(month)
+        const result = await fetch(`${url}/reports/monthly/${monthStr}?${new URLSearchParams({
+            accessToken: this.token,
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return (await result.json()) as MonthlyReport
+        }
+        return {
+            byCategories: {},
+            totalSpendings: 0,
+            totalIncome: 0,
+            savings: 0
+        }
     }
 }

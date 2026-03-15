@@ -54,6 +54,9 @@ builder.Services.AddScoped<IPayeeManager, PayeeManager>();
 
 builder.Services.AddScoped<IDataManager, DataManager>();
 
+builder.Services.AddScoped<IReportsRepository, ReportsRepository>();
+builder.Services.AddScoped<IReportsManager, ReportsManager>();
+
 builder.Services.AddScoped<SecurityFilterAttribute>();
 
 builder.Services.AddControllers();

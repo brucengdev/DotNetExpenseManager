@@ -102,4 +102,25 @@ describe("MainView", () => {
         expect(screen.getByRole("button", { name: "Tags"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Payees"}).className).toContain("bg-indigo-600")
     })
+
+    it("shows reports view when clicked on", () => {
+        render(<MainView client={new TestClient()} onLogout={() => { }} />)
+
+        const reportsButton = screen.getByRole("button", { name: "Reports"})
+        expect(reportsButton).toBeInTheDocument()
+
+        fireEvent.click(reportsButton)
+
+        const reportsView = screen.getByTestId("reports-view")
+        expect(reportsView).toBeInTheDocument()
+
+        expect(screen.queryByTestId("day-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
+        
+        expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-gray-300")
+        expect(screen.getByRole("button", { name: "Tags"}).className).toContain("bg-gray-300")
+        expect(screen.getByRole("button", { name: "Payees"}).className).toContain("bg-gray-300")
+        expect(screen.getByRole("button", { name: "Reports"}).className).toContain("bg-indigo-600")
+    })
 })

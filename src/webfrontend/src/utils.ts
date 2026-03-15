@@ -10,6 +10,10 @@ export function formatDateToDay(date: Date): string {
     return `${date.getFullYear()}-${formatMonth(date.getMonth())}-${formatDate(date.getDate())}`
 }
 
+export function formatDateToMonthYear(date: Date): string {
+    return `${date.getFullYear()}-${formatMonth(date.getMonth())}`
+}
+
 function formatMonth(monthNumber: number): string {
     return (monthNumber + 1).toString().padStart(2, "0")
 }
