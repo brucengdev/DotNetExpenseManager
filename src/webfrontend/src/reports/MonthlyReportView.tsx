@@ -33,7 +33,10 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
             reportData
             ? <>
                 <div data-testid="by-categories">
-                    
+                    {
+                        Object.keys(reportData.ByCategories)
+                        .map(catName => <div data-testid="category-summary"></div>)
+                    }
                 </div>
                 <div data-testid="total-spendings">{reportData.TotalSpendings}</div>
                 <div data-testid="total-income">{reportData.TotalIncome}</div>

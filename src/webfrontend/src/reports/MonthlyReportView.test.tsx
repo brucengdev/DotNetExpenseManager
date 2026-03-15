@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it, vitest } from "vitest";
 import { MonthlyReportView } from "./MonthlyReportView";
 import '@testing-library/jest-dom'
@@ -66,6 +66,10 @@ describe("MonthlyReportView", () => {
         expect(screen.getByTestId("total-income")).toHaveTextContent("30")
         expect(screen.getByTestId("savings")).toHaveTextContent("20")
 
-        expect(screen.getByTestId("by-categories")).toBeInTheDocument()
+        const byCategories = screen.getByTestId("by-categories")
+        expect(byCategories).toBeInTheDocument()
+
+        const catSummaries = within(byCategories).queryAllByTestId("category-summary")
+        expect(catSummaries).toHaveLength(4)
     })
 })
