@@ -86,13 +86,13 @@ export class TestClient implements IClient {
         //this function should be replaced in tests
         //no real implementation here
         return {
-            ByCategories: {
+            byCategories: {
                 "Cat1": 10,
                 "Cat2": -2
             },
-            TotalIncome:0,
-            TotalSpendings: 0,
-            Savings: 0
+            totalIncome:0,
+            totalSpendings: 0,
+            savings: 0
         }
     }
 }

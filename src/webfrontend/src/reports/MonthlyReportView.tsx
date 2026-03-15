@@ -34,13 +34,13 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
             ? <>
                 <div data-testid="by-categories">
                     {
-                        Object.keys(reportData.ByCategories)
-                        .map(catName => <div data-testid="category-summary">{catName}: {reportData.ByCategories[catName]}</div>)
+                        Object.keys(reportData.byCategories)
+                        .map(catName => <div data-testid="category-summary">{catName}: {reportData.byCategories[catName]}</div>)
                     }
                 </div>
-                <div data-testid="total-spendings">{reportData.TotalSpendings}</div>
-                <div data-testid="total-income">{reportData.TotalIncome}</div>
-                <div data-testid="savings">{reportData.Savings}</div>
+                <div data-testid="total-spendings">{reportData.totalSpendings}</div>
+                <div data-testid="total-income">{reportData.totalIncome}</div>
+                <div data-testid="savings">{reportData.savings}</div>
             </>
             :<></>
         }

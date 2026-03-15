@@ -1,6 +1,6 @@
 export interface MonthlyReport {
-    ByCategories: Record<string, number>
-    TotalSpendings: number
-    TotalIncome: number
-    Savings: number
+    byCategories: Record<string, number>
+    totalSpendings: number
+    totalIncome: number
+    savings: number
 }

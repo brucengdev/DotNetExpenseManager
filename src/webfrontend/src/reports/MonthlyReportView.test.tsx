@@ -40,15 +40,15 @@ describe("MonthlyReportView", () => {
 
         client.GetMonthlyReport = vitest.fn(async(month: Date) => {
             return {
-                ByCategories: {
+                byCategories: {
                     "Household": -2,
                     "Food": -3,
                     "Travel": -3,
                     "Salary": 30
                 },
-                TotalSpendings: -10,
-                TotalIncome: 30,
-                Savings: 20
+                totalSpendings: -10,
+                totalIncome: 30,
+                savings: 20
             }
         })
         render(<MonthlyReportView client={client} month={new Date(2026, 2)} />)

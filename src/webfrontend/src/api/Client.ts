@@ -200,10 +200,10 @@ export class Client implements IClient {
             return (await result.json()) as MonthlyReport
         }
         return {
-            ByCategories: {},
-            TotalSpendings: 0,
-            TotalIncome: 0,
-            Savings: 0
+            byCategories: {},
+            totalSpendings: 0,
+            totalIncome: 0,
+            savings: 0
         }
     }
 }
