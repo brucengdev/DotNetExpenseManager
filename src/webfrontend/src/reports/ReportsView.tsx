@@ -9,6 +9,6 @@ interface ReportsViewProps {
 export function ReportsView(_: ReportsViewProps) {
     return <div data-testid="reports-view">
         <Button text="Monthly"/>
-        <MonthlyReportView />
+        <MonthlyReportView month={new Date()} />
     </div>
 }
