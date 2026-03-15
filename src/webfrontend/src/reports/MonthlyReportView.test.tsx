@@ -54,7 +54,8 @@ describe("MonthlyReportView", () => {
     it("Moves to another month when month picker changes", async () => {
         const client = new TestClient()
         client.GetMonthlyReport = vitest.fn(async(month: Date) => {
-            if(formatDateToMonthYear(month) === '2025-03') {
+            const monthStr = formatDateToMonthYear(month)
+            if(monthStr === '2026-03') {
                 return {
                     byCategories: {
                         "Household": -2,
@@ -71,14 +72,14 @@ describe("MonthlyReportView", () => {
             //2024-02
             return {
                 byCategories: {
-                    "Household": -20,
-                    "Food": -30,
-                    "Travel": -30,
-                    "Salary": 300
+                    "Household": -222,
+                    "Food": -333,
+                    "Travel": -333,
+                    "Salary": 333
                 },
                 totalSpendings: -122,
-                totalIncome: 300,
-                savings: 200
+                totalIncome: 333,
+                savings: 222
             }
         })
         render(<MonthlyReportView client={client} month={new Date(2026, 2)} />)
@@ -101,8 +102,8 @@ describe("MonthlyReportView", () => {
             expect(screen.getByTestId("total-spendings")).toHaveTextContent("Total spendings: -122")
         })
 
-        expect(screen.getByTestId("total-income")).toHaveTextContent("Total income: 300")
-        expect(screen.getByTestId("savings")).toHaveTextContent("Savings: 200")
+        expect(screen.getByTestId("total-income")).toHaveTextContent("Total income: 333")
+        expect(screen.getByTestId("savings")).toHaveTextContent("Savings: 222")
 
         const byCategories = screen.getByTestId("by-categories")
         expect(byCategories).toBeInTheDocument()
@@ -111,10 +112,10 @@ describe("MonthlyReportView", () => {
         const catSummaryTexts = catSummaries.map(e => e.textContent)
         expect(catSummaryTexts).toStrictEqual(
             [
-                "Household: -20",
-                "Food: -30",
-                "Travel: -30",
-                "Salary: 300"
+                "Household: -222",
+                "Food: -333",
+                "Travel: -333",
+                "Salary: 333"
             ]
         )
     })

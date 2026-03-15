@@ -26,7 +26,12 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
                 id="month-control" 
                 type="month" 
                 value={formatDateToMonthYear(month)}
-                onChange={e => setMonth(new Date(e.target.value))}
+                onChange={
+                    e => { 
+                        setMonth(new Date(e.target.value))
+                        setReportData(undefined)//to reload
+                    }
+                }
             />
         </div>
         {
