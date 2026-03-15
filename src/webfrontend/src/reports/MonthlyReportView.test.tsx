@@ -9,7 +9,7 @@ describe("MonthlyReportView", () => {
      it("Shows month picker and report of selected month", async () => {
         const client = new TestClient()
 
-        client.GetMonthlyReport = vitest.fn(async(month: Date) => {
+        client.GetMonthlyReport = vitest.fn(async(_: Date) => {
             return {
                 byCategories: {
                     "Household": -2,
