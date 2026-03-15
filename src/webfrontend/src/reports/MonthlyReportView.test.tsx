@@ -40,7 +40,9 @@ describe("MonthlyReportView", () => {
 
         client.GetMonthlyReport = vitest.fn(async(month: Date) => {
             return {
-                TotalSpendings: -10
+                TotalSpendings: -10,
+                TotalIncome: 30,
+                Savings: 20
             }
         })
         render(<MonthlyReportView client={client} month={new Date(2026, 2)} />)
@@ -54,9 +56,8 @@ describe("MonthlyReportView", () => {
 
         await waitFor(() => {
             expect(screen.getByTestId("total-spendings")).toHaveTextContent("-10")
-            
+            expect(screen.getByTestId("total-income")).toHaveTextContent("30")
+            expect(screen.getByTestId("savings")).toHaveTextContent("20")  
         })
-        expect(screen.getByTestId("total-income")).toHaveTextContent("30")
-        expect(screen.getByTestId("savings")).toHaveTextContent("20")
     })
 })

@@ -191,7 +191,9 @@ export class Client implements IClient {
 
     async GetMonthlyReport(month: Date) {
         return {
-            TotalSpendings: -10
+            TotalSpendings: -10,
+            TotalIncome: 10,
+            Savings: 0
         }
     }
 }

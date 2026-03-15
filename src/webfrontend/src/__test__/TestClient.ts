@@ -82,9 +82,13 @@ export class TestClient implements IClient {
         return true
     }
 
-    async GetMonthlyReport(month: Date) {
+    async GetMonthlyReport(month: Date): Promise<MonthlyReport> {
+        //this function should be replaced in tests
+        //no real implementation here
         return {
-            TotalSpendings: 0
+            TotalIncome:0,
+            TotalSpendings: 0,
+            Savings: 0
         }
     }
 }
