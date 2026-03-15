@@ -12,6 +12,6 @@ public class ReportsManager: IReportsManager
     }
     public MonthlyReport GetMonthlyReport(int userId, DateTime month)
     {
-        return GetMonthlyReport(userId, month);
+        return _reportsRepository.GetMonthlyReport(userId, month);
     }
 }
