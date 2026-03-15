@@ -21,7 +21,7 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
     return <div data-testid="monthly-report-view">
         Monthly Report
         <div>
-            <label htmlFor="month-control">Month</label>
+            <label htmlFor="month-control" className="mr-5">Month</label>
             <input 
                 id="month-control" 
                 type="month" 
@@ -32,15 +32,15 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
         {
             reportData
             ? <>
-                <div data-testid="by-categories">
+                <div data-testid="by-categories" className="mt-5 mb-5">
                     {
                         Object.keys(reportData.byCategories)
-                        .map(catName => <div data-testid="category-summary">{catName}: {reportData.byCategories[catName]}</div>)
+                        .map(catName => <div key={catName} data-testid="category-summary">{catName}: {reportData.byCategories[catName]}</div>)
                     }
                 </div>
-                <div data-testid="total-spendings">{reportData.totalSpendings}</div>
-                <div data-testid="total-income">{reportData.totalIncome}</div>
-                <div data-testid="savings">{reportData.savings}</div>
+                <div data-testid="total-spendings">Total spendings: {reportData.totalSpendings}</div>
+                <div data-testid="total-income">Total income: {reportData.totalIncome}</div>
+                <div data-testid="savings">Savings: {reportData.savings}</div>
             </>
             :<></>
         }
