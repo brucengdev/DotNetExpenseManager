@@ -70,6 +70,14 @@ describe("MonthlyReportView", () => {
         expect(byCategories).toBeInTheDocument()
 
         const catSummaries = within(byCategories).queryAllByTestId("category-summary")
-        expect(catSummaries).toHaveLength(4)
+        const catSummaryTexts = catSummaries.map(e => e.textContent)
+        expect(catSummaryTexts).toStrictEqual(
+            [
+                "Household: -2",
+                "Food: -3",
+                "Travel: -3",
+                "Salary: 30"
+            ]
+        )
     })
 })
