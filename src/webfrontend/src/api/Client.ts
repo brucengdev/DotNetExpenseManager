@@ -2,6 +2,7 @@ import { Category } from "../models/Category"
 import { Entry } from "../models/Entry"
 import { Payee } from "../models/Payee"
 import { Tag } from "../models/Tag"
+import { formatDateToDay } from "../utils"
 
 export interface IClient {
     Token: () => string | undefined
@@ -69,9 +70,11 @@ export class Client implements IClient {
     }
 
     async GetEntriesByDate(date: Date): Promise<Entry[]> {
+        //format date manually to avoid date being converted to UTC.
+        const dateStr = formatDateToDay(date)
         const result = await fetch(`${url}/Entries/GetByDate?${new URLSearchParams({
             accessToken: this.token,
-            date: date.toISOString()
+            date: dateStr
         }).toString()}`, {
             method: "GET"
         })
