@@ -1,5 +1,6 @@
 import { Category } from "../models/Category"
 import { Entry } from "../models/Entry"
+import { MonthlyReport } from "../models/MonthlyReport"
 import { Payee } from "../models/Payee"
 import { Tag } from "../models/Tag"
 import { formatDateToDay } from "../utils"
@@ -21,6 +22,9 @@ export interface IClient {
 
     AddPayee: (name: string) => Promise<boolean>
     GetPayees: () => Promise<Payee[]>
+
+    //reports
+    GetMonthlyReport: (month: Date) => Promise<MonthlyReport>
 }
 
 const devUrl = "https://localhost:7146"
@@ -183,5 +187,11 @@ export class Client implements IClient {
                 .map(p => new Payee(p.id, p.name))
         }
         return []
+    }
+
+    async GetMonthlyReport(month: Date) {
+        return {
+            TotalSpendings: -10
+        }
     }
 }

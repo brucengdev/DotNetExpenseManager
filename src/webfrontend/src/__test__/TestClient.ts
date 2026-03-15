@@ -4,6 +4,7 @@ import { Entry } from "../models/Entry";
 import { sameDate } from "../utils";
 import { Tag } from "../models/Tag";
 import { Payee } from "../models/Payee";
+import { MonthlyReport } from "../models/MonthlyReport";
 
 export const TEST_USER_NAME = "valid_user"
 export const TEST_PASSWORD = "correct_pass"
@@ -79,5 +80,11 @@ export class TestClient implements IClient {
     async AddPayee(payeeName: string):Promise<boolean> {
         this.Payees = [...this.Payees, new Payee(this.Payees.length + 1, payeeName)]
         return true
+    }
+
+    async GetMonthlyReport(month: Date) {
+        return {
+            TotalSpendings: 0
+        }
     }
 }

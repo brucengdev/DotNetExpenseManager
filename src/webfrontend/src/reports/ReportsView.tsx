@@ -6,9 +6,10 @@ interface ReportsViewProps {
     client: IClient
 }
 
-export function ReportsView(_: ReportsViewProps) {
+export function ReportsView(props: ReportsViewProps) {
+    const { client } = props
     return <div data-testid="reports-view">
         <Button text="Monthly"/>
-        <MonthlyReportView month={new Date()} />
+        <MonthlyReportView month={new Date()} client={client} />
     </div>
 }
