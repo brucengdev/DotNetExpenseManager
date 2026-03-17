@@ -2,6 +2,7 @@ import { Category } from "../models/Category"
 import { Entry } from "../models/Entry"
 import { MonthlyReport } from "../models/MonthlyReport"
 import { Payee } from "../models/Payee"
+import { SpendingsSummary } from "../models/SpendingsSummary"
 import { Tag } from "../models/Tag"
 import { formatDateToDay, formatDateToMonthYear } from "../utils"
 
@@ -25,6 +26,7 @@ export interface IClient {
 
     //reports
     GetMonthlyReport: (month: Date) => Promise<MonthlyReport>
+    GetSpendingsSummary: (date: Date) => Promise<SpendingsSummary>
 }
 
 const devUrl = "https://localhost:7146"
@@ -205,5 +207,18 @@ export class Client implements IClient {
             totalIncome: 0,
             savings: 0
         }
+    }
+
+    async GetSpendingsSummary(date: Date) {
+        const dateStr = formatDateToDay(date)
+        const result = await fetch(`${url}/reports/spendings/${dateStr}?${new URLSearchParams({
+            accessToken: this.token,
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return (await result.json()) as SpendingsSummary
+        }
+        return {} as SpendingsSummary
     }
 }

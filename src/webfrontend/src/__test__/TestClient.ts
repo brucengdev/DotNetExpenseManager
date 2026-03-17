@@ -5,6 +5,7 @@ import { sameDate } from "../utils";
 import { Tag } from "../models/Tag";
 import { Payee } from "../models/Payee";
 import { MonthlyReport } from "../models/MonthlyReport";
+import { SpendingsSummary } from "../models/SpendingsSummary";
 
 export const TEST_USER_NAME = "valid_user"
 export const TEST_PASSWORD = "correct_pass"
@@ -93,6 +94,13 @@ export class TestClient implements IClient {
             totalIncome:0,
             totalSpendings: 0,
             savings: 0
+        }
+    }
+
+    async GetSpendingsSummary(_: Date): Promise<SpendingsSummary> {
+        //this function should be replaced in tests
+        //no real implementation here
+        return {
         }
     }
 }

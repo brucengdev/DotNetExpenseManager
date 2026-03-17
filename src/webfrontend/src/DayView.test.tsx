@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import {describe, expect, it} from 'vitest'
+import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { DayView } from "./DayView";
 import { TestClient } from "./__test__/TestClient";
@@ -12,6 +12,11 @@ import { Payee } from "./models/Payee";
 describe("DayView", () => {
     it("shows spendings summary", async () => {
         const client = new TestClient()
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+
+            }
+        })
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
         expect(screen.getByTestId("spendings-summary")).toBeInTheDocument()
