@@ -21,7 +21,7 @@ namespace Backend.Core.Tests
             {
                 Title = "Test entry",
                 Value = -10.22f,
-                Date = new DateTime(2022, 4, 22),
+                Date = new DateTime(2022, 4, 22, 12, 22, 34),
                 UserId = 23,
                 CategoryId = 1,
                 TagIds = [1, 2],
@@ -34,7 +34,7 @@ namespace Backend.Core.Tests
             entryRepo.Entries.Count().ShouldBe(1);
             var savedEntry = entryRepo.Entries.First();
             savedEntry.Title.ShouldBe("Test entry");
-            savedEntry.Date.ShouldBe(new DateTime(2022, 4, 22));
+            savedEntry.Date.ShouldBe(new DateTime(2022, 4, 22));//ignore time, only cares about date
             savedEntry.Value.ShouldBe(-10.22f);
             savedEntry.UserId.ShouldBe(23);
             savedEntry.CategoryId.ShouldBe(1);

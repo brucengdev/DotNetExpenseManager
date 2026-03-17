@@ -41,7 +41,7 @@ namespace Backend.Models
         public EntryPlain(EntryPlain other)
         {
             Value = other.Value;
-            Date = other.Date;
+            Date = other.Date.Date;//ignore time, only care about the Date
             Title = other.Title;
             CategoryId = other.CategoryId;
             Id = other.Id;
