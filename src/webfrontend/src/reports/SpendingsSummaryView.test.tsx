@@ -7,7 +7,7 @@ import { TestClient } from "../__test__/TestClient";
 describe("SpendingsSummaryView", () => {
     it("renders spendings summary", async () => {
         const client = new TestClient()
-        client.GetSpendingsSummary = vitest.fn(async (date:Date) => {
+        client.GetSpendingsSummary = vitest.fn(async (_:Date) => {
             return {
                 amountSpentToday: -123,
                 amountSpentThisWeek: -222,
