@@ -8,14 +8,18 @@ import { sameDate } from "./utils";
 import { Category } from "./models/Category";
 import { Tag } from "./models/Tag";
 import { Payee } from "./models/Payee";
+import { SpendingsSummary } from "./models/SpendingsSummary";
 
 describe("DayView", () => {
     it("shows spendings summary", async () => {
         const client = new TestClient()
         client.GetSpendingsSummary = vitest.fn(async () => {
             return {
-                amountSpentToday: -123
-            }
+                amountSpentToday: -123,
+                amountSpentThisWeek: -222,
+                amountSpentThisMonth: -333,
+                amountSpentThisYear: -444
+            } as SpendingsSummary
         })
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         

@@ -9,12 +9,18 @@ describe("SpendingsSummaryView", () => {
         const client = new TestClient()
         client.GetSpendingsSummary = vitest.fn(async (date:Date) => {
             return {
-                amountSpentToday: -123
+                amountSpentToday: -123,
+                amountSpentThisWeek: -222,
+                amountSpentThisMonth: -333,
+                amountSpentThisYear: -444
             }
         })
         render(<SpendingsSummaryView client={client} date={new Date()} />)
 
         expect(screen.getByTestId("spendings-summary")).toBeInTheDocument()
         expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("-123")
+        expect(await screen.findByTestId("amount-spent-this-week")).toHaveTextContent("-222")
+        expect(await screen.findByTestId("amount-spent-this-month")).toHaveTextContent("-333")
+        expect(await screen.findByTestId("amount-spent-this-year")).toHaveTextContent("-444")
     })
 })
