@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import {describe, expect, it} from 'vitest'
+import {describe, expect, it, vitest} from 'vitest'
 import '@testing-library/jest-dom'
 import { DayView } from "./DayView";
 import { TestClient } from "./__test__/TestClient";
@@ -8,8 +8,24 @@ import { sameDate } from "./utils";
 import { Category } from "./models/Category";
 import { Tag } from "./models/Tag";
 import { Payee } from "./models/Payee";
+import { SpendingsSummary } from "./models/SpendingsSummary";
 
 describe("DayView", () => {
+    it("shows spendings summary", async () => {
+        const client = new TestClient()
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -123,
+                amountSpentThisWeek: -222,
+                amountSpentThisMonth: -333,
+                amountSpentThisYear: -444
+            } as SpendingsSummary
+        })
+        render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
+        
+        expect(screen.getByTestId("spendings-summary")).toBeInTheDocument()
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -123")
+    })
     it("shows entries by day", async () => {
         const client = new TestClient()
         client.Categories = [
@@ -175,12 +191,23 @@ describe("DayView", () => {
         expect(screen.getByTestId("entry-form")).toBeInTheDocument()
     })
 
-    it("goes back to day view after saving new entry", async() => {
+    it("goes back to day view after saving new entry and refresh spending reports", async() => {
         const client = new TestClient()
         client.Categories = [
             new Category(12, "Household")
         ]
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -123,
+                amountSpentThisWeek: -222,
+                amountSpentThisMonth: -333,
+                amountSpentThisYear: -444
+            } as SpendingsSummary
+        })
+        
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
+
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -123")
 
         const logButton = await screen.findByRole("button", {name: "+"})
         fireEvent.click(logButton)
@@ -191,6 +218,16 @@ describe("DayView", () => {
         fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
         fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})
         fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
+
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -1000,
+                amountSpentThisWeek: -1000,
+                amountSpentThisMonth: -1000,
+                amountSpentThisYear: -1000
+            } as SpendingsSummary
+        })
+
         fireEvent.click(screen.getByRole("button", { name: "Save" }))
 
         expect(await screen.findByTestId("entry-list")).toBeInTheDocument()
@@ -201,6 +238,8 @@ describe("DayView", () => {
         expect(entry.value).toBe(-120.23)
         expect(sameDate(entry.date, new Date(2023, 0, 2))).toBeTruthy()
         expect(entry.categoryId).toBe(12)
+
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -1000")
     })
 
     it("goes back to day view after cancelling adding new entry", async() => {
@@ -213,18 +252,38 @@ describe("DayView", () => {
         expect(await screen.findByTestId("entry-list")).toBeInTheDocument()
     })
 
-    it("deletes an entry", async() => {
+    it("deletes an entry and refresh spendings report", async() => {
         const client = new TestClient()
         client.Entries = [
             new Entry(13, new Date(2024, 5, 1), "grocery", -120),
         ]
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -123,
+                amountSpentThisWeek: -222,
+                amountSpentThisMonth: -333,
+                amountSpentThisYear: -444
+            } as SpendingsSummary
+        })
+        
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
+
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -123")
 
         const entryList = await screen.findByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
         expect(entries.length).toBe(1) 
 
         fireEvent.click(screen.getByRole("button", {name: "X"}))
+
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -1000,
+                amountSpentThisWeek: -1000,
+                amountSpentThisMonth: -1000,
+                amountSpentThisYear: -1000
+            } as SpendingsSummary
+        })
 
         fireEvent.click(screen.getByRole("button", {name: "Yes"}))
 
@@ -233,5 +292,7 @@ describe("DayView", () => {
         const entryListAfter = await screen.findByTestId("entry-list")
         const entriesAfter = entryListAfter.querySelectorAll('[data-testid="entry"]')
         expect(entriesAfter.length).toBe(0) 
+
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -1000")
     })
 })

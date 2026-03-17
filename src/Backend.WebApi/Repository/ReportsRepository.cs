@@ -35,4 +35,35 @@ public class ReportsRepository: IReportsRepository
             Savings = income + spendings
         };
     }
+
+    public SpendingsReport GetSpendingsReport(int userId, DateTime date)
+    {
+        var amountSpentToday = _dbContext.Entries
+            .Where(e => e.UserId == userId && e.Date.Date == date.Date && e.Value < 0)
+            .Select(e => e.Value)
+            .Sum();
+        var amountSpentThisMonth = _dbContext.Entries
+            .Where(e => e.UserId == userId && e.Date.Month == date.Month && e.Date.Year == date.Year && e.Value < 0)
+            .Select(e => e.Value)
+            .Sum();
+        var amountSpentThisYear = _dbContext.Entries
+            .Where(e => e.UserId == userId && e.Date.Year == date.Year && e.Value < 0)
+            .Select(e => e.Value)
+            .Sum();
+        
+        var daysSinceMonday = date.DayOfWeek == DayOfWeek.Sunday ? 6 : ((int)date.DayOfWeek - 1);
+        var monday = date.Date.AddDays(-daysSinceMonday);
+        var sunday = monday.AddDays(6);
+        var amountSpentThisWeek = _dbContext.Entries
+            .Where(e => e.UserId == userId && e.Date >= monday && e.Date <= sunday && e.Value < 0)
+            .Select(e => e.Value)
+            .Sum();
+        return new()
+        {
+            AmountSpentToday = amountSpentToday,
+            AmountSpentThisWeek = amountSpentThisWeek,
+            AmountSpentThisMonth = amountSpentThisMonth,
+            AmountSpentThisYear = amountSpentThisYear
+        };
+    }
 }
