@@ -18,9 +18,12 @@ describe("SpendingsSummaryView", () => {
         render(<SpendingsSummaryView client={client} date={new Date()} />)
 
         expect(screen.getByTestId("spendings-summary")).toBeInTheDocument()
-        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("-123")
-        expect(await screen.findByTestId("amount-spent-this-week")).toHaveTextContent("-222")
-        expect(await screen.findByTestId("amount-spent-this-month")).toHaveTextContent("-333")
-        expect(await screen.findByTestId("amount-spent-this-year")).toHaveTextContent("-444")
+        
+        expect(screen.getByRole("heading", { name:"Spendings"})).toBeInTheDocument()
+        
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -123")
+        expect(await screen.findByTestId("amount-spent-this-week")).toHaveTextContent("This week: -222")
+        expect(await screen.findByTestId("amount-spent-this-month")).toHaveTextContent("This month: -333")
+        expect(await screen.findByTestId("amount-spent-this-year")).toHaveTextContent("This year: -444")
     })
 })

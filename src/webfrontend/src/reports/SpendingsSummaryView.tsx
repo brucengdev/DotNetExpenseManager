@@ -17,12 +17,13 @@ export function SpendingsSummaryView(props: SpendingsSummaryViewProps) {
         })()
     }
     return <div data-testid="spendings-summary">
+        <h3>Spendings</h3>
         {report ?
             <>
-                <div data-testId="amount-spent-today">{report.amountSpentToday}</div>
-                <div data-testId="amount-spent-this-week">{report.amountSpentThisWeek}</div>
-                <div data-testId="amount-spent-this-month">{report.amountSpentThisMonth}</div>
-                <div data-testId="amount-spent-this-year">{report.amountSpentThisYear}</div>
+                <div data-testId="amount-spent-today">Today: {report.amountSpentToday}</div>
+                <div data-testId="amount-spent-this-week">This week: {report.amountSpentThisWeek}</div>
+                <div data-testId="amount-spent-this-month">This month: {report.amountSpentThisMonth}</div>
+                <div data-testId="amount-spent-this-year">This year: {report.amountSpentThisYear}</div>
             </>
             :<></>
         }
