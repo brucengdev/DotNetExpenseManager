@@ -14,12 +14,13 @@ describe("DayView", () => {
         const client = new TestClient()
         client.GetSpendingsSummary = vitest.fn(async () => {
             return {
-
+                amountSpentToday: -123
             }
         })
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
         expect(screen.getByTestId("spendings-summary")).toBeInTheDocument()
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("-123")
     })
     it("shows entries by day", async () => {
         const client = new TestClient()

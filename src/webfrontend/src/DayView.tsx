@@ -57,7 +57,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     }
 
     return <div data-testid="day-view" className="mb-5">
-        <SpendingsSummaryView />
+        <SpendingsSummaryView client={client} date={date} />
             {addingEntry? <EntryForm 
                         client={client} 
                         date={date} 

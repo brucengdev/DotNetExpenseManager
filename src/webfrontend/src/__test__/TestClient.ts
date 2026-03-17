@@ -101,6 +101,7 @@ export class TestClient implements IClient {
         //this function should be replaced in tests
         //no real implementation here
         return {
+            amountSpentToday: 0
         }
     }
 }
