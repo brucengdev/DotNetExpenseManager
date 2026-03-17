@@ -9,6 +9,7 @@ import { Button, ButtonMode } from "./controls/Button"
 import { Tag } from "./models/Tag"
 import { Payee } from "./models/Payee"
 import { TextBox } from "./controls/TextBox"
+import { SpendingsSummaryView } from "./reports/SpendingsSummaryView"
 
 export interface DayViewProps {
     client: IClient
@@ -56,6 +57,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     }
 
     return <div data-testid="day-view" className="mb-5">
+        <SpendingsSummaryView />
             {addingEntry? <EntryForm 
                         client={client} 
                         date={date} 

@@ -10,6 +10,12 @@ import { Tag } from "./models/Tag";
 import { Payee } from "./models/Payee";
 
 describe("DayView", () => {
+    it("shows spendings summary", async () => {
+        const client = new TestClient()
+        render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
+        
+        expect(screen.getByTestId("spendings-summary")).toBeInTheDocument()
+    })
     it("shows entries by day", async () => {
         const client = new TestClient()
         client.Categories = [
