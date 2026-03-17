@@ -23,4 +23,12 @@ public class ReportsController: ControllerBase
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
         return MonthlyReportServiceModel.From(_reportsManager.GetMonthlyReport(userId.Value!, month));
     }
+    
+    [HttpGet("spendings/{date}")]
+    [ServiceFilter<SecurityFilterAttribute>]
+    public SpendingsReportServiceModel GetSpendings(DateTime date)
+    {
+        var userId = HttpContext.Items[Constants.USER_ID] as int?;
+        return SpendingsReportServiceModel.From(_reportsManager.GetSpendingsReport(userId.Value!, date));
+    }
 }

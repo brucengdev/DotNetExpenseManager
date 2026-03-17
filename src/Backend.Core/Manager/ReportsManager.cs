@@ -14,4 +14,9 @@ public class ReportsManager: IReportsManager
     {
         return _reportsRepository.GetMonthlyReport(userId, month);
     }
+
+    public SpendingsReport GetSpendingsReport(int userId, DateTime date)
+    {
+        return _reportsRepository.GetSpendingsReport(userId, date);
+    }
 }
