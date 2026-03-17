@@ -57,6 +57,10 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
             .join(",")
     }
 
+    function refreshSpendingsReport() {
+        setSpendingReportRefreshFlag(!spendingsReportRefreshFlag)
+    }
+
     return <div data-testid="day-view" className="mb-5">
         <SpendingsSummaryView client={client} date={date} refreshFlag={spendingsReportRefreshFlag} />
             {addingEntry? <EntryForm 
@@ -64,7 +68,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                         date={date} 
                         onSave={() => { 
                             setAddingEntry(false) 
-                            setSpendingReportRefreshFlag(!spendingsReportRefreshFlag)
+                            refreshSpendingsReport()
                         }} 
                         onCancel={() => setAddingEntry(false) }
                         /> :
@@ -98,6 +102,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
                                     const success = await client.DeleteEntry(id)
                                     if(success) {
                                         setEntries(entries.filter(e => e.id !== id))
+                                        refreshSpendingsReport()
                                     }
                                  }} />)}
                     </div>

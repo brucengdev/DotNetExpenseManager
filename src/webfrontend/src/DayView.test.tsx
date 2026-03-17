@@ -252,18 +252,38 @@ describe("DayView", () => {
         expect(await screen.findByTestId("entry-list")).toBeInTheDocument()
     })
 
-    it("deletes an entry", async() => {
+    it("deletes an entry and refresh spendings report", async() => {
         const client = new TestClient()
         client.Entries = [
             new Entry(13, new Date(2024, 5, 1), "grocery", -120),
         ]
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -123,
+                amountSpentThisWeek: -222,
+                amountSpentThisMonth: -333,
+                amountSpentThisYear: -444
+            } as SpendingsSummary
+        })
+        
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
+
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -123")
 
         const entryList = await screen.findByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
         expect(entries.length).toBe(1) 
 
         fireEvent.click(screen.getByRole("button", {name: "X"}))
+
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -1000,
+                amountSpentThisWeek: -1000,
+                amountSpentThisMonth: -1000,
+                amountSpentThisYear: -1000
+            } as SpendingsSummary
+        })
 
         fireEvent.click(screen.getByRole("button", {name: "Yes"}))
 
@@ -272,5 +292,7 @@ describe("DayView", () => {
         const entryListAfter = await screen.findByTestId("entry-list")
         const entriesAfter = entryListAfter.querySelectorAll('[data-testid="entry"]')
         expect(entriesAfter.length).toBe(0) 
+
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -1000")
     })
 })
