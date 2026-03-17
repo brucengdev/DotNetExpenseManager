@@ -5,6 +5,7 @@ import { DayView } from "./DayView"
 import { TagsView } from "./TagsView"
 import { PayeesView } from "./PayeesView"
 import { ReportsView } from "./reports/ReportsView"
+import { formatDateToDay } from "./utils"
 
 export interface MainViewProps {
   client: IClient
@@ -35,7 +36,7 @@ export function MainView({client, onLogout} : MainViewProps) {
         <Button text="Payees" mode={view === View.PAYEES? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.PAYEES)}/>
         <Button text="Reports" mode={view === View.REPORTS? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.REPORTS)}/>
       </div>
-        {view === View.DAY? <DayView client={client} initialDate={new Date()} />: <></>}
+        {view === View.DAY? <DayView client={client} initialDate={new Date(formatDateToDay(new Date()))} />: <></>}
         {view === View.TAGS? <TagsView client={client} />: <></>}
         {view === View.PAYEES? <PayeesView client={client}/>:<></>}
         {view === View.REPORTS? <ReportsView client={client}/>:<></>}
