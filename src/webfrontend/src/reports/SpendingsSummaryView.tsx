@@ -4,16 +4,19 @@ import { SpendingsSummary } from "../models/SpendingsSummary"
 
 interface SpendingsSummaryViewProps {
     client: IClient,
-    date: Date
+    date: Date,
+    refreshFlag?: boolean
 }
 
 export function SpendingsSummaryView(props: SpendingsSummaryViewProps) {
-    const { client, date } = props
+    const { client, date, refreshFlag } = props
     const [report, setReport] = useState<SpendingsSummary | undefined>(undefined)
-    if(report === undefined) {
+    const [currentRefreshFlag, setCurrentRefreshFlag] = useState(refreshFlag)
+    if(report === undefined || currentRefreshFlag != refreshFlag) {
         (async () => {
             const retrievedReport = await client.GetSpendingsSummary(date)
             setReport(retrievedReport)
+            if(currentRefreshFlag != refreshFlag) { setCurrentRefreshFlag(refreshFlag) }
         })()
     }
     return <div data-testid="spendings-summary">

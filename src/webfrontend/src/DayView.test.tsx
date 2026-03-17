@@ -191,12 +191,23 @@ describe("DayView", () => {
         expect(screen.getByTestId("entry-form")).toBeInTheDocument()
     })
 
-    it("goes back to day view after saving new entry", async() => {
+    it("goes back to day view after saving new entry and refresh spending reports", async() => {
         const client = new TestClient()
         client.Categories = [
             new Category(12, "Household")
         ]
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -123,
+                amountSpentThisWeek: -222,
+                amountSpentThisMonth: -333,
+                amountSpentThisYear: -444
+            } as SpendingsSummary
+        })
+        
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
+
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -123")
 
         const logButton = await screen.findByRole("button", {name: "+"})
         fireEvent.click(logButton)
@@ -207,6 +218,16 @@ describe("DayView", () => {
         fireEvent.change(screen.getByRole("textbox", {name: "Title"}), { target: { value: "foo"}})
         fireEvent.change(screen.getByLabelText("Value"), { target: { value: "-120.23"}})
         fireEvent.change(screen.getByLabelText("Date"), { target: { value: "2023-01-02"}})
+
+        client.GetSpendingsSummary = vitest.fn(async () => {
+            return {
+                amountSpentToday: -1000,
+                amountSpentThisWeek: -1000,
+                amountSpentThisMonth: -1000,
+                amountSpentThisYear: -1000
+            } as SpendingsSummary
+        })
+
         fireEvent.click(screen.getByRole("button", { name: "Save" }))
 
         expect(await screen.findByTestId("entry-list")).toBeInTheDocument()
@@ -217,6 +238,8 @@ describe("DayView", () => {
         expect(entry.value).toBe(-120.23)
         expect(sameDate(entry.date, new Date(2023, 0, 2))).toBeTruthy()
         expect(entry.categoryId).toBe(12)
+
+        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -1000")
     })
 
     it("goes back to day view after cancelling adding new entry", async() => {

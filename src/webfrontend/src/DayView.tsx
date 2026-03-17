@@ -23,6 +23,7 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     const [tags, setTags] = useState([] as Tag[])
     const [date, setDate] = useState(initialDate)
     const [payees, setPayees] = useState<Payee[]>([])
+    const [spendingsReportRefreshFlag, setSpendingReportRefreshFlag] = useState(false)
     client.GetCategories()
     .then(serverCategories => {
         if(!areSame(serverCategories, categories)) {
@@ -57,11 +58,14 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
     }
 
     return <div data-testid="day-view" className="mb-5">
-        <SpendingsSummaryView client={client} date={date} />
+        <SpendingsSummaryView client={client} date={date} refreshFlag={spendingsReportRefreshFlag} />
             {addingEntry? <EntryForm 
                         client={client} 
                         date={date} 
-                        onSave={() => { setAddingEntry(false) } } 
+                        onSave={() => { 
+                            setAddingEntry(false) 
+                            setSpendingReportRefreshFlag(!spendingsReportRefreshFlag)
+                        }} 
                         onCancel={() => setAddingEntry(false) }
                         /> :
                 <div>
