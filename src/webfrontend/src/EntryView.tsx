@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ConfirmDeleteView } from "./ConfirmDeleteView"
 import { Button, ButtonMode } from "./controls/Button"
+import { formatMoney } from "./utils"
 
 export interface EntryProps {
     title: string
@@ -18,7 +19,7 @@ export const EntryView = (props: EntryProps) => {
     return <div data-testid="entry" className="grid grid-cols-7 mb-1">
         <div data-testid="title">{title}</div>
         <div data-testid="category">{categoryName}</div>
-        <div data-testid="value">{value}</div>
+        <div data-testid="value">{formatMoney(value)}</div>
         <div data-testid="tags">{tags ?? ""}</div>
         <div data-testid="payee">{payee ?? ""}</div>
         <div data-testid="notes">{notes ?? ""}</div>

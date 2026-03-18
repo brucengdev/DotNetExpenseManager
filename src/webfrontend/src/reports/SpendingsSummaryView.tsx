@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { IClient } from "../api/Client"
 import { SpendingsSummary } from "../models/SpendingsSummary"
+import { formatMoney } from "../utils"
 
 interface SpendingsSummaryViewProps {
     client: IClient,
@@ -23,10 +24,10 @@ export function SpendingsSummaryView(props: SpendingsSummaryViewProps) {
         <h3>Spendings</h3>
         {report ?
             <>
-                <div data-testId="amount-spent-today">Today: {report.amountSpentToday}</div>
-                <div data-testId="amount-spent-this-week">This week: {report.amountSpentThisWeek}</div>
-                <div data-testId="amount-spent-this-month">This month: {report.amountSpentThisMonth}</div>
-                <div data-testId="amount-spent-this-year">This year: {report.amountSpentThisYear}</div>
+                <div data-testId="amount-spent-today">Today: {formatMoney(report.amountSpentToday)}</div>
+                <div data-testId="amount-spent-this-week">This week: {formatMoney(report.amountSpentThisWeek)}</div>
+                <div data-testId="amount-spent-this-month">This month: {formatMoney(report.amountSpentThisMonth)}</div>
+                <div data-testId="amount-spent-this-year">This year: {formatMoney(report.amountSpentThisYear)}</div>
             </>
             :<></>
         }

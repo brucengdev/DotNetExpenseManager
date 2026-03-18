@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { IClient } from "../api/Client"
-import { formatDateToMonthYear } from "../utils"
+import { formatDateToMonthYear, formatMoney } from "../utils"
 import { MonthlyReport } from "../models/MonthlyReport"
 
 interface MonthlyReportViewProps {
@@ -40,12 +40,12 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
                 <div data-testid="by-categories" className="mt-5 mb-5">
                     {
                         Object.keys(reportData.byCategories)
-                        .map(catName => <div key={catName} data-testid="category-summary">{catName}: {reportData.byCategories[catName]}</div>)
+                        .map(catName => <div key={catName} data-testid="category-summary">{catName}: {formatMoney(reportData.byCategories[catName])}</div>)
                     }
                 </div>
-                <div data-testid="total-spendings">Total spendings: {reportData.totalSpendings}</div>
-                <div data-testid="total-income">Total income: {reportData.totalIncome}</div>
-                <div data-testid="savings">Savings: {reportData.savings}</div>
+                <div data-testid="total-spendings">Total spendings: {formatMoney(reportData.totalSpendings)}</div>
+                <div data-testid="total-income">Total income: {formatMoney(reportData.totalIncome)}</div>
+                <div data-testid="savings">Savings: {formatMoney(reportData.savings)}</div>
             </>
             :<></>
         }
