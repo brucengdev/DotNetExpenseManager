@@ -63,13 +63,13 @@ describe("DayView", () => {
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
         expect(entries[0].querySelector('[data-testid="category"]')?.textContent).toBe("household")
-        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120 ₫")
         expect(entries[0].querySelector('[data-testid="tags"]')?.textContent).toBe("tag1,tag3")
         expect(entries[0].querySelector('button[data-testid="deleteBtn"]')).toBeInTheDocument()
 
         expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("eat out")
         expect(entries[1].querySelector('[data-testid="category"]')?.textContent).toBe("leisure")
-        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-65 ₫")
         expect(entries[1].querySelector('[data-testid="tags"]')?.textContent).toBe("")
         expect(entries[1].querySelector('[data-testid="payee"]')?.textContent).toBe("Tom")
         expect(entries[1].querySelector('[data-testid="notes"]')?.textContent).toBe("this is some note")
@@ -114,10 +114,10 @@ describe("DayView", () => {
         expect(entries.length).toBe(2) 
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
-        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120 ₫")
 
         expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("toys")
-        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100 ₫")
     })
 
     it("switches to next day when next day button is clicked", async () => {
@@ -141,10 +141,10 @@ describe("DayView", () => {
         expect(entries.length).toBe(2) 
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
-        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120 ₫")
 
         expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("toys")
-        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100 ₫")
     })
 
     it("switches to next day when date field is changed", async () => {
@@ -169,10 +169,10 @@ describe("DayView", () => {
         expect(entries.length).toBe(2) 
 
         expect(entries[0].querySelector('[data-testid="title"]')?.textContent).toBe("grocery")
-        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120")
+        expect(entries[0].querySelector('[data-testid="value"]')?.textContent).toBe("-120 ₫")
 
         expect(entries[1].querySelector('[data-testid="title"]')?.textContent).toBe("toys")
-        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100")
+        expect(entries[1].querySelector('[data-testid="value"]')?.textContent).toBe("-100 ₫")
     })
 
 
