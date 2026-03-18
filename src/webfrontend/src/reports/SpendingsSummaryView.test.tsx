@@ -9,10 +9,10 @@ describe("SpendingsSummaryView", () => {
         const client = new TestClient()
         client.GetSpendingsSummary = vitest.fn(async (_:Date) => {
             return {
-                amountSpentToday: -123,
-                amountSpentThisWeek: -222,
-                amountSpentThisMonth: -333,
-                amountSpentThisYear: -444
+                amountSpentToday: -1230,
+                amountSpentThisWeek: -2220,
+                amountSpentThisMonth: -3330,
+                amountSpentThisYear: -4440
             }
         })
         render(<SpendingsSummaryView client={client} date={new Date()} />)
@@ -21,9 +21,9 @@ describe("SpendingsSummaryView", () => {
         
         expect(screen.getByRole("heading", { name:"Spendings"})).toBeInTheDocument()
         
-        expect(await screen.findByTestId("amount-spent-today")).toHaveTextContent("Today: -123")
-        expect(await screen.findByTestId("amount-spent-this-week")).toHaveTextContent("This week: -222")
-        expect(await screen.findByTestId("amount-spent-this-month")).toHaveTextContent("This month: -333")
-        expect(await screen.findByTestId("amount-spent-this-year")).toHaveTextContent("This year: -444")
+        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today: -1.230 ₫")
+        expect((await screen.findByTestId("amount-spent-this-week")).textContent).toBe("This week: -2.220 ₫")
+        expect((await screen.findByTestId("amount-spent-this-month")).textContent).toBe("This month: -3.330 ₫")
+        expect((await screen.findByTestId("amount-spent-this-year")).textContent).toBe("This year: -4.440 ₫")
     })
 })
