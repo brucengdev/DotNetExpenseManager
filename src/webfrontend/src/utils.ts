@@ -41,3 +41,12 @@ export function areSame<T extends Comparable<T>>(first: T[], second: T[]): boole
 
     return true
 }
+
+const currency = Intl.NumberFormat("vi-VN", {
+    style: 'currency',
+    currency: 'VND'
+})
+
+export function formatMoney(money: number) {
+    return currency.format(money)
+}
