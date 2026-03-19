@@ -32,10 +32,10 @@ describe("MonthlyReportView", () => {
         expect(monthControl).toHaveValue("2026-03")
 
         await waitFor(() => {
-            expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings: -10.000 ₫")
+            expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings-10.000 ₫")
         })
-        expect(screen.getByTestId("total-income").textContent).toBe("Total income: 30.000 ₫")
-        expect(screen.getByTestId("savings").textContent).toBe("Savings: 20.000 ₫")
+        expect(screen.getByTestId("total-income").textContent).toBe("Total income30.000 ₫")
+        expect(screen.getByTestId("savings").textContent).toBe("Savings20.000 ₫")
 
         const byCategories = screen.getByTestId("by-categories")
         expect(byCategories).toBeInTheDocument()
@@ -44,10 +44,10 @@ describe("MonthlyReportView", () => {
         const catSummaryTexts = catSummaries.map(e => e.textContent)
         expect(catSummaryTexts).toStrictEqual(
             [
-                "Household: -2.000 ₫",
-                "Food: -3.000 ₫",
-                "Travel: -3.000 ₫",
-                "Salary: 30.000 ₫"
+                "Household-2.000 ₫",
+                "Food-3.000 ₫",
+                "Travel-3.000 ₫",
+                "Salary30.000 ₫"
             ]
         )
     })
@@ -92,18 +92,18 @@ describe("MonthlyReportView", () => {
         expect(monthControl).toHaveValue("2026-03")
 
         await waitFor(() => {
-            expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings: -10 ₫")
+            expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings-10 ₫")
         })
 
         fireEvent.change(monthControl, {target: {value: "2024-02"}})
         expect(monthControl).toHaveValue("2024-02")
 
         await waitFor(() => {
-            expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings: -122 ₫")
+            expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings-122 ₫")
         })
 
-        expect(screen.getByTestId("total-income").textContent).toBe("Total income: 333 ₫")
-        expect(screen.getByTestId("savings").textContent).toBe("Savings: 222 ₫")
+        expect(screen.getByTestId("total-income").textContent).toBe("Total income333 ₫")
+        expect(screen.getByTestId("savings").textContent).toBe("Savings222 ₫")
 
         const byCategories = screen.getByTestId("by-categories")
         expect(byCategories).toBeInTheDocument()
@@ -112,10 +112,10 @@ describe("MonthlyReportView", () => {
         const catSummaryTexts = catSummaries.map(e => e.textContent)
         expect(catSummaryTexts).toStrictEqual(
             [
-                "Household: -222 ₫",
-                "Food: -333 ₫",
-                "Travel: -333 ₫",
-                "Salary: 333 ₫"
+                "Household-222 ₫",
+                "Food-333 ₫",
+                "Travel-333 ₫",
+                "Salary333 ₫"
             ]
         )
     })

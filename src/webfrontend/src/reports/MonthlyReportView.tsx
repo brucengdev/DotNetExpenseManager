@@ -2,6 +2,8 @@ import { useState } from "react"
 import { IClient } from "../api/Client"
 import { formatDateToMonthYear, formatMoney } from "../utils"
 import { MonthlyReport } from "../models/MonthlyReport"
+import { TextBox } from "../controls/TextBox"
+import { TableFieldValueRow } from "../controls/TableFieldValueRow"
 
 interface MonthlyReportViewProps {
     month: Date,
@@ -18,35 +20,39 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
             setReportData(retrievedReport)
         })();
     }
-    return <div data-testid="monthly-report-view">
+    return <div 
+            className="xl:mx-50"
+            data-testid="monthly-report-view">
         Monthly Report
-        <div>
-            <label htmlFor="month-control" className="mr-5">Month</label>
-            <input 
-                id="month-control" 
-                type="month" 
-                value={formatDateToMonthYear(month)}
-                onChange={
-                    e => { 
-                        setMonth(new Date(e.target.value))
-                        setReportData(undefined)//to reload
-                    }
+        <TextBox
+            name="month"
+            label="Month"
+            type="month"
+            value={formatDateToMonthYear(month)}
+            onChange={
+                e => { 
+                    setMonth(new Date(e.target.value))
+                    setReportData(undefined)//to reload
                 }
+            }
             />
-        </div>
         {
             reportData
-            ? <>
+            ? <div>
                 <div data-testid="by-categories" className="mt-5 mb-5">
                     {
                         Object.keys(reportData.byCategories)
-                        .map(catName => <div key={catName} data-testid="category-summary">{catName}: {formatMoney(reportData.byCategories[catName])}</div>)
+                        .map(catName => <TableFieldValueRow 
+                            dataTestId="category-summary"
+                            label={catName} 
+                            value={formatMoney(reportData.byCategories[catName])}
+                        />)
                     }
                 </div>
-                <div data-testid="total-spendings">Total spendings: {formatMoney(reportData.totalSpendings)}</div>
-                <div data-testid="total-income">Total income: {formatMoney(reportData.totalIncome)}</div>
-                <div data-testid="savings">Savings: {formatMoney(reportData.savings)}</div>
-            </>
+                <TableFieldValueRow dataTestId="total-spendings" label="Total spendings" value={formatMoney(reportData.totalSpendings)} />
+                <TableFieldValueRow dataTestId="total-income" label="Total income" value={formatMoney(reportData.totalIncome)} />
+                <TableFieldValueRow dataTestId="savings" label="Savings" value={formatMoney(reportData.savings)} />
+            </div>
             :<></>
         }
     </div>

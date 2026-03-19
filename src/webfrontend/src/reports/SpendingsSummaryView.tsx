@@ -2,6 +2,7 @@ import { useState } from "react"
 import { IClient } from "../api/Client"
 import { SpendingsSummary } from "../models/SpendingsSummary"
 import { formatMoney } from "../utils"
+import { TableFieldValueRow } from "../controls/TableFieldValueRow"
 
 interface SpendingsSummaryViewProps {
     client: IClient,
@@ -23,12 +24,16 @@ export function SpendingsSummaryView(props: SpendingsSummaryViewProps) {
     return <div data-testid="spendings-summary">
         <h3>Spendings</h3>
         {report ?
-            <>
-                <div data-testId="amount-spent-today">Today: {formatMoney(report.amountSpentToday)}</div>
-                <div data-testId="amount-spent-this-week">This week: {formatMoney(report.amountSpentThisWeek)}</div>
-                <div data-testId="amount-spent-this-month">This month: {formatMoney(report.amountSpentThisMonth)}</div>
-                <div data-testId="amount-spent-this-year">This year: {formatMoney(report.amountSpentThisYear)}</div>
-            </>
+            <div className="xl:mr-150 pb-5 pt-2">
+                <TableFieldValueRow dataTestId="amount-spent-today" 
+                    label={"Today"} value={formatMoney(report.amountSpentToday)} />
+                <TableFieldValueRow dataTestId="amount-spent-this-week" 
+                    label={"This week"} value={formatMoney(report.amountSpentThisWeek)} />
+                <TableFieldValueRow dataTestId="amount-spent-this-month" 
+                    label={"This month"} value={formatMoney(report.amountSpentThisMonth)} />
+                <TableFieldValueRow dataTestId="amount-spent-this-year" 
+                    label={"This year"} value={formatMoney(report.amountSpentThisYear)} />
+            </div>
             :<></>
         }
     </div>
