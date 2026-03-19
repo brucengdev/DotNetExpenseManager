@@ -40,7 +40,10 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
                 <div data-testid="by-categories" className="mt-5 mb-5">
                     {
                         Object.keys(reportData.byCategories)
-                        .map(catName => <div key={catName} data-testid="category-summary">{catName}: {formatMoney(reportData.byCategories[catName])}</div>)
+                        .map(catName => <CategorySummary 
+                            catName={catName} 
+                            value={reportData.byCategories[catName]}
+                        />)
                     }
                 </div>
                 <div data-testid="total-spendings">Total spendings: {formatMoney(reportData.totalSpendings)}</div>
@@ -50,4 +53,11 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
             :<></>
         }
     </div>
+}
+
+function CategorySummary(props: {catName: string, value: number}) {
+    const { catName, value } = props
+    return <div key={catName} data-testid="category-summary">
+            {catName}: {formatMoney(value)}
+        </div>
 }
