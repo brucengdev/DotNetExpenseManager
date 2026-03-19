@@ -40,24 +40,30 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
                 <div data-testid="by-categories" className="mt-5 mb-5">
                     {
                         Object.keys(reportData.byCategories)
-                        .map(catName => <CategorySummary 
-                            catName={catName} 
+                        .map(catName => <TableEntry 
+                            dataTestId="category-summary"
+                            label={catName} 
                             value={reportData.byCategories[catName]}
                         />)
                     }
                 </div>
-                <div data-testid="total-spendings">Total spendings: {formatMoney(reportData.totalSpendings)}</div>
-                <div data-testid="total-income">Total income: {formatMoney(reportData.totalIncome)}</div>
-                <div data-testid="savings">Savings: {formatMoney(reportData.savings)}</div>
+                <TableEntry dataTestId="total-spendings" label="Total spendings" value={reportData.totalSpendings} />
+                <TableEntry dataTestId="total-income" label="Total income" value={reportData.totalIncome} />
+                <TableEntry dataTestId="savings" label="Savings" value={reportData.savings} />
             </>
             :<></>
         }
     </div>
 }
 
-function CategorySummary(props: {catName: string, value: number}) {
-    const { catName, value } = props
-    return <div key={catName} data-testid="category-summary">
-            {catName}: {formatMoney(value)}
+interface CategorySummaryProps {
+    label: string,
+    dataTestId: string,
+    value: number
+}
+function TableEntry(props: CategorySummaryProps) {
+    const { value, dataTestId, label } = props
+    return <div key={label} data-testid={dataTestId}>
+            {label}: {formatMoney(value)}
         </div>
 }
