@@ -2,6 +2,7 @@ import { useState } from "react"
 import { IClient } from "../api/Client"
 import { formatDateToMonthYear, formatMoney } from "../utils"
 import { MonthlyReport } from "../models/MonthlyReport"
+import { TextBox } from "../controls/TextBox"
 
 interface MonthlyReportViewProps {
     month: Date,
@@ -18,25 +19,25 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
             setReportData(retrievedReport)
         })();
     }
-    return <div data-testid="monthly-report-view">
+    return <div 
+            className="lg:mx-50"
+            data-testid="monthly-report-view">
         Monthly Report
-        <div>
-            <label htmlFor="month-control" className="mr-5">Month</label>
-            <input 
-                id="month-control" 
-                type="month" 
-                value={formatDateToMonthYear(month)}
-                onChange={
-                    e => { 
-                        setMonth(new Date(e.target.value))
-                        setReportData(undefined)//to reload
-                    }
+        <TextBox
+            name="month"
+            label="Month"
+            type="month"
+            value={formatDateToMonthYear(month)}
+            onChange={
+                e => { 
+                    setMonth(new Date(e.target.value))
+                    setReportData(undefined)//to reload
                 }
+            }
             />
-        </div>
         {
             reportData
-            ? <>
+            ? <div>
                 <div data-testid="by-categories" className="mt-5 mb-5">
                     {
                         Object.keys(reportData.byCategories)
@@ -50,7 +51,7 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
                 <TableEntry dataTestId="total-spendings" label="Total spendings" value={reportData.totalSpendings} />
                 <TableEntry dataTestId="total-income" label="Total income" value={reportData.totalIncome} />
                 <TableEntry dataTestId="savings" label="Savings" value={reportData.savings} />
-            </>
+            </div>
             :<></>
         }
     </div>
