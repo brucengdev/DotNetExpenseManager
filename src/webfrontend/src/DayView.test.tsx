@@ -24,7 +24,7 @@ describe("DayView", () => {
         render(<DayView client={client} initialDate={new Date(2024, 5, 11)} />)
         
         expect(screen.getByTestId("spendings-summary")).toBeInTheDocument()
-        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today: -123 ₫")
+        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today-123 ₫")
     })
     it("shows entries by day", async () => {
         const client = new TestClient()
@@ -207,7 +207,7 @@ describe("DayView", () => {
         
         render(<DayView client={client} initialDate={new Date(2024, 4, 31)} />)
 
-        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today: -123 ₫")
+        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today-123 ₫")
 
         const logButton = await screen.findByRole("button", {name: "+"})
         fireEvent.click(logButton)
@@ -239,7 +239,7 @@ describe("DayView", () => {
         expect(sameDate(entry.date, new Date(2023, 0, 2))).toBeTruthy()
         expect(entry.categoryId).toBe(12)
 
-        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today: -1.000 ₫")
+        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today-1.000 ₫")
     })
 
     it("goes back to day view after cancelling adding new entry", async() => {
@@ -268,7 +268,7 @@ describe("DayView", () => {
         
         render(<DayView client={client} initialDate={new Date(2024, 5, 1)} />)
 
-        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today: -123 ₫")
+        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today-123 ₫")
 
         const entryList = await screen.findByTestId("entry-list")
         const entries = entryList.querySelectorAll('[data-testid="entry"]')
@@ -293,6 +293,6 @@ describe("DayView", () => {
         const entriesAfter = entryListAfter.querySelectorAll('[data-testid="entry"]')
         expect(entriesAfter.length).toBe(0) 
 
-        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today: -1.000 ₫")
+        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today-1.000 ₫")
     })
 })

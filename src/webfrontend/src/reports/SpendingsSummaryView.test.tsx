@@ -21,9 +21,9 @@ describe("SpendingsSummaryView", () => {
         
         expect(screen.getByRole("heading", { name:"Spendings"})).toBeInTheDocument()
         
-        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today: -1.230 ₫")
-        expect((await screen.findByTestId("amount-spent-this-week")).textContent).toBe("This week: -2.220 ₫")
-        expect((await screen.findByTestId("amount-spent-this-month")).textContent).toBe("This month: -3.330 ₫")
-        expect((await screen.findByTestId("amount-spent-this-year")).textContent).toBe("This year: -4.440 ₫")
+        expect((await screen.findByTestId("amount-spent-today")).textContent).toBe("Today-1.230 ₫")
+        expect((await screen.findByTestId("amount-spent-this-week")).textContent).toBe("This week-2.220 ₫")
+        expect((await screen.findByTestId("amount-spent-this-month")).textContent).toBe("This month-3.330 ₫")
+        expect((await screen.findByTestId("amount-spent-this-year")).textContent).toBe("This year-4.440 ₫")
     })
 })
