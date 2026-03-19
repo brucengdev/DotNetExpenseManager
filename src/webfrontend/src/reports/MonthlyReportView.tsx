@@ -3,6 +3,7 @@ import { IClient } from "../api/Client"
 import { formatDateToMonthYear, formatMoney } from "../utils"
 import { MonthlyReport } from "../models/MonthlyReport"
 import { TextBox } from "../controls/TextBox"
+import { TableFieldValueRow } from "../controls/TableFieldValueRow"
 
 interface MonthlyReportViewProps {
     month: Date,
@@ -41,31 +42,18 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
                 <div data-testid="by-categories" className="mt-5 mb-5">
                     {
                         Object.keys(reportData.byCategories)
-                        .map(catName => <TableEntry 
+                        .map(catName => <TableFieldValueRow 
                             dataTestId="category-summary"
                             label={catName} 
-                            value={reportData.byCategories[catName]}
+                            value={formatMoney(reportData.byCategories[catName])}
                         />)
                     }
                 </div>
-                <TableEntry dataTestId="total-spendings" label="Total spendings" value={reportData.totalSpendings} />
-                <TableEntry dataTestId="total-income" label="Total income" value={reportData.totalIncome} />
-                <TableEntry dataTestId="savings" label="Savings" value={reportData.savings} />
+                <TableFieldValueRow dataTestId="total-spendings" label="Total spendings" value={formatMoney(reportData.totalSpendings)} />
+                <TableFieldValueRow dataTestId="total-income" label="Total income" value={formatMoney(reportData.totalIncome)} />
+                <TableFieldValueRow dataTestId="savings" label="Savings" value={formatMoney(reportData.savings)} />
             </div>
             :<></>
         }
     </div>
-}
-
-interface CategorySummaryProps {
-    label: string,
-    dataTestId: string,
-    value: number
-}
-function TableEntry(props: CategorySummaryProps) {
-    const { value, dataTestId, label } = props
-    return <div key={label} data-testid={dataTestId} className="grid grid-cols-2">
-            <div className="bg-blue-400 text-white border-1">{label}</div>
-            <div className="border-1">{formatMoney(value)}</div>
-        </div>
 }
