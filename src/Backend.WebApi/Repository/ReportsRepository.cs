@@ -24,7 +24,9 @@ public class ReportsRepository: IReportsRepository
                 CategoryId = g.Key!.Value,
                 CategoryName = g.First().Category.Name,
                 Total = g.Sum(e => e.Value)
-            }).ToList();
+            })
+            .OrderBy(cs => cs.Total)
+            .ToList();
         var spendings = categorySummaries.Where(s => s.Total < 0).Sum(s => s.Total);
         var income = categorySummaries.Where(s => s.Total > 0).Sum(s => s.Total);
         return new MonthlyReport()
