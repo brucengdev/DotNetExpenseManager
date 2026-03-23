@@ -71,8 +71,12 @@ describe("EntryForm", () => {
 
     it("changes value", async () => {
         const client = new TestClient()
-        client.GetAverageMonthlyIncome = vitest.fn(async() => {
-            return 100000
+        client.GetAverageMonthlyIncome = vitest.fn(async(fromMonth: Date, toMonth: Date) => {
+            return {
+                fromMonth: new Date(2023, 10, 0),
+                toMonth: new Date(2024, 3, 0),
+                averageIncome: 0
+            }
         })
         render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
         
@@ -82,7 +86,10 @@ describe("EntryForm", () => {
         fireEvent.change(valueTextbox, { target: { value: "-120.23"}})
         expect(valueTextbox).toHaveValue(-120.23)
 
-        expect(screen.getByText("%12 of your income")).toBeInTheDocument()
+        expect(client.GetAverageMonthlyIncome).toHaveBeenCalledWith(
+            new Date(2023, 10, 0, 0, 0, 0, 0),
+            new Date(2024, 3, 0, 0, 0, 0, 0))
+        expect(screen.getByTestId("percentage-of-income").textContent).toBe("12% of your average monthly income in last 6 months")
     })
 
     it("changes category", async () => {
