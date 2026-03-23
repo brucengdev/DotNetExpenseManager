@@ -6,6 +6,7 @@ import { Tag } from "../models/Tag";
 import { Payee } from "../models/Payee";
 import { MonthlyReport } from "../models/MonthlyReport";
 import { SpendingsSummary } from "../models/SpendingsSummary";
+import { AverageMonthlyIncomeReport } from "../models/AverageMonthlyIncomeReport";
 
 export const TEST_USER_NAME = "valid_user"
 export const TEST_PASSWORD = "correct_pass"
@@ -105,6 +106,16 @@ export class TestClient implements IClient {
             amountSpentThisWeek: 0,
             amountSpentThisMonth: 0,
             amountSpentThisYear: 0
+        }
+    }
+
+    async GetAverageMonthlyIncome(_: Date, _2: Date): Promise<AverageMonthlyIncomeReport> {
+        //this function should be replaced in tests
+        //no real implementation here
+        return {
+            fromMonth: new Date(),
+            toMonth: new Date(),
+            averageIncome: 0
         }
     }
 }
