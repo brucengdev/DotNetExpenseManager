@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { formatDateToDay } from "./utils"
+import { addMonths, formatDateToDay, formatDateToMonthYear } from "./utils"
 import { IClient } from "./api/Client"
 import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
@@ -8,6 +8,7 @@ import { Button, ButtonMode } from "./controls/Button"
 import { MultiSelect } from "./controls/MultiSelect"
 import { Tag } from "./models/Tag"
 import { Payee } from "./models/Payee"
+import { AverageMonthlyIncomeReport } from "./models/AverageMonthlyIncomeReport"
 
 export interface EntryFormProps {
     date: Date
@@ -29,6 +30,7 @@ export const EntryForm = (props: EntryFormProps) => {
     const [tagIds, setTagIds] = useState<number[]>([])
     const [payeeId, setPayeeId] = useState<number | undefined>(undefined)
     const [notes, setNotes] = useState("")
+    const [averageMonthlyIncomeReport, setAverageMonthlyIncomeReport] = useState<AverageMonthlyIncomeReport | undefined>(undefined)
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -39,7 +41,17 @@ export const EntryForm = (props: EntryFormProps) => {
     }
 
     const sortedTags = (tags || []).sort((a, b) => a.name.localeCompare(b.name))
-    const sortedPayees = (payees || []).sort((a, b) => a.name.localeCompare(b.name))
+    const sortedPayees = (payees || []).sort((a, b) => a.name.localeCompare(b.name));
+
+    if(averageMonthlyIncomeReport === undefined) {
+        (async () => {
+            const monthOnly = new Date(formatDateToMonthYear(date))
+            const endMonth = addMonths(monthOnly, -1)
+            const startMonth = addMonths(endMonth, -5)
+            const retrievedReport = await client.GetAverageMonthlyIncome(startMonth, endMonth)
+            setAverageMonthlyIncomeReport(retrievedReport)
+        })()
+    }
 
     return <div data-testid="entry-form">
         <TextBox

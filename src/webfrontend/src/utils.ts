@@ -28,6 +28,12 @@ export function addDays(date: Date, days: number) {
     return clonedDate
 }
 
+export function addMonths(date: Date, months: number) {
+    const clonedDate = new Date(date)
+    clonedDate.setMonth(date.getMonth() + months)
+    return clonedDate
+}
+
 export function areSame<T extends Comparable<T>>(first: T[], second: T[]): boolean {
     if(first.length !== second.length) {
         return false
