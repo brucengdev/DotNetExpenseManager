@@ -53,6 +53,8 @@ export const EntryForm = (props: EntryFormProps) => {
         })()
     }
 
+    const percentageOfIncome = parseFloat(value)/(averageMonthlyIncomeReport?.averageIncome ?? 1) * -100
+
     return <div data-testid="entry-form">
         <TextBox
             name="title"
@@ -70,7 +72,7 @@ export const EntryForm = (props: EntryFormProps) => {
         />
         <div>
             <div data-testId="percentage-of-income">
-                12% of your average monthly income in last 6 months
+                {percentageOfIncome}% of your average monthly income in last 6 months
             </div>
         </div>
         <TextBox

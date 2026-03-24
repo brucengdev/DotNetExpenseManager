@@ -67,30 +67,46 @@ describe("EntryForm", () => {
 
         fireEvent.change(titleTextbox, { target: { value: "foo"}})
         expect(titleTextbox).toHaveValue("foo")
-    })
+    });
 
-    it("changes value", async () => {
-        const client = new TestClient()
-        client.GetAverageMonthlyIncome = vitest.fn(async(fromMonth: Date, toMonth: Date) => {
-            return {
-                fromMonth: new Date(2023, 10, 1, 0, 0, 0, 0),
-                toMonth: new Date(2024, 3, 1, 0, 0, 0, 0),
-                averageIncome: 0
-            }
+    [
+        {
+            averageIncome: 10000, value: -100, expectedPercentage: 1
+        },
+        {
+            averageIncome: 100, value: -25, expectedPercentage: 25
+        },
+        {
+            averageIncome: 200, value: -25, expectedPercentage: 12.5
+        }
+    ].forEach(
+        ({averageIncome, value, expectedPercentage}) => 
+        it(`changes value with average income = ${averageIncome} and spendings = ${value}`, async () => {
+            const client = new TestClient()
+            client.GetAverageMonthlyIncome = vitest.fn(async(_fromMonth: Date, _toMonth: Date) => {
+                return {
+                    fromMonth: new Date(2023, 10, 1, 0, 0, 0, 0),
+                    toMonth: new Date(2024, 3, 1, 0, 0, 0, 0),
+                    averageIncome
+                }
+            })
+            render(<EntryForm client={client} date={new Date(2024, 4, 15)} onSave={() => {}} />)
+            
+            const valueTextbox = screen.getByLabelText("Value")
+            expect(valueTextbox).toHaveValue(0)
+
+            fireEvent.change(valueTextbox, { target: { value: value?.toString()}})
+            expect(valueTextbox).toHaveValue(value)
+
+            expect(client.GetAverageMonthlyIncome).toHaveBeenCalledWith(
+                new Date(2023, 10, 1, 0, 0, 0, 0),
+                new Date(2024, 3, 1, 0, 0, 0, 0))
+            await waitFor(() => {
+                expect(screen.getByTestId("percentage-of-income").textContent)
+                    .toBe(`${expectedPercentage}% of your average monthly income in last 6 months`)
+            })
         })
-        render(<EntryForm client={client} date={new Date(2024, 4, 15)} onSave={() => {}} />)
-        
-        const valueTextbox = screen.getByLabelText("Value")
-        expect(valueTextbox).toHaveValue(0)
-
-        fireEvent.change(valueTextbox, { target: { value: "-120.23"}})
-        expect(valueTextbox).toHaveValue(-120.23)
-
-        expect(client.GetAverageMonthlyIncome).toHaveBeenCalledWith(
-            new Date(2023, 10, 1, 0, 0, 0, 0),
-            new Date(2024, 3, 1, 0, 0, 0, 0))
-        expect(screen.getByTestId("percentage-of-income").textContent).toBe("12% of your average monthly income in last 6 months")
-    })
+    )
 
     it("changes category", async () => {
         const client = new TestClient()
