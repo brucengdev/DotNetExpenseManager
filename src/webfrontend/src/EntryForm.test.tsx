@@ -73,12 +73,12 @@ describe("EntryForm", () => {
         const client = new TestClient()
         client.GetAverageMonthlyIncome = vitest.fn(async(fromMonth: Date, toMonth: Date) => {
             return {
-                fromMonth: new Date(2023, 10, 0),
-                toMonth: new Date(2024, 3, 0),
+                fromMonth: new Date(2023, 10, 1, 0, 0, 0, 0),
+                toMonth: new Date(2024, 3, 1, 0, 0, 0, 0),
                 averageIncome: 0
             }
         })
-        render(<EntryForm client={client} date={new Date(2024, 4, 31)} onSave={() => {}} />)
+        render(<EntryForm client={client} date={new Date(2024, 4, 15)} onSave={() => {}} />)
         
         const valueTextbox = screen.getByLabelText("Value")
         expect(valueTextbox).toHaveValue(0)
@@ -87,8 +87,8 @@ describe("EntryForm", () => {
         expect(valueTextbox).toHaveValue(-120.23)
 
         expect(client.GetAverageMonthlyIncome).toHaveBeenCalledWith(
-            new Date(2023, 10, 0, 0, 0, 0, 0),
-            new Date(2024, 3, 0, 0, 0, 0, 0))
+            new Date(2023, 10, 1, 0, 0, 0, 0),
+            new Date(2024, 3, 1, 0, 0, 0, 0))
         expect(screen.getByTestId("percentage-of-income").textContent).toBe("12% of your average monthly income in last 6 months")
     })
 

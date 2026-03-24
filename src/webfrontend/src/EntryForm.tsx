@@ -45,7 +45,7 @@ export const EntryForm = (props: EntryFormProps) => {
 
     if(averageMonthlyIncomeReport === undefined) {
         (async () => {
-            const monthOnly = new Date(formatDateToMonthYear(date))
+            const monthOnly = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0)
             const endMonth = addMonths(monthOnly, -1)
             const startMonth = addMonths(endMonth, -5)
             const retrievedReport = await client.GetAverageMonthlyIncome(startMonth, endMonth)
