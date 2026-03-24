@@ -68,4 +68,34 @@ public class ReportsRepository: IReportsRepository
             AmountSpentThisYear = amountSpentThisYear
         };
     }
+
+    public AverageIncomeReport GetAverageIncomeReport(int userId, DateOnly fromMonth, DateOnly toMonth)
+    {
+        var startDate = new DateTime(fromMonth.Year, fromMonth.Month, 1);
+        var endDate = new DateTime(toMonth.Year, toMonth.Month, 1);
+        endDate = endDate.AddMonths(1).AddDays(-1);//move to end of Month
+        var income = _dbContext.Entries
+            .Where(e => e.UserId == userId
+                        && e.Date >= startDate
+                        && e.Date <= endDate
+                        && e.Value > 0)
+            .GroupBy(e => new
+            {
+                Year = e.Date.Year,
+                Month = e.Date.Month
+            }).Select(g => new
+            {
+                Key = g.Key,
+                Income = g.Sum(e => e.Value)
+            }).Select(r => r.Income);
+
+        var averageIncome = income.Any()? income.Average(): 0;
+
+        return new()
+        {
+            FromMonth = fromMonth,
+            ToMonth = toMonth,
+            AverageIncome = averageIncome
+        };
+    }
 }

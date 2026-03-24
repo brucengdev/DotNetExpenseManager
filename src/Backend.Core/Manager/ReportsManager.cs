@@ -19,4 +19,9 @@ public class ReportsManager: IReportsManager
     {
         return _reportsRepository.GetSpendingsReport(userId, date);
     }
+
+    public AverageIncomeReport GetAverageIncomeReport(int userId, DateOnly fromMonth, DateOnly toMonth)
+    {
+        return _reportsRepository.GetAverageIncomeReport(userId, fromMonth, toMonth);
+    }
 }
