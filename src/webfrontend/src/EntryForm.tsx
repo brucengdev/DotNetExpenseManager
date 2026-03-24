@@ -68,6 +68,11 @@ export const EntryForm = (props: EntryFormProps) => {
             onChange={event => setValue(event.target.value)}
             inputClassName={isNaN(parseFloat(value))? "border-red-600": ""}
         />
+        <div>
+            <div data-testId="percentage-of-income">
+                12% of your average monthly income in last 6 months
+            </div>
+        </div>
         <TextBox
             name="date"
             label="Date"
