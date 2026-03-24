@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { addMonths, formatDateToDay, formatDateToMonthYear } from "./utils"
+import { addMonths, formatDateToDay } from "./utils"
 import { IClient } from "./api/Client"
 import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
