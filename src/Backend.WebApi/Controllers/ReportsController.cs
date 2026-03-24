@@ -31,4 +31,17 @@ public class ReportsController: ControllerBase
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
         return SpendingsReportServiceModel.From(_reportsManager.GetSpendingsReport(userId.Value!, date));
     }
+    
+    
+    [HttpGet("averageIncome")]
+    [ServiceFilter<SecurityFilterAttribute>]
+    public AverageIncomeServiceModel GetAverageIncome(
+        [FromQuery] DateOnly fromMonth,
+        [FromQuery] DateOnly toMonth
+        )
+    {
+        var userId = HttpContext.Items[Constants.USER_ID] as int?;
+        return AverageIncomeServiceModel.From(
+            _reportsManager.GetAverageIncomeReport(userId.Value!, fromMonth, toMonth));
+    }
 }

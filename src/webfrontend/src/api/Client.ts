@@ -1,3 +1,4 @@
+import { AverageMonthlyIncomeReport } from "../models/AverageMonthlyIncomeReport"
 import { Category } from "../models/Category"
 import { Entry } from "../models/Entry"
 import { MonthlyReport } from "../models/MonthlyReport"
@@ -27,6 +28,7 @@ export interface IClient {
     //reports
     GetMonthlyReport: (month: Date) => Promise<MonthlyReport>
     GetSpendingsSummary: (date: Date) => Promise<SpendingsSummary>
+    GetAverageMonthlyIncome: (fromMonth: Date, toMonth:Date) => Promise<AverageMonthlyIncomeReport>
 }
 
 const devUrl = "https://localhost:7146"
@@ -220,5 +222,21 @@ export class Client implements IClient {
             return (await result.json()) as SpendingsSummary
         }
         return {} as SpendingsSummary
+    }
+
+    async GetAverageMonthlyIncome(fromMonth: Date, toMonth: Date) {
+        const fromMonthStr = formatDateToMonthYear(fromMonth)
+        const toMonthStr = formatDateToMonthYear(toMonth)
+        const result = await fetch(`${url}/reports/averageIncome?${new URLSearchParams({
+            accessToken: this.token,
+            fromMonth: fromMonthStr,
+            toMonth: toMonthStr
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return (await result.json()) as AverageMonthlyIncomeReport
+        }
+        return {} as AverageMonthlyIncomeReport
     }
 }

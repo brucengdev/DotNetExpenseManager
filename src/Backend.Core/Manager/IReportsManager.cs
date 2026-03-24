@@ -6,4 +6,6 @@ public interface IReportsManager
 {
     MonthlyReport GetMonthlyReport(int userId, DateTime month);
     SpendingsReport GetSpendingsReport(int userId, DateTime date);
+
+    AverageIncomeReport GetAverageIncomeReport(int userId, DateOnly fromMonth, DateOnly toMonth);
 }
