@@ -2,6 +2,7 @@ import { useState } from "react"
 import { IClient } from "../api/Client"
 import { Button, ButtonMode } from "../controls/Button"
 import { MonthlyReportView } from "./MonthlyReportView"
+import { YearlyReportView } from "./YearlyReportView"
 
 interface ReportsViewProps {
     client: IClient
@@ -22,6 +23,10 @@ export function ReportsView(props: ReportsViewProps) {
         <Button text="Yearly" mode={currentView == CurrentReportView.YEARLY? ButtonMode.PRIMARY: ButtonMode.SECONDARY}
             onClick={() => setCurrentView(CurrentReportView.YEARLY)}
         />
-        <MonthlyReportView month={new Date()} client={client} />
+        {
+            currentView == CurrentReportView.MONTHLY
+            ? <MonthlyReportView month={new Date()} client={client} />
+            : <YearlyReportView />
+        }
     </div>
 }
