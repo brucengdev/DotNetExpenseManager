@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { ReportsView } from "./ReportsView"
 import { TestClient } from "../__test__/TestClient"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import '@testing-library/jest-dom'
 
 describe("ReportsView", () => {
@@ -20,5 +20,22 @@ describe("ReportsView", () => {
 
         expect(screen.getByTestId("monthly-report-view")).toBeInTheDocument()
         expect(screen.queryByTestId("yearly-report-view")).not.toBeInTheDocument()
+    })
+
+    it("switches to yearly report view when clicked", async () => {
+        await render(<ReportsView client={new TestClient()} />)
+
+        expect(screen.getByTestId("reports-view")).toBeInTheDocument()
+
+        const monthlyReportButton = screen.getByRole("button", { name: "Monthly"})
+        const yearlyReportButton = screen.getByRole("button", { name: "Yearly" })
+
+        fireEvent.click(yearlyReportButton)
+
+        expect(monthlyReportButton).toHaveClass("bg-gray-300")
+        expect(yearlyReportButton).toHaveClass("bg-indigo-600")
+        
+        expect(screen.queryByTestId("monthly-report-view")).not.toBeInTheDocument()
+        expect(screen.getByTestId("yearly-report-view")).toBeInTheDocument()  
     })
 })
