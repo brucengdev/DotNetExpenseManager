@@ -1,7 +1,8 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { YearlyReportView } from "./YearlyReportView";
 import "@testing-library/jest-dom"
+import userEvent from "@testing-library/user-event";
 
 describe("Yearly report", () => {
 
@@ -23,6 +24,16 @@ describe("Yearly report", () => {
             const expectedYear = currentYear - i;
             expect(options[i]).toHaveValue(expectedYear.toString())
         }
+    })
+
+    it("switches year when user changes year", async () => {
+        render(<YearlyReportView />)
+
+        const yearPicker = screen.getByRole("combobox", { name: "Year"})
+
+        userEvent.selectOptions(yearPicker, "2020")
+
+        await waitFor(() => expect(yearPicker).toHaveValue("2020"))
     })
 
 })

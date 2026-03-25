@@ -11,6 +11,9 @@ export function YearlyReportView() {
             label="Year"
             options={yearOptions}
             value={year.toString()}
+            onChange={newYear => {
+                setYear(parseInt(newYear))
+            }}
         />
     </div>
 }
