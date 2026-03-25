@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { Select } from "../controls/Select";
 
-interface YearlyReportViewProps {
-    year?: number
-}
-export function YearlyReportView(props: YearlyReportViewProps) {
-    const { year: initialYear } = props
-    const [year, setYear] = useState(initialYear ?? (new Date()).getFullYear())
+export function YearlyReportView() {
+    const [year, setYear] = useState((new Date()).getFullYear())
     return <div data-testid="yearly-report-view">
         <Select
             elementId="year-control"
