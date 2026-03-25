@@ -11,7 +11,9 @@ describe("ReportsView", () => {
         expect(screen.getByTestId("reports-view")).toBeInTheDocument()
 
         expect(screen.getByRole("button", { name: "Monthly"})).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "Yearly" })).toBeInTheDocument()
 
         expect(screen.getByTestId("monthly-report-view")).toBeInTheDocument()
+        expect(screen.queryByTestId("yearly-report-view")).not.toBeInTheDocument()
     })
 })
