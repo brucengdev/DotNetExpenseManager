@@ -22,7 +22,7 @@ describe("ReportsView", () => {
         expect(screen.queryByTestId("yearly-report-view")).not.toBeInTheDocument()
     })
 
-    it("switches to yearly report view when clicked", async () => {
+    it("switches between reports", async () => {
         await render(<ReportsView client={new TestClient()} />)
 
         expect(screen.getByTestId("reports-view")).toBeInTheDocument()
@@ -36,6 +36,14 @@ describe("ReportsView", () => {
         expect(yearlyReportButton).toHaveClass("bg-indigo-600")
         
         expect(screen.queryByTestId("monthly-report-view")).not.toBeInTheDocument()
-        expect(screen.getByTestId("yearly-report-view")).toBeInTheDocument()  
+        expect(screen.getByTestId("yearly-report-view")).toBeInTheDocument()
+
+        fireEvent.click(monthlyReportButton)
+
+        expect(monthlyReportButton).toHaveClass("bg-indigo-600")
+        expect(yearlyReportButton).toHaveClass("bg-gray-300")
+        
+        expect(screen.getByTestId("monthly-report-view")).toBeInTheDocument()
+        expect(screen.queryByTestId("yearly-report-view")).not.toBeInTheDocument()  
     })
 })
