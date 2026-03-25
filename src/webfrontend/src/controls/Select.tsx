@@ -25,7 +25,7 @@ export function Select(props: SelectProps) {
                     }
                 }}
             >
-                {options.map(option => (
+                {(options || []).map(option => (
                     <option key={option.value} value={option.value}>{option.text}</option>
                 ))}
             </select>
