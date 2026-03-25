@@ -1,5 +1,5 @@
 
-interface SelectOption {
+export interface SelectOption {
     value: string | undefined
     text: string
 }
