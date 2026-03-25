@@ -10,8 +10,13 @@ describe("ReportsView", () => {
 
         expect(screen.getByTestId("reports-view")).toBeInTheDocument()
 
-        expect(screen.getByRole("button", { name: "Monthly"})).toBeInTheDocument()
-        expect(screen.getByRole("button", { name: "Yearly" })).toBeInTheDocument()
+        const monthlyReportButton = screen.getByRole("button", { name: "Monthly"})
+        expect(monthlyReportButton).toBeInTheDocument()
+        expect(monthlyReportButton).toHaveClass("bg-indigo-600")
+
+        const yearlyReportButton = screen.getByRole("button", { name: "Yearly" })
+        expect(yearlyReportButton).toBeInTheDocument()
+        expect(yearlyReportButton).toHaveClass("bg-gray-300")
 
         expect(screen.getByTestId("monthly-report-view")).toBeInTheDocument()
         expect(screen.queryByTestId("yearly-report-view")).not.toBeInTheDocument()
