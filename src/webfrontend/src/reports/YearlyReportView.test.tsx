@@ -8,5 +8,8 @@ describe("Yearrly report", () =>
         render(<YearlyReportView />)
 
         expect(screen.getByTestId("yearly-report-view")).toBeInTheDocument()
+
+        const yearPicker = screen.getByRole("combobox", { name: "Year"})
+        expect(yearPicker).toBeInTheDocument()
     })
 )
