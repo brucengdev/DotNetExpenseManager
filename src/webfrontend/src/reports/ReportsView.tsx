@@ -26,7 +26,7 @@ export function ReportsView(props: ReportsViewProps) {
         {
             currentView == CurrentReportView.MONTHLY
             ? <MonthlyReportView month={new Date()} client={client} />
-            : <YearlyReportView />
+            : <YearlyReportView client={client} />
         }
     </div>
 }

@@ -41,7 +41,7 @@ describe("Yearly report", () => {
         const client = new TestClient()
         client.GetYearlyReport = vitest.fn(async (_year: number) => {
             return {
-                year: 2026,
+                year: _year,
                 months: [
                     {
                         month: 1,
@@ -60,5 +60,9 @@ describe("Yearly report", () => {
         })
         render(<YearlyReportView client={client} />)
 
+        await waitFor(() => {
+            const monthSummaries = screen.queryAllByTestId("month-summary")
+            expect(monthSummaries).toHaveLength(2)
+        })
     })
 })
