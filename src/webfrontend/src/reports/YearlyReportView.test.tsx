@@ -3,11 +3,12 @@ import { describe, expect, it } from "vitest";
 import { YearlyReportView } from "./YearlyReportView";
 import "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
+import { TestClient } from "../__test__/TestClient";
 
 describe("Yearly report", () => {
 
     it("has UI components", async () => {
-        render(<YearlyReportView />)
+        render(<YearlyReportView  client={new TestClient()}/>)
 
         expect(screen.getByTestId("yearly-report-view")).toBeInTheDocument()
 
@@ -27,7 +28,7 @@ describe("Yearly report", () => {
     })
 
     it("switches year when user changes year", async () => {
-        render(<YearlyReportView />)
+        render(<YearlyReportView  client={new TestClient()}/>)
 
         const yearPicker = screen.getByRole("combobox", { name: "Year"})
 
@@ -36,4 +37,9 @@ describe("Yearly report", () => {
         await waitFor(() => expect(yearPicker).toHaveValue("2020"))
     })
 
+    it("Shows the report for chosen year", async () => {
+        const client = new TestClient()
+        render(<YearlyReportView client={client} />)
+
+    })
 })

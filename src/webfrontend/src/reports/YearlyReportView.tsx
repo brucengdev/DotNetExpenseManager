@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Select, SelectOption } from "../controls/Select";
+import { IClient } from "../api/Client";
 
-export function YearlyReportView() {
+interface YearlyReportViewProps {
+    client: IClient
+}
+
+export function YearlyReportView(_: YearlyReportViewProps) {
     const currentYear = (new Date()).getFullYear()
     const [year, setYear] = useState(currentYear)
     const yearOptions: SelectOption[] = buildYearOptions(currentYear, 2013);
