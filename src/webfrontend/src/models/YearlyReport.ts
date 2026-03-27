@@ -8,4 +8,7 @@ export interface MonthSummary {
 export interface YearlyReport {
     year: number
     months: MonthSummary[]
+    totalSpendings: number
+    totalIncome: number
+    totalSavings: number
 }

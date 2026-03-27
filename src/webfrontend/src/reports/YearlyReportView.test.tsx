@@ -4,6 +4,7 @@ import { YearlyReportView } from "./YearlyReportView";
 import "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
 import { TestClient } from "../__test__/TestClient";
+import { YearlyReport } from "../models/YearlyReport";
 
 describe("Yearly report", () => {
 
@@ -45,18 +46,21 @@ describe("Yearly report", () => {
                 months: [
                     {
                         month: 1,
-                        spendings: -100,
-                        income: 120,
-                        savings: 20
+                        spendings: -1000,
+                        income: 1200,
+                        savings: 200
                     },
                     {
                         month: 3,
-                        spendings: -300,
-                        income: 450,
-                        savings: 150
+                        spendings: -3000,
+                        income: 4500,
+                        savings: 1500
                     }
-                ]
-            }
+                ],
+                totalSpendings: -4000,
+                totalIncome: 5700,
+                totalSavings: 1700
+            } as YearlyReport
         })
         render(<YearlyReportView client={client} />)
 
@@ -66,7 +70,11 @@ describe("Yearly report", () => {
         })
 
         const monthSummaries = screen.queryAllByTestId("month-summary")
-        expect(monthSummaries[0].textContent).toBe("01-100 ₫120 ₫20 ₫")
-        expect(monthSummaries[1].textContent).toBe("03-300 ₫450 ₫150 ₫")
+        expect(monthSummaries[0].textContent).toBe("01-1.000 ₫1.200 ₫200 ₫")
+        expect(monthSummaries[1].textContent).toBe("03-3.000 ₫4.500 ₫1.500 ₫")
+
+        expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings-4.000 ₫")
+        expect(screen.getByTestId("total-income").textContent).toBe("Total income5.700 ₫")
+        expect(screen.getByTestId("total-savings").textContent).toBe("Total savings1.700 ₫")
     })
 })
