@@ -125,7 +125,10 @@ export class TestClient implements IClient {
         //no real implementation here
         return {
             year: _year,
-            months: []
+            months: [],
+            totalIncome: 0,
+            totalSavings: 0,
+            totalSpendings: 0
         }
     }
 }
