@@ -22,7 +22,7 @@ export function YearlyReportView(props: YearlyReportViewProps) {
             setYearlyReport(retrievedReport)
         })()
     }
-    return <div data-testid="yearly-report-view">
+    return <div data-testid="yearly-report-view" className="xl:mx-50 mb-30">
         <Select
             elementId="year-control"
             label="Year"
@@ -33,11 +33,11 @@ export function YearlyReportView(props: YearlyReportViewProps) {
                 setYearlyReport(undefined)//to reload
             }}
         />
-        <div className="grid grid-cols-4">
-            <div className="border-1">Month</div>
-            <div className="border-1">Spendings</div>
-            <div className="border-1">Income</div>
-            <div className="border-1">Savings</div>
+        <div className="grid grid-cols-4 mt-5">
+            <div className="border-1 bg-blue-600 text-white">Month</div>
+            <div className="border-1 bg-blue-600 text-white">Spendings</div>
+            <div className="border-1 bg-blue-600 text-white">Income</div>
+            <div className="border-1 bg-blue-600 text-white">Savings</div>
         </div>
         {
             (yearlyReport?.months ?? [])
@@ -47,11 +47,11 @@ export function YearlyReportView(props: YearlyReportViewProps) {
 
         {
             yearlyReport
-            ? <>
+            ? <div className="mt-5 xl:mx-20">
                 <TableFieldValueRow dataTestId="total-spendings" label="Total spendings" value={formatMoney(yearlyReport.totalSpendings)} />
                 <TableFieldValueRow dataTestId="total-income" label="Total income" value={formatMoney(yearlyReport.totalIncome)} />
                 <TableFieldValueRow dataTestId="total-savings" label="Total savings" value={formatMoney(yearlyReport.totalSavings)} />
-            </>
+            </div>
             :<></>
         }
     </div>
