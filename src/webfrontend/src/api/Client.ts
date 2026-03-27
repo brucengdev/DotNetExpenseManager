@@ -5,6 +5,7 @@ import { MonthlyReport } from "../models/MonthlyReport"
 import { Payee } from "../models/Payee"
 import { SpendingsSummary } from "../models/SpendingsSummary"
 import { Tag } from "../models/Tag"
+import { YearlyReport } from "../models/YearlyReport"
 import { formatDateToDay, formatDateToMonthYear } from "../utils"
 
 export interface IClient {
@@ -29,6 +30,7 @@ export interface IClient {
     GetMonthlyReport: (month: Date) => Promise<MonthlyReport>
     GetSpendingsSummary: (date: Date) => Promise<SpendingsSummary>
     GetAverageMonthlyIncome: (fromMonth: Date, toMonth:Date) => Promise<AverageMonthlyIncomeReport>
+    GetYearlyReport: (year: number) => Promise<YearlyReport>
 }
 
 const devUrl = "https://localhost:7146"
@@ -238,5 +240,18 @@ export class Client implements IClient {
             return (await result.json()) as AverageMonthlyIncomeReport
         }
         return {} as AverageMonthlyIncomeReport
+    }
+
+    
+    async GetYearlyReport(year: number): Promise<YearlyReport> {
+        const result = await fetch(`${url}/reports/yearly/${year}?${new URLSearchParams({
+            accessToken: this.token
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return (await result.json()) as YearlyReport
+        }
+        return {} as YearlyReport
     }
 }

@@ -1,5 +1,5 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vitest } from "vitest";
 import { YearlyReportView } from "./YearlyReportView";
 import "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
@@ -39,6 +39,11 @@ describe("Yearly report", () => {
 
     it("Shows the report for chosen year", async () => {
         const client = new TestClient()
+        client.GetYearlyReport = vitest.fn(async (_year: number) => {
+            return {
+                
+            }
+        })
         render(<YearlyReportView client={client} />)
 
     })
