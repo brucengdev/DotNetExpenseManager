@@ -32,7 +32,8 @@ export function YearlyReportView(props: YearlyReportViewProps) {
         />
         {
             (yearlyReport?.months ?? [])
-            .map(monthSummary => <MonthSummaryView />)
+            .map(({income, month, savings, spendings}) => 
+                <MonthSummaryView month={month} spendings={spendings} savings={savings} income={income}/>)
         }
     </div>
 }

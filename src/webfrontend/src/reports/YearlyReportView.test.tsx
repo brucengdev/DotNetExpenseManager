@@ -67,5 +67,6 @@ describe("Yearly report", () => {
 
         const monthSummaries = screen.queryAllByTestId("month-summary")
         expect(monthSummaries[0].textContent).toBe("01-100 ₫120 ₫20 ₫")
+        expect(monthSummaries[1].textContent).toBe("03-300 ₫450 ₫150 ₫")
     })
 })
