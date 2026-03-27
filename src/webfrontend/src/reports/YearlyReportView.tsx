@@ -30,6 +30,12 @@ export function YearlyReportView(props: YearlyReportViewProps) {
                 setYear(parseInt(newYear))
             }}
         />
+        <div className="grid grid-cols-4">
+            <div className="border-1">Month</div>
+            <div className="border-1">Spendings</div>
+            <div className="border-1">Income</div>
+            <div className="border-1">Savings</div>
+        </div>
         {
             (yearlyReport?.months ?? [])
             .map(({income, month, savings, spendings}) => 
