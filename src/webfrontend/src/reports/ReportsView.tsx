@@ -17,12 +17,14 @@ export function ReportsView(props: ReportsViewProps) {
     const { client } = props
     const [currentView, setCurrentView] = useState(CurrentReportView.MONTHLY)
     return <div data-testid="reports-view">
-        <Button text="Monthly" mode={currentView == CurrentReportView.MONTHLY? ButtonMode.PRIMARY: ButtonMode.SECONDARY} 
-            onClick={() => setCurrentView(CurrentReportView.MONTHLY)}
-        />
-        <Button text="Yearly" mode={currentView == CurrentReportView.YEARLY? ButtonMode.PRIMARY: ButtonMode.SECONDARY}
-            onClick={() => setCurrentView(CurrentReportView.YEARLY)}
-        />
+        <div className="grid grid-cols-2 xl:mx-30 mx-2">
+            <Button text="Monthly" mode={currentView == CurrentReportView.MONTHLY? ButtonMode.PRIMARY: ButtonMode.SECONDARY} 
+                onClick={() => setCurrentView(CurrentReportView.MONTHLY)}
+            />
+            <Button text="Yearly" mode={currentView == CurrentReportView.YEARLY? ButtonMode.PRIMARY: ButtonMode.SECONDARY}
+                onClick={() => setCurrentView(CurrentReportView.YEARLY)}
+            />
+        </div>
         {
             currentView == CurrentReportView.MONTHLY
             ? <MonthlyReportView month={new Date()} client={client} />

@@ -21,9 +21,8 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
         })();
     }
     return <div 
-            className="xl:mx-50"
+            className="xl:mx-50 mb-20"
             data-testid="monthly-report-view">
-        Monthly Report
         <TextBox
             name="month"
             label="Month"
