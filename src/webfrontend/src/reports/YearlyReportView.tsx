@@ -30,6 +30,7 @@ export function YearlyReportView(props: YearlyReportViewProps) {
             value={year.toString()}
             onChange={newYear => {
                 setYear(parseInt(newYear))
+                setYearlyReport(undefined)//to reload
             }}
         />
         <div className="grid grid-cols-4">
