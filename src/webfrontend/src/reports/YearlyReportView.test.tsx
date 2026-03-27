@@ -64,5 +64,8 @@ describe("Yearly report", () => {
             const monthSummaries = screen.queryAllByTestId("month-summary")
             expect(monthSummaries).toHaveLength(2)
         })
+
+        const monthSummaries = screen.queryAllByTestId("month-summary")
+        expect(monthSummaries[0].textContent).toBe("01-100 ₫120 ₫20 ₫")
     })
 })
