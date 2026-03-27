@@ -41,7 +41,21 @@ describe("Yearly report", () => {
         const client = new TestClient()
         client.GetYearlyReport = vitest.fn(async (_year: number) => {
             return {
-                
+                year: 2026,
+                months: [
+                    {
+                        month: 1,
+                        spendings: -100,
+                        income: 120,
+                        savings: 20
+                    },
+                    {
+                        month: 3,
+                        spendings: -300,
+                        income: 450,
+                        savings: 150
+                    }
+                ]
             }
         })
         render(<YearlyReportView client={client} />)

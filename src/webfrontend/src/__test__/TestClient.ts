@@ -124,6 +124,8 @@ export class TestClient implements IClient {
         //this function should be replaced in tests
         //no real implementation here
         return {
+            year: _year,
+            months: []
         }
     }
 }
