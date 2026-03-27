@@ -98,4 +98,27 @@ public class ReportsRepository: IReportsRepository
             AverageIncome = averageIncome
         };
     }
+
+    public YearlyReport GetYearlyReport(int userId, int year)
+    {
+        var months = _dbContext.Entries
+            .Where(e => e.Date.Year == year)
+            .GroupBy(e => e.Date.Month)
+            .Select(g => new MonthSummary()
+            {
+                Month = g.Key,
+                Spendings = g.Sum(e => e.Value < 0 ? e.Value : 0),
+                Income = g.Sum(e => e.Value > 0 ? e.Value : 0),
+                Savings = g.Sum(e => e.Value)
+            })
+            .OrderBy(ms => ms.Month);
+        return new()
+        {
+            Months = months,
+            Year = year,
+            TotalSpendings = months.Sum(m => m.Spendings),
+            TotalIncome = months.Sum(m => m.Income),
+            TotalSavings = months.Sum(m => m.Savings)
+        };
+    }
 }

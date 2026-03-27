@@ -7,6 +7,7 @@ import { Payee } from "../models/Payee";
 import { MonthlyReport } from "../models/MonthlyReport";
 import { SpendingsSummary } from "../models/SpendingsSummary";
 import { AverageMonthlyIncomeReport } from "../models/AverageMonthlyIncomeReport";
+import { YearlyReport } from "../models/YearlyReport";
 
 export const TEST_USER_NAME = "valid_user"
 export const TEST_PASSWORD = "correct_pass"
@@ -116,6 +117,18 @@ export class TestClient implements IClient {
             fromMonth: new Date(),
             toMonth: new Date(),
             averageIncome: 0
+        }
+    }
+    
+    async GetYearlyReport(_year: number): Promise<YearlyReport> {
+        //this function should be replaced in tests
+        //no real implementation here
+        return {
+            year: _year,
+            months: [],
+            totalIncome: 0,
+            totalSavings: 0,
+            totalSpendings: 0
         }
     }
 }

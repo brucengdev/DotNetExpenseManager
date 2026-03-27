@@ -44,4 +44,13 @@ public class ReportsController: ControllerBase
         return AverageIncomeServiceModel.From(
             _reportsManager.GetAverageIncomeReport(userId.Value!, fromMonth, toMonth));
     }
+    
+    
+    [HttpGet("yearly/{year}")]
+    [ServiceFilter<SecurityFilterAttribute>]
+    public YearlyReportServiceModel GetYearlyReport(int year)
+    {
+        var userId = HttpContext.Items[Constants.USER_ID] as int?;
+        return YearlyReportServiceModel.From(_reportsManager.GetYearlyReport(userId.Value!, year));
+    }
 }

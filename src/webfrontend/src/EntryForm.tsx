@@ -9,6 +9,7 @@ import { MultiSelect } from "./controls/MultiSelect"
 import { Tag } from "./models/Tag"
 import { Payee } from "./models/Payee"
 import { AverageMonthlyIncomeReport } from "./models/AverageMonthlyIncomeReport"
+import { Select } from "./controls/Select"
 
 export interface EntryFormProps {
     date: Date
@@ -100,23 +101,22 @@ export const EntryForm = (props: EntryFormProps) => {
             />
         </div>
 
-        <div>
-            <label htmlFor="payee-select" className="block text-sm/6 font-semibold text-gray-900">Payee</label>
-            <select id="payee-select" 
-                className={"block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 " +
-                        "outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 "}
-                value={payeeId} 
-                onChange={event => {
-                    const newPayeeId = event.target.value ? parseInt(event.target.value) : undefined
-                    setPayeeId(newPayeeId)}
-                }
-            >
-                <option key={0} value={undefined}>[No payee]</option>
-                {sortedPayees.map(payee => (
-                    <option key={payee.id} value={payee.id}>{payee.name}</option>
-                ))}
-            </select>
-        </div>
+        <Select
+            elementId="payee-select"
+            label="Payee"
+            value={payeeId?.toString() ?? ""}
+            onChange={newValue => {
+                const newPayeeId = newValue ? parseInt(newValue) : undefined
+                setPayeeId(newPayeeId)
+            }}
+
+            options={[{ value: undefined as string | undefined, text: "[No payee]"}]
+            .concat(
+                sortedPayees.map(p => {
+                    return { value: p.id?.toString(), text: p.name }
+                })
+            )}
+        />
 
         <TextBox
             name="notes"
