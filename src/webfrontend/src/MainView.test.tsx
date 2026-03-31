@@ -39,6 +39,8 @@ describe("MainView", () => {
 
         expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
         expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("entry-filters-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("reports-view")).not.toBeInTheDocument()
 
         //check highlighted button
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-indigo-600")
@@ -59,6 +61,8 @@ describe("MainView", () => {
 
         expect(screen.queryByTestId("day-view")).not.toBeInTheDocument()
         expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("entry-filters-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("reports-view")).not.toBeInTheDocument()
 
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
@@ -86,6 +90,8 @@ describe("MainView", () => {
 
         expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
         expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("entry-filters-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("reports-view")).not.toBeInTheDocument()
 
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-indigo-600")
         expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
@@ -106,6 +112,8 @@ describe("MainView", () => {
 
         expect(screen.queryByTestId("day-view")).not.toBeInTheDocument()
         expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("entry-filters-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("reports-view")).not.toBeInTheDocument()
         
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
@@ -127,6 +135,7 @@ describe("MainView", () => {
         expect(screen.queryByTestId("day-view")).not.toBeInTheDocument()
         expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
         expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("entry-filters-view")).not.toBeInTheDocument()
         
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
