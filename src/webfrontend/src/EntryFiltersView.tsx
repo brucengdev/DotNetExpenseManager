@@ -1,6 +1,11 @@
+import { Client } from "./api/Client";
 import { TextBox } from "./controls/TextBox";
 
-export function EntryFiltersView() {
+interface EntryFiltersViewProps {
+    client: Client
+}
+
+export function EntryFiltersView(_: EntryFiltersViewProps) {
     return <div data-testId="entry-filters-view">
         <TextBox
             label="From date"
