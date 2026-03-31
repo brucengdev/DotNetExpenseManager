@@ -33,7 +33,7 @@ export function MainView({client, onLogout} : MainViewProps) {
       </div>
       <div className="mb-5 grid grid-cols-4 gap-2">
         <Button text="Day" mode={view === View.DAY? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.DAY)}/>
-        <Button text="Entry filters" />
+        <Button text="Entry filters" mode={view === View.EntryFilters? ButtonMode.PRIMARY: ButtonMode.SECONDARY} />
         <Button text="Tags" mode={view === View.TAGS? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.TAGS)}/>
         <Button text="Payees" mode={view === View.PAYEES? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.PAYEES)}/>
         <Button text="Reports" mode={view === View.REPORTS? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.REPORTS)}/>

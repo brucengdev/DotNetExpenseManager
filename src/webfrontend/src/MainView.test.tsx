@@ -42,6 +42,7 @@ describe("MainView", () => {
 
         //check highlighted button
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-indigo-600")
+        expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Tags"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Payees"}).className).toContain("bg-gray-300")
     })
