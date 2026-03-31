@@ -17,6 +17,9 @@ describe("MainView", () => {
         const payeesButton = screen.getByRole("button", { name: "Payees"})
         expect(payeesButton).toBeInTheDocument()
 
+        const entryFiltersButton = screen.getByRole("button", { name: "Entry filters"})
+        expect(entryFiltersButton).toBeInTheDocument()
+
         const reportsButton = screen.getByRole("button", { name: "Reports" })
         expect(reportsButton).toBeInTheDocument()
 
