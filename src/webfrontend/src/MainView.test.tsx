@@ -61,6 +61,7 @@ describe("MainView", () => {
         expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
 
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-gray-300")
+        expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Tags"}).className).toContain("bg-indigo-600")
         expect(screen.getByRole("button", { name: "Payees"}).className).toContain("bg-gray-300")
     })
@@ -87,6 +88,7 @@ describe("MainView", () => {
         expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
 
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-indigo-600")
+        expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Tags"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Payees"}).className).toContain("bg-gray-300")
     })
@@ -106,6 +108,7 @@ describe("MainView", () => {
         expect(screen.queryByTestId("tags-view")).not.toBeInTheDocument()
         
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-gray-300")
+        expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Tags"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Payees"}).className).toContain("bg-indigo-600")
     })
@@ -126,6 +129,7 @@ describe("MainView", () => {
         expect(screen.queryByTestId("payees-view")).not.toBeInTheDocument()
         
         expect(screen.getByRole("button", { name: "Day"}).className).toContain("bg-gray-300")
+        expect(screen.getByRole("button", { name: "Entry filters"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Tags"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Payees"}).className).toContain("bg-gray-300")
         expect(screen.getByRole("button", { name: "Reports"}).className).toContain("bg-indigo-600")
