@@ -5,6 +5,7 @@ import { LabeledMultiSelect } from "./controls/LabeledMultiSelect";
 import { TextBox } from "./controls/TextBox";
 import { Tag } from "./models/Tag";
 import { Payee } from "./models/Payee";
+import { Select } from "./controls/Select";
 
 interface EntryFiltersViewProps {
     client: IClient
@@ -57,6 +58,22 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                 }
             })}
             selectedValues={tagIds.map(t => t.toString())}
+        />
+        <Select
+            elementId="payee-select"
+            label="Payee"
+            value={payeeId?.toString() ?? ""}
+            onChange={newValue => {
+                const newPayeeId = newValue ? parseInt(newValue) : undefined
+                setPayeeId(newPayeeId)
+            }}
+
+            options={[{ value: undefined as string | undefined, text: "[No payee]"}]
+            .concat(
+                sortedPayees.map(p => {
+                    return { value: p.id?.toString(), text: p.name }
+                })
+            )}
         />
     </div>
 }
