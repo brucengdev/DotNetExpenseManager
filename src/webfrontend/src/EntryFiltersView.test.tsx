@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { EntryFiltersView } from "./EntryFiltersView";
 import "@testing-library/jest-dom"
@@ -14,7 +14,9 @@ describe("EntryFiltersView", () => {
             new Category(1, "household") 
         ]
         client.Tags = [
-            new Tag(1, "tag1")
+            new Tag(2, "tag2"),
+            new Tag(1, "tag1"),
+            new Tag(3, "tag3")
         ]
         client.Payees = [
             new Payee(1, "Tom")
@@ -34,7 +36,11 @@ describe("EntryFiltersView", () => {
         const tagsField = screen.getByTestId("tags-control")
         expect(tagsField).toBeInTheDocument()
 
-        await waitFor(() => expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument())
+        await waitFor(() => {
+            const tagOptions = within(tagsField).getAllByRole("option")
+            const tagNames = tagOptions.map(to => to.textContent)
+            expect(tagNames).toStrictEqual(["tag1","tag2","tag3"])
+        })
 
         expect(screen.getByRole("combobox", { name: "Payee" })).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "[No payee]"})).toBeInTheDocument()
