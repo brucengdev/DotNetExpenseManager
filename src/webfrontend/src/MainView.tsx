@@ -43,7 +43,7 @@ export function MainView({client, onLogout} : MainViewProps) {
         <Button text="Reports" mode={view === View.REPORTS? ButtonMode.PRIMARY: ButtonMode.SECONDARY} onClick={() => setView(View.REPORTS)}/>
       </div>
         {view === View.DAY? <DayView client={client} initialDate={new Date(formatDateToDay(new Date()))} />: <></>}
-        {view === View.EntryFilters? <EntryFiltersView />:<></>}
+        {view === View.EntryFilters? <EntryFiltersView client={client} />:<></>}
         {view === View.TAGS? <TagsView client={client} />: <></>}
         {view === View.PAYEES? <PayeesView client={client}/>:<></>}
         {view === View.REPORTS? <ReportsView client={client}/>:<></>}

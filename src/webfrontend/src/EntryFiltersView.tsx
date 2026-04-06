@@ -1,10 +1,10 @@
-import { Client } from "./api/Client";
+import { IClient } from "./api/Client";
 import { CategoryControl } from "./controls/CategoryControl";
 import { LabeledMultiSelect } from "./controls/LabeledMultiSelect";
 import { TextBox } from "./controls/TextBox";
 
 interface EntryFiltersViewProps {
-    client: Client
+    client: IClient
 }
 
 export function EntryFiltersView(props: EntryFiltersViewProps) {
