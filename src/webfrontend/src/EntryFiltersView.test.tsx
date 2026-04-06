@@ -26,12 +26,18 @@ describe("EntryFiltersView", () => {
         
         const fromDateField = screen.getByLabelText("From date")
         expect(fromDateField).toBeInTheDocument()
+        expect(fromDateField).toHaveValue("")
 
         const toDateField = screen.getByLabelText("To date")
         expect(toDateField).toBeInTheDocument()
+        expect(toDateField).toHaveValue("")
 
-        const categoryField = screen.getByTestId("category-control")
+        const categoryField = screen.getByLabelText("Categories")
         expect(categoryField).toBeInTheDocument()
+        const categoryOptions = within(categoryField).getAllByRole("option")
+        const categoryNames = categoryOptions.map(co => co.textContent)
+        expect(categoryNames).toStrictEqual(["Uncategorized", "food", "household", "utilities"])
+        expect(categoryField).toHaveValue("")
 
         expect(screen.getByLabelText("Tags")).toBeInTheDocument()
         const tagsField = screen.getByTestId("tags-control")

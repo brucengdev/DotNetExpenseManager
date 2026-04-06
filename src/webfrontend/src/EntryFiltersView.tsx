@@ -43,10 +43,11 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             type="date"
             value=""
         />
-        <CategoryControl 
-            client={client}
-            categoryId={undefined}
-            onChange={() => {}}
+        <LabeledMultiSelect
+            selectDataTestId="category-control"
+            selectedValues={[]}
+            label="Categories"
+            options={[]}
         />
         <LabeledMultiSelect
             label="Tags"
