@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { EntryFiltersView } from "./EntryFiltersView";
 import "@testing-library/jest-dom"
@@ -8,7 +8,7 @@ import { Payee } from "./models/Payee";
 import { Tag } from "./models/Tag";
 
 describe("EntryFiltersView", () => {
-    it("has necessary UI", () => {
+    it("has necessary UI", async () => {
         const client = new TestClient()
         client.Categories = [
             new Category(1, "household") 
@@ -33,7 +33,8 @@ describe("EntryFiltersView", () => {
         expect(screen.getByLabelText("Tags")).toBeInTheDocument()
         const tagsField = screen.getByTestId("tags-control")
         expect(tagsField).toBeInTheDocument()
-        expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument()
+
+        await waitFor(() => expect(screen.getByRole("option", { name: "tag1"})).toBeInTheDocument())
 
         expect(screen.getByRole("combobox", { name: "Payee" })).toBeInTheDocument()
         expect(screen.getByRole("option", { name: "[No payee]"})).toBeInTheDocument()

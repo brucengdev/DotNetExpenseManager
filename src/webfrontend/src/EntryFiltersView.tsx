@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { IClient } from "./api/Client";
 import { CategoryControl } from "./controls/CategoryControl";
 import { LabeledMultiSelect } from "./controls/LabeledMultiSelect";
 import { TextBox } from "./controls/TextBox";
+import { Tag } from "./models/Tag";
+import { Payee } from "./models/Payee";
 
 interface EntryFiltersViewProps {
     client: IClient
@@ -9,6 +12,23 @@ interface EntryFiltersViewProps {
 
 export function EntryFiltersView(props: EntryFiltersViewProps) {
     const { client } = props
+    const [categoryId, setCategoryId] = useState<number | undefined>(undefined)
+    const [tags, setTags] = useState<Tag[] | undefined>(undefined)
+    const [payees, setPayees] = useState<Payee[] | undefined>(undefined)
+    const [tagIds, setTagIds] = useState<number[]>([])
+    const [payeeId, setPayeeId] = useState<number | undefined>(undefined)
+    if(tags === undefined) {
+        client.GetTags()
+        .then(retrievedTags => setTags(retrievedTags))
+    }
+    if(payees === undefined) {
+        client.GetPayees()
+        .then(retrievedPayees => setPayees(retrievedPayees))
+    }
+
+    const sortedTags = (tags || []).sort((a, b) => a.name.localeCompare(b.name))
+    const sortedPayees = (payees || []).sort((a, b) => a.name.localeCompare(b.name));
+
     return <div data-testId="entry-filters-view">
         <TextBox
             label="From date"
@@ -26,12 +46,17 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             client={client}
             categoryId={undefined}
             onChange={() => {}}
-            />
+        />
         <LabeledMultiSelect
             label="Tags"
             selectDataTestId="tags-control"
-            options={[]}
-            selectedValues={[]}
+            options={sortedTags.map(st => {
+                return {
+                    value: st.id.toString(),
+                    text: st.name
+                }
+            })}
+            selectedValues={tagIds.map(t => t.toString())}
         />
     </div>
 }
