@@ -5,12 +5,13 @@ interface LabeledMutliSelectProps {
     options: Option[]
     selectedValues: string[]
     selectDataTestId?: string
+    label: string
 }
 
 export function LabeledMultiSelect(props: LabeledMutliSelectProps) {
-    const { options, selectedValues, selectDataTestId, onChange } = props
+    const { label, options, selectedValues, selectDataTestId, onChange } = props
     return <div>
-        <label htmlFor="tags-control" className="block text-sm/6 font-semibold text-gray-900">Tags</label>
+        <label htmlFor="tags-control" className="block text-sm/6 font-semibold text-gray-900">{label}</label>
         <MultiSelect
             selectDataTestId={selectDataTestId}
             options={options}
