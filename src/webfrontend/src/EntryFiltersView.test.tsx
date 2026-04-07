@@ -39,10 +39,10 @@ describe("EntryFiltersView", () => {
         expect(categoryField).toBeInTheDocument()
         await waitFor(() => {
             const categoryOptions = within(categoryField).getAllByRole("option")
+            categoryOptions.forEach(co => expect(co).not.toBeChecked())
             const categoryNames = categoryOptions.map(co => co.textContent)
             expect(categoryNames).toStrictEqual(["Uncategorized", "food", "household", "utilities"])
         })
-        expect(categoryField).toHaveValue("")
 
         expect(screen.getByLabelText("Tags")).toBeInTheDocument()
         const tagsField = screen.getByTestId("tags-control")
