@@ -11,7 +11,10 @@ describe("EntryFiltersView", () => {
     it("has necessary UI", async () => {
         const client = new TestClient()
         client.Categories = [
-            new Category(1, "household") 
+            new Category(1, "Uncategorized"),
+            new Category(2, "household"),
+            new Category(3, "food"),
+            new Category(4, "utilities")
         ]
         client.Tags = [
             new Tag(2, "tag2"),
@@ -34,9 +37,11 @@ describe("EntryFiltersView", () => {
 
         const categoryField = screen.getByLabelText("Categories")
         expect(categoryField).toBeInTheDocument()
-        const categoryOptions = within(categoryField).getAllByRole("option")
-        const categoryNames = categoryOptions.map(co => co.textContent)
-        expect(categoryNames).toStrictEqual(["Uncategorized", "food", "household", "utilities"])
+        await waitFor(() => {
+            const categoryOptions = within(categoryField).getAllByRole("option")
+            const categoryNames = categoryOptions.map(co => co.textContent)
+            expect(categoryNames).toStrictEqual(["Uncategorized", "food", "household", "utilities"])
+        })
         expect(categoryField).toHaveValue("")
 
         expect(screen.getByLabelText("Tags")).toBeInTheDocument()

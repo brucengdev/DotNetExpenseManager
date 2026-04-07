@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { IClient } from "./api/Client";
-import { CategoryControl } from "./controls/CategoryControl";
 import { LabeledMultiSelect } from "./controls/LabeledMultiSelect";
 import { TextBox } from "./controls/TextBox";
 import { Tag } from "./models/Tag";
 import { Payee } from "./models/Payee";
 import { Select } from "./controls/Select";
+import { Category } from "./models/Category";
 
 interface EntryFiltersViewProps {
     client: IClient
@@ -18,6 +18,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
     const [payees, setPayees] = useState<Payee[] | undefined>(undefined)
     const [tagIds, setTagIds] = useState<number[]>([])
     const [payeeId, setPayeeId] = useState<number | undefined>(undefined)
+    const [categories, setCategories] = useState<Category[] | undefined>(undefined)
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -26,7 +27,12 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
         client.GetPayees()
         .then(retrievedPayees => setPayees(retrievedPayees))
     }
+    if(categories == undefined) {
+        client.GetCategories()
+        .then(retrievedCats => setCategories(retrievedCats))
+    }
 
+    const sortedCats = SortedCategories(categories || [])
     const sortedTags = (tags || []).sort((a, b) => a.name.localeCompare(b.name))
     const sortedPayees = (payees || []).sort((a, b) => a.name.localeCompare(b.name));
 
@@ -47,7 +53,14 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             selectDataTestId="category-control"
             selectedValues={[]}
             label="Categories"
-            options={[]}
+            options={
+                sortedCats.map(sc => {
+                    return {
+                        text: sc.name,
+                        value: sc.id.toString()
+                    }
+                })
+            }
         />
         <LabeledMultiSelect
             label="Tags"
@@ -77,4 +90,17 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             )}
         />
     </div>
+}
+
+function SortedCategories(cats: Category[]) {
+    const uncategorized = cats.find(c => c.id === 1)
+    let result = []
+    if(uncategorized) {
+        result.push(uncategorized)
+    }
+    result = [
+        ...result,
+        ...cats.filter(c => c.id !== 1).sort((a, b) => a.name.localeCompare(b.name))
+    ]
+    return result
 }
