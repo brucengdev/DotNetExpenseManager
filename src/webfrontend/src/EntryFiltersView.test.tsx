@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { EntryFiltersView } from "./EntryFiltersView";
 import "@testing-library/jest-dom"
@@ -65,5 +65,18 @@ describe("EntryFiltersView", () => {
             //payees must be sorted
             expect(payeeNames).toStrictEqual(["[No payee]","Jane","Tom"])
         })
+    })
+
+    it("updates date filters", () => {
+        const client = new TestClient()
+        render(<EntryFiltersView client={client}/>)
+
+        const fromDateField = screen.getByLabelText("From date")
+        fireEvent.change(fromDateField, { target: { value: "2022-02-22"}})
+        expect(fromDateField).toHaveValue("2022-02-22")
+
+        const toDateField = screen.getByLabelText("To date")
+        fireEvent.change(toDateField, { target: { value: "2022-02-22"}})
+        expect(toDateField).toHaveValue("2022-02-22")
     })
 })

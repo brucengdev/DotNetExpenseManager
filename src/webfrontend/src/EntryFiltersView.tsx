@@ -19,6 +19,8 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
     const [tagIds, setTagIds] = useState<number[]>([])
     const [payeeId, setPayeeId] = useState<number | undefined>(undefined)
     const [categories, setCategories] = useState<Category[] | undefined>(undefined)
+    const [fromDate, setFromDate] = useState("")
+    const [toDate, setToDate] = useState("")
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -41,13 +43,19 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             label="From date"
             name="from-date-field"
             type="date"
-            value=""
+            value={fromDate}
+            onChange={e => {
+                setFromDate(e.target.value)
+            }}
         />
         <TextBox
             label="To date"
             name="to-date-field"
             type="date"
-            value=""
+            value={toDate}
+            onChange={e => {
+                setToDate(e.target.value)
+            }}
         />
         <LabeledMultiSelect
             selectDataTestId="category-control"
