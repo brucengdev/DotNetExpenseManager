@@ -50,6 +50,7 @@ describe("EntryFiltersView", () => {
 
         await waitFor(() => {
             const tagOptions = within(tagsField).getAllByRole("option")
+            tagOptions.forEach(to => expect(to).not.toBeChecked())
             const tagNames = tagOptions.map(to => to.textContent)
             expect(tagNames).toStrictEqual(["tag1","tag2","tag3"])
         })
@@ -58,10 +59,11 @@ describe("EntryFiltersView", () => {
         expect(payeeField).toBeInTheDocument()
 
         await waitFor(() => {
-            const tagOptions = within(payeeField).getAllByRole("option")
-            const tagNames = tagOptions.map(to => to.textContent)
+            const payeeOptions = within(payeeField).getAllByRole("option")
+            payeeOptions.forEach(po => expect(po).not.toBeChecked())
+            const payeeNames = payeeOptions.map(to => to.textContent)
             //payees must be sorted
-            expect(tagNames).toStrictEqual(["[No payee]","Jane","Tom"])
+            expect(payeeNames).toStrictEqual(["[No payee]","Jane","Tom"])
         })
     })
 })
