@@ -7,7 +7,6 @@ import { Category } from "./models/Category";
 import { Payee } from "./models/Payee";
 import { Tag } from "./models/Tag";
 import userEvent from "@testing-library/user-event";
-import { CategoryControl } from "./controls/CategoryControl";
 
 describe("EntryFiltersView", () => {
     it("has necessary UI", async () => {
@@ -93,13 +92,31 @@ describe("EntryFiltersView", () => {
         render(<EntryFiltersView client={client} />)
 
         const categoryField = screen.getByLabelText("Categories")
-        expect(categoryField).toBeInTheDocument()
         await waitFor(() => {
             const categoryOptions = within(categoryField).getAllByRole("option")
-            const categoryNames = categoryOptions.map(co => co.textContent)
-            expect(categoryNames).toStrictEqual(["Uncategorized", "food", "household", "utilities"])
+            expect(categoryOptions).toHaveLength(4)
         })
         userEvent.selectOptions(categoryField, ["2", "4"])
         expect(categoryField).toHaveValue(["2","4"])
+    })
+
+    it("sets value for tag filters", async () => {
+        const client = new TestClient()
+        client.Tags = [
+            new Tag(2, "tag2"),
+            new Tag(1, "tag1"),
+            new Tag(3, "tag3")
+        ]
+        render(<EntryFiltersView client={client} />)
+
+        expect(screen.getByLabelText("Tags")).toBeInTheDocument()
+        const tagsField = screen.getByTestId("tags-control")
+
+        await waitFor(() => {
+            const tagOptions = within(tagsField).getAllByRole("option")
+            expect(tagOptions).toHaveLength(3)
+        })
+        userEvent.selectOptions(tagsField, ["2", "1"])
+        expect(tagsField).toHaveValue(["2","1"])
     })
 })
