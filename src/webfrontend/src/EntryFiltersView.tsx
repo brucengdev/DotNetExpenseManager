@@ -88,7 +88,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                 setPayeeIds(newValues.map(v => parseInt(v)))
             }}
 
-            options={[{ value: "", text: "[No payee]"}]
+            options={[{ value: "0", text: "[No payee]"}]
             .concat(
                 sortedPayees.map(p => {
                     return { value: p.id.toString(), text: p.name }
