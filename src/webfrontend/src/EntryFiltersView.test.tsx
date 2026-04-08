@@ -119,4 +119,26 @@ describe("EntryFiltersView", () => {
         userEvent.selectOptions(tagsField, ["2", "1"])
         expect(tagsField).toHaveValue(["2","1"])
     })
+
+    it("set value for payee filters", async () => {
+        const client = new TestClient()
+        client.Payees = [
+            new Payee(1, "Tom"),
+            new Payee(2, "Jane"),
+            new Payee(3, "Bob"),
+            new Payee(4, "Barb"),
+        ]
+        render(<EntryFiltersView client={client} />)
+
+        const payeeField = screen.getByRole("combobox", { name: "Payee" })
+        expect(payeeField).toBeInTheDocument()
+
+        await waitFor(() => {
+            const payeeOptions = within(payeeField).getAllByRole("option")
+            expect(payeeOptions).toHaveLength(5)
+        })
+
+        userEvent.selectOptions(payeeField, ["2", "4"])
+        expect(payeeField).toHaveValue(["2", "4"])
+    })
 })
