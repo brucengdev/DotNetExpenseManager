@@ -146,4 +146,52 @@ describe("EntryFiltersView", () => {
         userEvent.selectOptions(payeeField, ["2", "4"])
         expect(payeeField).toHaveValue(["2", "4"])
     })
+
+    it("calls server to list entries", async () => {
+        const client = new TestClient()
+        client.Categories = [
+            new Category(1, "Uncategorized"),
+            new Category(2, "household"),
+            new Category(3, "food"),
+            new Category(4, "utilities")
+        ]
+        client.Tags = [
+            new Tag(2, "tag2"),
+            new Tag(1, "tag1"),
+            new Tag(3, "tag3")
+        ]
+        client.Payees = [
+            new Payee(1, "Tom"),
+            new Payee(2, "Jane"),
+            new Payee(3, "Jack")
+        ]
+        render(<EntryFiltersView client={client} />)
+
+        const fromDateField = screen.getByLabelText("From date")
+        fireEvent.change(fromDateField, { target: {value: "2022-02-22"}})
+
+        const toDateField = screen.getByLabelText("To date")
+        fireEvent.change(toDateField, {target: { value: "2022-03-12"}})
+
+        const categoryField = screen.getByLabelText("Categories")
+        await waitFor(() => {
+            const categoryOptions = within(categoryField).getAllByRole("option")
+            expect(categoryOptions.length).toBeGreaterThan(0)
+        })
+        userEvent.selectOptions(categoryField, ["2", "4"])
+
+        const tagsField = screen.getByTestId("tags-control")
+        await waitFor(() => {
+            const tagOptions = within(tagsField).getAllByRole("option")
+            expect(tagOptions.length).toBeGreaterThan(0)
+        })
+        userEvent.selectOptions(tagsField, ["1", "3"])
+
+        const payeeField = screen.getByLabelText("Payees")
+        await waitFor(() => {
+            const payeeOptions = within(payeeField).getAllByRole("option")
+            expect(payeeOptions.length).toBeGreaterThan(0)
+        })
+        userEvent.selectOptions(payeeField, ["2", "3"])
+    })
 })
