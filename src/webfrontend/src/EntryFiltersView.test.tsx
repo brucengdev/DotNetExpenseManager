@@ -56,7 +56,7 @@ describe("EntryFiltersView", () => {
             expect(tagNames).toStrictEqual(["tag1", "tag2", "tag3"])
         })
 
-        const payeeField = screen.getByRole("combobox", { name: "Payee" })
+        const payeeField = screen.getByLabelText("Payees")
         expect(payeeField).toBeInTheDocument()
 
         await waitFor(() => {
@@ -130,7 +130,7 @@ describe("EntryFiltersView", () => {
         ]
         render(<EntryFiltersView client={client} />)
 
-        const payeeField = screen.getByRole("combobox", { name: "Payee" })
+        const payeeField = screen.getByLabelText("Payees")
         expect(payeeField).toBeInTheDocument()
 
         await waitFor(() => {

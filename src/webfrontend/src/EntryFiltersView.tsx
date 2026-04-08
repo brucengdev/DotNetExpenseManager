@@ -4,7 +4,6 @@ import { LabeledMultiSelect } from "./controls/LabeledMultiSelect";
 import { TextBox } from "./controls/TextBox";
 import { Tag } from "./models/Tag";
 import { Payee } from "./models/Payee";
-import { Select } from "./controls/Select";
 import { Category } from "./models/Category";
 
 interface EntryFiltersViewProps {
@@ -13,11 +12,11 @@ interface EntryFiltersViewProps {
 
 export function EntryFiltersView(props: EntryFiltersViewProps) {
     const { client } = props
-    const [categoryId, setCategoryId] = useState<number | undefined>(undefined)
+    const [categoryIds, setCategoryIds] = useState<number[]>([])
     const [tags, setTags] = useState<Tag[] | undefined>(undefined)
     const [payees, setPayees] = useState<Payee[] | undefined>(undefined)
     const [tagIds, setTagIds] = useState<number[]>([])
-    const [payeeId, setPayeeId] = useState<number | undefined>(undefined)
+    const [payeeIds, setPayeeIds] = useState<number[]>([])
     const [categories, setCategories] = useState<Category[] | undefined>(undefined)
     const [fromDate, setFromDate] = useState("")
     const [toDate, setToDate] = useState("")
@@ -81,19 +80,18 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             })}
             selectedValues={tagIds.map(t => t.toString())}
         />
-        <Select
-            elementId="payee-select"
-            label="Payee"
-            value={payeeId?.toString() ?? ""}
-            onChange={newValue => {
-                const newPayeeId = newValue ? parseInt(newValue) : undefined
-                setPayeeId(newPayeeId)
+        <LabeledMultiSelect
+            selectDataTestId="payee-select"
+            label="Payees"
+            selectedValues={payeeIds.map(p => p.toString())}
+            onChange={newValues => {
+                setPayeeIds(newValues.map(v => parseInt(v)))
             }}
 
-            options={[{ value: undefined as string | undefined, text: "[No payee]"}]
+            options={[{ value: "", text: "[No payee]"}]
             .concat(
                 sortedPayees.map(p => {
-                    return { value: p.id?.toString(), text: p.name }
+                    return { value: p.id.toString(), text: p.name }
                 })
             )}
         />
