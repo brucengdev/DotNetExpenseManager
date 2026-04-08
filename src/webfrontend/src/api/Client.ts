@@ -31,6 +31,14 @@ export interface IClient {
     GetSpendingsSummary: (date: Date) => Promise<SpendingsSummary>
     GetAverageMonthlyIncome: (fromMonth: Date, toMonth:Date) => Promise<AverageMonthlyIncomeReport>
     GetYearlyReport: (year: number) => Promise<YearlyReport>
+
+    GetEntries: (
+        fromDate: Date,
+        toDate: Date,
+        categoryIds: number[],
+        tagIds: number[],
+        payeeIds: number[]
+    ) => Promise<Entry[]>
 }
 
 const devUrl = "https://localhost:7146"
@@ -253,5 +261,31 @@ export class Client implements IClient {
             return (await result.json()) as YearlyReport
         }
         return {} as YearlyReport
+    }
+
+    async GetEntries(
+        fromDate: Date,
+        toDate: Date,
+        categoryIds: number[],
+        tagIds: number[],
+        payeeIds: number[]
+    ) {
+        const fromDateStr = formatDateToDay(fromDate)
+        const toDateStr = formatDateToDay(toDate)
+        const result = await fetch(`${url}/entries?${new URLSearchParams({
+            accessToken: this.token,
+            fromDate: fromDateStr,
+            toDate: toDateStr,
+            categorryIds: categoryIds.map(i => i.toString()).join(','),
+            tagIds: tagIds.map(t => t.toString()).join(','),
+            payeeIds: payeeIds.map(p => p.toString()).join(',')
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return ((await result.json()) as Entry[])
+                    .map(e => Entry.FromOther(e))
+        }
+        return []
     }
 }
