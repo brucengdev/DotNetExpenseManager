@@ -36,8 +36,8 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
     }
     if(entries === undefined) {
         client.GetEntries(
-            fromDate?new Date(fromDate): undefined,
-            undefined,
+            fromDate? new Date(fromDate): undefined,
+            toDate? new Date(toDate): undefined,
             categoryIds, 
             [], 
             [])

@@ -100,8 +100,18 @@ describe("EntryFiltersView", () => {
         })
 
         const toDateField = screen.getByLabelText("To date")
-        fireEvent.change(toDateField, { target: { value: "2022-02-22" } })
-        expect(toDateField).toHaveValue("2022-02-22")
+        fireEvent.change(toDateField, { target: { value: "2022-02-25" } })
+        expect(toDateField).toHaveValue("2022-02-25")
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                new Date("2022-02-22"),
+                new Date("2022-02-25"),
+                [],
+                [],
+                []
+            )
+        })
     })
 
     it("sets value for category filters", async () => {
