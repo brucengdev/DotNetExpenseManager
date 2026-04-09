@@ -276,7 +276,7 @@ export class Client implements IClient {
             accessToken: this.token,
             fromDate: fromDateStr,
             toDate: toDateStr,
-            categorryIds: categoryIds.map(i => i.toString()).join(','),
+            categoryIds: categoryIds.map(i => i.toString()).join(','),
             tagIds: tagIds.map(t => t.toString()).join(','),
             payeeIds: payeeIds.map(p => p.toString()).join(',')
         }).toString()}`, {
