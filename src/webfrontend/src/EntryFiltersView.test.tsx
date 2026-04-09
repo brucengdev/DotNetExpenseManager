@@ -189,6 +189,13 @@ describe("EntryFiltersView", () => {
 
     it("set value for payee filters", async () => {
         const client = new TestClient()
+        client.GetEntries = vitest.fn(
+            async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
+                return [
+                    new Entry(1, new Date("2022-02-22"), "entry 1", -123)
+                ]
+            }
+        )
         client.Payees = [
             new Payee(1, "Tom"),
             new Payee(2, "Jane"),
@@ -207,6 +214,16 @@ describe("EntryFiltersView", () => {
 
         userEvent.selectOptions(payeeField, ["2", "4"])
         expect(payeeField).toHaveValue(["2", "4"])
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [4, 2]
+            )
+        })
     })
 
     it("calls server to list entries", async () => {

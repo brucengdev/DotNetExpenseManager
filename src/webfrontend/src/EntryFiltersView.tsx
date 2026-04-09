@@ -40,7 +40,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             toDate? new Date(toDate): undefined,
             categoryIds, 
             tagIds, 
-            [])
+            payeeIds)
     }
 
     const sortedCats = SortedCategories(categories || [])
@@ -105,6 +105,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             selectedValues={payeeIds.map(p => p.toString())}
             onChange={newValues => {
                 setPayeeIds(newValues.map(v => parseInt(v)))
+                setEntries(undefined)
             }}
 
             options={[{ value: "0", text: "[No payee]"}]
