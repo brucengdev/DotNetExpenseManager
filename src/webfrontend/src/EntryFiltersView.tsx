@@ -39,7 +39,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             fromDate? new Date(fromDate): undefined,
             toDate? new Date(toDate): undefined,
             categoryIds, 
-            [], 
+            tagIds, 
             [])
     }
 
@@ -94,6 +94,10 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                 }
             })}
             selectedValues={tagIds.map(t => t.toString())}
+            onChange={newSelectedValues => {
+                setTagIds(newSelectedValues.map(tIdStr => parseInt(tIdStr)))
+                setEntries(undefined)
+            }}
         />
         <LabeledMultiSelect
             selectDataTestId="payee-select"

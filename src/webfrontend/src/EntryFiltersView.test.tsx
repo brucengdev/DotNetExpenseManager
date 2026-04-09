@@ -152,6 +152,13 @@ describe("EntryFiltersView", () => {
 
     it("sets value for tag filters", async () => {
         const client = new TestClient()
+        client.GetEntries = vitest.fn(
+            async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
+                return [
+                    new Entry(1, new Date("2022-02-22"), "entry 1", -123)
+                ]
+            }
+        )
         client.Tags = [
             new Tag(2, "tag2"),
             new Tag(1, "tag1"),
@@ -168,6 +175,16 @@ describe("EntryFiltersView", () => {
         })
         userEvent.selectOptions(tagsField, ["2", "1"])
         expect(tagsField).toHaveValue(["2","1"])
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [1, 2],
+                []
+            )
+        })
     })
 
     it("set value for payee filters", async () => {
