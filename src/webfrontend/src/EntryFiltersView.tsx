@@ -120,15 +120,17 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             )}
         />
 
-        {(entries ?? []).map(({title, value, categoryId, tagIds, payeeId, notes}) => 
-            <EntryView 
-                title={title}
-                value={value}
-                tags={buildTagsString(tagIds, tags ?? [])}
-                categoryName={(categories || []).find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
-                payee={(payees || []).find(p => p.id === payeeId)?.name ?? ""}
-                notes={notes}
-            />)}
+        <div className="mt-10">
+            {(entries ?? []).map(({title, value, categoryId, tagIds, payeeId, notes}) => 
+                <EntryView 
+                    title={title}
+                    value={value}
+                    tags={buildTagsString(tagIds, tags ?? [])}
+                    categoryName={(categories || []).find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
+                    payee={(payees || []).find(p => p.id === payeeId)?.name ?? ""}
+                    notes={notes}
+                />)}
+        </div>
     </div>
 }
 
