@@ -6,6 +6,8 @@ import { Tag } from "./models/Tag";
 import { Payee } from "./models/Payee";
 import { Category } from "./models/Category";
 import { Entry } from "./models/Entry";
+import { EntryView } from "./EntryView";
+import { buildTagsString } from "./utils";
 
 interface EntryFiltersViewProps {
     client: IClient
@@ -41,6 +43,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             categoryIds, 
             tagIds, 
             payeeIds)
+        .then(retrievedEntries => setEntries(retrievedEntries))
     }
 
     const sortedCats = SortedCategories(categories || [])
@@ -65,6 +68,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             value={toDate}
             onChange={e => {
                 setToDate(e.target.value)
+                setEntries(undefined)
             }}
         />
         <LabeledMultiSelect
@@ -115,6 +119,16 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                 })
             )}
         />
+
+        {(entries ?? []).map(({title, value, categoryId, tagIds, payeeId, notes}) => 
+            <EntryView 
+                title={title}
+                value={value}
+                tags={buildTagsString(tagIds, tags ?? [])}
+                categoryName={(categories || []).find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
+                payee={(payees || []).find(p => p.id === payeeId)?.name ?? ""}
+                notes={notes}
+            />)}
     </div>
 }
 

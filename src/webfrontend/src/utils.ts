@@ -1,4 +1,5 @@
 import { Comparable } from "./models/Comparable"
+import { Tag } from "./models/Tag"
 
 export function sameDate(date1: Date, date2: Date): boolean {
     return date1.getFullYear() === date2.getFullYear()
@@ -55,4 +56,12 @@ const currency = Intl.NumberFormat("vi-VN", {
 
 export function formatMoney(money: number) {
     return currency.format(money)
+}
+
+export function buildTagsString(tagIds: number[], tags: Tag[]): string {
+    if(tagIds === undefined || tagIds === null || tagIds.length === 0) {
+        return ""
+    }
+    return tagIds.map(tagId => (tags ?? []).find(t => t.id === tagId)?.name ?? "")
+        .join(",")
 }

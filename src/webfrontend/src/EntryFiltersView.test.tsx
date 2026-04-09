@@ -247,7 +247,8 @@ describe("EntryFiltersView", () => {
         client.GetEntries = vitest.fn(
             async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
                 return [
-                    new Entry(1, new Date("2022-02-22"), "entry 1", -123)
+                    new Entry(1, new Date("2022-02-22"), "entry 1", -123),
+                    new Entry(2, new Date("2022-02-23"), "entry 2", -223)
                 ]
             }
         )
@@ -289,5 +290,8 @@ describe("EntryFiltersView", () => {
                 [3, 2]
             )
         })
+
+        const entries = await screen.findAllByTestId("entry")
+        expect(entries).toHaveLength(2)
     })
 })

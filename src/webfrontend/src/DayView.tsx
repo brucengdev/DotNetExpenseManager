@@ -3,7 +3,7 @@ import { IClient } from "./api/Client"
 import { EntryView } from "./EntryView"
 import { Entry } from "./models/Entry"
 import { EntryForm } from "./EntryForm"
-import { addDays, areSame, formatDateToDay } from "./utils"
+import { addDays, areSame, buildTagsString, formatDateToDay } from "./utils"
 import { Category } from "./models/Category"
 import { Button, ButtonMode } from "./controls/Button"
 import { Tag } from "./models/Tag"
@@ -48,14 +48,6 @@ export const DayView = ({client, initialDate}: DayViewProps) => {
             setTags(serverTags)
         }
     })
-
-    function buildTagsString(tagIds: number[], tags: Tag[]): string {
-        if(tagIds === undefined || tagIds === null || tagIds.length === 0) {
-            return ""
-        }
-        return tagIds.map(tagId => (tags ?? []).find(t => t.id === tagId)?.name ?? "")
-            .join(",")
-    }
 
     function refreshSpendingsReport() {
         setSpendingReportRefreshFlag(!spendingsReportRefreshFlag)
