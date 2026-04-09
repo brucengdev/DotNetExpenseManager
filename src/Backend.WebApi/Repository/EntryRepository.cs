@@ -69,6 +69,7 @@ internal class EntryRepository: IEntryRepository
                             payeeIds.Contains(e.PayeeId.Value)
                         )
             ).Include(e => e.EntryTagMappings)
+            .OrderByDescending(e => e.Date)//newest entries at the top
             .Take(1000);
         return result;
     }
