@@ -39,4 +39,15 @@ public class EntryManager: IEntryManager
         }
         _entryRepository.DeleteEntry(entryId);
     }
+
+    public IEnumerable<Entry> GetEntries(
+        DateOnly? fromDate, 
+        DateOnly? toDate, 
+        IEnumerable<int> categoryIds,
+        IEnumerable<int> tagIds,
+        IEnumerable<int> payeeIds,
+        int userId)
+    {
+        return _entryRepository.GetEntries(fromDate, toDate, categoryIds, tagIds, payeeIds, userId);
+    }
 }

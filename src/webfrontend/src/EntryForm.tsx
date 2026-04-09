@@ -5,11 +5,11 @@ import { Entry } from "./models/Entry"
 import { CategoryControl } from "./controls/CategoryControl"
 import { TextBox } from "./controls/TextBox"
 import { Button, ButtonMode } from "./controls/Button"
-import { MultiSelect } from "./controls/MultiSelect"
 import { Tag } from "./models/Tag"
 import { Payee } from "./models/Payee"
 import { AverageMonthlyIncomeReport } from "./models/AverageMonthlyIncomeReport"
 import { Select } from "./controls/Select"
+import { LabeledMultiSelect } from "./controls/LabeledMultiSelect"
 
 export interface EntryFormProps {
     date: Date
@@ -89,17 +89,15 @@ export const EntryForm = (props: EntryFormProps) => {
             onChange={newCatId => setCategoryId(newCatId)} 
             />
 
-        <div>
-            <label htmlFor="tags-control" className="block text-sm/6 font-semibold text-gray-900">Tags</label>
-            <MultiSelect
-                selectDataTestId="tags-control"
-                options={sortedTags.map(tag => ({ value: tag.id.toString(), text: tag.name }))}
-                selectedValues={tagIds.map(id => id.toString())}
-                onChange={values => {
-                    setTagIds(values.map(v => parseInt(v)))
-                }}
-            />
-        </div>
+        <LabeledMultiSelect
+            label="Tags"
+            selectDataTestId="tags-control"
+            options={sortedTags.map(tag => ({ value: tag.id.toString(), text: tag.name }))}
+            selectedValues={tagIds.map(id => id.toString())}
+            onChange={values => {
+                setTagIds(values.map(v => parseInt(v)))
+            }}
+        />
 
         <Select
             elementId="payee-select"

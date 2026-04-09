@@ -10,4 +10,10 @@ public interface IEntryManager
     IEnumerable<Entry> GetByDate(DateTime date, int userId);
 
     void DeleteEntry(int entryId);
+    IEnumerable<Entry> GetEntries(DateOnly? fromDate, 
+        DateOnly? toDate, 
+        IEnumerable<int> categoryIds, 
+        IEnumerable<int> tagIds, 
+        IEnumerable<int> payeeIds,
+        int userId);
 }
