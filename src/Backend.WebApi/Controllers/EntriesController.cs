@@ -45,6 +45,38 @@ public class EntriesController: ControllerBase
         }
     }
 
+    [HttpGet]
+    [ServiceFilter<SecurityFilterAttribute>]
+    public ActionResult<IEnumerable<EntryServiceModel>> GetEntries(
+        [FromQuery] DateOnly? fromDate,
+        [FromQuery] DateOnly? toDate,
+        [FromQuery] string? categoryIds,
+        [FromQuery] string? tagIds,
+        [FromQuery] string? payeeIds
+    )
+    {
+        try
+        {
+            var userId = HttpContext.Items[Constants.USER_ID] as int?;
+            var parsedCategoryIds = categoryIds?.Split(',').Select(idStr => Convert.ToInt32(idStr)) ?? [];
+            var parsedTagIds = tagIds?.Split(',').Select(idStr => Convert.ToInt32(idStr)) ?? [];
+            var parsedPayeeIds = payeeIds?.Split(',').Select(idStr => Convert.ToInt32(idStr)) ?? [];
+            var result = _entryManager.GetEntries(
+                    fromDate, 
+                    toDate,
+                    parsedCategoryIds,
+                    parsedTagIds,
+                    parsedPayeeIds,
+                    userId.Value)
+                .Select(e => new EntryServiceModel(e));
+            return Ok(result);
+        }
+        catch (UserNotFoundException)
+        {
+            return Unauthorized();
+        }
+    }
+
     [HttpDelete("[action]")]
     [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult Delete(int id)

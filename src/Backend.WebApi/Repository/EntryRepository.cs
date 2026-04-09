@@ -41,4 +41,35 @@ internal class EntryRepository: IEntryRepository
     {
         return _dbContext.Entries.Find(id) != null;
     }
+
+    public IEnumerable<Entry> GetEntries(DateOnly? fromDate, 
+        DateOnly? toDate, 
+        IEnumerable<int> categoryIds, 
+        IEnumerable<int> tagIds,
+        IEnumerable<int> payeeIds, 
+        int userId)
+    {
+        DateTime? fromDate2 = fromDate.HasValue ? fromDate.Value.ToDateTime(new TimeOnly(0, 0, 0)) : null;
+        DateTime? toDate2 = toDate.HasValue ? toDate.Value.ToDateTime(new TimeOnly(0, 0, 0)) : null;
+        var result = _dbContext.Entries
+            .Where(e => e.UserId == userId
+                        && (
+                            (fromDate2 == null || e.Date >= fromDate2)
+                            && (toDate2 == null || e.Date <= toDate2)
+                        )
+                        && (
+                            !categoryIds.Any() || categoryIds.Contains(e.CategoryId.Value)
+                        )
+                        && (
+                            !tagIds.Any() ||
+                            tagIds.Any(tagId => e.EntryTagMappings.Any(mapping => mapping.TagId == tagId))
+                        )
+                        && (
+                            !payeeIds.Any() ||
+                            payeeIds.Contains(e.PayeeId.Value)
+                        )
+            ).Include(e => e.EntryTagMappings)
+            .Take(1000);
+        return result;
+    }
 }

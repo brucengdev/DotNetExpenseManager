@@ -10,4 +10,10 @@ public interface IEntryRepository
     void DeleteEntry(int id);
 
     bool Exists(int id);
+    IEnumerable<Entry> GetEntries(DateOnly? fromDate, 
+        DateOnly? toDate, 
+        IEnumerable<int> categoryIds,
+        IEnumerable<int> tagIds,
+        IEnumerable<int> payeeIds,
+        int userId);
 }
