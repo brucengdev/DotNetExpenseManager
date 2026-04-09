@@ -280,12 +280,14 @@ describe("EntryFiltersView", () => {
         })
         userEvent.selectOptions(payeeField, ["2", "3"])
 
-        // expect(client.GetEntries).toHaveBeenCalledWith(
-        //     new Date("2022-02-22"),
-        //     new Date("2022-03-12"),
-        //     [2, 4],
-        //     [1, 2],
-        //     [2, 3]
-        // )
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                new Date("2022-02-22"),
+                new Date("2022-03-12"),
+                [2, 4],
+                [1, 3],
+                [3, 2]
+            )
+        })
     })
 })
