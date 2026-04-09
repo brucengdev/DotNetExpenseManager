@@ -5,6 +5,7 @@ import { TextBox } from "./controls/TextBox";
 import { Tag } from "./models/Tag";
 import { Payee } from "./models/Payee";
 import { Category } from "./models/Category";
+import { Entry } from "./models/Entry";
 
 interface EntryFiltersViewProps {
     client: IClient
@@ -20,6 +21,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
     const [categories, setCategories] = useState<Category[] | undefined>(undefined)
     const [fromDate, setFromDate] = useState("")
     const [toDate, setToDate] = useState("")
+    const [entries, setEntries] = useState<Entry[] | undefined>(undefined)
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -31,6 +33,9 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
     if(categories == undefined) {
         client.GetCategories()
         .then(retrievedCats => setCategories(retrievedCats))
+    }
+    if(entries === undefined) {
+        client.GetEntries(undefined, undefined, categoryIds, [], [])
     }
 
     const sortedCats = SortedCategories(categories || [])
@@ -58,7 +63,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
         />
         <LabeledMultiSelect
             selectDataTestId="category-control"
-            selectedValues={[]}
+            selectedValues={categoryIds.map(cId => cId.toString())}
             label="Categories"
             options={
                 sortedCats.map(sc => {
@@ -68,6 +73,10 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                     }
                 })
             }
+            onChange={selectedValues => {
+                setCategoryIds(selectedValues.map(catIdStr => parseInt(catIdStr)))
+                setEntries(undefined)
+            }}
         />
         <LabeledMultiSelect
             label="Tags"

@@ -33,8 +33,8 @@ export interface IClient {
     GetYearlyReport: (year: number) => Promise<YearlyReport>
 
     GetEntries: (
-        fromDate: Date,
-        toDate: Date,
+        fromDate: Date | undefined,
+        toDate: Date | undefined,
         categoryIds: number[],
         tagIds: number[],
         payeeIds: number[]
@@ -264,14 +264,14 @@ export class Client implements IClient {
     }
 
     async GetEntries(
-        fromDate: Date,
-        toDate: Date,
+        fromDate: Date | undefined,
+        toDate: Date | undefined,
         categoryIds: number[],
         tagIds: number[],
         payeeIds: number[]
     ) {
-        const fromDateStr = formatDateToDay(fromDate)
-        const toDateStr = formatDateToDay(toDate)
+        const fromDateStr = fromDate? formatDateToDay(fromDate): ""
+        const toDateStr = toDate? formatDateToDay(toDate): ""
         const result = await fetch(`${url}/entries?${new URLSearchParams({
             accessToken: this.token,
             fromDate: fromDateStr,

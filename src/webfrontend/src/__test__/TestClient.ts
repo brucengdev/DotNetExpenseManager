@@ -133,8 +133,8 @@ export class TestClient implements IClient {
     }
 
     async GetEntries(
-        _fromDate: Date,
-        _toDate: Date,
+        _fromDate: Date | undefined,
+        _toDate: Date | undefined,
         _categoryIds: number[],
         _tagIds: number[],
         _payeeIds: number[]
