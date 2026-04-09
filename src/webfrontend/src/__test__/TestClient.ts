@@ -131,4 +131,15 @@ export class TestClient implements IClient {
             totalSpendings: 0
         }
     }
+
+    async GetEntries(
+        _fromDate: Date,
+        _toDate: Date,
+        _categoryIds: number[],
+        _tagIds: number[],
+        _payeeIds: number[]
+    ): Promise<Entry[]> {
+        //this function should be replaced in tests
+        return []
+    }
 }

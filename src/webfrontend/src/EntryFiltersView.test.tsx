@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vitest } from "vitest";
 import { EntryFiltersView } from "./EntryFiltersView";
 import "@testing-library/jest-dom"
 import { TestClient } from "./__test__/TestClient";
@@ -7,6 +7,7 @@ import { Category } from "./models/Category";
 import { Payee } from "./models/Payee";
 import { Tag } from "./models/Tag";
 import userEvent from "@testing-library/user-event";
+import { Entry } from "./models/Entry";
 
 describe("EntryFiltersView", () => {
     it("has necessary UI", async () => {
@@ -165,6 +166,13 @@ describe("EntryFiltersView", () => {
             new Payee(2, "Jane"),
             new Payee(3, "Jack")
         ]
+        client.GetEntries = vitest.fn(
+            async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
+                return [
+                    new Entry(1, new Date("2022-02-22"), "entry 1", -123)
+                ]
+            }
+        )
         render(<EntryFiltersView client={client} />)
 
         const fromDateField = screen.getByLabelText("From date")
@@ -193,5 +201,13 @@ describe("EntryFiltersView", () => {
             expect(payeeOptions.length).toBeGreaterThan(0)
         })
         userEvent.selectOptions(payeeField, ["2", "3"])
+
+        expect(client.GetEntries).toHaveBeenCalledWith(
+            new Date("2022-02-22"),
+            new Date("2022-03-12"),
+            [2, 4],
+            [1, 2],
+            [2, 3]
+        )
     })
 })
