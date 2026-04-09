@@ -35,7 +35,12 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
         .then(retrievedCats => setCategories(retrievedCats))
     }
     if(entries === undefined) {
-        client.GetEntries(undefined, undefined, categoryIds, [], [])
+        client.GetEntries(
+            fromDate?new Date(fromDate): undefined,
+            undefined,
+            categoryIds, 
+            [], 
+            [])
     }
 
     const sortedCats = SortedCategories(categories || [])
@@ -50,6 +55,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             value={fromDate}
             onChange={e => {
                 setFromDate(e.target.value)
+                setEntries(undefined)
             }}
         />
         <TextBox

@@ -74,13 +74,30 @@ describe("EntryFiltersView", () => {
         })
     })
 
-    it("updates date filters", () => {
+    it("updates date filters", async () => {
         const client = new TestClient()
+        client.GetEntries = vitest.fn(
+            async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
+                return [
+                    new Entry(1, new Date("2022-02-22"), "entry 1", -123)
+                ]
+            }
+        )
         render(<EntryFiltersView client={client} />)
 
         const fromDateField = screen.getByLabelText("From date")
         fireEvent.change(fromDateField, { target: { value: "2022-02-22" } })
         expect(fromDateField).toHaveValue("2022-02-22")
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                new Date("2022-02-22"),
+                undefined,
+                [],
+                [],
+                []
+            )
+        })
 
         const toDateField = screen.getByLabelText("To date")
         fireEvent.change(toDateField, { target: { value: "2022-02-22" } })
