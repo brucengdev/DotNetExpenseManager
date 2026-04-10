@@ -18,8 +18,8 @@ export const EntryView = (props: EntryProps) => {
     const {title, value, categoryName, date,
         tags, payee, notes, onDelete} = props
     const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
-    let numberOfCols = 6
-    if(date !== undefined) { numberOfCols++ }
+    let numberOfCols = 7
+    if(date !== undefined) { numberOfCols = 8 }
     return <div data-testid="entry" className={`grid grid-cols-${numberOfCols} mb-1`}>
         {
             date?<div data-testid="date">{formatDateToDay(date)}</div>
