@@ -22,7 +22,7 @@ export const EntryView = (props: EntryProps) => {
     if(date !== undefined) {
         gridColsClass = "grid-cols-8"
     }
-    return <div data-testid="entry" className={`grid ${gridColsClass} mb-1`}>
+    return <div data-testid="entry" className={`grid ${gridColsClass} mb-1 border-amber-400 border-2`}>
         {
             date?<div data-testid="date">{formatDateToDay(date)}</div>
             :<></>
