@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { ConfirmDeleteView } from "./ConfirmDeleteView"
 import { Button, ButtonMode } from "./controls/Button"
-import { formatMoney } from "./utils"
+import { formatDateToDay, formatMoney } from "./utils"
 
 export interface EntryProps {
     title: string
@@ -11,12 +11,20 @@ export interface EntryProps {
     tags?: string
     payee?: string
     notes?: string
+    date?: Date
 }
 
 export const EntryView = (props: EntryProps) => {
-    const {title, value, categoryName, tags, payee, notes, onDelete} = props
+    const {title, value, categoryName, date,
+        tags, payee, notes, onDelete} = props
     const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
-    return <div data-testid="entry" className="grid grid-cols-7 mb-1">
+    let numberOfCols = 6
+    if(date !== undefined) { numberOfCols++ }
+    return <div data-testid="entry" className={`grid grid-cols-${numberOfCols} mb-1`}>
+        {
+            date?<div data-testid="date">{formatDateToDay(date)}</div>
+            :<></>
+        }
         <div data-testid="title">{title}</div>
         <div data-testid="category">{categoryName}</div>
         <div data-testid="value">{formatMoney(value)}</div>
