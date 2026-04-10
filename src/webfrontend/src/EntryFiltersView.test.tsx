@@ -295,5 +295,11 @@ describe("EntryFiltersView", () => {
         expect(entries).toHaveLength(2)
 
         expect(within(entries[0]).getByTestId("date").textContent).toBe("2022-02-22")
+        expect(within(entries[0]).getByTestId("title").textContent).toBe("entry 1")
+        expect(within(entries[0]).getByTestId("value").textContent).toBe("-123 ₫")
+
+        expect(within(entries[1]).getByTestId("date").textContent).toBe("2022-02-23")
+        expect(within(entries[1]).getByTestId("title").textContent).toBe("entry 2")
+        expect(within(entries[1]).getByTestId("value").textContent).toBe("-223 ₫")
     })
 })
