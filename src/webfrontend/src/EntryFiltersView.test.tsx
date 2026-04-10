@@ -293,5 +293,7 @@ describe("EntryFiltersView", () => {
 
         const entries = await screen.findAllByTestId("entry")
         expect(entries).toHaveLength(2)
+
+        expect(within(entries[0]).getByTestId("date").textContent).toBe("2022-02-22")
     })
 })

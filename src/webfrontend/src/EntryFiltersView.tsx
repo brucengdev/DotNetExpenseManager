@@ -121,7 +121,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
         />
 
         <div className="mt-10">
-            {(entries ?? []).map(({title, value, categoryId, tagIds, payeeId, notes}) => 
+            {(entries ?? []).map(({date, title, value, categoryId, tagIds, payeeId, notes}) => 
                 <EntryView 
                     title={title}
                     value={value}
@@ -129,6 +129,7 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                     categoryName={(categories || []).find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
                     payee={(payees || []).find(p => p.id === payeeId)?.name ?? ""}
                     notes={notes}
+                    date={date}
                 />)}
         </div>
     </div>
