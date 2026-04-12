@@ -229,6 +229,33 @@ describe("EntryFiltersView", () => {
         const expensesCheckbox = screen.getByRole("checkbox", { name: "Expenses"})
         fireEvent.click(expensesCheckbox)
         expect(expensesCheckbox).not.toBeChecked()
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                false,
+                true
+            )
+        })
+
+        fireEvent.click(expensesCheckbox)
+        expect(expensesCheckbox).toBeChecked()
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                true,
+                true
+            )
+        })
     })
 
 
