@@ -130,8 +130,9 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
         />
 
         <CheckBox
-            checked={true}
+            checked={showExpenses}
             label="Expenses"
+            onChange={newValue => setShowExpenses(newValue)}
         />
 
         <CheckBox

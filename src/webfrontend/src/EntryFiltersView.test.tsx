@@ -225,6 +225,10 @@ describe("EntryFiltersView", () => {
                 true
             )
         })
+
+        const expensesCheckbox = screen.getByRole("checkbox", { name: "Expenses"})
+        fireEvent.click(expensesCheckbox)
+        expect(expensesCheckbox).not.toBeChecked()
     })
 
 
