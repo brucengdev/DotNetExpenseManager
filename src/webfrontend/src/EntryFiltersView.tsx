@@ -26,6 +26,8 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
     const [fromDate, setFromDate] = useState("")
     const [toDate, setToDate] = useState("")
     const [entries, setEntries] = useState<Entry[] | undefined>(undefined)
+    const [showExpenses, setShowExpenses] = useState(true)
+    const [showIncome, setShowIncome] = useState(true)
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -44,7 +46,10 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             toDate? new Date(toDate): undefined,
             categoryIds, 
             tagIds, 
-            payeeIds)
+            payeeIds,
+            showExpenses,
+            showIncome
+        )
         .then(retrievedEntries => setEntries(retrievedEntries))
     }
 

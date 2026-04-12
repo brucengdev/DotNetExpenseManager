@@ -103,7 +103,9 @@ describe("EntryFiltersView", () => {
                 undefined,
                 [],
                 [],
-                []
+                [],
+                true,
+                true
             )
         })
 
@@ -117,7 +119,9 @@ describe("EntryFiltersView", () => {
                 new Date("2022-02-25"),
                 [],
                 [],
-                []
+                [],
+                true,
+                true
             )
         })
     })
@@ -153,7 +157,9 @@ describe("EntryFiltersView", () => {
                 undefined,
                 [2, 4],
                 [],
-                []
+                [],
+                true,
+                true
             )
         })
     })
@@ -190,10 +196,37 @@ describe("EntryFiltersView", () => {
                 undefined,
                 [],
                 [1, 2],
-                []
+                [],
+                true,
+                true
             )
         })
     })
+
+    it("sets value for expenses checkbox", async () => {
+        const client = new TestClient()
+        client.GetEntries = vitest.fn(
+            async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
+                return [
+                    new Entry(1, new Date("2022-02-22"), "entry 1", -123)
+                ]
+            }
+        )
+        render(<EntryFiltersView client={client} />)
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                true,
+                true
+            )
+        })
+    })
+
 
     it("set value for payee filters", async () => {
         const client = new TestClient()
@@ -229,7 +262,9 @@ describe("EntryFiltersView", () => {
                 undefined,
                 [],
                 [],
-                [4, 2]
+                [4, 2],
+                true,
+                true
             )
         })
     })
@@ -295,7 +330,9 @@ describe("EntryFiltersView", () => {
                 new Date("2022-03-12"),
                 [2, 4],
                 [1, 3],
-                [3, 2]
+                [3, 2],
+                true,
+                true
             )
         })
 
