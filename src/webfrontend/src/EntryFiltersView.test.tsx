@@ -72,6 +72,14 @@ describe("EntryFiltersView", () => {
             const payeeIds = payeeOptions.map(to => (to as HTMLOptionElement).value)
             expect(payeeIds).toStrictEqual(["0", "2", "1"])
         })
+
+        const expensesCheckbox = screen.getByRole("checkbox", { name: "Expenses"})
+        expect(expensesCheckbox).toBeInTheDocument()
+        expect(expensesCheckbox).toBeChecked()
+
+        const incomeCheckbox = screen.getByRole("checkbox", { name: "Income"})
+        expect(incomeCheckbox).toBeInTheDocument()
+        expect(incomeCheckbox).toBeChecked()
     })
 
     it("updates date filters", async () => {

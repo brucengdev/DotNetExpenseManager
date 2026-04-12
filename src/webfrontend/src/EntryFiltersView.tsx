@@ -9,6 +9,7 @@ import { Entry } from "./models/Entry";
 import { EntryView } from "./EntryView";
 import { buildTagsString, formatMoney } from "./utils";
 import { TableFieldValueRow } from "./controls/TableFieldValueRow";
+import { CheckBox } from "./controls/CheckBox";
 
 interface EntryFiltersViewProps {
     client: IClient
@@ -121,6 +122,16 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                     return { value: p.id.toString(), text: p.name }
                 })
             )}
+        />
+
+        <CheckBox
+            checked={true}
+            label="Expenses"
+        />
+
+        <CheckBox
+            checked={true}
+            label="Income"
         />
 
         <div className="mt-10">
