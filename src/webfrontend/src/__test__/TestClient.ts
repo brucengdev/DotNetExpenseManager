@@ -137,7 +137,9 @@ export class TestClient implements IClient {
         _toDate: Date | undefined,
         _categoryIds: number[],
         _tagIds: number[],
-        _payeeIds: number[]
+        _payeeIds: number[],
+        _showExpenses: boolean,
+        _showIncome: boolean
     ): Promise<Entry[]> {
         //this function should be replaced in tests
         return []
