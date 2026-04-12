@@ -7,7 +7,8 @@ import { Payee } from "./models/Payee";
 import { Category } from "./models/Category";
 import { Entry } from "./models/Entry";
 import { EntryView } from "./EntryView";
-import { buildTagsString } from "./utils";
+import { buildTagsString, formatMoney } from "./utils";
+import { TableFieldValueRow } from "./controls/TableFieldValueRow";
 
 interface EntryFiltersViewProps {
     client: IClient
@@ -49,6 +50,8 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
     const sortedCats = SortedCategories(categories || [])
     const sortedTags = (tags || []).sort((a, b) => a.name.localeCompare(b.name))
     const sortedPayees = (payees || []).sort((a, b) => a.name.localeCompare(b.name));
+    const totalSpendings = (entries || []).filter(e => e.value < 0).map(e => e.value).reduce((prev, cur) => prev + cur, 0)
+    const totalIncome = (entries || []).filter(e => e.value > 0).map(e => e.value).reduce((prev, cur) => prev + cur, 0)
 
     return <div data-testId="entry-filters-view">
         <TextBox
@@ -121,16 +124,24 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
         />
 
         <div className="mt-10">
-            {(entries ?? []).map(({date, title, value, categoryId, tagIds, payeeId, notes}) => 
-                <EntryView 
-                    title={title}
-                    value={value}
-                    tags={buildTagsString(tagIds, tags ?? [])}
-                    categoryName={(categories || []).find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
-                    payee={(payees || []).find(p => p.id === payeeId)?.name ?? ""}
-                    notes={notes}
-                    date={date}
-                />)}
+            <div className="xl:mr-150">
+                <TableFieldValueRow dataTestId="total-expenses" label="Total expenses" value={formatMoney(totalSpendings)} />
+                <TableFieldValueRow dataTestId="total-income" label="Total income" value={formatMoney(totalIncome)} />
+                <TableFieldValueRow dataTestId="savings" label="Savings" value={formatMoney(totalSpendings + totalIncome)} />
+            </div>
+
+            <div className="mt-5">
+                {(entries ?? []).map(({date, title, value, categoryId, tagIds, payeeId, notes}) => 
+                    <EntryView 
+                        title={title}
+                        value={value}
+                        tags={buildTagsString(tagIds, tags ?? [])}
+                        categoryName={(categories || []).find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
+                        payee={(payees || []).find(p => p.id === payeeId)?.name ?? ""}
+                        notes={notes}
+                        date={date}
+                    />)}
+            </div>
         </div>
     </div>
 }

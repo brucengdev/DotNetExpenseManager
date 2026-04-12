@@ -248,7 +248,7 @@ describe("EntryFiltersView", () => {
             async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
                 return [
                     new Entry(1, new Date("2022-02-22"), "entry 1", -123),
-                    new Entry(2, new Date("2022-02-23"), "entry 2", -223)
+                    new Entry(2, new Date("2022-02-23"), "entry 2", 2230)
                 ]
             }
         )
@@ -300,6 +300,10 @@ describe("EntryFiltersView", () => {
 
         expect(within(entries[1]).getByTestId("date").textContent).toBe("2022-02-23")
         expect(within(entries[1]).getByTestId("title").textContent).toBe("entry 2")
-        expect(within(entries[1]).getByTestId("value").textContent).toBe("-223 ₫")
+        expect(within(entries[1]).getByTestId("value").textContent).toBe("2.230 ₫")
+
+        expect(screen.getByTestId("total-income").textContent).toBe("Total income2.230 ₫")
+        expect(screen.getByTestId("total-expenses").textContent).toBe("Total expenses-123 ₫")
+        expect(screen.getByTestId("savings").textContent).toBe("Savings2.107 ₫")
     })
 })
