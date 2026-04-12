@@ -37,7 +37,9 @@ export interface IClient {
         toDate: Date | undefined,
         categoryIds: number[],
         tagIds: number[],
-        payeeIds: number[]
+        payeeIds: number[],
+        expenses: boolean,
+        income: boolean
     ) => Promise<Entry[]>
 }
 
@@ -268,7 +270,9 @@ export class Client implements IClient {
         toDate: Date | undefined,
         categoryIds: number[],
         tagIds: number[],
-        payeeIds: number[]
+        payeeIds: number[],
+        expenses: boolean = true,
+        income: boolean = true
     ) {
         const fromDateStr = fromDate? formatDateToDay(fromDate): ""
         const toDateStr = toDate? formatDateToDay(toDate): ""
@@ -278,7 +282,9 @@ export class Client implements IClient {
             toDate: toDateStr,
             categoryIds: categoryIds.map(i => i.toString()).join(','),
             tagIds: tagIds.map(t => t.toString()).join(','),
-            payeeIds: payeeIds.map(p => p.toString()).join(',')
+            payeeIds: payeeIds.map(p => p.toString()).join(','),
+            expenses: expenses? "true": "false",
+            income: income? "true": "false"
         }).toString()}`, {
             method: "GET"
         })

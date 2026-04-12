@@ -46,8 +46,11 @@ public class EntryManager: IEntryManager
         IEnumerable<int> categoryIds,
         IEnumerable<int> tagIds,
         IEnumerable<int> payeeIds,
+        bool expenses,
+        bool income,
         int userId)
     {
-        return _entryRepository.GetEntries(fromDate, toDate, categoryIds, tagIds, payeeIds, userId);
+        return _entryRepository.GetEntries(fromDate, toDate, categoryIds,
+            tagIds, payeeIds, expenses, income, userId);
     }
 }

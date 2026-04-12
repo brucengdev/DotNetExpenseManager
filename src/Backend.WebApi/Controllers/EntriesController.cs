@@ -52,7 +52,9 @@ public class EntriesController: ControllerBase
         [FromQuery] DateOnly? toDate,
         [FromQuery] string? categoryIds,
         [FromQuery] string? tagIds,
-        [FromQuery] string? payeeIds
+        [FromQuery] string? payeeIds,
+        [FromQuery] bool? expenses,
+        [FromQuery] bool? income
     )
     {
         try
@@ -67,6 +69,8 @@ public class EntriesController: ControllerBase
                     parsedCategoryIds,
                     parsedTagIds,
                     parsedPayeeIds,
+                    expenses?? true,
+                    income?? true,
                     userId.Value)
                 .Select(e => new EntryServiceModel(e));
             return Ok(result);

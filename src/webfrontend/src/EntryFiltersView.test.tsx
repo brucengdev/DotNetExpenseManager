@@ -72,6 +72,14 @@ describe("EntryFiltersView", () => {
             const payeeIds = payeeOptions.map(to => (to as HTMLOptionElement).value)
             expect(payeeIds).toStrictEqual(["0", "2", "1"])
         })
+
+        const expensesCheckbox = screen.getByRole("checkbox", { name: "Expenses"})
+        expect(expensesCheckbox).toBeInTheDocument()
+        expect(expensesCheckbox).toBeChecked()
+
+        const incomeCheckbox = screen.getByRole("checkbox", { name: "Income"})
+        expect(incomeCheckbox).toBeInTheDocument()
+        expect(incomeCheckbox).toBeChecked()
     })
 
     it("updates date filters", async () => {
@@ -95,7 +103,9 @@ describe("EntryFiltersView", () => {
                 undefined,
                 [],
                 [],
-                []
+                [],
+                true,
+                true
             )
         })
 
@@ -109,7 +119,9 @@ describe("EntryFiltersView", () => {
                 new Date("2022-02-25"),
                 [],
                 [],
-                []
+                [],
+                true,
+                true
             )
         })
     })
@@ -145,7 +157,9 @@ describe("EntryFiltersView", () => {
                 undefined,
                 [2, 4],
                 [],
-                []
+                [],
+                true,
+                true
             )
         })
     })
@@ -182,10 +196,124 @@ describe("EntryFiltersView", () => {
                 undefined,
                 [],
                 [1, 2],
-                []
+                [],
+                true,
+                true
             )
         })
     })
+
+    it("sets value for expenses checkbox", async () => {
+        const client = new TestClient()
+        client.GetEntries = vitest.fn(
+            async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
+                return [
+                    new Entry(1, new Date("2022-02-22"), "entry 1", -123)
+                ]
+            }
+        )
+        render(<EntryFiltersView client={client} />)
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                true,
+                true
+            )
+        })
+
+        const expensesCheckbox = screen.getByRole("checkbox", { name: "Expenses"})
+        fireEvent.click(expensesCheckbox)
+        expect(expensesCheckbox).not.toBeChecked()
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                false,
+                true
+            )
+        })
+
+        fireEvent.click(expensesCheckbox)
+        expect(expensesCheckbox).toBeChecked()
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                true,
+                true
+            )
+        })
+    })
+
+    it("sets value for income checkbox", async () => {
+        const client = new TestClient()
+        client.GetEntries = vitest.fn(
+            async (_fromDate: Date, _toDate: Date, _categoryIds:number[], _tagIds: number[], _payeeIds: number[]) => {
+                return [
+                    new Entry(1, new Date("2022-02-22"), "entry 1", -123)
+                ]
+            }
+        )
+        render(<EntryFiltersView client={client} />)
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                true,
+                true
+            )
+        })
+
+        const incomeCheckbox = screen.getByRole("checkbox", { name: "Income"})
+        fireEvent.click(incomeCheckbox)
+        expect(incomeCheckbox).not.toBeChecked()
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                true,
+                false
+            )
+        })
+
+        fireEvent.click(incomeCheckbox)
+        expect(incomeCheckbox).toBeChecked()
+
+        await waitFor(() => {
+            expect(client.GetEntries).toHaveBeenCalledWith(
+                undefined,
+                undefined,
+                [],
+                [],
+                [],
+                true,
+                true
+            )
+        })
+    })
+
+
 
     it("set value for payee filters", async () => {
         const client = new TestClient()
@@ -221,7 +349,9 @@ describe("EntryFiltersView", () => {
                 undefined,
                 [],
                 [],
-                [4, 2]
+                [4, 2],
+                true,
+                true
             )
         })
     })
@@ -287,7 +417,9 @@ describe("EntryFiltersView", () => {
                 new Date("2022-03-12"),
                 [2, 4],
                 [1, 3],
-                [3, 2]
+                [3, 2],
+                true,
+                true
             )
         })
 

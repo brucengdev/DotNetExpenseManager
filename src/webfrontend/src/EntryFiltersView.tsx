@@ -9,6 +9,7 @@ import { Entry } from "./models/Entry";
 import { EntryView } from "./EntryView";
 import { buildTagsString, formatMoney } from "./utils";
 import { TableFieldValueRow } from "./controls/TableFieldValueRow";
+import { CheckBox } from "./controls/CheckBox";
 
 interface EntryFiltersViewProps {
     client: IClient
@@ -25,6 +26,8 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
     const [fromDate, setFromDate] = useState("")
     const [toDate, setToDate] = useState("")
     const [entries, setEntries] = useState<Entry[] | undefined>(undefined)
+    const [showExpenses, setShowExpenses] = useState(true)
+    const [showIncome, setShowIncome] = useState(true)
     if(tags === undefined) {
         client.GetTags()
         .then(retrievedTags => setTags(retrievedTags))
@@ -43,7 +46,10 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
             toDate? new Date(toDate): undefined,
             categoryIds, 
             tagIds, 
-            payeeIds)
+            payeeIds,
+            showExpenses,
+            showIncome
+        )
         .then(retrievedEntries => setEntries(retrievedEntries))
     }
 
@@ -121,6 +127,24 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                     return { value: p.id.toString(), text: p.name }
                 })
             )}
+        />
+
+        <CheckBox
+            checked={showExpenses}
+            label="Expenses"
+            onChange={newValue => {
+                setShowExpenses(newValue)
+                setEntries(undefined)
+            }}
+        />
+
+        <CheckBox
+            checked={showIncome}
+            label="Income"
+            onChange={newValue => {
+                setShowIncome(newValue)
+                setEntries(undefined)
+            }}
         />
 
         <div className="mt-10">

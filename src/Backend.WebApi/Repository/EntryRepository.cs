@@ -47,6 +47,8 @@ internal class EntryRepository: IEntryRepository
         IEnumerable<int> categoryIds, 
         IEnumerable<int> tagIds,
         IEnumerable<int> payeeIds, 
+        bool expenses,
+        bool income,
         int userId)
     {
         DateTime? fromDate2 = fromDate.HasValue ? fromDate.Value.ToDateTime(new TimeOnly(0, 0, 0)) : null;
@@ -67,6 +69,10 @@ internal class EntryRepository: IEntryRepository
                         && (
                             !payeeIds.Any() ||
                             payeeIds.Contains(e.PayeeId.Value)
+                        )
+                        && (
+                            (expenses && e.Value < 0)
+                            || (income && e.Value >= 0)
                         )
             ).Include(e => e.EntryTagMappings)
             .OrderByDescending(e => e.Date)//newest entries at the top
