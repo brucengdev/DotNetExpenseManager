@@ -139,8 +139,12 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
         />
 
         <CheckBox
-            checked={true}
+            checked={showIncome}
             label="Income"
+            onChange={newValue => {
+                setShowIncome(newValue)
+                setEntries(undefined)
+            }}
         />
 
         <div className="mt-10">
