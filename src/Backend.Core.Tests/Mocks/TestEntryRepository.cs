@@ -37,8 +37,11 @@ public class TestEntryRepository: IEntryRepository
         return Entries.Exists(e => e.Id == id);
     }
 
-    public IEnumerable<Entry> GetEntries(DateOnly? fromDate, DateOnly? toDate, IEnumerable<int> categoryIds, IEnumerable<int> tagIds,
-        IEnumerable<int> payeeIds, int userId)
+    public IEnumerable<Entry> GetEntries(
+        DateOnly? fromDate, DateOnly? toDate, 
+        IEnumerable<int> categoryIds, IEnumerable<int> tagIds,
+        IEnumerable<int> payeeIds, bool expenses, bool income, 
+        int userId)
     {
         throw new NotImplementedException();
     }

@@ -15,5 +15,7 @@ public interface IEntryManager
         IEnumerable<int> categoryIds, 
         IEnumerable<int> tagIds, 
         IEnumerable<int> payeeIds,
+        bool expenses,
+        bool income,
         int userId);
 }
