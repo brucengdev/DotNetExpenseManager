@@ -121,12 +121,9 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
                 setEntries(undefined)
             }}
 
-            options={[{ value: "0", text: "[No payee]"}]
-            .concat(
-                sortedPayees.map(p => {
+            options={sortedPayees.map(p => {
                     return { value: p.id.toString(), text: p.name }
-                })
-            )}
+                })}
         />
 
         <CheckBox

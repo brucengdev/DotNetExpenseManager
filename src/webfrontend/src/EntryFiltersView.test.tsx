@@ -67,10 +67,10 @@ describe("EntryFiltersView", () => {
 
             //payees must be sorted
             const payeeNames = payeeOptions.map(to => to.textContent)
-            expect(payeeNames).toStrictEqual(["[No payee]", "Jane", "Tom"])
+            expect(payeeNames).toStrictEqual(["Jane", "Tom"])
 
             const payeeIds = payeeOptions.map(to => (to as HTMLOptionElement).value)
-            expect(payeeIds).toStrictEqual(["0", "2", "1"])
+            expect(payeeIds).toStrictEqual(["2", "1"])
         })
 
         const expensesCheckbox = screen.getByRole("checkbox", { name: "Expenses"})
@@ -337,7 +337,7 @@ describe("EntryFiltersView", () => {
 
         await waitFor(() => {
             const payeeOptions = within(payeeField).getAllByRole("option")
-            expect(payeeOptions).toHaveLength(5)
+            expect(payeeOptions).toHaveLength(4)
         })
 
         userEvent.selectOptions(payeeField, ["2", "4"])
