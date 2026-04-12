@@ -124,20 +124,24 @@ export function EntryFiltersView(props: EntryFiltersViewProps) {
         />
 
         <div className="mt-10">
-            <TableFieldValueRow dataTestId="total-expenses" label="Total expenses" value={formatMoney(totalSpendings)} />
-            <TableFieldValueRow dataTestId="total-income" label="Total income" value={formatMoney(totalIncome)} />
-            <TableFieldValueRow dataTestId="savings" label="Savings" value={formatMoney(totalSpendings + totalIncome)} />
+            <div className="xl:mr-150">
+                <TableFieldValueRow dataTestId="total-expenses" label="Total expenses" value={formatMoney(totalSpendings)} />
+                <TableFieldValueRow dataTestId="total-income" label="Total income" value={formatMoney(totalIncome)} />
+                <TableFieldValueRow dataTestId="savings" label="Savings" value={formatMoney(totalSpendings + totalIncome)} />
+            </div>
 
-            {(entries ?? []).map(({date, title, value, categoryId, tagIds, payeeId, notes}) => 
-                <EntryView 
-                    title={title}
-                    value={value}
-                    tags={buildTagsString(tagIds, tags ?? [])}
-                    categoryName={(categories || []).find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
-                    payee={(payees || []).find(p => p.id === payeeId)?.name ?? ""}
-                    notes={notes}
-                    date={date}
-                />)}
+            <div className="mt-5">
+                {(entries ?? []).map(({date, title, value, categoryId, tagIds, payeeId, notes}) => 
+                    <EntryView 
+                        title={title}
+                        value={value}
+                        tags={buildTagsString(tagIds, tags ?? [])}
+                        categoryName={(categories || []).find(c => c.id === categoryId)?.name ?? "Uncategorized" } 
+                        payee={(payees || []).find(p => p.id === payeeId)?.name ?? ""}
+                        notes={notes}
+                        date={date}
+                    />)}
+            </div>
         </div>
     </div>
 }
