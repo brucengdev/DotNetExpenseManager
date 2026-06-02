@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { IClient } from "../api/Client"
-import { formatDateToMonthYear, formatMoney } from "../utils"
-import { MonthlyReport } from "../models/MonthlyReport"
+import { formatDateToMonthYear, formatMoney, formatPercentage } from "../utils"
+import { CategorySummary, MonthlyReport } from "../models/MonthlyReport"
 import { TextBox } from "../controls/TextBox"
 import { TableFieldValueRow } from "../controls/TableFieldValueRow"
 
@@ -44,7 +44,7 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
                         .map(catName => <TableFieldValueRow 
                             dataTestId="category-summary"
                             label={catName} 
-                            value={formatMoney(reportData.byCategories[catName])}
+                            value={formatCategorySummary(reportData.byCategories[catName])}
                         />)
                     }
                 </div>
@@ -55,4 +55,12 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
             :<></>
         }
     </div>
+}
+
+const formatCategorySummary = (summary: CategorySummary) => {
+    let result = formatMoney(summary.Total)
+    if(summary.Total < 0){
+        result += ` (${formatPercentage(summary.ExpensePercentage)})`
+    }
+    return result
 }

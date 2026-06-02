@@ -12,10 +12,10 @@ describe("MonthlyReportView", () => {
         client.GetMonthlyReport = vitest.fn(async(_: Date) => {
             return {
                 byCategories: {
-                    "Household": -2000,
-                    "Food": -3000,
-                    "Travel": -3000,
-                    "Salary": 30000
+                    "Household": { Total: -2000, ExpensePercentage: 0.1225 },
+                    "Food": { Total: -3000, ExpensePercentage: 0.05234 },
+                    "Travel": { Total: -3000, ExpensePercentage: 0.05234 },
+                    "Salary": { Total: 30000, ExpensePercentage: 0 }
                 },
                 totalSpendings: -10000,
                 totalIncome: 30000,
@@ -44,9 +44,9 @@ describe("MonthlyReportView", () => {
         const catSummaryTexts = catSummaries.map(e => e.textContent)
         expect(catSummaryTexts).toStrictEqual(
             [
-                "Household-2.000 ₫",
-                "Food-3.000 ₫",
-                "Travel-3.000 ₫",
+                "Household-2.000 ₫ (12.25%)",
+                "Food-3.000 ₫ (5.23%)",
+                "Travel-3.000 ₫ (5.23%)",
                 "Salary30.000 ₫"
             ]
         )
@@ -58,10 +58,10 @@ describe("MonthlyReportView", () => {
             if(monthStr === '2026-03') {
                 return {
                     byCategories: {
-                        "Household": -2,
-                        "Food": -3,
-                        "Travel": -3,
-                        "Salary": 30
+                        "Household": { Total: -2, ExpensePercentage: 0.12345 },
+                        "Food": { Total: -3, ExpensePercentage: 0.12345 },
+                        "Travel": { Total: -3, ExpensePercentage: 0.12345 },
+                        "Salary": { Total: 30, ExpensePercentage: 0 },
                     },
                     totalSpendings: -10,
                     totalIncome: 30,
@@ -72,10 +72,10 @@ describe("MonthlyReportView", () => {
             //2024-02
             return {
                 byCategories: {
-                    "Household": -222,
-                    "Food": -333,
-                    "Travel": -333,
-                    "Salary": 333
+                    "Household": { Total: -222, ExpensePercentage: 0.12345 },
+                    "Food": { Total: -333, ExpensePercentage: 0.12345 },
+                    "Travel": { Total: -333, ExpensePercentage: 0.12345 },
+                    "Salary": { Total: 333, ExpensePercentage: 0 },
                 },
                 totalSpendings: -122,
                 totalIncome: 333,
@@ -112,9 +112,9 @@ describe("MonthlyReportView", () => {
         const catSummaryTexts = catSummaries.map(e => e.textContent)
         expect(catSummaryTexts).toStrictEqual(
             [
-                "Household-222 ₫",
-                "Food-333 ₫",
-                "Travel-333 ₫",
+                "Household-222 ₫ (12.35%)",
+                "Food-333 ₫ (12.35%)",
+                "Travel-333 ₫ (12.35%)",
                 "Salary333 ₫"
             ]
         )

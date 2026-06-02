@@ -65,3 +65,7 @@ export function buildTagsString(tagIds: number[], tags: Tag[]): string {
     return tagIds.map(tagId => (tags ?? []).find(t => t.id === tagId)?.name ?? "")
         .join(",")
 }
+
+export function formatPercentage(value: number) {
+    return (value * 100).toFixed(2) + "%"
+}
