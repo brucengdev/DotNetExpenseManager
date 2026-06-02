@@ -58,9 +58,9 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
 }
 
 const formatCategorySummary = (summary: CategorySummary) => {
-    let result = formatMoney(summary.Total)
-    if(summary.Total < 0){
-        result += ` (${formatPercentage(summary.ExpensePercentage)})`
+    let result = formatMoney(summary.total)
+    if(summary.total < 0){
+        result += ` (${formatPercentage(summary.expensePercentage)})`
     }
     return result
 }
