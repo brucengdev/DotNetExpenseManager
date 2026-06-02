@@ -8,16 +8,28 @@ public class MonthlyReportServiceModel
     {
         return new MonthlyReportServiceModel()
         {
-            ByCategories = monthlyReport.CategorySummaries.ToDictionary(s => s.CategoryName, s => s.Total),
+            ByCategories = monthlyReport.CategorySummaries.ToDictionary(
+                s => s.CategoryName, 
+                s => new CategorySummaryServiceModel()
+                {
+                    Total = s.Total,
+                    ExpensePercentage = s.ExpensePercentage
+                }),
             TotalSpendings = monthlyReport.TotalSpendings,
             TotalIncome = monthlyReport.TotalIncome,
             Savings = monthlyReport.Savings
         };
     }
 
-    public Dictionary<string, float> ByCategories { get; set; } = new();
+    public Dictionary<string, CategorySummaryServiceModel> ByCategories { get; set; } = new();
 
     public float TotalIncome { get; set; }
     public float TotalSpendings { get; set; }
     public float Savings { get; set; }
+}
+
+public class CategorySummaryServiceModel
+{ 
+    public float Total { get; set; }
+    public float ExpensePercentage { get; set; }
 }

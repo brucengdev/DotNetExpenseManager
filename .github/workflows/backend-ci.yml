@@ -6,6 +6,8 @@ name: Backend CI
 on:
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - 'src/webfrontend/**'
 
 env:
   ConnectionStrings__DefaultConnection: Data Source=localhost;Initial Catalog=Expenses;User Id=sa; Password=MyPassword;Trust Server Certificate=True

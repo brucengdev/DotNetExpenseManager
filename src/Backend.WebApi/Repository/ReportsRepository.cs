@@ -29,6 +29,13 @@ public class ReportsRepository: IReportsRepository
             .ToList();
         var spendings = categorySummaries.Where(s => s.Total < 0).Sum(s => s.Total);
         var income = categorySummaries.Where(s => s.Total > 0).Sum(s => s.Total);
+        
+        //calculate percentage
+        categorySummaries
+            .Where(summary => summary.Total < 0)
+            .ToList()
+            .ForEach(summary => summary.ExpensePercentage = summary.Total / spendings);
+        
         return new MonthlyReport()
         {
             CategorySummaries = categorySummaries,

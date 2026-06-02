@@ -1,6 +1,11 @@
 export interface MonthlyReport {
-    byCategories: Record<string, number>
+    byCategories: Record<string, CategorySummary>
     totalSpendings: number
     totalIncome: number
     savings: number
+}
+
+export interface CategorySummary {
+    total: number
+    expensePercentage: number
 }
