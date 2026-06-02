@@ -12,10 +12,10 @@ describe("MonthlyReportView", () => {
         client.GetMonthlyReport = vitest.fn(async(_: Date) => {
             return {
                 byCategories: {
-                    "Household": { Total: -2000, ExpensePercentage: 0.1225 },
-                    "Food": { Total: -3000, ExpensePercentage: 0.05234 },
-                    "Travel": { Total: -3000, ExpensePercentage: 0.05234 },
-                    "Salary": { Total: 30000, ExpensePercentage: 0 }
+                    "Household": { total: -2000, expensePercentage: 0.1225 },
+                    "Food": { total: -3000, expensePercentage: 0.05234 },
+                    "Travel": { total: -3000, expensePercentage: 0.05234 },
+                    "Salary": { total: 30000, expensePercentage: 0 }
                 },
                 totalSpendings: -10000,
                 totalIncome: 30000,
@@ -58,10 +58,10 @@ describe("MonthlyReportView", () => {
             if(monthStr === '2026-03') {
                 return {
                     byCategories: {
-                        "Household": { Total: -2, ExpensePercentage: 0.12345 },
-                        "Food": { Total: -3, ExpensePercentage: 0.12345 },
-                        "Travel": { Total: -3, ExpensePercentage: 0.12345 },
-                        "Salary": { Total: 30, ExpensePercentage: 0 },
+                        "Household": { total: -2, expensePercentage: 0.12345 },
+                        "Food": { total: -3, expensePercentage: 0.12345 },
+                        "Travel": { total: -3, expensePercentage: 0.12345 },
+                        "Salary": { total: 30, expensePercentage: 0 },
                     },
                     totalSpendings: -10,
                     totalIncome: 30,
@@ -72,10 +72,10 @@ describe("MonthlyReportView", () => {
             //2024-02
             return {
                 byCategories: {
-                    "Household": { Total: -222, ExpensePercentage: 0.12345 },
-                    "Food": { Total: -333, ExpensePercentage: 0.12345 },
-                    "Travel": { Total: -333, ExpensePercentage: 0.12345 },
-                    "Salary": { Total: 333, ExpensePercentage: 0 },
+                    "Household": { total: -222, expensePercentage: 0.12345 },
+                    "Food": { total: -333, expensePercentage: 0.12345 },
+                    "Travel": { total: -333, expensePercentage: 0.12345 },
+                    "Salary": { total: 333, expensePercentage: 0 },
                 },
                 totalSpendings: -122,
                 totalIncome: 333,
