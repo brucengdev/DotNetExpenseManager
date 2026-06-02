@@ -6,6 +6,8 @@ name: Web frontend CI
 on:
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'src/webfrontend/**'
 
 jobs:
   build:
