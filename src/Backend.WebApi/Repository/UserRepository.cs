@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Backend.Core.Repository;
 using Backend.Models;
 
@@ -27,6 +28,18 @@ public class UserRepository: IUserRepository
         _dbContext.Users.Add(user);
         _dbContext.SaveChanges();
         return true;
+    }
+
+    
+    public bool UpdateUser(User user)
+    {
+        var existing = _dbContext.Users.FirstOrDefault(u => u.Id == user.Id);
+        if(existing != null) {
+            existing.MakeSame(user);
+            _dbContext.SaveChanges();
+            return true;
+        }
+        return false;
     }
 
     public bool UserExists(string username)

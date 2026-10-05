@@ -37,7 +37,7 @@ public class AccountManager: IAccountManager
         _userRepository = userRepository;
         _hoursTillExpiration = hoursTillExpiration;
     }
-    private bool VerifyUser(string username, string password)
+    private User VerifyUser(string username, string password)
     {
         var user = _userRepository.GetUser(username);
         if (user == null)
@@ -50,7 +50,7 @@ public class AccountManager: IAccountManager
             throw new WrongPasswordException();
         }
 
-        return true;
+        return user;
     }
 
     public CreateUserResult CreateUser(string username, string password)
@@ -65,6 +65,15 @@ public class AccountManager: IAccountManager
             PasswordHash = CreateHash(password, _salt)
         });
         return CreateUserResult.Success;
+    }
+
+    
+    public bool ChangePassword(string username, string password)
+    {
+        var user = VerifyUser(username, password);
+        user.PasswordHash = CreateHash(password, _salt);
+        _userRepository.UpdateUser(user);
+        return true;
     }
 
     public string CreateAccessToken(string username, string password, DateTime creationTime)

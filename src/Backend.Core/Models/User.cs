@@ -15,4 +15,11 @@ public class User
                && Username == otherUser.Username
                && PasswordHash == otherUser.PasswordHash;
     }
+
+    public void MakeSame(User other)
+    {
+        Id = other.Id;
+        Username = other.Username;
+        PasswordHash = other.PasswordHash;
+    }
 }
