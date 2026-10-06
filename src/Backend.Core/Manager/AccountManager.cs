@@ -70,7 +70,11 @@ public class AccountManager: IAccountManager
     
     public bool ChangePassword(string username, string password)
     {
-        var user = VerifyUser(username, password);
+        var user = _userRepository.GetUser(username);
+        if(user == null)
+        {
+            return false;
+        }
         user.PasswordHash = CreateHash(password, _salt);
         _userRepository.UpdateUser(user);
         return true;

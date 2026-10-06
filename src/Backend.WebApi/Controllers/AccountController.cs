@@ -54,6 +54,7 @@ public class AccountController: ControllerBase
         return Ok();
     }
 
+    [HttpPost("[action]")]
     [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult<bool> ChangePassword(
         [FromForm] string username, 
