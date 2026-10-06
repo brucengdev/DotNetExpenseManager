@@ -54,6 +54,21 @@ public class AccountController: ControllerBase
         return Ok();
     }
 
+    [HttpPost("[action]")]
+    [ServiceFilter<SecurityFilterAttribute>]
+    public ActionResult<bool> ChangePassword(
+        [FromForm] string username, 
+        [FromForm] string password)
+    {
+        var user = _accountManager.GetById(this.CurrentUserId());
+        if (user.Username != Constants.ADMIN_USERNAME)
+        {
+            return Unauthorized();
+        }
+        var result = _accountManager.ChangePassword(username, password);
+        return Ok();
+    }
+
     [HttpGet("[action]")]
     [ServiceFilter<SecurityFilterAttribute>]
     public ActionResult IsLoggedIn()

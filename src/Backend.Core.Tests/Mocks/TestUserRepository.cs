@@ -1,5 +1,6 @@
 using Backend.Core.Repository;
 using Backend.Models;
+using Microsoft.AspNetCore.Builder;
 
 namespace Backend.Core.Tests.Mocks;
 
@@ -9,6 +10,17 @@ public class TestUserRepository: IUserRepository
     public bool AddUser(User user)
     {
         return _users.TryAdd(user.Username, user);
+    }
+
+    public bool UpdateUser(User user)
+    {
+        if(!_users.TryGetValue(user.Username, out var existing))
+        {
+            return false;
+        }
+
+        existing.MakeSame(user);
+        return true;
     }
 
     public User? GetUser(string username)
