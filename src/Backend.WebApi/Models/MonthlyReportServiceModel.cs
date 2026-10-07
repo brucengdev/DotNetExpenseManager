@@ -12,7 +12,8 @@ public class MonthlyReportServiceModel
                 s => s.CategoryName, 
                 s => new CategorySummaryServiceModel()
                 {
-                    Total = s.Total,
+                    TotalExpenses = s.TotalExpenses,
+                    TotalIncome = s.TotalIncome,
                     ExpensePercentage = s.ExpensePercentage
                 }),
             TotalSpendings = monthlyReport.TotalSpendings,
@@ -30,6 +31,7 @@ public class MonthlyReportServiceModel
 
 public class CategorySummaryServiceModel
 { 
-    public float Total { get; set; }
+    public float TotalExpenses { get; set; }
+    public float TotalIncome { get; set; }
     public float ExpensePercentage { get; set; }
 }

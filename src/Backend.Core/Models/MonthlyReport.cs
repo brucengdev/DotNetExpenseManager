@@ -4,7 +4,8 @@ public class CategorySummary
 {
     public int CategoryId { get; set; }
     public string CategoryName { get; set; }
-    public float Total { get; set; }
+    public float TotalExpenses { get; set; }
+    public float TotalIncome { get; set; }
     public float ExpensePercentage { get; set; }
 }
 public class MonthlyReport

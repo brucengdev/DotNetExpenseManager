@@ -6,6 +6,7 @@ export interface MonthlyReport {
 }
 
 export interface CategorySummary {
-    total: number
+    totalExpenses: number
+    totalIncome: number
     expensePercentage: number
 }

@@ -12,10 +12,10 @@ describe("MonthlyReportView", () => {
         client.GetMonthlyReport = vitest.fn(async(_: Date) => {
             return {
                 byCategories: {
-                    "Household": { total: -2000, expensePercentage: 0.1225 },
-                    "Food": { total: -3000, expensePercentage: 0.05234 },
-                    "Travel": { total: -3000, expensePercentage: 0.05234 },
-                    "Salary": { total: 30000, expensePercentage: 0 }
+                    "Household": { totalExpenses: -2000, totalIncome: 0, expensePercentage: 0.1225 },
+                    "Food": { totalExpenses: -3000, totalIncome: 0, expensePercentage: 0.05234 },
+                    "Travel": { totalExpenses: -3000, totalIncome: 0, expensePercentage: 0.05234 },
+                    "Salary": { totalExpenses: 0, totalIncome: 30000, expensePercentage: 0 }
                 },
                 totalSpendings: -10000,
                 totalIncome: 30000,
@@ -47,7 +47,7 @@ describe("MonthlyReportView", () => {
                 "Household-2.000 ₫ (12.25%)",
                 "Food-3.000 ₫ (5.23%)",
                 "Travel-3.000 ₫ (5.23%)",
-                "Salary30.000 ₫"
+                "Salary0 ₫, 30.000 ₫"
             ]
         )
     })
@@ -58,10 +58,10 @@ describe("MonthlyReportView", () => {
             if(monthStr === '2026-03') {
                 return {
                     byCategories: {
-                        "Household": { total: -2, expensePercentage: 0.12345 },
-                        "Food": { total: -3, expensePercentage: 0.12345 },
-                        "Travel": { total: -3, expensePercentage: 0.12345 },
-                        "Salary": { total: 30, expensePercentage: 0 },
+                        "Household": { totalExpenses: -2, totalIncome: 0, expensePercentage: 0.12345 },
+                        "Food": { totalExpenses: -3, totalIncome: 0, expensePercentage: 0.12345 },
+                        "Travel": { totalExpenses: -3, totalIncome: 0, expensePercentage: 0.12345 },
+                        "Salary": { totalExpenses: 0, totalIncome: 30, expensePercentage: 0 },
                     },
                     totalSpendings: -10,
                     totalIncome: 30,
@@ -72,10 +72,10 @@ describe("MonthlyReportView", () => {
             //2024-02
             return {
                 byCategories: {
-                    "Household": { total: -222, expensePercentage: 0.12345 },
-                    "Food": { total: -333, expensePercentage: 0.12345 },
-                    "Travel": { total: -333, expensePercentage: 0.12345 },
-                    "Salary": { total: 333, expensePercentage: 0 },
+                    "Household": { totalExpenses: -222, totalIncome: 0, expensePercentage: 0.12345 },
+                    "Food": { totalExpenses: -333, totalIncome: 0, expensePercentage: 0.12345 },
+                    "Travel": { totalExpenses: -333, totalIncome: 0, expensePercentage: 0.12345 },
+                    "Salary": { totalExpenses: 0, totalIncome: 333, expensePercentage: 0 },
                 },
                 totalSpendings: -122,
                 totalIncome: 333,
@@ -115,7 +115,7 @@ describe("MonthlyReportView", () => {
                 "Household-222 ₫ (12.35%)",
                 "Food-333 ₫ (12.35%)",
                 "Travel-333 ₫ (12.35%)",
-                "Salary333 ₫"
+                "Salary0 ₫, 333 ₫"
             ]
         )
     })

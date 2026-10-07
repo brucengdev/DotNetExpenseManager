@@ -90,8 +90,8 @@ export class TestClient implements IClient {
         //no real implementation here
         return {
             byCategories: {
-                "Cat1": { total: 10, expensePercentage: 0.233 },
-                "Cat2": { total: -2, expensePercentage: 0.233 }
+                "Cat1": { totalExpenses: 0, totalIncome: 10, expensePercentage: 0.233 },
+                "Cat2": { totalExpenses: -2, totalIncome: 0, expensePercentage: 0.233 }
             },
             totalIncome:0,
             totalSpendings: 0,
