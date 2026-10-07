@@ -23,18 +23,18 @@ public class ReportsRepository: IReportsRepository
             {
                 CategoryId = g.Key!.Value,
                 CategoryName = g.First().Category.Name,
-                Total = g.Sum(e => e.Value)
+                TotalIncome = g.Where(e => e.Value > 0).Sum(e => e.Value),
+                TotalExpenses = g.Where(e => e.Value < 0).Sum(e => e.Value)
             })
-            .OrderBy(cs => cs.Total)
+            .OrderBy(cs => cs.TotalExpenses)
             .ToList();
-        var spendings = categorySummaries.Where(s => s.Total < 0).Sum(s => s.Total);
-        var income = categorySummaries.Where(s => s.Total > 0).Sum(s => s.Total);
+        var spendings = categorySummaries.Sum(s => s.TotalExpenses);
+        var income = categorySummaries.Sum(s => s.TotalIncome);
         
         //calculate percentage
         categorySummaries
-            .Where(summary => summary.Total < 0)
             .ToList()
-            .ForEach(summary => summary.ExpensePercentage = summary.Total / spendings);
+            .ForEach(summary => summary.ExpensePercentage = summary.TotalExpenses / spendings);
         
         return new MonthlyReport()
         {
