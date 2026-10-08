@@ -30,7 +30,7 @@ export interface IClient {
     GetMonthlyReport: (month: Date) => Promise<MonthlyReport>
     GetSpendingsSummary: (date: Date) => Promise<SpendingsSummary>
     GetAverageMonthlyIncome: (fromMonth: Date, toMonth:Date) => Promise<AverageMonthlyIncomeReport>
-    GetYearlyReport: (year: number) => Promise<YearlyReport>
+    GetYearlyByMonthReport: (year: number) => Promise<YearlyReport>
 
     GetEntries: (
         fromDate: Date | undefined,
@@ -253,7 +253,7 @@ export class Client implements IClient {
     }
 
     
-    async GetYearlyReport(year: number): Promise<YearlyReport> {
+    async GetYearlyByMonthReport(year: number): Promise<YearlyReport> {
         const result = await fetch(`${url}/reports/yearly/${year}?${new URLSearchParams({
             accessToken: this.token
         }).toString()}`, {

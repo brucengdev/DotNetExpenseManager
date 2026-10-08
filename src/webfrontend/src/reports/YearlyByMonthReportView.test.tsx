@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 import { TestClient } from "../__test__/TestClient";
 import { YearlyReport } from "../models/YearlyReport";
 
-describe("Yearly by month report", () => {
+describe("Yearly by report", () => {
 
     it("has UI components", async () => {
         render(<YearlyByMonthReportView  client={new TestClient()}/>)
@@ -40,7 +40,7 @@ describe("Yearly by month report", () => {
 
     it("Shows the report for chosen year", async () => {
         const client = new TestClient()
-        client.GetYearlyReport = vitest.fn(async (year: number) => {
+        client.GetYearlyByMonthReport = vitest.fn(async (year: number) => {
             return {
                 year,
                 months: [
@@ -80,7 +80,7 @@ describe("Yearly by month report", () => {
 
     it("Must update report when year is changed", async () => {
         const client = new TestClient()
-        client.GetYearlyReport = vitest.fn(async (year: number) => {
+        client.GetYearlyByMonthReport = vitest.fn(async (year: number) => {
             if(year === 2020) {
                 return {
                     year,

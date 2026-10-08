@@ -19,7 +19,7 @@ export function YearlyByMonthReportView(props: YearlyByMonthReportViewProps) {
     const [yearlyReport, setYearlyReport] = useState<YearlyReport | undefined>(undefined)
     if(yearlyReport == undefined) {
         (async () => {
-            const retrievedReport = await client.GetYearlyReport(year)
+            const retrievedReport = await client.GetYearlyByMonthReport(year)
             setYearlyReport(retrievedReport)
         })()
     }

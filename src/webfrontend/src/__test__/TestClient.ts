@@ -120,7 +120,7 @@ export class TestClient implements IClient {
         }
     }
     
-    async GetYearlyReport(_year: number): Promise<YearlyReport> {
+    async GetYearlyByMonthReport(_year: number): Promise<YearlyReport> {
         //this function should be replaced in tests
         //no real implementation here
         return {
