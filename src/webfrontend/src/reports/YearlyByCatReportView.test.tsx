@@ -40,7 +40,7 @@ describe("Yearly by categories report", () => {
 
     it("shows the report for currently selected year", async () => {
         const client = new TestClient()
-        client.GetYearlyByCategoriesReport = vitest.fn(async (year: number) => {
+        client.GetYearlyByCategoriesReport = vitest.fn(async (_: number) => {
             return {
                 byCategories: {
                     "Household": { totalExpenses: -222, totalIncome: 0, expensePercentage: 0.12345 },
