@@ -8,6 +8,7 @@ import { MonthlyReport } from "../models/MonthlyReport";
 import { SpendingsSummary } from "../models/SpendingsSummary";
 import { AverageMonthlyIncomeReport } from "../models/AverageMonthlyIncomeReport";
 import { YearlyReport } from "../models/YearlyReport";
+import { YearlyByCategoriesReport } from "../models/YearlyByCategoriesReport";
 
 export const TEST_USER_NAME = "valid_user"
 export const TEST_PASSWORD = "correct_pass"
@@ -129,6 +130,20 @@ export class TestClient implements IClient {
             totalIncome: 0,
             totalSavings: 0,
             totalSpendings: 0
+        }
+    }
+    
+    async GetYearlyByCategoriesReport(_year: number): Promise<YearlyByCategoriesReport> {
+        //this function should be replaced in tests
+        //no real implementation here
+        return {
+            byCategories: {
+                "Cat1": { totalExpenses: 0, totalIncome: 10, expensePercentage: 0.233 },
+                "Cat2": { totalExpenses: -2, totalIncome: 0, expensePercentage: 0.233 }
+            },
+            totalIncome:0,
+            totalSpendings: 0,
+            savings: 0
         }
     }
 

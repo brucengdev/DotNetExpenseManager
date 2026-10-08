@@ -1,9 +1,10 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vitest } from "vitest";
 import { YearlyByCatReportView } from "./YearlyByCatReportView";
 import "@testing-library/jest-dom"
 import { TestClient } from "../__test__/TestClient";
 import userEvent from "@testing-library/user-event";
+import { YearlyByCategoriesReport } from "../models/YearlyByCategoriesReport";
 
 describe("Yearly by categories report", () => {
 
@@ -35,5 +36,28 @@ describe("Yearly by categories report", () => {
         userEvent.selectOptions(yearPicker, "2020")
         
         await waitFor(() => expect(yearPicker).toHaveValue("2020"))
+    })
+
+    it("shows the report for currently selected year", async () => {
+        const client = new TestClient()
+        client.GetYearlyByCategoriesReport = vitest.fn(async (year: number) => {
+            return {
+                byCategories: {
+                    "Household": { totalExpenses: -222, totalIncome: 0, expensePercentage: 0.12345 },
+                    "Food": { totalExpenses: -333, totalIncome: 0, expensePercentage: 0.12345 },
+                    "Travel": { totalExpenses: -333, totalIncome: 0, expensePercentage: 0.12345 },
+                    "Salary": { totalExpenses: 0, totalIncome: 333, expensePercentage: 0 },
+                },
+                totalSpendings: -122,
+                totalIncome: 333,
+                savings: 222
+            } as YearlyByCategoriesReport
+        })
+        render(<YearlyByCatReportView  client={client}/>)
+
+
+        const yearPicker = screen.getByRole("combobox", { name: "Year"})
+        userEvent.selectOptions(yearPicker, "2020")
+        
     })
 })
