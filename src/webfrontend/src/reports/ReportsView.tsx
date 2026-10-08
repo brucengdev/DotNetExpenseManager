@@ -3,6 +3,7 @@ import { IClient } from "../api/Client"
 import { Button, ButtonMode } from "../controls/Button"
 import { MonthlyReportView } from "./MonthlyReportView"
 import { YearlyByMonthReportView } from "./YearlyByMonthReportView"
+import { YearlyByCatReportView } from "./YearlyByCatReportView"
 
 interface ReportsViewProps {
     client: IClient
@@ -10,7 +11,8 @@ interface ReportsViewProps {
 
 enum CurrentReportView {
     MONTHLY,
-    YEARLY
+    YEARLY,
+    YEARLY_BY_CAT
 }
 
 export function ReportsView(props: ReportsViewProps) {
@@ -24,11 +26,21 @@ export function ReportsView(props: ReportsViewProps) {
             <Button text="Yearly by month" mode={currentView == CurrentReportView.YEARLY? ButtonMode.PRIMARY: ButtonMode.SECONDARY}
                 onClick={() => setCurrentView(CurrentReportView.YEARLY)}
             />
+            <Button text="Yearly by categories" mode={currentView === CurrentReportView.YEARLY_BY_CAT? ButtonMode.PRIMARY: ButtonMode.SECONDARY }
+                onClick={() => setCurrentView(CurrentReportView.YEARLY_BY_CAT)}
+            />
         </div>
         {
-            currentView == CurrentReportView.MONTHLY
-            ? <MonthlyReportView month={new Date()} client={client} />
-            : <YearlyByMonthReportView client={client} />
+            ShowReport(currentView, client)
         }
     </div>
+}
+
+function ShowReport(currentView: CurrentReportView, client: IClient) {
+    switch(currentView) {
+        case CurrentReportView.YEARLY_BY_CAT: return <YearlyByCatReportView />
+        case CurrentReportView.YEARLY: return <YearlyByMonthReportView client={client} />
+        default:
+        case CurrentReportView.MONTHLY: return <MonthlyReportView month={new Date()} client={client} />;
+    }
 }
