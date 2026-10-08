@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it, vitest } from "vitest";
-import { YearlyReportView } from "./YearlyReportView";
+import { YearlyByMonthReportView } from "./YearlyByMonthReportView";
 import "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
 import { TestClient } from "../__test__/TestClient";
@@ -9,9 +9,9 @@ import { YearlyReport } from "../models/YearlyReport";
 describe("Yearly report", () => {
 
     it("has UI components", async () => {
-        render(<YearlyReportView  client={new TestClient()}/>)
+        render(<YearlyByMonthReportView  client={new TestClient()}/>)
 
-        expect(screen.getByTestId("yearly-report-view")).toBeInTheDocument()
+        expect(screen.getByTestId("yearly-by-month-report-view")).toBeInTheDocument()
 
         const yearPicker = screen.getByRole("combobox", { name: "Year"})
         expect(yearPicker).toBeInTheDocument()
@@ -29,7 +29,7 @@ describe("Yearly report", () => {
     })
 
     it("switches year when user changes year", async () => {
-        render(<YearlyReportView  client={new TestClient()}/>)
+        render(<YearlyByMonthReportView  client={new TestClient()}/>)
 
         const yearPicker = screen.getByRole("combobox", { name: "Year"})
 
@@ -62,7 +62,7 @@ describe("Yearly report", () => {
                 totalSavings: 1700
             } as YearlyReport
         })
-        render(<YearlyReportView client={client} />)
+        render(<YearlyByMonthReportView client={client} />)
 
         await waitFor(() => {
             const monthSummaries = screen.queryAllByTestId("month-summary")
@@ -118,7 +118,7 @@ describe("Yearly report", () => {
                 totalSavings: 1700
             } as YearlyReport
         })
-        render(<YearlyReportView client={client} />)
+        render(<YearlyByMonthReportView client={client} />)
 
         await waitFor(() => {
             const monthSummaries = screen.queryAllByTestId("month-summary")

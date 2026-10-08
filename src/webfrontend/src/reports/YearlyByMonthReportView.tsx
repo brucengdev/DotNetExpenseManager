@@ -6,11 +6,11 @@ import { MonthSummaryView } from "./MonthSummaryView";
 import { TableFieldValueRow } from "../controls/TableFieldValueRow";
 import { formatMoney } from "../utils";
 
-interface YearlyReportViewProps {
+interface YearlyByMonthReportViewProps {
     client: IClient
 }
 
-export function YearlyReportView(props: YearlyReportViewProps) {
+export function YearlyByMonthReportView(props: YearlyByMonthReportViewProps) {
     const { client } = props
     const currentYear = (new Date()).getFullYear()
     const [year, setYear] = useState(currentYear)
@@ -22,7 +22,7 @@ export function YearlyReportView(props: YearlyReportViewProps) {
             setYearlyReport(retrievedReport)
         })()
     }
-    return <div data-testid="yearly-report-view" className="xl:mx-50 mb-30">
+    return <div data-testid="yearly-by-month-report-view" className="xl:mx-50 mb-30">
         <Select
             elementId="year-control"
             label="Year"
