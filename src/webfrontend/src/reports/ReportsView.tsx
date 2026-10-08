@@ -38,7 +38,7 @@ export function ReportsView(props: ReportsViewProps) {
 
 function ShowReport(currentView: CurrentReportView, client: IClient) {
     switch(currentView) {
-        case CurrentReportView.YEARLY_BY_CAT: return <YearlyByCatReportView />
+        case CurrentReportView.YEARLY_BY_CAT: return <YearlyByCatReportView client={client} />
         case CurrentReportView.YEARLY: return <YearlyByMonthReportView client={client} />
         default:
         case CurrentReportView.MONTHLY: return <MonthlyReportView month={new Date()} client={client} />;
