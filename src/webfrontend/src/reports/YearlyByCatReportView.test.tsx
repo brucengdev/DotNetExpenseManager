@@ -1,8 +1,9 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { YearlyByCatReportView } from "./YearlyByCatReportView";
 import "@testing-library/jest-dom"
 import { TestClient } from "../__test__/TestClient";
+import userEvent from "@testing-library/user-event";
 
 describe("Yearly by categories report", () => {
 
@@ -24,5 +25,15 @@ describe("Yearly by categories report", () => {
             const expectedYear = currentYear - i;
             expect(options[i]).toHaveValue(expectedYear.toString())
         }
+    })
+
+    it("changes year when another year is selected", async () => {
+        render(<YearlyByCatReportView  client={new TestClient()}/>)
+
+        const yearPicker = screen.getByRole("combobox", { name: "Year"})
+
+        userEvent.selectOptions(yearPicker, "2020")
+        
+        await waitFor(() => expect(yearPicker).toHaveValue("2020"))
     })
 })
