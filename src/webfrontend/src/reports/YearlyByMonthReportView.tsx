@@ -5,6 +5,7 @@ import { YearlyReport } from "../models/YearlyReport";
 import { MonthSummaryView } from "./MonthSummaryView";
 import { TableFieldValueRow } from "../controls/TableFieldValueRow";
 import { formatMoney } from "../utils";
+import { buildYearSelectOptions } from "../controlUtils/SelectUtils";
 
 interface YearlyByMonthReportViewProps {
     client: IClient
@@ -14,7 +15,7 @@ export function YearlyByMonthReportView(props: YearlyByMonthReportViewProps) {
     const { client } = props
     const currentYear = (new Date()).getFullYear()
     const [year, setYear] = useState(currentYear)
-    const yearOptions: SelectOption[] = buildYearOptions(currentYear, 2013);
+    const yearOptions: SelectOption[] = buildYearSelectOptions(currentYear, 2013);
     const [yearlyReport, setYearlyReport] = useState<YearlyReport | undefined>(undefined)
     if(yearlyReport == undefined) {
         (async () => {
@@ -55,15 +56,4 @@ export function YearlyByMonthReportView(props: YearlyByMonthReportViewProps) {
             :<></>
         }
     </div>
-}
-
-function buildYearOptions(currentYear: number, oldestYear: number) {
-    const yearOptions: SelectOption[] = [];
-    for (let year = currentYear; year >= oldestYear; year--) {
-        yearOptions.push({
-            value: year.toString(),
-            text: year.toString()
-        });
-    }
-    return yearOptions;
 }
