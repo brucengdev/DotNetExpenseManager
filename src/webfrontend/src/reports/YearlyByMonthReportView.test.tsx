@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 import { TestClient } from "../__test__/TestClient";
 import { YearlyReport } from "../models/YearlyReport";
 
-describe("Yearly report", () => {
+describe("Yearly by month report", () => {
 
     it("has UI components", async () => {
         render(<YearlyByMonthReportView  client={new TestClient()}/>)
