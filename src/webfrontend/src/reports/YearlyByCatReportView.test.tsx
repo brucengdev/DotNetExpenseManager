@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it, vitest } from "vitest";
 import { YearlyByCatReportView } from "./YearlyByCatReportView";
 import "@testing-library/jest-dom"
@@ -40,7 +40,16 @@ describe("Yearly by categories report", () => {
 
     it("shows the report for currently selected year", async () => {
         const client = new TestClient()
-        client.GetYearlyByCategoriesReport = vitest.fn(async (_: number) => {
+        client.GetYearlyByCategoriesReport = vitest.fn(async (year: number) => {
+            if(year === 2020) {
+                return {
+                    byCategories: {
+                    },
+                    totalSpendings: -10,
+                    totalIncome: 333,
+                    savings: 222
+                } as YearlyByCategoriesReport    
+            }
             return {
                 byCategories: {
                     "Household": { totalExpenses: -222, totalIncome: 0, expensePercentage: 0.12345 },
@@ -57,7 +66,37 @@ describe("Yearly by categories report", () => {
 
 
         const yearPicker = screen.getByRole("combobox", { name: "Year"})
-        userEvent.selectOptions(yearPicker, "2020")
+        fireEvent.change(yearPicker, { target: { value: "2020" }})
+
+        expect(yearPicker).toHaveValue("2020")
+        
+        await waitFor(() => {
+            expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings-10 ₫")
+        })
+        
+        fireEvent.change(yearPicker, {target: {value: "2024"}})
+        expect(yearPicker).toHaveValue("2024")
+        
+        await waitFor(() => {
+            expect(screen.getByTestId("total-spendings").textContent).toBe("Total spendings-122 ₫")
+        })
+
+        expect(screen.getByTestId("total-income").textContent).toBe("Total income333 ₫")
+        expect(screen.getByTestId("savings").textContent).toBe("Savings222 ₫")
+
+        const byCategories = screen.getByTestId("by-categories")
+        expect(byCategories).toBeInTheDocument()
+
+        const catSummaries = within(byCategories).queryAllByTestId("category-summary")
+        const catSummaryTexts = catSummaries.map(e => e.textContent)
+        expect(catSummaryTexts).toStrictEqual(
+            [
+                "Household-222 ₫ (12.35%)",
+                "Food-333 ₫ (12.35%)",
+                "Travel-333 ₫ (12.35%)",
+                "Salary0 ₫, 333 ₫"
+            ]
+        )
         
     })
 })

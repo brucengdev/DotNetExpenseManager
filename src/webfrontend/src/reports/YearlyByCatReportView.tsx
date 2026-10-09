@@ -2,15 +2,25 @@ import { useState } from "react"
 import { IClient } from "../api/Client"
 import { Select } from "../controls/Select"
 import { buildYearSelectOptions } from "../controlUtils/SelectUtils"
+import { TableFieldValueRow } from "../controls/TableFieldValueRow"
+import { YearlyByCategoriesReport } from "../models/YearlyByCategoriesReport"
+import { formatMoney } from "../utils"
 
 interface YearlyByCatReportViewProps {
     client: IClient
 }
 
 export function YearlyByCatReportView(props: YearlyByCatReportViewProps) {
+    const { client } = props
     const currentYear = (new Date()).getFullYear()
     const [year, setYear] = useState(currentYear)
     const yearOptions = buildYearSelectOptions(currentYear, 2013)
+    const [report, setReport] = useState<YearlyByCategoriesReport | undefined>(undefined)
+    if(report === undefined) {
+        (async () => {
+            setReport(await client.GetYearlyByCategoriesReport(year));
+        })()
+    }
     return <div data-testId="yearly-by-cat-report-view">
         <Select
                     elementId="year-control"
@@ -19,7 +29,17 @@ export function YearlyByCatReportView(props: YearlyByCatReportViewProps) {
                     value={year.toString()}
                     onChange={newYear => {
                         setYear(parseInt(newYear))
+                        setReport(undefined)//reload report
                     }}
                 />
+
+        <TableFieldValueRow 
+            dataTestId="total-spendings" label="Total spendings"
+            value={formatMoney(report?.totalSpendings || 0)} 
+        />
+        <TableFieldValueRow dataTestId="total-income" label="Total income" 
+            value={formatMoney(report?.totalIncome || 0)} />
+        <TableFieldValueRow dataTestId="savings" label="Savings" 
+            value={formatMoney(report?.savings || 0)} />
     </div>
 }
