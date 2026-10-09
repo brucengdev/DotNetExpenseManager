@@ -32,14 +32,18 @@ export function YearlyByCatReportView(props: YearlyByCatReportViewProps) {
                         setReport(undefined)//reload report
                     }}
                 />
-
-        <TableFieldValueRow 
-            dataTestId="total-spendings" label="Total spendings"
-            value={formatMoney(report?.totalSpendings || 0)} 
-        />
-        <TableFieldValueRow dataTestId="total-income" label="Total income" 
-            value={formatMoney(report?.totalIncome || 0)} />
-        <TableFieldValueRow dataTestId="savings" label="Savings" 
-            value={formatMoney(report?.savings || 0)} />
+        {report
+            ?<>
+            <TableFieldValueRow 
+                dataTestId="total-spendings" label="Total spendings"
+                value={formatMoney(report.totalSpendings)} 
+            />
+            <TableFieldValueRow dataTestId="total-income" label="Total income" 
+                value={formatMoney(report.totalIncome)} />
+            <TableFieldValueRow dataTestId="savings" label="Savings" 
+                value={formatMoney(report.savings)} />
+            </>
+            :<></>
+        }
     </div>
 }
