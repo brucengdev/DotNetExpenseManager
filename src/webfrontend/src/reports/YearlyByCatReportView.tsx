@@ -5,6 +5,7 @@ import { buildYearSelectOptions } from "../controlUtils/SelectUtils"
 import { TableFieldValueRow } from "../controls/TableFieldValueRow"
 import { YearlyByCategoriesReport } from "../models/YearlyByCategoriesReport"
 import { formatMoney } from "../utils"
+import { formatCategorySummary } from "../controlUtils/ReportCategoryUtils"
 
 interface YearlyByCatReportViewProps {
     client: IClient
@@ -34,14 +35,24 @@ export function YearlyByCatReportView(props: YearlyByCatReportViewProps) {
                 />
         {report
             ?<>
-            <TableFieldValueRow 
-                dataTestId="total-spendings" label="Total spendings"
-                value={formatMoney(report.totalSpendings)} 
-            />
-            <TableFieldValueRow dataTestId="total-income" label="Total income" 
-                value={formatMoney(report.totalIncome)} />
-            <TableFieldValueRow dataTestId="savings" label="Savings" 
-                value={formatMoney(report.savings)} />
+                <div data-testid="by-categories" className="mt-5 mb-5">
+                    {
+                        Object.keys(report.byCategories)
+                        .map(catName => <TableFieldValueRow 
+                            dataTestId="category-summary"
+                            label={catName} 
+                            value={formatCategorySummary(report.byCategories[catName])}
+                        />)
+                    }
+                </div>
+                <TableFieldValueRow 
+                    dataTestId="total-spendings" label="Total spendings"
+                    value={formatMoney(report.totalSpendings)} 
+                />
+                <TableFieldValueRow dataTestId="total-income" label="Total income" 
+                    value={formatMoney(report.totalIncome)} />
+                <TableFieldValueRow dataTestId="savings" label="Savings" 
+                    value={formatMoney(report.savings)} />
             </>
             :<></>
         }

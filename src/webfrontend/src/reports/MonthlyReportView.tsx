@@ -4,6 +4,7 @@ import { formatDateToMonthYear, formatMoney, formatPercentage } from "../utils"
 import { CategorySummary, MonthlyReport } from "../models/MonthlyReport"
 import { TextBox } from "../controls/TextBox"
 import { TableFieldValueRow } from "../controls/TableFieldValueRow"
+import { formatCategorySummary } from "../controlUtils/ReportCategoryUtils"
 
 interface MonthlyReportViewProps {
     month: Date,
@@ -55,15 +56,4 @@ export function MonthlyReportView(props: MonthlyReportViewProps) {
             :<></>
         }
     </div>
-}
-
-const formatCategorySummary = (summary: CategorySummary) => {
-    let result = formatMoney(summary.totalExpenses)
-    if(summary.totalExpenses < 0) {
-        result += ` (${formatPercentage(summary.expensePercentage)})`
-    }
-    if(summary.totalIncome > 0) {
-        result += `, ${formatMoney(summary.totalIncome)}`
-    }
-    return result
 }
