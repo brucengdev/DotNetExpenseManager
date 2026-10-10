@@ -1,5 +1,6 @@
 using Backend.Core.Models;
 using Backend.Core.Repository;
+using Backend.Models;
 
 namespace Backend.Core.Manager;
 
@@ -28,5 +29,10 @@ public class ReportsManager: IReportsManager
     public YearlyReport GetYearlyReport(int userId, int year)
     {
         return _reportsRepository.GetYearlyReport(userId, year);
+    }
+
+    public YearlyByCatReport GetYearlyByCatReport(int userId, int year)
+    {
+        return _reportsRepository.GetYearlyByCatReport(userId, year);
     }
 }
