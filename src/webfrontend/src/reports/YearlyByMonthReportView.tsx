@@ -5,24 +5,25 @@ import { YearlyReport } from "../models/YearlyReport";
 import { MonthSummaryView } from "./MonthSummaryView";
 import { TableFieldValueRow } from "../controls/TableFieldValueRow";
 import { formatMoney } from "../utils";
+import { buildYearSelectOptions } from "../controlUtils/SelectUtils";
 
-interface YearlyReportViewProps {
+interface YearlyByMonthReportViewProps {
     client: IClient
 }
 
-export function YearlyReportView(props: YearlyReportViewProps) {
+export function YearlyByMonthReportView(props: YearlyByMonthReportViewProps) {
     const { client } = props
     const currentYear = (new Date()).getFullYear()
     const [year, setYear] = useState(currentYear)
-    const yearOptions: SelectOption[] = buildYearOptions(currentYear, 2013);
+    const yearOptions: SelectOption[] = buildYearSelectOptions(currentYear, 2013);
     const [yearlyReport, setYearlyReport] = useState<YearlyReport | undefined>(undefined)
     if(yearlyReport == undefined) {
         (async () => {
-            const retrievedReport = await client.GetYearlyReport(year)
+            const retrievedReport = await client.GetYearlyByMonthReport(year)
             setYearlyReport(retrievedReport)
         })()
     }
-    return <div data-testid="yearly-report-view" className="xl:mx-50 mb-30">
+    return <div data-testid="yearly-by-month-report-view" className="xl:mx-50 mb-30">
         <Select
             elementId="year-control"
             label="Year"
@@ -55,15 +56,4 @@ export function YearlyReportView(props: YearlyReportViewProps) {
             :<></>
         }
     </div>
-}
-
-function buildYearOptions(currentYear: number, oldestYear: number) {
-    const yearOptions: SelectOption[] = [];
-    for (let year = currentYear; year >= oldestYear; year--) {
-        yearOptions.push({
-            value: year.toString(),
-            text: year.toString()
-        });
-    }
-    return yearOptions;
 }

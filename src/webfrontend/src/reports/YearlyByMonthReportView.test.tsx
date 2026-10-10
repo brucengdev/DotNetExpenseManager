@@ -1,17 +1,17 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it, vitest } from "vitest";
-import { YearlyReportView } from "./YearlyReportView";
+import { YearlyByMonthReportView } from "./YearlyByMonthReportView";
 import "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
 import { TestClient } from "../__test__/TestClient";
 import { YearlyReport } from "../models/YearlyReport";
 
-describe("Yearly report", () => {
+describe("Yearly by report", () => {
 
     it("has UI components", async () => {
-        render(<YearlyReportView  client={new TestClient()}/>)
+        render(<YearlyByMonthReportView  client={new TestClient()}/>)
 
-        expect(screen.getByTestId("yearly-report-view")).toBeInTheDocument()
+        expect(screen.getByTestId("yearly-by-month-report-view")).toBeInTheDocument()
 
         const yearPicker = screen.getByRole("combobox", { name: "Year"})
         expect(yearPicker).toBeInTheDocument()
@@ -29,7 +29,7 @@ describe("Yearly report", () => {
     })
 
     it("switches year when user changes year", async () => {
-        render(<YearlyReportView  client={new TestClient()}/>)
+        render(<YearlyByMonthReportView  client={new TestClient()}/>)
 
         const yearPicker = screen.getByRole("combobox", { name: "Year"})
 
@@ -40,7 +40,7 @@ describe("Yearly report", () => {
 
     it("Shows the report for chosen year", async () => {
         const client = new TestClient()
-        client.GetYearlyReport = vitest.fn(async (year: number) => {
+        client.GetYearlyByMonthReport = vitest.fn(async (year: number) => {
             return {
                 year,
                 months: [
@@ -62,7 +62,7 @@ describe("Yearly report", () => {
                 totalSavings: 1700
             } as YearlyReport
         })
-        render(<YearlyReportView client={client} />)
+        render(<YearlyByMonthReportView client={client} />)
 
         await waitFor(() => {
             const monthSummaries = screen.queryAllByTestId("month-summary")
@@ -80,7 +80,7 @@ describe("Yearly report", () => {
 
     it("Must update report when year is changed", async () => {
         const client = new TestClient()
-        client.GetYearlyReport = vitest.fn(async (year: number) => {
+        client.GetYearlyByMonthReport = vitest.fn(async (year: number) => {
             if(year === 2020) {
                 return {
                     year,
@@ -118,7 +118,7 @@ describe("Yearly report", () => {
                 totalSavings: 1700
             } as YearlyReport
         })
-        render(<YearlyReportView client={client} />)
+        render(<YearlyByMonthReportView client={client} />)
 
         await waitFor(() => {
             const monthSummaries = screen.queryAllByTestId("month-summary")

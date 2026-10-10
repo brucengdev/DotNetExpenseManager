@@ -2,7 +2,7 @@ using Backend.Core.Models;
 
 namespace Backend.WebApi.Models;
 
-public class YearlyReportServiceModel
+public class YearlyByMonthReportServiceModel
 {
     public int Year { get; set; }
     public IEnumerable<MonthSummaryServiceModel> Months { get; set; }
@@ -11,7 +11,7 @@ public class YearlyReportServiceModel
     public float TotalIncome { get; set; }
     public float TotalSavings { get; set; }
 
-    public static YearlyReportServiceModel From(YearlyReport domainModel)
+    public static YearlyByMonthReportServiceModel From(YearlyByMonthReport domainModel)
     {
         return new()
         {

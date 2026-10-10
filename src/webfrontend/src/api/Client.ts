@@ -5,6 +5,7 @@ import { MonthlyReport } from "../models/MonthlyReport"
 import { Payee } from "../models/Payee"
 import { SpendingsSummary } from "../models/SpendingsSummary"
 import { Tag } from "../models/Tag"
+import { YearlyByCategoriesReport } from "../models/YearlyByCategoriesReport"
 import { YearlyReport } from "../models/YearlyReport"
 import { formatDateToDay, formatDateToMonthYear } from "../utils"
 
@@ -30,7 +31,8 @@ export interface IClient {
     GetMonthlyReport: (month: Date) => Promise<MonthlyReport>
     GetSpendingsSummary: (date: Date) => Promise<SpendingsSummary>
     GetAverageMonthlyIncome: (fromMonth: Date, toMonth:Date) => Promise<AverageMonthlyIncomeReport>
-    GetYearlyReport: (year: number) => Promise<YearlyReport>
+    GetYearlyByMonthReport: (year: number) => Promise<YearlyReport>
+    GetYearlyByCategoriesReport: (year: number) => Promise<YearlyByCategoriesReport>
 
     GetEntries: (
         fromDate: Date | undefined,
@@ -253,8 +255,8 @@ export class Client implements IClient {
     }
 
     
-    async GetYearlyReport(year: number): Promise<YearlyReport> {
-        const result = await fetch(`${url}/reports/yearly/${year}?${new URLSearchParams({
+    async GetYearlyByMonthReport(year: number): Promise<YearlyReport> {
+        const result = await fetch(`${url}/reports/yearlybymonth/${year}?${new URLSearchParams({
             accessToken: this.token
         }).toString()}`, {
             method: "GET"
@@ -263,6 +265,18 @@ export class Client implements IClient {
             return (await result.json()) as YearlyReport
         }
         return {} as YearlyReport
+    }
+    
+    async GetYearlyByCategoriesReport(year: number): Promise<YearlyByCategoriesReport> {
+        const result = await fetch(`${url}/reports/yearlybycat/${year}?${new URLSearchParams({
+            accessToken: this.token
+        }).toString()}`, {
+            method: "GET"
+        })
+        if(result.ok) {
+            return (await result.json()) as YearlyByCategoriesReport
+        }
+        return {} as YearlyByCategoriesReport
     }
 
     async GetEntries(

@@ -1,6 +1,6 @@
 namespace Backend.Core.Models;
 
-public class YearlyReport
+public class YearlyByMonthReport
 {
     public int Year { get; set; }
     public IEnumerable<MonthSummary> Months { get; set; }
