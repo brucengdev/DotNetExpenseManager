@@ -256,7 +256,7 @@ export class Client implements IClient {
 
     
     async GetYearlyByMonthReport(year: number): Promise<YearlyReport> {
-        const result = await fetch(`${url}/reports/yearly/${year}?${new URLSearchParams({
+        const result = await fetch(`${url}/reports/yearlybymonth/${year}?${new URLSearchParams({
             accessToken: this.token
         }).toString()}`, {
             method: "GET"

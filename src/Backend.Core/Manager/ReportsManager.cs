@@ -26,9 +26,9 @@ public class ReportsManager: IReportsManager
         return _reportsRepository.GetAverageIncomeReport(userId, fromMonth, toMonth);
     }
 
-    public YearlyReport GetYearlyReport(int userId, int year)
+    public YearlyByMonthReport GetYearlyByMonthReport(int userId, int year)
     {
-        return _reportsRepository.GetYearlyReport(userId, year);
+        return _reportsRepository.GetYearlyByMonthReport(userId, year);
     }
 
     public YearlyByCatReport GetYearlyByCatReport(int userId, int year)

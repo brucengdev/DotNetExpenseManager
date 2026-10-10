@@ -46,12 +46,12 @@ public class ReportsController: ControllerBase
     }
     
     
-    [HttpGet("yearly/{year}")]
+    [HttpGet("yearlybymonth/{year}")]
     [ServiceFilter<SecurityFilterAttribute>]
-    public YearlyReportServiceModel GetYearlyReport(int year)
+    public YearlyByMonthReportServiceModel GetYearlyByMonthReport(int year)
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
-        return YearlyReportServiceModel.From(_reportsManager.GetYearlyReport(userId.Value!, year));
+        return YearlyByMonthReportServiceModel.From(_reportsManager.GetYearlyByMonthReport(userId.Value!, year));
     }
 
     

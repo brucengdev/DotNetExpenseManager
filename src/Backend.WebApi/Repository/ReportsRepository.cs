@@ -106,7 +106,7 @@ public class ReportsRepository: IReportsRepository
         };
     }
 
-    public YearlyReport GetYearlyReport(int userId, int year)
+    public YearlyByMonthReport GetYearlyByMonthReport(int userId, int year)
     {
         var months = _dbContext.Entries
             .Where(e => e.Date.Year == year)
