@@ -58,7 +58,7 @@ public class ReportsController: ControllerBase
     
     [HttpGet("yearlybycat/{year}")]
     [ServiceFilter<SecurityFilterAttribute>]
-    public YearlyReportServiceModel GetYearlyByCatReport(int year)
+    public YearlyByCatReportServiceModel GetYearlyByCatReport(int year)
     {
         var userId = HttpContext.Items[Constants.USER_ID] as int?;
         return YearlyByCatReportServiceModel.From(_reportsManager.GetYearlyByCatReport(userId.Value!, year));

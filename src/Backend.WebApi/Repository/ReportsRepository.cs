@@ -128,4 +128,36 @@ public class ReportsRepository: IReportsRepository
             TotalSavings = months.Sum(m => m.Savings)
         };
     }
+
+    public YearlyByCatReport GetYearlyByCatReport(int userId, int year)
+    {
+        var categorySummaries = _dbContext.Entries
+            .Where(e => e.Date.Year == year && e.UserId == userId)
+            .GroupBy(e => e.CategoryId)
+            .Where(g => g.Key.HasValue)
+            .Select(g => new CategorySummary
+            {
+                CategoryId = g.Key!.Value,
+                CategoryName = g.First().Category.Name,
+                TotalIncome = g.Where(e => e.Value > 0).Sum(e => e.Value),
+                TotalExpenses = g.Where(e => e.Value < 0).Sum(e => e.Value)
+            })
+            .OrderBy(cs => cs.TotalExpenses)
+            .ToList();
+        var spendings = categorySummaries.Sum(s => s.TotalExpenses);
+        var income = categorySummaries.Sum(s => s.TotalIncome);
+        
+        //calculate percentage
+        categorySummaries
+            .ToList()
+            .ForEach(summary => summary.ExpensePercentage = summary.TotalExpenses / spendings);
+        
+        return new YearlyByCatReport()
+        {
+            CategorySummaries = categorySummaries,
+            TotalSpendings = spendings,
+            TotalIncome = income,
+            Savings = income + spendings
+        };
+    }
 }
